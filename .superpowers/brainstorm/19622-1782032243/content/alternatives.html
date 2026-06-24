@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHE – Design Alternativen</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:sans-serif;background:#0e0e0e;color:#fff;padding:32px 24px}
+
+h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;color:#888;letter-spacing:0.1em;text-transform:uppercase;text-align:center;margin-bottom:8px}
+p.sub{font-size:13px;color:#555;text-align:center;margin-bottom:40px}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
+.option{border-radius:16px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:border-color 0.2s,transform 0.2s}
+.option:hover{transform:translateY(-4px)}
+.option.selected{border-color:#6366f1}
+
+.preview{width:100%;aspect-ratio:9/14;position:relative;overflow:hidden}
+
+/* ── OPTION A: Magazin Editorial ── */
+.preview-a{background:#f5f0e8}
+.a-nav{background:#f5f0e8;border-bottom:2px solid #1a1a1a;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+.a-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#1a1a1a;letter-spacing:-0.5px}
+.a-nav-links{display:flex;gap:16px}
+.a-nav-link{font-family:'Plus Jakarta Sans',sans-serif;font-size:8px;font-weight:500;color:#666;letter-spacing:0.05em;text-transform:uppercase}
+.a-nav-cta{background:#1a1a1a;color:#f5f0e8;font-size:8px;font-weight:700;padding:5px 12px;letter-spacing:0.05em;text-transform:uppercase}
+
+.a-hero{padding:24px 20px 20px;position:relative;overflow:hidden}
+.a-tag{font-family:'Plus Jakarta Sans',sans-serif;font-size:7px;font-weight:600;color:#888;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px}
+.a-headline{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:#1a1a1a;line-height:1.05;margin-bottom:6px}
+.a-headline em{font-style:italic;color:#c84b31}
+.a-sub{font-family:'Plus Jakarta Sans',sans-serif;font-size:9px;color:#666;line-height:1.6;max-width:200px;margin-bottom:16px}
+.a-btns{display:flex;gap:8px;margin-bottom:20px}
+.a-btn-wa{background:#25d366;color:#fff;font-size:8px;font-weight:700;padding:8px 14px;display:flex;align-items:center;gap:5px}
+.a-btn-chat{border:1.5px solid #1a1a1a;color:#1a1a1a;font-size:8px;font-weight:600;padding:8px 14px;background:transparent}
+
+.a-jobs-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:7px;font-weight:700;color:#888;letter-spacing:0.15em;text-transform:uppercase;border-top:2px solid #1a1a1a;padding-top:12px;margin-bottom:10px}
+.a-job{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #ddd}
+.a-job-title{font-family:'Playfair Display',serif;font-size:10px;color:#1a1a1a}
+.a-job-loc{font-family:'Plus Jakarta Sans',sans-serif;font-size:7px;color:#888}
+.a-job-btn{background:#25d366;color:#fff;font-size:7px;font-weight:700;padding:4px 8px}
+
+.a-stats{background:#1a1a1a;padding:10px 20px;display:flex;gap:0}
+.a-stat{flex:1;text-align:center;padding:8px;border-right:1px solid #333}
+.a-stat:last-child{border-right:none}
+.a-stat-n{font-family:'Playfair Display',serif;font-size:18px;color:#f5f0e8}
+.a-stat-l{font-family:'Plus Jakarta Sans',sans-serif;font-size:6px;color:#666;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px}
+
+/* ── OPTION B: Bold Startup ── */
+.preview-b{background:#0a0a0a}
+.b-nav{padding:14px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a1a1a}
+.b-logo{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff;letter-spacing:-1px}
+.b-logo span{color:#ff5c35}
+.b-nav-links{display:flex;gap:14px}
+.b-nav-link{font-family:'Plus Jakarta Sans',sans-serif;font-size:7px;color:#555}
+.b-nav-cta{background:#ff5c35;color:#fff;font-size:7px;font-weight:700;padding:5px 10px;border-radius:4px}
+
+.b-hero{padding:20px;min-height:180px;position:relative;overflow:hidden}
+.b-bg-num{position:absolute;right:-10px;top:5px;font-family:'Syne',sans-serif;font-size:100px;font-weight:800;color:rgba(255,92,53,0.05);line-height:1;pointer-events:none;user-select:none}
+.b-badge{display:inline-block;background:#ff5c35;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:7px;font-weight:700;padding:3px 9px;border-radius:2px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px}
+.b-headline{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;line-height:1;letter-spacing:-0.03em;margin-bottom:8px}
+.b-headline span{color:#ff5c35}
+.b-sub{font-family:'Plus Jakarta Sans',sans-serif;font-size:8px;color:#666;line-height:1.6;margin-bottom:14px;max-width:200px}
+.b-btns{display:flex;gap:6px}
+.b-btn-wa{background:#25d366;color:#fff;font-size:8px;font-weight:700;padding:8px 12px;border-radius:6px;display:flex;align-items:center;gap:4px}
+.b-btn-chat{background:#1a1a1a;color:#fff;font-size:8px;font-weight:600;padding:8px 12px;border-radius:6px;border:1px solid #333}
+
+.b-ticker{background:#ff5c35;padding:6px 20px;display:flex;gap:24px;overflow:hidden}
+.b-tick-item{font-family:'Syne',sans-serif;font-size:7px;font-weight:700;color:#fff;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.b-tick-dot{width:4px;height:4px;background:rgba(255,255,255,0.5);border-radius:50%;flex-shrink:0}
+
+.b-jobs{padding:16px 20px;background:#0a0a0a}
+.b-jobs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.b-jobs-title{font-family:'Syne',sans-serif;font-size:12px;font-weight:800;color:#fff}
+.b-jobs-link{font-size:7px;color:#ff5c35;font-weight:600}
+.b-job-card{background:#111;border:1px solid #1e1e1e;border-radius:8px;padding:10px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;transition:border-color 0.2s}
+.b-job-card:hover{border-color:#ff5c35}
+.b-job-cat{font-size:6px;color:#ff5c35;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px}
+.b-job-name{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;color:#fff;margin-bottom:2px}
+.b-job-loc{font-size:7px;color:#444}
+.b-job-btn{background:#25d366;color:#fff;font-size:7px;font-weight:700;padding:5px 9px;border-radius:5px;white-space:nowrap}
+
+.b-stats{padding:16px 20px;background:#0f0f0f;border-top:1px solid #1a1a1a;display:flex;gap:0}
+.b-stat{flex:1;text-align:center;padding:6px;border-right:1px solid #1a1a1a}
+.b-stat:last-child{border-right:none}
+.b-stat-n{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#ff5c35}
+.b-stat-l{font-size:6px;color:#555;text-transform:uppercase;letter-spacing:0.08em;margin-top:2px}
+
+/* ── OPTION C: Soft Modern ── */
+.preview-c{background:#ffffff}
+.c-nav{background:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f0f0f0}
+.c-logo{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#111;letter-spacing:-0.5px}
+.c-logo span{background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.c-nav-links{display:flex;gap:14px;align-items:center}
+.c-nav-link{font-size:8px;color:#888;font-weight:500}
+.c-nav-cta{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;font-size:8px;font-weight:600;padding:5px 12px;border-radius:20px}
+
+.c-hero{background:linear-gradient(160deg,#f8f9ff 0%,#f0f0ff 100%);padding:20px}
+.c-pill{display:inline-block;background:#fff;border:1px solid #e0e0f0;color:#7c3aed;font-size:7px;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:0.05em}
+.c-headline{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:#111;line-height:1.1;letter-spacing:-0.02em;margin-bottom:6px}
+.c-headline span{background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.c-sub{font-size:9px;color:#666;line-height:1.6;max-width:200px;margin-bottom:14px}
+.c-btns{display:flex;gap:7px;margin-bottom:16px}
+.c-btn-wa{background:#25d366;color:#fff;font-size:8px;font-weight:600;padding:8px 13px;border-radius:10px;display:flex;align-items:center;gap:4px;box-shadow:0 4px 12px rgba(34,197,94,0.25)}
+.c-btn-chat{background:#fff;color:#111;font-size:8px;font-weight:600;padding:8px 13px;border-radius:10px;border:1px solid #e0e0e0;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+
+.c-jobs{padding:14px 20px;background:#fff}
+.c-jobs-title{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:#111;margin-bottom:10px}
+.c-job{background:#f8f9ff;border-radius:10px;padding:9px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;border:1px solid #ebebf5}
+.c-job-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-right:8px}
+.c-job-row{display:flex;align-items:center;flex:1}
+.c-job-name{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;color:#111;margin-bottom:2px}
+.c-job-loc{font-size:7px;color:#888}
+.c-job-btn{background:#25d366;color:#fff;font-size:7px;font-weight:600;padding:5px 8px;border-radius:8px;white-space:nowrap}
+
+.c-stats{background:linear-gradient(135deg,#3b82f6,#7c3aed);padding:12px 20px;display:flex;gap:0}
+.c-stat{flex:1;text-align:center;padding:6px}
+.c-stat-n{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:#fff;line-height:1}
+.c-stat-l{font-size:6px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.1em;margin-top:3px}
+
+/* Labels */
+.option-label{padding:16px 12px 12px;text-align:center}
+.option-letter{display:inline-block;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.06);font-size:13px;font-weight:700;color:#fff;line-height:28px;text-align:center;margin-bottom:6px}
+.option-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;color:#fff;margin-bottom:3px}
+.option-desc{font-size:11px;color:#666;line-height:1.5}
+</style>
+</head>
+<body>
+
+<h1>PHE – Design Alternativen</h1>
+<p class="sub">Welches Design gefällt dir am besten?</p>
+
+<div class="grid">
+
+  <!-- OPTION A -->
+  <div class="option" onclick="this.classList.toggle('selected')">
+    <div class="preview preview-a">
+      <div class="a-nav">
+        <div class="a-logo">PHE.</div>
+        <div class="a-nav-links">
+          <span class="a-nav-link">Jobs</span>
+          <span class="a-nav-link">YAFTO</span>
+          <span class="a-nav-link">Über uns</span>
+        </div>
+        <div class="a-nav-cta">Bewerben</div>
+      </div>
+      <div class="a-hero">
+        <div class="a-tag">Direktvermittlung · IT · Elektro · Bau</div>
+        <div class="a-headline">Dein Job.<br><em>Direkt.</em><br>Jetzt.</div>
+        <div class="a-sub">Bewirb dich in Sekunden — per WhatsApp oder im Live-Chat.</div>
+        <div class="a-btns">
+          <div class="a-btn-wa">💬 WhatsApp</div>
+          <div class="a-btn-chat">Live-Chat</div>
+        </div>
+        <div class="a-jobs-label">Aktuelle Stellen</div>
+        <div class="a-job">
+          <div><div class="a-job-title">Elektrotechniker</div><div class="a-job-loc">📍 München</div></div>
+          <div class="a-job-btn">💬</div>
+        </div>
+        <div class="a-job">
+          <div><div class="a-job-title">SPS-Programmierer</div><div class="a-job-loc">📍 Hamburg</div></div>
+          <div class="a-job-btn">💬</div>
+        </div>
+        <div class="a-job">
+          <div><div class="a-job-title">Bauleiter</div><div class="a-job-loc">📍 Berlin</div></div>
+          <div class="a-job-btn">💬</div>
+        </div>
+      </div>
+      <div class="a-stats">
+        <div class="a-stat"><div class="a-stat-n">10k+</div><div class="a-stat-l">Profile</div></div>
+        <div class="a-stat"><div class="a-stat-n">48h</div><div class="a-stat-l">Matching</div></div>
+        <div class="a-stat"><div class="a-stat-n">100%</div><div class="a-stat-l">Direkt</div></div>
+      </div>
+    </div>
+    <div class="option-label">
+      <div class="option-letter">A</div>
+      <div class="option-name">Editorial / Magazin</div>
+      <div class="option-desc">Cremefarbener Hintergrund, Serif-Schrift, Terrakotta-Akzente. Elegant, journalistisch, unvergesslich.</div>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="option" onclick="this.classList.toggle('selected')">
+    <div class="preview preview-b">
+      <div class="b-nav">
+        <div class="b-logo">PHE<span>.</span></div>
+        <div class="b-nav-links">
+          <span class="b-nav-link">Jobs</span>
+          <span class="b-nav-link">YAFTO</span>
+          <span class="b-nav-link">Über uns</span>
+        </div>
+        <div class="b-nav-cta">Bewerben</div>
+      </div>
+      <div class="b-hero">
+        <div class="b-bg-num">10k</div>
+        <div class="b-badge">Direktvermittlung</div>
+        <div class="b-headline">Dein<br>nächster<br><span>Job.</span></div>
+        <div class="b-sub">WhatsApp-Bewerbung in 30 Sekunden. Kein Lebenslauf nötig zum Start.</div>
+        <div class="b-btns">
+          <div class="b-btn-wa">💬 WhatsApp</div>
+          <div class="b-btn-chat">Live-Chat</div>
+        </div>
+      </div>
+      <div class="b-ticker">
+        <div class="b-tick-item"><div class="b-tick-dot"></div>Elektrotechniker München</div>
+        <div class="b-tick-item"><div class="b-tick-dot"></div>SPS-Programmierer HH</div>
+        <div class="b-tick-item"><div class="b-tick-dot"></div>IT-Admin Berlin</div>
+      </div>
+      <div class="b-jobs">
+        <div class="b-jobs-header"><span class="b-jobs-title">Offene Stellen</span><span class="b-jobs-link">Alle →</span></div>
+        <div class="b-job-card">
+          <div><div class="b-job-cat">⚡ Elektro</div><div class="b-job-name">Elektrotechniker</div><div class="b-job-loc">📍 München</div></div>
+          <div class="b-job-btn">💬 Bewerben</div>
+        </div>
+        <div class="b-job-card">
+          <div><div class="b-job-cat">💻 IT</div><div class="b-job-name">SPS-Programmierer</div><div class="b-job-loc">📍 Hamburg</div></div>
+          <div class="b-job-btn">💬 Bewerben</div>
+        </div>
+      </div>
+      <div class="b-stats">
+        <div class="b-stat"><div class="b-stat-n">10k+</div><div class="b-stat-l">Profile</div></div>
+        <div class="b-stat"><div class="b-stat-n">48h</div><div class="b-stat-l">Matching</div></div>
+        <div class="b-stat"><div class="b-stat-n">3</div><div class="b-stat-l">Branchen</div></div>
+      </div>
+    </div>
+    <div class="option-label">
+      <div class="option-letter">B</div>
+      <div class="option-name">Bold / Dark Startup</div>
+      <div class="option-desc">Schwarz mit Orange-Rot Akzenten, fette Typografie. Energiegeladen, mutig, modern.</div>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="option" onclick="this.classList.toggle('selected')">
+    <div class="preview preview-c">
+      <div class="c-nav">
+        <div class="c-logo">PHE<span>.</span></div>
+        <div class="c-nav-links">
+          <span class="c-nav-link">Jobs</span>
+          <span class="c-nav-link">YAFTO</span>
+          <span class="c-nav-link">Über uns</span>
+          <div class="c-nav-cta">Bewerben</div>
+        </div>
+      </div>
+      <div class="c-hero">
+        <div class="c-pill">✦ Direktvermittlung für Fachkräfte</div>
+        <div class="c-headline">Dein Job.<br><span>Jetzt & direkt.</span></div>
+        <div class="c-sub">Per WhatsApp in 30 Sekunden bewerben. Unser Team antwortet sofort.</div>
+        <div class="c-btns">
+          <div class="c-btn-wa">💬 WhatsApp bewerben</div>
+          <div class="c-btn-chat">Live-Chat</div>
+        </div>
+      </div>
+      <div class="c-jobs">
+        <div class="c-jobs-title">Aktuelle Stellen</div>
+        <div class="c-job">
+          <div class="c-job-row">
+            <div class="c-job-icon" style="background:#fef9c3">⚡</div>
+            <div><div class="c-job-name">Elektrotechniker (m/w/d)</div><div class="c-job-loc">📍 München · Vollzeit</div></div>
+          </div>
+          <div class="c-job-btn">💬</div>
+        </div>
+        <div class="c-job">
+          <div class="c-job-row">
+            <div class="c-job-icon" style="background:#e0f2fe">💻</div>
+            <div><div class="c-job-name">SPS-Programmierer (m/w/d)</div><div class="c-job-loc">📍 Hamburg · Vollzeit</div></div>
+          </div>
+          <div class="c-job-btn">💬</div>
+        </div>
+        <div class="c-job">
+          <div class="c-job-row">
+            <div class="c-job-icon" style="background:#dcfce7">🏗️</div>
+            <div><div class="c-job-name">Bauleiter (m/w/d)</div><div class="c-job-loc">📍 Berlin · Vollzeit</div></div>
+          </div>
+          <div class="c-job-btn">💬</div>
+        </div>
+      </div>
+      <div class="c-stats">
+        <div class="c-stat"><div class="c-stat-n">10k+</div><div class="c-stat-l">Profile</div></div>
+        <div class="c-stat"><div class="c-stat-n">48h</div><div class="c-stat-l">Matching</div></div>
+        <div class="c-stat"><div class="c-stat-n">100%</div><div class="c-stat-l">Direkt</div></div>
+      </div>
+    </div>
+    <div class="option-label">
+      <div class="option-letter">C</div>
+      <div class="option-name">Soft Modern / Freundlich</div>
+      <div class="option-desc">Weißer Hintergrund, Blau-Lila Gradient, runde Formen. Zugänglich, hell, vertrauensvoll.</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

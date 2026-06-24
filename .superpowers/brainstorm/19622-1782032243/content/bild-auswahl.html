@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0e0e0e;font-family:'Segoe UI',sans-serif;padding:32px;color:#fff}
+h2{font-size:14px;font-weight:600;color:#888;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:24px;text-align:center}
+.group{margin-bottom:40px}
+.group-title{font-size:11px;color:#555;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px}
+.row{display:flex;gap:16px}
+.img-option{flex:1;border-radius:12px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:border-color .2s,transform .2s;position:relative}
+.img-option:hover{transform:scale(1.01);border-color:#6366f1}
+.img-option img{width:100%;display:block}
+.img-label{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,0.7);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px}
+</style>
+</head>
+<body>
+<h2>Welches Bild soll verwendet werden?</h2>
+
+<div class="group">
+  <div class="group-title">Hero-Bild (oben rechts) — 2 Varianten</div>
+  <div class="row">
+    <div class="img-option">
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3DEnNUo30c9qxiRVMSnr83LGNJN/hf_20260621_102118_dd37da22-d767-45f1-9c61-b856127e89e1_min.webp">
+      <div class="img-label">Hero A</div>
+    </div>
+    <div class="img-option">
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3DEnNUo30c9qxiRVMSnr83LGNJN/hf_20260621_102118_f3c90c2b-c502-4338-910d-b5fc3973ba45_min.webp">
+      <div class="img-label">Hero B</div>
+    </div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="group-title">YAFTO Hintergrund — 2 Varianten</div>
+  <div class="row">
+    <div class="img-option">
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3DEnNUo30c9qxiRVMSnr83LGNJN/hf_20260621_102120_1fb16a6d-6626-477e-8870-a1e788e72cb4_min.webp">
+      <div class="img-label">YAFTO A</div>
+    </div>
+    <div class="img-option" style="background:#111;display:flex;align-items:center;justify-content:center;min-height:200px">
+      <span style="color:#555;font-size:12px">YAFTO B — noch lädt...</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

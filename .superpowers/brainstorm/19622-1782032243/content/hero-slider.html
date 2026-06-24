@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHE – Hero mit Job-Slider</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#3b82f6;--violet:#7c3aed;
+  --grad:linear-gradient(135deg,#3b82f6,#7c3aed);
+  --navy:#0f172a;--white:#fff;--off:#f8f9ff;
+  --gray:#64748b;--border:#e8eaf6;--green:#22c55e;
+  --font:'Space Grotesk',sans-serif;--serif:'Instrument Serif',serif;
+}
+body{font-family:var(--font);background:var(--white);color:var(--navy);overflow-x:hidden}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);height:68px;
+  display:flex;align-items:center;padding:0 56px;justify-content:space-between;
+}
+.logo{font-size:22px;font-weight:700;color:var(--navy)}
+.logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--gray);text-decoration:none}
+.nav-btn{background:var(--grad);color:#fff;padding:10px 22px;border-radius:50px;font-size:13px;font-weight:600;text-decoration:none}
+
+/* HERO */
+.hero{
+  min-height:100vh;padding-top:68px;
+  display:grid;grid-template-columns:1fr 1fr;
+  position:relative;overflow:hidden;background:linear-gradient(160deg,#f8f9ff 0%,#eef0ff 100%);
+}
+.hero-dots{position:absolute;inset:0;opacity:0.4;background-image:radial-gradient(rgba(124,58,237,0.15) 1px,transparent 1px);background-size:28px 28px}
+
+.hero-left{padding:72px 40px 72px 56px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:50px;padding:6px 16px 6px 8px;width:fit-content;margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+.pill-dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero-pill span{font-size:12px;font-weight:600;color:var(--gray)}
+h1{font-family:var(--serif);font-size:clamp(38px,4.5vw,62px);line-height:1.06;color:var(--navy);margin-bottom:20px}
+h1 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:15px;line-height:1.7;color:var(--gray);max-width:400px;margin-bottom:32px}
+.hero-btns{display:flex;gap:12px;margin-bottom:40px}
+.btn-wa{display:inline-flex;align-items:center;gap:10px;background:var(--green);color:#fff;padding:13px 22px;border-radius:12px;font-size:14px;font-weight:600;text-decoration:none;box-shadow:0 4px 20px rgba(34,197,94,0.3)}
+.btn-chat{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--navy);padding:13px 22px;border-radius:12px;font-size:14px;font-weight:600;text-decoration:none;border:1.5px solid var(--border)}
+.hero-stats{display:flex;gap:0}
+.h-stat{padding:0 24px;border-right:1px solid var(--border)}
+.h-stat:first-child{padding-left:0}
+.h-stat:last-child{border-right:none}
+.h-stat-n{font-family:var(--serif);font-size:28px;color:var(--navy);line-height:1}
+.h-stat-l{font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px}
+
+/* JOB SLIDER */
+.hero-right{
+  display:flex;align-items:center;justify-content:center;
+  padding:80px 40px 80px 20px;position:relative;z-index:1;
+}
+
+.slider-wrap{width:100%;max-width:420px;position:relative}
+
+.slider-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px;
+}
+.slider-title{font-size:12px;font-weight:700;color:var(--gray);letter-spacing:0.08em;text-transform:uppercase}
+.slider-count{font-size:12px;color:var(--gray)}
+.slider-count span{color:var(--violet);font-weight:700}
+
+.slider-track{
+  position:relative;overflow:hidden;
+  border-radius:20px;
+}
+
+.slide{
+  background:#fff;border-radius:20px;padding:28px;
+  border:1px solid var(--border);
+  box-shadow:0 8px 40px rgba(13,33,55,0.08);
+  display:none;
+  animation:slideIn .4s ease;
+}
+.slide.active{display:block}
+
+@keyframes slideIn{
+  from{opacity:0;transform:translateX(24px)}
+  to{opacity:1;transform:translateX(0)}
+}
+
+.slide-cat{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;
+  padding:4px 12px;border-radius:50px;margin-bottom:16px;
+}
+.cat-elektro{background:#fef9c3;color:#854d0e}
+.cat-sps{background:#e0f2fe;color:#0369a1}
+.cat-mecha{background:#fce7f3;color:#9d174d}
+.cat-it{background:#f3f0ff;color:#6d28d9}
+.cat-bau{background:#f0fdf4;color:#166534}
+
+.slide-title{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:10px;line-height:1.3}
+.slide-meta{display:flex;flex-direction:column;gap:5px;margin-bottom:20px}
+.slide-meta-row{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--gray)}
+.slide-meta-row span{font-size:15px}
+
+.slide-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px}
+.slide-tag{background:var(--off);color:var(--gray);font-size:11px;font-weight:500;padding:4px 12px;border-radius:50px;border:1px solid var(--border)}
+
+.slide-footer{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:18px;border-top:1px solid var(--border);
+}
+.slide-posted{font-size:11px;color:var(--gray)}
+.btn-apply-slide{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--green);color:#fff;
+  padding:10px 18px;border-radius:10px;
+  font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:var(--font);
+  box-shadow:0 4px 16px rgba(34,197,94,0.3);
+  transition:transform .15s;
+}
+.btn-apply-slide:hover{transform:scale(1.04)}
+
+/* Nav dots & arrows */
+.slider-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:16px;
+}
+.slider-dots{display:flex;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .2s}
+.dot.active{background:var(--violet);width:24px;border-radius:4px}
+
+.slider-arrows{display:flex;gap:8px}
+.arrow{width:36px;height:36px;border-radius:10px;border:1.5px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--gray);transition:all .2s}
+.arrow:hover{border-color:var(--violet);color:var(--violet);background:var(--off)}
+
+/* Progress bar */
+.progress-bar{
+  height:3px;background:var(--border);border-radius:2px;
+  margin-bottom:16px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;background:var(--grad);border-radius:2px;
+  width:0%;transition:width .1s linear;
+}
+
+/* Live badge */
+.live-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  background:#f0fdf4;color:#15803d;
+  font-size:10px;font-weight:700;padding:3px 10px;border-radius:50px;
+  border:1px solid #bbf7d0;
+}
+.live-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 1.5s infinite}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">PHE<span>.</span></div>
+  <div class="nav-links">
+    <a href="#">Jobs</a>
+    <a href="#">YAFTO</a>
+    <a href="#">Über uns</a>
+    <a href="#" class="nav-btn">Jetzt bewerben</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-dots"></div>
+
+  <div class="hero-left">
+    <div class="hero-pill">
+      <div class="pill-dot"></div>
+      <span>Direktvermittlung · IT · Elektro · Bau</span>
+    </div>
+    <h1>Dein nächster<br>Job. <span class="grad">Jetzt.</span></h1>
+    <p class="hero-sub">Bewirb dich in Sekunden — direkt per WhatsApp oder im Live-Chat. Kein Lebenslauf nötig zum Start.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-wa">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Per WhatsApp bewerben
+      </a>
+      <a href="#" class="btn-chat">💬 Live-Chat</a>
+    </div>
+    <div class="hero-stats">
+      <div class="h-stat"><div class="h-stat-n">10.000+</div><div class="h-stat-l">Profile</div></div>
+      <div class="h-stat"><div class="h-stat-n">48h</div><div class="h-stat-l">Ø Matching</div></div>
+      <div class="h-stat"><div class="h-stat-n">100%</div><div class="h-stat-l">Direkt</div></div>
+    </div>
+  </div>
+
+  <!-- JOB SLIDER -->
+  <div class="hero-right">
+    <div class="slider-wrap">
+      <div class="slider-header">
+        <span class="slider-title">Aktuelle Stellen</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="live-badge"><div class="live-dot"></div>Live</div>
+          <span class="slider-count"><span id="current">1</span> / <span id="total">5</span></span>
+        </div>
+      </div>
+
+      <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+      <div class="slider-track">
+
+        <div class="slide active">
+          <div class="slide-cat cat-elektro">⚡ Elektrotechnik</div>
+          <div class="slide-title">Elektrotechniker / Betriebstechnik (m/w/d)</div>
+          <div class="slide-meta">
+            <div class="slide-meta-row"><span>📍</span> München, Bayern</div>
+            <div class="slide-meta-row"><span>⏱</span> Vollzeit · Ab sofort</div>
+            <div class="slide-meta-row"><span>🎓</span> Ausbildung Elektrotechnik</div>
+          </div>
+          <div class="slide-tags">
+            <span class="slide-tag">Vollzeit</span>
+            <span class="slide-tag">Direktvermittlung</span>
+            <span class="slide-tag">Ab sofort</span>
+          </div>
+          <div class="slide-footer">
+            <span class="slide-posted">Heute veröffentlicht</span>
+            <button class="btn-apply-slide" onclick="applyWA('Elektrotechniker München')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Bewerben
+            </button>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-cat cat-sps">🖥️ SPS & Automatisierung</div>
+          <div class="slide-title">SPS-Programmierer / Automatisierungstechnik (m/w/d)</div>
+          <div class="slide-meta">
+            <div class="slide-meta-row"><span>📍</span> Hamburg, Nord</div>
+            <div class="slide-meta-row"><span>⏱</span> Vollzeit · Flexibel</div>
+            <div class="slide-meta-row"><span>🎓</span> Studium / Ausbildung Automatisierung</div>
+          </div>
+          <div class="slide-tags">
+            <span class="slide-tag">Siemens S7</span>
+            <span class="slide-tag">TIA Portal</span>
+            <span class="slide-tag">Vollzeit</span>
+          </div>
+          <div class="slide-footer">
+            <span class="slide-posted">Vor 2 Tagen</span>
+            <button class="btn-apply-slide" onclick="applyWA('SPS-Programmierer Hamburg')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Bewerben
+            </button>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-cat cat-mecha">🔧 Mechatronik</div>
+          <div class="slide-title">Mechatroniker / Instandhaltung (m/w/d)</div>
+          <div class="slide-meta">
+            <div class="slide-meta-row"><span>📍</span> Stuttgart, BW</div>
+            <div class="slide-meta-row"><span>⏱</span> Vollzeit · 3-Schicht</div>
+            <div class="slide-meta-row"><span>🎓</span> Ausbildung Mechatronik</div>
+          </div>
+          <div class="slide-tags">
+            <span class="slide-tag">Instandhaltung</span>
+            <span class="slide-tag">3-Schicht</span>
+            <span class="slide-tag">Vollzeit</span>
+          </div>
+          <div class="slide-footer">
+            <span class="slide-posted">Vor 3 Tagen</span>
+            <button class="btn-apply-slide" onclick="applyWA('Mechatroniker Stuttgart')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Bewerben
+            </button>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-cat cat-elektro">⚡ Elektrotechnik</div>
+          <div class="slide-title">Elektriker / Industrieelektriker (m/w/d)</div>
+          <div class="slide-meta">
+            <div class="slide-meta-row"><span>📍</span> Frankfurt, Hessen</div>
+            <div class="slide-meta-row"><span>⏱</span> Vollzeit · Ab sofort</div>
+            <div class="slide-meta-row"><span>🎓</span> Gesellenbrief Elektrik</div>
+          </div>
+          <div class="slide-tags">
+            <span class="slide-tag">Industrie</span>
+            <span class="slide-tag">Vollzeit</span>
+            <span class="slide-tag">Direktvermittlung</span>
+          </div>
+          <div class="slide-footer">
+            <span class="slide-posted">Heute veröffentlicht</span>
+            <button class="btn-apply-slide" onclick="applyWA('Elektriker Frankfurt')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Bewerben
+            </button>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-cat cat-sps">🖥️ SPS & Automatisierung</div>
+          <div class="slide-title">Servicetechniker / Field Service Engineer (m/w/d)</div>
+          <div class="slide-meta">
+            <div class="slide-meta-row"><span>📍</span> bundesweit · Remote möglich</div>
+            <div class="slide-meta-row"><span>⏱</span> Vollzeit · Reisebereitschaft</div>
+            <div class="slide-meta-row"><span>🎓</span> Studium / Ausbildung ET oder IT</div>
+          </div>
+          <div class="slide-tags">
+            <span class="slide-tag">Remote</span>
+            <span class="slide-tag">Reise</span>
+            <span class="slide-tag">Vollzeit</span>
+          </div>
+          <div class="slide-footer">
+            <span class="slide-posted">Vor 1 Woche</span>
+            <button class="btn-apply-slide" onclick="applyWA('Servicetechniker bundesweit')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Bewerben
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /slider-track -->
+
+      <div class="slider-nav">
+        <div class="slider-dots" id="dots"></div>
+        <div class="slider-arrows">
+          <button class="arrow" onclick="prev()">←</button>
+          <button class="arrow" onclick="next()">→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+let timer, progress = 0, progressTimer;
+const INTERVAL = 5000;
+
+document.getElementById('total').textContent = total;
+
+// Build dots
+const dotsEl = document.getElementById('dots');
+slides.forEach((_,i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function goTo(n) {
+  slides[current].classList.remove('active');
+  document.querySelectorAll('.dot')[current].classList.remove('active');
+  current = (n + total) % total;
+  slides[current].classList.add('active');
+  document.querySelectorAll('.dot')[current].classList.add('active');
+  document.getElementById('current').textContent = current + 1;
+  resetProgress();
+}
+
+function next(){ goTo(current + 1) }
+function prev(){ goTo(current - 1) }
+
+function resetProgress(){
+  clearInterval(progressTimer);
+  progress = 0;
+  document.getElementById('progress').style.width = '0%';
+  progressTimer = setInterval(() => {
+    progress += 100 / (INTERVAL / 100);
+    document.getElementById('progress').style.width = Math.min(progress, 100) + '%';
+    if(progress >= 100){ next(); }
+  }, 100);
+}
+
+function applyWA(job){
+  const msg = encodeURIComponent(`Hallo PHE Team, ich interessiere mich für die Stelle: ${job}`);
+  window.open(`https://wa.me/49000000000?text=${msg}`, '_blank');
+}
+
+resetProgress();
+</script>
+</body>
+</html>

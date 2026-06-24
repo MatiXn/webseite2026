@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0a0a;font-family:'Segoe UI',sans-serif;padding:32px;color:#fff}
+h2{font-size:13px;font-weight:600;color:#666;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:32px;text-align:center}
+.group{margin-bottom:48px}
+.group-title{font-size:12px;color:#fff;font-weight:700;margin-bottom:6px}
+.group-sub{font-size:11px;color:#555;margin-bottom:16px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.opt{border-radius:14px;overflow:hidden;border:2px solid #1a1a1a;cursor:pointer;transition:border-color .2s,transform .2s;position:relative}
+.opt:hover{border-color:#6366f1;transform:translateY(-3px)}
+.opt img{width:100%;display:block}
+.badge{position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:0.04em;border:1px solid rgba(255,255,255,0.1)}
+.cap{padding:12px 14px;background:#111;font-size:11px;color:#555;line-height:1.5}
+</style>
+</head>
+<body>
+<h2>Wähle je ein Bild pro Kategorie</h2>
+
+<div class="group">
+  <div class="group-title">Bild 1 — CV-Prozess (Lebenslauf erstellen → Job bekommen)</div>
+  <div class="group-sub">Für die CV-Generator Sektion auf der Startseite</div>
+  <div class="row">
+    <div class="opt">
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3DEnNUo30c9qxiRVMSnr83LGNJN/hf_20260621_105327_5dd113c2-d347-4115-a1d8-d2ec5afb18df_min.webp">
+      <div class="badge">CV-Prozess A</div>
+      <div class="cap">Illustration-Stil: CV erstellen → Jobangebot → Erfolg</div>
+    </div>
+    <div class="opt">
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3DEnNUo30c9qxiRVMSnr83LGNJN/hf_20260621_105327_387a8ae6-b20c-4f76-bc46-4e2236636e70_min.webp">
+      <div class="badge">CV-Prozess B</div>
+      <div class="cap">Illustration-Stil: alternative Variante des Prozesses</div>
+    </div>
+  </div>
+</div>
+
+<div class="group">
+  <div class="group-title">Bild 2 — Bewerbungsprozess (Bewerber + PHE Mitarbeiter)</div>
+  <div class="group-sub">Für die "So funktioniert's" Sektion — enge Zusammenarbeit bis zum neuen Job</div>
+  <div class="row">
+    <div class="opt">
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3DEnNUo30c9qxiRVMSnr83LGNJN/hf_20260621_105329_0ea54082-e7c5-4859-8fe6-644b64d3c17e_min.webp">
+      <div class="badge">Bewerbung A</div>
+      <div class="cap">Recruiter & Bewerber im Gespräch, modern, warm</div>
+    </div>
+    <div class="opt">
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3DEnNUo30c9qxiRVMSnr83LGNJN/hf_20260621_105329_e73b151b-25a6-48bb-9045-ac84971d51e6_min.webp">
+      <div class="badge">Bewerbung B</div>
+      <div class="cap">Enge Zusammenarbeit, Laptop, WhatsApp sichtbar</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHE Perm Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0d2137;
+    --navy-mid: #1e3a5f;
+    --indigo: #5b5edb;
+    --indigo-light: #818cf8;
+    --indigo-pale: #eef0ff;
+    --whatsapp: #22c55e;
+    --white: #ffffff;
+    --off-white: #f7f8fc;
+    --gray-100: #f1f4f9;
+    --gray-300: #d1d8e8;
+    --gray-500: #7a8aaa;
+    --gray-700: #3d4f6b;
+    --text: #0d2137;
+    --font-display: 'Fraunces', serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--gray-300);
+    padding: 0 40px;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 26px;
+    color: var(--navy);
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--indigo); }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 32px; list-style: none;
+  }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--gray-700);
+    text-decoration: none; letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--indigo); }
+
+  .nav-cta {
+    background: var(--indigo);
+    color: #fff !important;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: #4a4dc4 !important; transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    padding-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, #f7f8fc 50%, #eef0ff 100%);
+    z-index: 0;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0; opacity: 0.035;
+    background-image:
+      linear-gradient(var(--navy) 1px, transparent 1px),
+      linear-gradient(90deg, var(--navy) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-accent {
+    position: absolute;
+    top: 120px; right: -120px;
+    width: 600px; height: 600px;
+    background: radial-gradient(ellipse, rgba(91,94,219,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  .hero-left {
+    position: relative; z-index: 1;
+    padding: 80px 40px 80px 64px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--indigo-pale);
+    border: 1px solid rgba(91,94,219,0.2);
+    color: var(--indigo);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px; border-radius: 100px;
+    margin-bottom: 28px;
+    width: fit-content;
+  }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--indigo); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 5.5vw, 68px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    margin-bottom: 20px;
+  }
+  .hero-headline em {
+    font-style: italic;
+    color: var(--indigo);
+    font-weight: 300;
+  }
+
+  .hero-sub {
+    font-size: 16px; font-weight: 400; line-height: 1.7;
+    color: var(--gray-500);
+    max-width: 420px;
+    margin-bottom: 36px;
+  }
+
+  .hero-actions {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .btn-whatsapp {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--whatsapp);
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-size: 14px; font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(34,197,94,0.3);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(34,197,94,0.4); }
+
+  .btn-chat {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: transparent;
+    color: var(--navy-mid);
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-size: 14px; font-weight: 600;
+    border: 1.5px solid var(--gray-300);
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .btn-chat:hover { border-color: var(--indigo); color: var(--indigo); background: var(--indigo-pale); }
+
+  .hero-trust {
+    display: flex; gap: 28px;
+  }
+  .trust-item {
+    display: flex; flex-direction: column;
+  }
+  .trust-number {
+    font-family: var(--font-display);
+    font-size: 28px; font-weight: 700; color: var(--navy);
+    line-height: 1;
+  }
+  .trust-label {
+    font-size: 11px; color: var(--gray-500); letter-spacing: 0.04em;
+    text-transform: uppercase; margin-top: 4px;
+  }
+  .trust-divider { width: 1px; background: var(--gray-300); }
+
+  .hero-right {
+    position: relative; z-index: 1;
+    padding: 80px 64px 80px 24px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .job-preview-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px;
+    width: 100%; max-width: 380px;
+    box-shadow: 0 24px 80px rgba(13,33,55,0.12), 0 4px 16px rgba(13,33,55,0.06);
+    border: 1px solid rgba(209,216,232,0.5);
+  }
+
+  .jpc-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px;
+  }
+  .jpc-title { font-size: 13px; font-weight: 600; color: var(--gray-500); letter-spacing: 0.04em; text-transform: uppercase; }
+  .jpc-badge { background: #dcfce7; color: #15803d; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 100px; }
+
+  .jpc-item {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--gray-100);
+    display: flex; align-items: center; gap: 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 0 -12px;
+  }
+  .jpc-item:hover { background: var(--gray-100); }
+
+  .jpc-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .jpc-icon.elektro { background: #fef9c3; }
+  .jpc-icon.it { background: #e0f2fe; }
+  .jpc-icon.bau { background: #fce7f3; }
+
+  .jpc-info { flex: 1; }
+  .jpc-job { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+  .jpc-meta { font-size: 11px; color: var(--gray-500); }
+
+  .jpc-action {
+    background: var(--whatsapp);
+    color: #fff;
+    border: none; border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 11px; font-weight: 600; cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.15s;
+  }
+  .jpc-action:hover { transform: scale(1.05); }
+
+  .jpc-footer {
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid var(--gray-100);
+    display: flex; justify-content: center;
+  }
+  .jpc-footer a { font-size: 12px; color: var(--indigo); font-weight: 600; text-decoration: none; }
+
+  /* ─── STATS STRIP ─── */
+  .stats-strip {
+    background: var(--navy);
+    padding: 28px 64px;
+    display: flex; align-items: center; justify-content: center; gap: 0;
+  }
+  .stat-item {
+    flex: 1; text-align: center; padding: 0 32px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: 36px; font-weight: 700; color: var(--indigo-light);
+    line-height: 1;
+  }
+  .stat-label { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; }
+
+  /* ─── JOBS SECTION ─── */
+  .section { padding: 96px 64px; }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--indigo); background: var(--indigo-pale);
+    padding: 5px 12px; border-radius: 100px;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4vw, 46px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+  .section-title em { font-style: italic; font-weight: 300; color: var(--indigo); }
+
+  .section-sub {
+    font-size: 15px; color: var(--gray-500); max-width: 480px; line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  .jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .job-card {
+    background: #fff;
+    border: 1px solid var(--gray-300);
+    border-radius: 16px;
+    padding: 24px;
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .job-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--navy-mid), var(--indigo));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .job-card:hover { box-shadow: 0 12px 48px rgba(13,33,55,0.1); transform: translateY(-3px); border-color: var(--indigo-light); }
+  .job-card:hover::before { transform: scaleX(1); }
+
+  .job-card-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--indigo); margin-bottom: 12px; }
+  .job-card-title { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 8px; line-height: 1.3; }
+  .job-card-meta { font-size: 12px; color: var(--gray-500); margin-bottom: 20px; line-height: 1.8; }
+  .job-card-footer { display: flex; justify-content: space-between; align-items: center; }
+  .job-tag { background: var(--gray-100); color: var(--gray-700); font-size: 10px; font-weight: 500; padding: 4px 10px; border-radius: 100px; }
+  .btn-apply-sm {
+    background: var(--whatsapp);
+    color: #fff;
+    border: none; border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-apply-sm:hover { transform: scale(1.04); box-shadow: 0 4px 16px rgba(34,197,94,0.3); }
+
+  .jobs-cta { text-align: center; }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1.5px solid var(--indigo);
+    color: var(--indigo);
+    padding: 12px 28px; border-radius: 10px;
+    font-size: 14px; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { background: var(--indigo); color: #fff; }
+
+  /* ─── CV GENERATOR ─── */
+  .cv-section {
+    background: var(--off-white);
+    padding: 96px 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .cv-templates {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .cv-template {
+    aspect-ratio: 0.707;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(13,33,55,0.12);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cv-template:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 16px 48px rgba(13,33,55,0.18); }
+
+  .cv-t1 { background: linear-gradient(160deg, #0d2137, #1e3a5f); }
+  .cv-t2 { background: linear-gradient(160deg, #1a1a2e, #5b5edb); }
+  .cv-t3 { background: linear-gradient(160deg, #fff, #f1f4f9); border: 1px solid var(--gray-300); }
+  .cv-t4 { background: linear-gradient(160deg, #0f0f0f, #1a1a1a); }
+
+  .cv-template-inner {
+    position: absolute; inset: 0; padding: 12px;
+  }
+  .cv-line { height: 4px; border-radius: 2px; margin-bottom: 5px; }
+  .cv-line.w-full { width: 100%; }
+  .cv-line.w-3q { width: 75%; }
+  .cv-line.w-half { width: 50%; }
+  .cv-line.w-2q { width: 40%; }
+  .cv-label { font-size: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; padding-bottom: 4px; border-bottom-width: 1px; border-bottom-style: solid; }
+  .cv-name { font-size: 10px; font-weight: 900; margin-bottom: 3px; }
+
+  .light-text { color: rgba(255,255,255,0.7); }
+  .light-line { background: rgba(255,255,255,0.15); }
+  .light-line-bright { background: rgba(255,255,255,0.4); }
+  .indigo-line { background: rgba(91,94,219,0.4); }
+  .indigo-line-bright { background: #818cf8; }
+  .dark-line { background: rgba(13,33,55,0.12); }
+  .dark-line-bold { background: var(--navy); }
+
+  .cv-badge-overlay {
+    position: absolute; bottom: 8px; right: 8px;
+    background: var(--indigo); color: #fff;
+    font-size: 7px; font-weight: 700;
+    padding: 3px 7px; border-radius: 100px;
+    letter-spacing: 0.04em;
+  }
+
+  .cv-content { }
+  .cv-free-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #dcfce7; color: #15803d;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 100px;
+    margin-bottom: 20px;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, var(--navy-mid), var(--indigo));
+    color: #fff;
+    padding: 16px 32px; border-radius: 12px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 8px 32px rgba(91,94,219,0.3);
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin-top: 32px;
+    width: fit-content;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(91,94,219,0.4); }
+
+  /* ─── YAFTO ─── */
+  .yafto-section {
+    background: #070d16;
+    padding: 100px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .yafto-glow {
+    position: absolute;
+    top: -100px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(91,94,219,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .yafto-grid {
+    position: absolute; inset: 0; opacity: 0.03;
+    background-image:
+      linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .yafto-inner {
+    position: relative; z-index: 1;
+    max-width: 720px; margin: 0 auto; text-align: center;
+  }
+
+  .yafto-coming {
+    display: inline-block;
+    border: 1px solid rgba(91,94,219,0.4);
+    color: var(--indigo-light);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 6px 16px; border-radius: 100px;
+    margin-bottom: 28px;
+    background: rgba(91,94,219,0.08);
+  }
+
+  .yafto-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .yafto-title span { color: var(--indigo-light); font-style: italic; font-weight: 300; }
+
+  .yafto-tagline {
+    font-size: 13px; color: rgba(255,255,255,0.35);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .yafto-features {
+    display: flex; justify-content: center; gap: 0;
+    margin-bottom: 48px;
+  }
+  .yafto-feat {
+    padding: 0 28px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    text-align: center;
+  }
+  .yafto-feat:last-child { border-right: none; }
+  .yafto-feat-icon { font-size: 24px; margin-bottom: 8px; }
+  .yafto-feat-title { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .yafto-feat-desc { font-size: 11px; color: rgba(255,255,255,0.35); line-height: 1.5; }
+
+  .yafto-form {
+    display: flex; gap: 0;
+    max-width: 440px; margin: 0 auto;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    padding: 6px;
+  }
+  .yafto-input {
+    flex: 1; background: transparent;
+    border: none; outline: none;
+    padding: 12px 16px;
+    font-size: 14px; color: #fff;
+    font-family: var(--font-body);
+  }
+  .yafto-input::placeholder { color: rgba(255,255,255,0.2); }
+  .yafto-btn {
+    background: var(--indigo);
+    color: #fff; border: none;
+    padding: 12px 20px; border-radius: 9px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    font-family: var(--font-body);
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .yafto-btn:hover { background: #4a4dc4; }
+
+  .yafto-note { font-size: 11px; color: rgba(255,255,255,0.2); margin-top: 12px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--navy);
+    padding: 40px 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo { font-family: var(--font-display); font-size: 22px; font-weight: 900; color: #fff; }
+  .footer-logo span { color: var(--indigo-light); }
+
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 12px; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+  .footer-copy { font-size: 11px; color: rgba(255,255,255,0.2); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-badge { animation: fadeUp 0.6s ease both; }
+  .hero-headline { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-sub { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-actions { animation: fadeUp 0.6s 0.3s ease both; }
+  .hero-trust { animation: fadeUp 0.6s 0.4s ease both; }
+  .job-preview-card { animation: fadeUp 0.7s 0.2s ease both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">PHE<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Jobs</a></li>
+    <li><a href="#">YAFTO</a></li>
+    <li><a href="#">Über uns</a></li>
+    <li><a href="#" class="nav-cta">Jetzt bewerben</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-accent"></div>
+
+  <div class="hero-left">
+    <div class="hero-badge">Direktvermittlung · IT · Elektro · Bau</div>
+    <h1 class="hero-headline">
+      Dein nächster<br>
+      Job. <em>Jetzt.</em>
+    </h1>
+    <p class="hero-sub">
+      Bewirb dich in Sekunden — direkt per WhatsApp oder im Live-Chat mit unserem Team. Keine langen Formulare, keine Wartezeiten.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn-whatsapp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Per WhatsApp bewerben
+      </a>
+      <a href="#" class="btn-chat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        Live-Chat starten
+      </a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item">
+        <div class="trust-number">10.000+</div>
+        <div class="trust-label">Kandidaten-Profile</div>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <div class="trust-number">48h</div>
+        <div class="trust-label">Ø Matching</div>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <div class="trust-number">3</div>
+        <div class="trust-label">Branchen</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="job-preview-card">
+      <div class="jpc-header">
+        <span class="jpc-title">Aktuelle Stellen</span>
+        <span class="jpc-badge">● Live</span>
+      </div>
+      <div class="jpc-item">
+        <div class="jpc-icon elektro">⚡</div>
+        <div class="jpc-info">
+          <div class="jpc-job">Elektrotechniker (m/w/d)</div>
+          <div class="jpc-meta">📍 München · Vollzeit</div>
+        </div>
+        <button class="jpc-action">💬 Bewerben</button>
+      </div>
+      <div class="jpc-item">
+        <div class="jpc-icon it">💻</div>
+        <div class="jpc-info">
+          <div class="jpc-job">SPS-Programmierer (m/w/d)</div>
+          <div class="jpc-meta">📍 Hamburg · Vollzeit</div>
+        </div>
+        <button class="jpc-action">💬 Bewerben</button>
+      </div>
+      <div class="jpc-item">
+        <div class="jpc-icon bau">🏗️</div>
+        <div class="jpc-info">
+          <div class="jpc-job">Bauleiter (m/w/d)</div>
+          <div class="jpc-meta">📍 Berlin · Vollzeit</div>
+        </div>
+        <button class="jpc-action">💬 Bewerben</button>
+      </div>
+      <div class="jpc-footer">
+        <a href="#">Alle 24 Stellen ansehen →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <div class="stat-number">10.000+</div>
+    <div class="stat-label">Kandidaten-Profile</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">48h</div>
+    <div class="stat-label">Ø Matching-Zeit</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">3</div>
+    <div class="stat-label">Fokus-Branchen</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">100%</div>
+    <div class="stat-label">Direktvermittlung</div>
+  </div>
+</div>
+
+<!-- JOBS -->
+<section class="section" style="background:#fff;">
+  <div class="section-tag">Stellenangebote</div>
+  <h2 class="section-title">Offene Stellen — <em>jetzt verfügbar</em></h2>
+  <p class="section-sub">Alle Positionen in IT, Elektrotechnik und Bau. Bewirb dich direkt per WhatsApp — in unter 60 Sekunden.</p>
+
+  <div class="jobs-grid">
+    <div class="job-card">
+      <div class="job-card-tag">⚡ Elektrotechnik</div>
+      <div class="job-card-title">Elektrotechniker / Betriebstechnik (m/w/d)</div>
+      <div class="job-card-meta">
+        📍 München, Bayern<br>
+        ⏱ Vollzeit · Ab sofort<br>
+        🎓 Berufsausbildung Elektrotechnik
+      </div>
+      <div class="job-card-footer">
+        <span class="job-tag">Vollzeit</span>
+        <button class="btn-apply-sm">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Bewerben
+        </button>
+      </div>
+    </div>
+    <div class="job-card">
+      <div class="job-card-tag">💻 IT</div>
+      <div class="job-card-title">SPS-Programmierer / Automatisierung (m/w/d)</div>
+      <div class="job-card-meta">
+        📍 Hamburg, Nord<br>
+        ⏱ Vollzeit · Ab sofort<br>
+        🎓 Studium / Ausbildung Automatisierungstechnik
+      </div>
+      <div class="job-card-footer">
+        <span class="job-tag">Vollzeit</span>
+        <button class="btn-apply-sm">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Bewerben
+        </button>
+      </div>
+    </div>
+    <div class="job-card">
+      <div class="job-card-tag">🏗️ Bau</div>
+      <div class="job-card-title">Bauleiter / Projektleitung Hochbau (m/w/d)</div>
+      <div class="job-card-meta">
+        📍 Berlin, Brandenburg<br>
+        ⏱ Vollzeit · Flexibel<br>
+        🎓 Studium Bauingenieurwesen
+      </div>
+      <div class="job-card-footer">
+        <span class="job-tag">Vollzeit</span>
+        <button class="btn-apply-sm">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Bewerben
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="jobs-cta">
+    <a href="#" class="btn-outline">Alle Stellenangebote ansehen →</a>
+  </div>
+</section>
+
+<!-- CV GENERATOR -->
+<section class="cv-section">
+  <div class="cv-templates">
+    <div class="cv-template cv-t1">
+      <div class="cv-template-inner">
+        <div class="cv-name light-text" style="color:rgba(255,255,255,0.9);font-size:9px;font-weight:900;margin-bottom:2px">Max Mustermann</div>
+        <div style="font-size:6px;color:rgba(255,255,255,0.4);margin-bottom:8px">Elektrotechniker</div>
+        <div class="cv-label light-text" style="border-color:rgba(255,255,255,0.1)">Erfahrung</div>
+        <div class="cv-line light-line-bright w-full"></div>
+        <div class="cv-line light-line w-3q"></div>
+        <div class="cv-line light-line w-half" style="margin-bottom:8px"></div>
+        <div class="cv-label light-text" style="border-color:rgba(255,255,255,0.1)">Skills</div>
+        <div class="cv-line indigo-line-bright w-3q"></div>
+        <div class="cv-line indigo-line w-half"></div>
+      </div>
+      <div class="cv-badge-overlay">Classic</div>
+    </div>
+    <div class="cv-template cv-t2">
+      <div class="cv-template-inner">
+        <div style="width:100%;height:24px;background:rgba(129,140,248,0.3);border-radius:3px;margin-bottom:8px;display:flex;align-items:center;padding:0 6px">
+          <div style="font-size:7px;font-weight:900;color:#818cf8">M.M.</div>
+        </div>
+        <div class="cv-line indigo-line-bright w-3q"></div>
+        <div class="cv-line light-line w-full"></div>
+        <div class="cv-line light-line w-half" style="margin-bottom:8px"></div>
+        <div class="cv-label" style="color:#818cf8;border-color:rgba(129,140,248,0.2)">Kompetenzen</div>
+        <div class="cv-line indigo-line-bright w-full"></div>
+        <div class="cv-line indigo-line w-3q"></div>
+      </div>
+      <div class="cv-badge-overlay">Modern</div>
+    </div>
+    <div class="cv-template cv-t3">
+      <div class="cv-template-inner">
+        <div class="cv-name" style="color:var(--navy);font-size:9px;font-weight:900;margin-bottom:2px">Max Mustermann</div>
+        <div style="font-size:6px;color:var(--gray-500);margin-bottom:8px">Bauleiter</div>
+        <div class="cv-label" style="color:var(--indigo);border-color:var(--gray-300)">Berufserfahrung</div>
+        <div class="cv-line dark-line-bold w-full"></div>
+        <div class="cv-line dark-line w-3q"></div>
+        <div class="cv-line dark-line w-2q" style="margin-bottom:8px"></div>
+        <div class="cv-label" style="color:var(--indigo);border-color:var(--gray-300)">Ausbildung</div>
+        <div class="cv-line dark-line-bold w-3q"></div>
+        <div class="cv-line dark-line w-half"></div>
+      </div>
+      <div class="cv-badge-overlay">Clean</div>
+    </div>
+    <div class="cv-template cv-t4">
+      <div class="cv-template-inner">
+        <div style="width:100%;height:20px;background:rgba(255,255,255,0.05);border-radius:3px;margin-bottom:8px"></div>
+        <div style="display:flex;gap:4px;margin-bottom:8px">
+          <div style="flex:1;height:40px;background:rgba(255,255,255,0.04);border-radius:3px"></div>
+          <div style="flex:2">
+            <div class="cv-line" style="background:rgba(255,255,255,0.5);width:100%"></div>
+            <div class="cv-line" style="background:rgba(255,255,255,0.15);width:75%"></div>
+          </div>
+        </div>
+        <div class="cv-label" style="color:rgba(255,255,255,0.3);border-color:rgba(255,255,255,0.05)">Expertise</div>
+        <div class="cv-line" style="background:rgba(255,255,255,0.4);width:100%"></div>
+        <div class="cv-line" style="background:rgba(255,255,255,0.15);width:60%"></div>
+      </div>
+      <div class="cv-badge-overlay">Executive</div>
+    </div>
+  </div>
+
+  <div class="cv-content">
+    <div class="cv-free-badge">✓ 100% Kostenlos</div>
+    <div class="section-tag">Lebenslauf-Generator</div>
+    <h2 class="section-title">Dein CV in<br><em>5 Minuten</em> fertig.</h2>
+    <p class="section-sub" style="margin-bottom:0">
+      4 moderne Vorlagen aus 2026. Professionelles Design wie bei den großen Portalen — kostenlos und sofort als PDF. Kein Account nötig.
+    </p>
+    <ul style="margin-top:20px;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px">
+      <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray-700)">
+        <span style="background:var(--indigo-pale);color:var(--indigo);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">✓</span>
+        4 professionelle Vorlagen (Classic, Modern, Clean, Executive)
+      </li>
+      <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray-700)">
+        <span style="background:var(--indigo-pale);color:var(--indigo);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">✓</span>
+        Sofort als PDF herunterladen
+      </li>
+      <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray-700)">
+        <span style="background:var(--indigo-pale);color:var(--indigo);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">✓</span>
+        Kein Login, keine Daten gespeichert
+      </li>
+    </ul>
+    <a href="#" class="btn-primary">
+      ✨ Lebenslauf jetzt erstellen
+    </a>
+  </div>
+</section>
+
+<!-- YAFTO -->
+<section class="yafto-section">
+  <div class="yafto-glow"></div>
+  <div class="yafto-grid"></div>
+  <div class="yafto-inner">
+    <div class="yafto-coming">● Coming Soon 2026</div>
+    <h2 class="yafto-title">YAFTO<span>.</span></h2>
+    <div class="yafto-tagline">Die neue Art zu jobben — made in Germany</div>
+
+    <div class="yafto-features">
+      <div class="yafto-feat">
+        <div class="yafto-feat-icon">🔒</div>
+        <div class="yafto-feat-title">100% Anonym</div>
+        <div class="yafto-feat-desc">Bis du selbst Ja sagst, bleibt deine Identität vollständig geschützt.</div>
+      </div>
+      <div class="yafto-feat">
+        <div class="yafto-feat-icon">🎯</div>
+        <div class="yafto-feat-title">Unternehmen kommen zu dir</div>
+        <div class="yafto-feat-desc">Du lehnst dich zurück. Relevante Angebote kommen zu dir.</div>
+      </div>
+      <div class="yafto-feat">
+        <div class="yafto-feat-icon">🚫</div>
+        <div class="yafto-feat-title">Keine nervigen Anrufe</div>
+        <div class="yafto-feat-desc">Nur eine Plattform. Kein Telefonterror von 10 Recruitern täglich.</div>
+      </div>
+    </div>
+
+    <div class="yafto-form">
+      <input class="yafto-input" type="email" placeholder="deine@email.de">
+      <button class="yafto-btn">Early Access sichern</button>
+    </div>
+    <div class="yafto-note">Kostenlos · Keine Werbemails · Jederzeit abmeldbar</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">PHE<span>.</span></div>
+  <div class="footer-links">
+    <a href="#">Jobs</a>
+    <a href="#">YAFTO</a>
+    <a href="#">Über uns</a>
+    <a href="#">Kontakt</a>
+    <a href="#">Impressum</a>
+    <a href="#">Datenschutz</a>
+  </div>
+  <div class="footer-copy">© 2026 PHE Perm Engineering GmbH</div>
+</footer>
+
+</body>
+</html>

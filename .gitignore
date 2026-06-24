@@ -11,3 +11,4 @@ backend/.env
 
 # General
 .DS_Store
+.gstack/

@@ -1,5 +1,44 @@
-fastapi>=0.115.0
-uvicorn[standard]>=0.30.0
-supabase>=2.0.0
-python-dotenv>=1.0.0
-pydantic-settings>=2.0.0
+# ── Web Framework ──────────────────────────────────────────────────────────────
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+python-multipart==0.0.20       # File upload support
+
+# ── Auth & Security ────────────────────────────────────────────────────────────
+python-jose[cryptography]==3.3.0   # JWT decode/verify
+passlib[bcrypt]==1.7.4             # Password hashing (future use)
+cryptography==43.0.3               # Required by python-jose
+
+# ── Supabase ───────────────────────────────────────────────────────────────────
+supabase==2.10.0
+gotrue==2.9.0                      # Supabase Auth client (pinned for stability)
+
+# ── Validation ────────────────────────────────────────────────────────────────
+pydantic==2.10.3
+pydantic-settings==2.6.1
+pydantic[email]==2.10.3            # EmailStr validation
+python-dotenv==1.0.1
+phonenumbers==8.13.50              # Phone number validation (E.164 standard)
+
+# ── Rate Limiting ─────────────────────────────────────────────────────────────
+slowapi==0.1.9                     # Rate limiting middleware for FastAPI
+limits==3.14.0                     # Backend for slowapi (in-memory / Redis)
+
+# ── Security Headers ──────────────────────────────────────────────────────────
+secure==0.3.0                      # Security headers helper
+
+# ── Logging ───────────────────────────────────────────────────────────────────
+structlog==24.4.0                  # Structured JSON logging
+python-json-logger==2.0.7          # JSON formatter for stdlib logging
+
+# ── Error Tracking ────────────────────────────────────────────────────────────
+sentry-sdk[fastapi]==2.19.2        # Sentry integration with FastAPI middleware
+
+# ── HTTP Client ───────────────────────────────────────────────────────────────
+httpx==0.27.2                      # Async HTTP client + test client
+
+# ── File Validation ───────────────────────────────────────────────────────────
+python-magic==0.4.27               # MIME-type detection from file bytes (not spoofable extension)
+
+# ── Dev / Testing ─────────────────────────────────────────────────────────────
+pytest==8.3.4
+pytest-asyncio==0.24.0
