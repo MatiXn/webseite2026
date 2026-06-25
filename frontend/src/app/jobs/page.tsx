@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Nav, { WA_LINK, MAIL_APPLY } from "../components/Nav";
 import FaqSection from "../components/FaqSection";
 import JsonLd from "../components/JsonLd";
@@ -80,7 +80,7 @@ export default function JobsPage() {
 
     // No location — return title matches directly
     if (!loc) {
-      setResult({ type: "exact", jobs: pool });
+      setResult(q ? { type: "exact", jobs: pool } : null);
       return;
     }
 
@@ -118,6 +118,20 @@ export default function JobsPage() {
       setLoading(false);
     }
   }, [query, locationInput, category]);
+
+  // Live-Filterung beim Tippen (nur Keyword, kein Geocoding)
+  useEffect(() => {
+    if (locationInput.trim()) return; // Mit Standort: nur bei Enter/Button
+    const q = query.trim().toLowerCase();
+    if (!q) { setResult(null); return; }
+    let pool = category === "all" ? JOBS : JOBS.filter(j => j.category === category);
+    pool = pool.filter(j =>
+      j.title.toLowerCase().includes(q) ||
+      j.tags.some(t => t.toLowerCase().includes(q)) ||
+      CATEGORY_LABELS[j.category].toLowerCase().includes(q)
+    );
+    setResult({ type: "exact", jobs: pool });
+  }, [query, category, locationInput]);
 
   const handleReset = () => {
     setQuery("");
