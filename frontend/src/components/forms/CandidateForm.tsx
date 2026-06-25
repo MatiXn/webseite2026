@@ -31,7 +31,7 @@ interface FormValues {
   notes: string;
 }
 
-interface FormErrors {
+type FormErrors = {
   [K in keyof FormValues]?: string;
 }
 

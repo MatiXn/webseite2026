@@ -10,12 +10,14 @@
 
 // DOMPurify läuft nur im Browser (kein SSR) — serverseitig Leer-String zurückgeben.
 // Import erfolgt lazy damit Next.js Server-Components nicht crashen.
-let purify: typeof import("dompurify") | null = null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let purify: any = null;
 
 async function getPurify() {
   if (typeof window === "undefined") return null;
   if (!purify) {
-    purify = (await import("dompurify")).default;
+    const mod = await import("dompurify");
+    purify = mod.default;
   }
   return purify;
 }
