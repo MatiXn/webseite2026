@@ -1,18 +1,18 @@
 import type { NextConfig } from "next";
 
 // ── Content Security Policy ────────────────────────────────────────────────────
-// Kein unsafe-inline für Scripts, kein unsafe-eval.
 // Alle externen Quellen explizit erlaubt — kein Wildcard.
 const CSP = [
   "default-src 'self'",
-  "script-src 'self'",
-  // Next.js CSS-in-JS braucht unsafe-inline — daher nur für Styles
+  // Next.js App Router benötigt 'unsafe-inline' für Hydration-Inline-Scripts
+  "script-src 'self' 'unsafe-inline'",
+  // Next.js CSS-in-JS + Styles braucht unsafe-inline
   "style-src 'self' 'unsafe-inline'",
   // data: für Base64-Previews, blob: für File-Viewer
   "img-src 'self' data: blob: https:",
   "font-src 'self'",
-  // API-Calls: eigene Domain + Supabase + Backend
-  `connect-src 'self' ${process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://*.supabase.co"} ${process.env.NEXT_PUBLIC_API_URL ?? ""}`,
+  // API-Calls: eigene Domain + Supabase + Backend + Nominatim (Standortsuche)
+  `connect-src 'self' https://nominatim.openstreetmap.org ${process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://*.supabase.co"} ${process.env.NEXT_PUBLIC_API_URL ?? ""}`,
   "worker-src 'self' blob:",
   "frame-ancestors 'none'",
   "form-action 'self'",
