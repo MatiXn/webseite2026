@@ -127,8 +127,9 @@ export default function JobsPage() {
   };
 
   // Live-Filterung: direkt aus query abgeleitet, kein useEffect nötig
+  // Keyword filtert immer sofort; Standort-Geocoding nur beim Button-Klick
   const q = query.trim().toLowerCase();
-  const hasLiveFilter = q && !locationInput.trim() && result === null;
+  const hasLiveFilter = q && result === null;
   const livePool = hasLiveFilter
     ? (category === "all" ? JOBS : JOBS.filter(j => j.category === category)).filter(j =>
         j.title.toLowerCase().includes(q) ||
