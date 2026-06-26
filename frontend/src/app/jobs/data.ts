@@ -185,7 +185,7 @@ export const JOBS: Job[] = [
   {
     id: "13",
     title: "Elektroniker MSR-Technik / Gebäudeautomation (m/w/d)",
-    category: "bau",
+    category: "elektro",
     city: "Köln",
     region: "Nordrhein-Westfalen",
     lat: 50.938,
@@ -311,7 +311,7 @@ export const JOBS: Job[] = [
   {
     id: "22",
     title: "Elektroniker Energie- und Gebäudetechnik (m/w/d)",
-    category: "bau",
+    category: "elektro",
     city: "Düren",
     region: "Nordrhein-Westfalen",
     lat: 50.804,
