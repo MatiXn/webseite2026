@@ -126,38 +126,32 @@ export default function JobsPage() {
     setResult(null);
   };
 
-  // Live-Filterung: direkt aus query abgeleitet, kein useEffect nötig
-  // Keyword filtert immer sofort; Standort-Geocoding nur beim Button-Klick
+  // ── Suchlogik ────────────────────────────────────────────────────────────────
+  // Keyword-Filter läuft IMMER sofort beim Tippen (kein useEffect, direkt im Render)
+  // Standort-Geocoding nur beim Button-Klick
   const q = query.trim().toLowerCase();
-  const hasLiveFilter = q && result === null;
-  const livePool = hasLiveFilter
-    ? (category === "all" ? JOBS : JOBS.filter(j => j.category === category)).filter(j =>
-        j.title.toLowerCase().includes(q) ||
-        j.tags.some(t => t.toLowerCase().includes(q)) ||
-        CATEGORY_LABELS[j.category].toLowerCase().includes(q)
-      )
-    : null;
 
-  const displayJobs: (Job & { distance?: number })[] =
-    result === null
-      ? JOBS
-      : result.type === "exact"
-      ? result.jobs
-      : result.type === "radius"
-      ? result.jobs
-      : [];
+  const matchesKeyword = (j: Job) =>
+    !q ||
+    j.title.toLowerCase().includes(q) ||
+    j.tags.some(t => t.toLowerCase().includes(q)) ||
+    CATEGORY_LABELS[j.category].toLowerCase().includes(q);
 
-  const filteredDisplay = category === "all"
-    ? displayJobs
-    : displayJobs.filter(j => j.category === category);
+  const matchesCategory = (j: Job) => category === "all" || j.category === category;
 
-  const showJobs = livePool !== null
-    ? livePool
-    : result === null
-    ? (category === "all" ? JOBS : JOBS.filter(j => j.category === category))
-    : filteredDisplay;
+  // Basis-Pool: entweder Standort-Suchergebnis oder alle Jobs
+  const basePool: (Job & { distance?: number })[] =
+    result === null ? JOBS
+    : result.type === "exact" ? result.jobs
+    : result.type === "radius" ? result.jobs
+    : [];
 
-  const isFiltering = livePool !== null || result !== null;
+  // Angezeigte Jobs: Basis-Pool gefiltert nach Keyword + Kategorie
+  const showJobs = result?.type === "none"
+    ? []
+    : basePool.filter(j => matchesKeyword(j) && matchesCategory(j));
+
+  const isFiltering = q !== "" || result !== null || category !== "all";
 
   return (
     <>
