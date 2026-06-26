@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import Nav, { WA_LINK, MAIL_APPLY } from "../components/Nav";
 import FaqSection from "../components/FaqSection";
 import JsonLd from "../components/JsonLd";
@@ -119,26 +119,23 @@ export default function JobsPage() {
     }
   }, [query, locationInput, category]);
 
-  // Live-Filterung beim Tippen (nur Keyword, kein Geocoding)
-  useEffect(() => {
-    if (locationInput.trim()) return; // Mit Standort: nur bei Enter/Button
-    const q = query.trim().toLowerCase();
-    if (!q) { setResult(null); return; }
-    let pool = category === "all" ? JOBS : JOBS.filter(j => j.category === category);
-    pool = pool.filter(j =>
-      j.title.toLowerCase().includes(q) ||
-      j.tags.some(t => t.toLowerCase().includes(q)) ||
-      CATEGORY_LABELS[j.category].toLowerCase().includes(q)
-    );
-    setResult({ type: "exact", jobs: pool });
-  }, [query, category, locationInput]);
-
   const handleReset = () => {
     setQuery("");
     setLocationInput("");
     setCategory("all");
     setResult(null);
   };
+
+  // Live-Filterung: direkt aus query abgeleitet, kein useEffect nötig
+  const q = query.trim().toLowerCase();
+  const hasLiveFilter = q && !locationInput.trim() && result === null;
+  const livePool = hasLiveFilter
+    ? (category === "all" ? JOBS : JOBS.filter(j => j.category === category)).filter(j =>
+        j.title.toLowerCase().includes(q) ||
+        j.tags.some(t => t.toLowerCase().includes(q)) ||
+        CATEGORY_LABELS[j.category].toLowerCase().includes(q)
+      )
+    : null;
 
   const displayJobs: (Job & { distance?: number })[] =
     result === null
@@ -153,7 +150,13 @@ export default function JobsPage() {
     ? displayJobs
     : displayJobs.filter(j => j.category === category);
 
-  const showJobs = result === null ? (category === "all" ? JOBS : JOBS.filter(j => j.category === category)) : filteredDisplay;
+  const showJobs = livePool !== null
+    ? livePool
+    : result === null
+    ? (category === "all" ? JOBS : JOBS.filter(j => j.category === category))
+    : filteredDisplay;
+
+  const isFiltering = livePool !== null || result !== null;
 
   return (
     <>
@@ -225,7 +228,7 @@ export default function JobsPage() {
               {loading ? "Suche..." : "Suchen"}
             </button>
             {/* Reset */}
-            {result !== null && (
+            {isFiltering && (
               <button
                 onClick={handleReset}
                 style={{
