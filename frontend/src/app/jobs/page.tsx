@@ -1,9 +1,9 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Nav, { WA_LINK, MAIL_APPLY } from "../components/Nav";
 import FaqSection from "../components/FaqSection";
 import JsonLd from "../components/JsonLd";
-import { JOBS, CATEGORIES, CATEGORY_COLORS, CATEGORY_LABELS, distanceKm, type Job } from "./data";
+import { JOBS as FALLBACK_JOBS, CATEGORIES, CATEGORY_COLORS, CATEGORY_LABELS, distanceKm, type Job } from "./data";
 
 const WhatsAppIcon = ({ size = 14 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -56,18 +56,28 @@ async function geocodeCity(city: string): Promise<{ lat: number; lng: number; di
 }
 
 export default function JobsPage() {
+  const [jobs, setJobs] = useState<Job[]>(FALLBACK_JOBS);
+  const [jobsLoading, setJobsLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [locationInput, setLocationInput] = useState("");
   const [category, setCategory] = useState("all");
   const [result, setResult] = useState<SearchResult>(null);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    fetch("/api/jobs")
+      .then(r => r.json())
+      .then((data: Job[]) => { if (data?.length) setJobs(data); })
+      .catch(() => {})
+      .finally(() => setJobsLoading(false));
+  }, []);
+
   const handleSearch = useCallback(async () => {
     const q = query.trim().toLowerCase();
     const loc = locationInput.trim();
 
     // Filter by category first
-    let pool = category === "all" ? JOBS : JOBS.filter(j => j.category === category);
+    let pool = category === "all" ? jobs : jobs.filter(j => j.category === category);
 
     // Filter by title keyword
     if (q) {
@@ -117,7 +127,7 @@ export default function JobsPage() {
     } finally {
       setLoading(false);
     }
-  }, [query, locationInput, category]);
+  }, [query, locationInput, category, jobs]);
 
   const handleReset = () => {
     setQuery("");
@@ -141,7 +151,7 @@ export default function JobsPage() {
 
   // Basis-Pool: entweder Standort-Suchergebnis oder alle Jobs
   const basePool: (Job & { distance?: number })[] =
-    result === null ? JOBS
+    result === null ? jobs
     : result.type === "exact" ? result.jobs
     : result.type === "radius" ? result.jobs
     : [];
@@ -161,7 +171,7 @@ export default function JobsPage() {
       <div style={{ background: "var(--bg)", borderBottom: "1px solid var(--border)", padding: "48px 48px 32px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
-            {JOBS.length} offene Stellen
+            {jobsLoading ? "..." : jobs.length} offene Stellen
           </p>
           <h1 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, color: "var(--navy)", letterSpacing: "-0.025em", marginBottom: 32 }}>
             Stellenangebote
