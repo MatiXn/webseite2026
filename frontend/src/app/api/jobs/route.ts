@@ -55,7 +55,7 @@ function getCityCoords(city: string): [number, number] {
   return [51.165, 10.451]; // Germany center as default
 }
 
-export const revalidate = 300; // Cache for 5 minutes
+export const revalidate = 60; // Cache for 1 minute
 
 export async function GET() {
   const apiKey = process.env.GOOGLE_SHEETS_API_KEY;
