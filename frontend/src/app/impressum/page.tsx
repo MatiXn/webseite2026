@@ -10,7 +10,7 @@ export default function ImpressumPage() {
   return (
     <>
       <Nav />
-      <main style={{ maxWidth: 760, margin: "0 auto", padding: "64px 24px 120px" }}>
+      <main className="legal-page">
         <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>
           Rechtliches
         </p>

@@ -10,7 +10,7 @@ export default function DatenschutzPage() {
   return (
     <>
       <Nav />
-      <main style={{ maxWidth: 760, margin: "0 auto", padding: "64px 24px 120px" }}>
+      <main className="legal-page">
         <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>
           Rechtliches
         </p>
@@ -123,7 +123,7 @@ export default function DatenschutzPage() {
         </Section>
 
         <Section title="4. Speicherdauer (Art. 13 Abs. 2 lit. a DSGVO)">
-          <table style={tableStyle}>
+          <div style={{ overflowX: "auto" }}><table style={tableStyle}>
             <thead>
               <tr style={{ background: "var(--bg)" }}>
                 <th style={thStyle}>Datenkategorie</th>
@@ -163,7 +163,7 @@ export default function DatenschutzPage() {
                 <td style={tdStyle}>§ 15 AGG</td>
               </tr>
             </tbody>
-          </table>
+          </table></div>
         </Section>
 
         <Section title="5. Ihre Rechte als betroffene Person (Art. 15–22 DSGVO)">

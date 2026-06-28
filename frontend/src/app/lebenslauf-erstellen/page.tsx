@@ -572,7 +572,7 @@ function TemplatePicker({ selected, onChange }: { selected: TemplateId; onChange
   return (
     <div style={{ marginBottom: 24 }}>
       <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gray)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>Vorlage wählen</p>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+      <div className="grid-2col" style={{ gap: 8 }}>
         {TEMPLATES.map(t => (
           <button key={t.id} onClick={() => onChange(t.id)} style={{
             padding: "10px 12px", borderRadius: 10, border: "2px solid",
@@ -646,7 +646,7 @@ export default function LebenslaufPage() {
       {showModal && <ApplyModal data={data} onClose={() => setShowModal(false)} />}
 
       {/* HEADER */}
-      <div style={{ background: "var(--bg)", borderBottom: "1px solid var(--border)", padding: "40px 48px 32px" }}>
+      <div className="section-pad" style={{ background: "var(--bg)", borderBottom: "1px solid var(--border)", paddingBottom: 32 }}>
         <div style={{ maxWidth: 1300, margin: "0 auto" }}>
           <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Kostenlos & ohne Anmeldung</p>
           <h1 style={{ fontSize: "clamp(26px,3.5vw,40px)", fontWeight: 900, color: "var(--navy)", letterSpacing: "-0.025em", marginBottom: 8 }}>Lebenslauf erstellen</h1>
@@ -655,7 +655,7 @@ export default function LebenslaufPage() {
       </div>
 
       {/* PHE CTA BANNER */}
-      <div style={{ background: "linear-gradient(135deg,#1e3a5f,#3d7cc9)", padding: "18px 48px" }}>
+      <div className="px-section" style={{ background: "linear-gradient(135deg,#1e3a5f,#3d7cc9)", paddingTop: 18, paddingBottom: 18 }}>
         <div style={{ maxWidth: 1300, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
           <div>
             <p style={{ fontWeight: 800, color: "#fff", fontSize: 15, marginBottom: 2 }}>🎯 Lebenslauf fertig? Jetzt direkt bei PHE bewerben!</p>
@@ -680,10 +680,10 @@ export default function LebenslaufPage() {
       </div>
 
       {/* MAIN: FORM + PREVIEW */}
-      <div style={{ maxWidth: 1300, margin: "0 auto", padding: "32px 48px 80px", display: "grid", gridTemplateColumns: "420px 1fr", gap: 40, alignItems: "start" }}>
+      <div className="cv-layout px-section" style={{ maxWidth: 1300, margin: "0 auto", paddingTop: 32, paddingBottom: 80, gap: 40, alignItems: "start" }}>
 
         {/* LEFT: FORM */}
-        <div>
+        <div className="cv-sidebar">
           {/* Template picker */}
           <TemplatePicker selected={template} onChange={setTemplate} />
 
@@ -725,17 +725,17 @@ export default function LebenslaufPage() {
                 </div>
 
                 {/* Persönliche Angaben links & rechts */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                <div className="grid-2col" style={{ gap: 12 }}>
                   <Input label="Vorname" value={data.vorname} onChange={v => set("vorname", v)} placeholder="Max" />
                   <Input label="Nachname" value={data.nachname} onChange={v => set("nachname", v)} placeholder="Mustermann" />
                 </div>
                 <Input label="Berufsbezeichnung" value={data.beruf} onChange={v => set("beruf", v)} placeholder="z.B. Elektroniker" />
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                <div className="grid-2col" style={{ gap: 12 }}>
                   <Input label="E-Mail" value={data.email} onChange={v => set("email", v)} placeholder="max@email.de" type="email" />
                   <Input label="Telefon" value={data.telefon} onChange={v => set("telefon", v)} placeholder="+49 ..." />
                 </div>
                 <Input label="Adresse" value={data.adresse} onChange={v => set("adresse", v)} placeholder="Stadt, PLZ" />
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                <div className="grid-2col" style={{ gap: 12 }}>
                   <Input label="Geburtsdatum" value={data.geburtsdatum} onChange={v => set("geburtsdatum", v)} placeholder="01.01.1990" />
                   <Input label="Geburtsort" value={data.geburtsort} onChange={v => set("geburtsort", v)} placeholder="Berlin" />
                 </div>
@@ -756,7 +756,7 @@ export default function LebenslaufPage() {
                     <div style={sectionStyle}>
                       <Input label="Firma" value={s.firma} onChange={v => setStation(s.id, "firma", v)} placeholder="Firma GmbH" />
                       <Input label="Position" value={s.position} onChange={v => setStation(s.id, "position", v)} placeholder="z.B. Elektroniker" />
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                      <div className="grid-2col" style={{ gap: 12 }}>
                         <Input label="Von" value={s.von} onChange={v => setStation(s.id, "von", v)} placeholder="03/2020" />
                         <Input label="Bis" value={s.bis} onChange={v => setStation(s.id, "bis", v)} placeholder="heute" />
                       </div>
@@ -782,7 +782,7 @@ export default function LebenslaufPage() {
                     <div style={sectionStyle}>
                       <Input label="Schule / Universität / Betrieb" value={a.schule} onChange={v => setAusbildung(a.id, "schule", v)} placeholder="Berufsschule XY" />
                       <Input label="Abschluss / Ausbildungsberuf" value={a.abschluss} onChange={v => setAusbildung(a.id, "abschluss", v)} placeholder="z.B. Elektroniker für Betriebstechnik" />
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                      <div className="grid-2col" style={{ gap: 12 }}>
                         <Input label="Von" value={a.von} onChange={v => setAusbildung(a.id, "von", v)} placeholder="09/2015" />
                         <Input label="Bis" value={a.bis} onChange={v => setAusbildung(a.id, "bis", v)} placeholder="07/2018" />
                       </div>

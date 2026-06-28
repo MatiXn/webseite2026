@@ -278,8 +278,8 @@ export default function Home() {
       <Nav />
 
       {/* ── HERO ── */}
-      <section style={{ padding: "80px 48px 60px", maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+      <section style={{ maxWidth: 1200, margin: "0 auto" }} className="section-pad px-section">
+        <div className="hero-grid" style={{ gap: 64 }}>
 
           {/* LEFT: Text */}
           <div>
@@ -303,7 +303,7 @@ export default function Home() {
               PHE Perm Engineering vermittelt Fachkräfte in Festanstellung — persönlich, schnell und ohne Gebühren für Bewerber.
             </p>
 
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 40 }}>
+            <div className="hero-buttons">
               <Link href={WA_LINK} className="btn-primary">
                 <WhatsAppIcon size={18} /> Via WhatsApp bewerben
               </Link>
@@ -323,14 +323,14 @@ export default function Home() {
             </div>
           </div>
 
-          {/* RIGHT: Job Cards Fan */}
-          <JobFan />
+          {/* RIGHT: Job Cards Fan — hidden on mobile */}
+          <div className="job-fan-wrapper"><JobFan /></div>
         </div>
       </section>
 
       {/* ── STATS ── */}
-      <div style={{ background: "var(--bg)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "48px 24px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 32, textAlign: "center" }}>
+      <div style={{ background: "var(--bg)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "40px 24px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }} className="stats-row">
           {[
             { num: "5.000+", label: "Erfolgreiche Matches" },
             { num: "48h", label: "Durchschnittliche Reaktionszeit" },
@@ -348,17 +348,17 @@ export default function Home() {
       {/* ── JOBS ── */}
       <section style={{ padding: "80px 24px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 36 }}>
+          <div className="section-header-row">
             <div>
               <span className="tag">Aktuelle Stellen</span>
               <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.025em", color: "var(--navy)" }}>
                 Offene Jobs — <em className="grad-text" style={{ fontStyle: "normal" }}>jetzt bewerben</em>
               </h2>
             </div>
-            <Link href="/jobs" style={{ fontSize: 14, fontWeight: 600, color: "var(--blue)", textDecoration: "none" }}>Alle Stellen ansehen →</Link>
+            <Link href="/jobs" style={{ fontSize: 14, fontWeight: 600, color: "var(--blue)", textDecoration: "none", whiteSpace: "nowrap" }}>Alle Stellen ansehen →</Link>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
+          <div className="grid-3col">
             {JOBS.map((job) => (
               <div key={job.title} style={{
                 border: "1.5px solid var(--border)", borderRadius: 14, padding: 24,
@@ -403,8 +403,8 @@ export default function Home() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section id="how" style={{ background: "var(--bg)", padding: "80px 24px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+      <section id="how" style={{ background: "var(--bg)", padding: "64px 24px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }} className="hero-grid">
           <div>
             <span className="tag">So funktioniert&apos;s</span>
             <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.025em", color: "var(--navy)", marginBottom: 16 }}>
@@ -451,7 +451,7 @@ export default function Home() {
           <p style={{ fontSize: 17, color: "var(--gray)", lineHeight: 1.65, marginBottom: 48, maxWidth: 560, margin: "0 auto 48px" }}>
             Erstellen Sie Ihren Lebenslauf mit einem unserer modernen Vorlagen — und laden Sie ihn sofort als PDF herunter.
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24, marginBottom: 48 }}>
+          <div className="grid-3col" style={{ marginBottom: 48 }}>
             {[
               { title: "4 moderne Templates", desc: "Professionelle Designs für IT, Elektro und Bau — optimiert für Bewerber in Deutschland." },
               { title: "Fertig in 5 Minuten", desc: "Formular ausfüllen, Foto hochladen und als PDF herunterladen — ohne Registrierung." },
@@ -479,7 +479,7 @@ export default function Home() {
       {/* ── GOOGLE REVIEWS ── */}
       <section style={{ padding: "80px 24px", overflow: "hidden" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 36 }}>
+          <div className="section-header-row">
             <div>
               <span className="tag">Bewerberstimmen</span>
               <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.025em", color: "var(--navy)" }}>
@@ -500,7 +500,7 @@ export default function Home() {
             </a>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
+          <div className="grid-3col">
             {REVIEWS.slice(0, 3).map((r) => (
               <div key={r.name} style={{ border: "1.5px solid var(--border)", borderRadius: 16, padding: 24, background: "#fff" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
@@ -529,8 +529,8 @@ export default function Home() {
             ))}
           </div>
 
-          {/* zweite Reihe — leicht versetzt */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 20, marginTop: 20, maxWidth: 740, margin: "20px auto 0" }}>
+          {/* zweite Reihe */}
+          <div className="reviews-row-2">
             {REVIEWS.slice(3).map((r) => (
               <div key={r.name} style={{ border: "1.5px solid var(--border)", borderRadius: 16, padding: 24, background: "#fff" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
@@ -583,7 +583,7 @@ export default function Home() {
           <p style={{ fontSize: 17, color: "rgba(255,255,255,.65)", lineHeight: 1.7, marginBottom: 48 }}>
             Die neue Art der Stellenvermittlung in Deutschland. Ihr Profil — anonym. Unternehmen bewerben sich bei Ihnen. Sie entscheiden.
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24, marginBottom: 48, textAlign: "left" }}>
+          <div className="grid-3col" style={{ marginBottom: 48, textAlign: "left" }}>
             {[
               { icon: "01", title: "100% Anonym", desc: "Ihr Name bleibt bis zur eigenen Freigabe vollständig anonym. Keine unerwünschten Kontaktversuche durch Dritte." },
               { icon: "02", title: "Firmen kommen zu Ihnen", desc: "Unternehmen sehen Ihr Profil und nehmen Kontakt auf — Sie entscheiden, wen Sie kennenlernen möchten." },
@@ -596,7 +596,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <form onSubmit={(e) => e.preventDefault()} style={{ display: "flex", gap: 8, maxWidth: 440, margin: "0 auto" }}>
+          <form onSubmit={(e) => e.preventDefault()} className="yafto-form">
             <input
               type="email"
               placeholder="Ihre E-Mail-Adresse"
@@ -617,9 +617,9 @@ export default function Home() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer style={{ background: "var(--bg)", borderTop: "1px solid var(--border)", padding: "48px 48px 24px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "200px 1fr 1fr 1fr", gap: 48, marginBottom: 48 }}>
+      <footer style={{ background: "var(--bg)", borderTop: "1px solid var(--border)" }} className="px-section">
+        <div style={{ maxWidth: 1100, margin: "0 auto", paddingTop: 40, paddingBottom: 20 }}>
+          <div className="footer-grid" style={{ marginBottom: 40 }}>
             <div>
               <Image src="/phe-logo.png" alt="PHE Perm Engineering" height={28} width={140} style={{ height: 28, width: "auto", marginBottom: 12 }} />
               <p style={{ fontSize: 13, color: "var(--gray)", lineHeight: 1.6 }}>
@@ -641,7 +641,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 24, borderTop: "1px solid var(--border)", fontSize: 12, color: "var(--gray-light)" }}>
+          <div className="footer-bottom">
             <span>© 2026 PHE Perm Engineering GmbH. Alle Rechte vorbehalten.</span>
             <div>
               <Link href="/impressum" style={{ color: "var(--gray-light)", textDecoration: "none", marginLeft: 16 }}>Impressum</Link>

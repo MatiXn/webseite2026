@@ -278,7 +278,7 @@ export default function JobsPage() {
       <Nav />
 
       {/* HEADER + SEARCH */}
-      <div style={{ background: "var(--bg)", borderBottom: "1px solid var(--border)", padding: "48px 48px 32px" }}>
+      <div className="section-pad" style={{ background: "var(--bg)", borderBottom: "1px solid var(--border)", paddingBottom: 32 }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
             {jobsLoading ? "..." : jobs.length} offene Stellen
@@ -288,7 +288,7 @@ export default function JobsPage() {
           </h1>
 
           {/* SEARCH BAR */}
-          <div style={{ display: "flex", gap: 12, marginBottom: 24 }}>
+          <div style={{ display: "flex", gap: 12, marginBottom: 24, flexWrap: "wrap" }}>
             {/* Job title */}
             <div style={{ flex: 2, position: "relative" }}>
               <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "var(--gray-light)", display: "flex" }}>
@@ -381,7 +381,7 @@ export default function JobsPage() {
       </div>
 
       {/* RESULTS BANNER */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 48px" }}>
+      <div className="px-section" style={{ maxWidth: 1100, margin: "0 auto" }}>
         {result?.type === "radius" && (
           <div style={{
             marginTop: 24, padding: "14px 20px", background: "#fff8e1",
@@ -431,14 +431,14 @@ export default function JobsPage() {
       </div>
 
       {/* JOB GRID */}
-      <main style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 48px 80px" }}>
+      <main className="px-section" style={{ maxWidth: 1100, margin: "0 auto", paddingTop: 32, paddingBottom: 80 }}>
         {result?.type !== "none" && (
           <>
             <p style={{ fontSize: 13, color: "var(--gray)", marginBottom: 20 }}>
               {showJobs.length} {showJobs.length === 1 ? "Stelle" : "Stellen"} gefunden
               {result?.type === "radius" ? ` im Umkreis von 50 km` : ""}
             </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
+            <div className="grid-3col" style={{ gap: 20 }}>
               {showJobs.map(job => (
                 <JobCard key={job.id} job={job} distance={"distance" in job ? (job.distance as number) : undefined} />
               ))}

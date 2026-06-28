@@ -49,7 +49,7 @@ export default function UeberUnsPage() {
       <Nav />
 
       {/* HERO */}
-      <section style={{ padding: "80px 48px 64px", maxWidth: 1100, margin: "0 auto" }}>
+      <section className="section-pad px-section" style={{ maxWidth: 1100, margin: "0 auto" }}>
         <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>
           Über uns
         </p>
@@ -65,8 +65,8 @@ export default function UeberUnsPage() {
       </section>
 
       {/* STATS */}
-      <section style={{ background: "var(--bg)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "48px 48px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 32 }}>
+      <section className="px-section" style={{ background: "var(--bg)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "48px 0" }}>
+        <div className="ueber-stats" style={{ maxWidth: 1100, margin: "0 auto", gap: 32 }}>
           {STATS.map(s => (
             <div key={s.label} style={{ textAlign: "center" }}>
               <p style={{ fontSize: 40, fontWeight: 900, color: "var(--navy)", letterSpacing: "-0.03em", marginBottom: 6 }}>{s.value}</p>
@@ -77,8 +77,8 @@ export default function UeberUnsPage() {
       </section>
 
       {/* MISSION */}
-      <section style={{ padding: "80px 48px", maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
+      <section className="section-pad px-section" style={{ maxWidth: 1100, margin: "0 auto" }}>
+        <div className="ueber-grid" style={{ alignItems: "center" }}>
           <div>
             <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>
               Unsere Mission
@@ -108,7 +108,7 @@ export default function UeberUnsPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "80px 48px", maxWidth: 1100, margin: "0 auto", textAlign: "center" }}>
+      <section className="section-pad px-section" style={{ maxWidth: 1100, margin: "0 auto", textAlign: "center" }}>
         <h2 style={{ fontSize: "clamp(24px,3vw,36px)", fontWeight: 800, color: "var(--navy)", marginBottom: 16 }}>
           Bereit für den nächsten Schritt?
         </h2>

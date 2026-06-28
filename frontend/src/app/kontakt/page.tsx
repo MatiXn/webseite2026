@@ -56,7 +56,7 @@ export default function KontaktPage() {
     <>
       <Nav />
 
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "80px 48px" }}>
+      <div className="section-pad px-section" style={{ maxWidth: 1100, margin: "0 auto" }}>
         {/* HEADER */}
         <div style={{ marginBottom: 64 }}>
           <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>
@@ -70,7 +70,7 @@ export default function KontaktPage() {
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: 64, alignItems: "start" }}>
+        <div className="kontakt-grid" style={{ alignItems: "start" }}>
           {/* LEFT — CONTACT INFO */}
           <div>
             <div style={{ marginBottom: 40 }}>
@@ -133,7 +133,7 @@ export default function KontaktPage() {
           </div>
 
           {/* RIGHT — FORM */}
-          <div style={{ background: "var(--bg)", border: "1.5px solid var(--border)", borderRadius: 16, padding: 40 }}>
+          <div style={{ background: "var(--bg)", border: "1.5px solid var(--border)", borderRadius: 16, padding: "24px 20px" }}>
             {sent ? (
               <div style={{ textAlign: "center", padding: "40px 0" }}>
                 <div style={{ fontSize: 48, marginBottom: 16 }}>
@@ -167,7 +167,7 @@ export default function KontaktPage() {
                 </div>
 
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                  <div className="grid-2col" style={{ gap: 12 }}>
                     <div>
                       <label style={{ fontSize: 12, fontWeight: 700, color: "var(--gray)", display: "block", marginBottom: 6 }}>Name *</label>
                       <input required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Ihr Name"
