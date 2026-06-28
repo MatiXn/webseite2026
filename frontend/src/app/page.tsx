@@ -520,7 +520,7 @@ export default function Home() {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 36 }}>
             <div>
-              <span className="tag">Kundenstimmen</span>
+              <span className="tag">Bewerberstimmen</span>
               <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.025em", color: "var(--navy)" }}>
                 Was unsere <em className="grad-text" style={{ fontStyle: "normal" }}>Bewerber sagen</em>
               </h2>
