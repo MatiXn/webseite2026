@@ -11,8 +11,8 @@ const NAV_LINKS: [string, string][] = [
   ["Startseite", "/"],
   ["Stellenangebote", "/jobs"],
   ["Lebenslauf erstellen", "/lebenslauf-erstellen"],
+  ["Talente finden", "/talente-finden"],
   ["So funktioniert's", "/#how"],
-  ["YAFTO", "/#yafto"],
   ["Über uns", "/ueber-uns"],
 ];
 
