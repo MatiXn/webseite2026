@@ -93,44 +93,29 @@ const JOBS = [
   { category: "Elektrotechnik", color: "#f59e0b", title: "Elektroniker MSR / Gebäudeautomation (m/w/d)", location: "Frankfurt", salary: "48.000 – 60.000 €/Jahr", tags: ["Festanstellung", "MSR", "KNX"] },
 ];
 
-const STACK_JOBS = [
+const FAN_JOBS = [
   { category: "Elektrotechnik", color: "#f59e0b", title: "Elektroniker für Betriebstechnik (m/w/d)", location: "Köln", salary: "45.000 – 54.000 €/Jahr", tags: ["Instandhaltung", "Keine Schicht"] },
   { category: "IT / Automation", color: "#7c3aed", title: "SPS-Programmierer / Automatisierungstechniker (m/w/d)", location: "München", salary: "50.000 – 72.000 €/Jahr", tags: ["Siemens TIA Portal", "SCADA"] },
   { category: "Mechatronik", color: "#3d7cc9", title: "Servicetechniker Kältetechnik (m/w/d)", location: "Hamburg", salary: "48.000 – 62.000 €/Jahr", tags: ["Kältetechnik", "Dienstwagen"] },
   { category: "Elektrotechnik", color: "#f59e0b", title: "Servicetechniker Photovoltaik (m/w/d)", location: "Düsseldorf", salary: "44.000 – 54.000 €/Jahr", tags: ["Photovoltaik", "Außendienst"] },
 ];
 
-// Slight rotation + offset for each card in the stack (back → front)
-const STACK_OFFSETS = [
-  { rotate: "3deg",   y: 24, x: 6 },
-  { rotate: "-2deg",  y: 16, x: -4 },
-  { rotate: "1.5deg", y: 8,  x: 2 },
-  { rotate: "0deg",   y: 0,  x: 0 },
+// Fan positions: offset 0 = active center, 1 = right, 2 = far-right, 3 = left
+const FAN_POS = [
+  { ry:   0, tx:    0, tz:   0, scale: 1,    opacity: 1,    zIndex: 4 },
+  { ry: -32, tx:  185, tz: -80, scale: 0.84, opacity: 0.95, zIndex: 3 },
+  { ry: -52, tx:  310, tz: -180, scale: 0.68, opacity: 0.80, zIndex: 2 },
+  { ry:  32, tx: -185, tz: -80, scale: 0.84, opacity: 0.95, zIndex: 3 },
 ];
 
-function JobStack() {
+function JobFan() {
   const [active, setActive] = useState(0);
-  const [exiting, setExiting] = useState(false);
+  const total = FAN_JOBS.length;
 
   useEffect(() => {
-    const t = setInterval(() => {
-      setExiting(true);
-      setTimeout(() => {
-        setActive(i => (i + 1) % STACK_JOBS.length);
-        setExiting(false);
-      }, 380);
-    }, 3200);
+    const t = setInterval(() => setActive(i => (i + 1) % total), 3400);
     return () => clearInterval(t);
-  }, []);
-
-  const handleClick = () => {
-    if (exiting) return;
-    setExiting(true);
-    setTimeout(() => {
-      setActive(i => (i + 1) % STACK_JOBS.length);
-      setExiting(false);
-    }, 380);
-  };
+  }, [total]);
 
   const LocationIcon = () => (
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -139,90 +124,97 @@ function JobStack() {
   );
 
   return (
-    <div style={{ position: "relative", userSelect: "none" }}>
-      {/* Stack container — extra bottom padding to show offset cards below */}
-      <div style={{ position: "relative", height: 340, paddingBottom: 32 }}>
-        {STACK_JOBS.map((job, i) => {
-          // Reorder so active card is always rendered last (on top)
-          const stackPos = (i - active + STACK_JOBS.length) % STACK_JOBS.length;
-          // stackPos 0 = active (front), 1 = one below, etc.
-          const cardIndex = STACK_JOBS.length - 1 - stackPos; // z-index order
-          const off = STACK_OFFSETS[stackPos] ?? STACK_OFFSETS[STACK_OFFSETS.length - 1];
-          const isTop = stackPos === 0;
+    <div style={{ userSelect: "none", display: "flex", flexDirection: "column", alignItems: "center" }}>
+      {/* 3-D fan container */}
+      <div style={{ perspective: "1100px", perspectiveOrigin: "50% 40%", width: "100%", height: 320, position: "relative" }}>
+        <div style={{ position: "absolute", inset: 0, transformStyle: "preserve-3d" }}>
+          {FAN_JOBS.map((job, i) => {
+            const offset = (i - active + total) % total;
+            const pos = FAN_POS[offset] ?? FAN_POS[0];
+            const isCenter = offset === 0;
 
-          const transform = isTop && exiting
-            ? `rotate(${off.rotate}) translateY(-120%) translateX(${off.x}px)`
-            : `rotate(${off.rotate}) translateY(${off.y}px) translateX(${off.x}px)`;
-
-          return (
-            <div
-              key={i}
-              onClick={isTop ? handleClick : undefined}
-              style={{
-                position: "absolute",
-                top: 0, left: 0, right: 0,
-                height: 280,
-                zIndex: cardIndex,
-                transform,
-                opacity: isTop && exiting ? 0 : 1,
-                transition: isTop
-                  ? "transform 0.38s cubic-bezier(.4,0,.2,1), opacity 0.28s ease"
-                  : "transform 0.5s cubic-bezier(.22,1,.36,1)",
-                cursor: isTop ? "pointer" : "default",
-              }}
-            >
-              <div style={{
-                background: "#fff",
-                border: `1.5px solid ${isTop ? "var(--border)" : "var(--border)"}`,
-                borderRadius: 16,
-                padding: 24,
-                height: "100%",
-                boxSizing: "border-box",
-                boxShadow: isTop
-                  ? "0 16px 48px rgba(0,0,0,0.12)"
-                  : `0 ${4 + stackPos * 2}px ${12 + stackPos * 4}px rgba(0,0,0,0.06)`,
-                display: "flex",
-                flexDirection: "column",
-              }}>
-                {/* Category */}
-                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
-                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: job.color, flexShrink: 0 }} />
-                  <span style={{ fontSize: 11, fontWeight: 700, color: job.color, textTransform: "uppercase", letterSpacing: "0.08em" }}>{job.category}</span>
-                  <span style={{ marginLeft: "auto", fontSize: 11, fontWeight: 600, background: "#f0f7ff", color: "var(--blue)", padding: "3px 8px", borderRadius: 6 }}>Festanstellung</span>
+            return (
+              <div
+                key={i}
+                onClick={() => setActive(i)}
+                style={{
+                  position: "absolute",
+                  top: "50%", left: "50%",
+                  width: 240,
+                  marginLeft: -120,
+                  marginTop: -140,
+                  height: 280,
+                  transform: `translateX(${pos.tx}px) translateZ(${pos.tz}px) rotateY(${pos.ry}deg) scale(${pos.scale})`,
+                  transformOrigin: "center bottom",
+                  opacity: pos.opacity,
+                  zIndex: pos.zIndex,
+                  transition: "transform 0.55s cubic-bezier(.22,1,.36,1), opacity 0.4s ease",
+                  cursor: isCenter ? "default" : "pointer",
+                }}
+              >
+                <div style={{
+                  background: "#fff",
+                  border: "1.5px solid var(--border)",
+                  borderRadius: 18,
+                  padding: 22,
+                  height: "100%",
+                  boxSizing: "border-box",
+                  boxShadow: isCenter
+                    ? "0 24px 64px rgba(0,0,0,0.14)"
+                    : "0 8px 24px rgba(0,0,0,0.08)",
+                  display: "flex",
+                  flexDirection: "column",
+                  transition: "box-shadow 0.4s ease",
+                }}>
+                  {/* Category */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
+                    <span style={{ width: 7, height: 7, borderRadius: "50%", background: job.color, flexShrink: 0 }} />
+                    <span style={{ fontSize: 10, fontWeight: 700, color: job.color, textTransform: "uppercase", letterSpacing: "0.08em" }}>{job.category}</span>
+                    <span style={{ marginLeft: "auto", fontSize: 10, fontWeight: 600, background: "#f0f7ff", color: "var(--blue)", padding: "2px 7px", borderRadius: 5 }}>Festanstellung</span>
+                  </div>
+                  {/* Title */}
+                  <h3 style={{ fontSize: 14, fontWeight: 800, color: "var(--navy)", lineHeight: 1.35, marginBottom: 10, flex: 1 }}>{job.title}</h3>
+                  {/* Location + Salary */}
+                  <div style={{ fontSize: 12, color: "var(--gray)", marginBottom: 10 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 3 }}><LocationIcon /> {job.location}</div>
+                    <div style={{ fontWeight: 700, color: "var(--navy)", fontSize: 13 }}>{job.salary}</div>
+                  </div>
+                  {/* Tags */}
+                  <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 14 }}>
+                    {job.tags.map(t => (
+                      <span key={t} style={{ fontSize: 10, fontWeight: 600, background: "var(--bg)", color: "var(--gray)", padding: "3px 8px", borderRadius: 5 }}>{t}</span>
+                    ))}
+                  </div>
+                  {/* CTA — only on active card */}
+                  {isCenter && (
+                    <a
+                      href={WA_LINK}
+                      onClick={e => e.stopPropagation()}
+                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--wa)", color: "#fff", fontSize: 12, fontWeight: 700, padding: "9px 14px", borderRadius: 9, textDecoration: "none" }}
+                    >
+                      <WhatsAppIcon size={12} /> Jetzt bewerben
+                    </a>
+                  )}
+                  {!isCenter && (
+                    <div style={{ fontSize: 11, color: "var(--gray-light)", textAlign: "center" }}>Klicken zum Ansehen</div>
+                  )}
                 </div>
-                {/* Title */}
-                <h3 style={{ fontSize: 16, fontWeight: 800, color: "var(--navy)", lineHeight: 1.3, marginBottom: 12, flex: 1 }}>{job.title}</h3>
-                {/* Location + Salary */}
-                <div style={{ display: "flex", gap: 14, fontSize: 13, color: "var(--gray)", marginBottom: 14, flexWrap: "wrap" }}>
-                  <span style={{ display: "flex", alignItems: "center", gap: 4 }}><LocationIcon /> {job.location}</span>
-                  <span style={{ fontWeight: 600, color: "var(--navy)" }}>{job.salary}</span>
-                </div>
-                {/* Tags */}
-                <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
-                  {job.tags.map(t => (
-                    <span key={t} style={{ fontSize: 11, fontWeight: 600, background: "var(--bg)", color: "var(--gray)", padding: "4px 10px", borderRadius: 6 }}>{t}</span>
-                  ))}
-                </div>
-                {/* CTA */}
-                {isTop && (
-                  <a
-                    href={WA_LINK}
-                    onClick={e => e.stopPropagation()}
-                    style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--wa)", color: "#fff", fontSize: 13, fontWeight: 700, padding: "10px 16px", borderRadius: 10, textDecoration: "none" }}
-                  >
-                    <WhatsAppIcon size={13} /> Jetzt bewerben
-                  </a>
-                )}
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
-      {/* Hint */}
-      <p style={{ textAlign: "center", fontSize: 12, color: "var(--gray-light)", marginTop: 8 }}>
-        Klicken um nächste Stelle zu sehen
-      </p>
+      {/* Dots */}
+      <div style={{ display: "flex", gap: 6, marginTop: 4 }}>
+        {FAN_JOBS.map((_, i) => (
+          <button key={i} onClick={() => setActive(i)} style={{
+            width: i === active ? 20 : 7, height: 7, borderRadius: 4, border: "none",
+            background: i === active ? "var(--blue)" : "var(--border)",
+            cursor: "pointer", transition: "all 0.3s", padding: 0,
+          }} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -362,8 +354,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* RIGHT: Job Cards Stack */}
-          <JobStack />
+          {/* RIGHT: Job Cards Fan */}
+          <JobFan />
         </div>
       </section>
 
