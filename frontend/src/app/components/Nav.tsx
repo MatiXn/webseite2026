@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export const WA_NUMBER = "491739980100";
 export const WA_LINK = `https://wa.me/${WA_NUMBER}`;
@@ -14,6 +15,7 @@ const NAV_LINKS: [string, string][] = [
   ["Talente finden", "/talente-finden"],
   ["So funktioniert's", "/#how"],
   ["Über uns", "/ueber-uns"],
+  ["Kontakt", "/kontakt"],
 ];
 
 const WhatsAppIcon = ({ size = 15 }: { size?: number }) => (
@@ -24,77 +26,165 @@ const WhatsAppIcon = ({ size = 15 }: { size?: number }) => (
 
 export default function Nav() {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 900);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Close menu on route change
+  useEffect(() => { setOpen(false); }, [pathname]);
 
   return (
-    <nav style={{
-      position: "sticky", top: 0, zIndex: 100,
-      background: "rgba(255,255,255,0.88)",
-      backdropFilter: "blur(24px) saturate(180%)",
-      WebkitBackdropFilter: "blur(24px) saturate(180%)",
-      boxShadow: "0 1px 0 rgba(0,0,0,0.08)",
-      padding: "0 32px",
-      height: 58,
-      display: "flex", alignItems: "center", justifyContent: "space-between",
-    }}>
-      <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
-        <Image src="/phe-logo.png" alt="PHE Perm Engineering" height={36} width={180}
-          style={{ height: 36, width: "auto" }} priority />
-      </Link>
-
-      {/* Center links */}
-      <ul style={{
-        display: "flex", gap: 4, listStyle: "none", margin: 0, padding: 0,
-        position: "absolute", left: "50%", transform: "translateX(-50%)",
+    <>
+      <nav style={{
+        position: "sticky", top: 0, zIndex: 100,
+        background: "rgba(255,255,255,0.92)",
+        backdropFilter: "blur(24px) saturate(180%)",
+        WebkitBackdropFilter: "blur(24px) saturate(180%)",
+        boxShadow: "0 1px 0 rgba(0,0,0,0.08)",
+        padding: isMobile ? "0 18px" : "0 32px",
+        height: 58,
+        display: "flex", alignItems: "center", justifyContent: "space-between",
       }}>
-        {NAV_LINKS.map(([label, href]) => {
-          const active = pathname === href || (href !== "/" && pathname.startsWith(href.split("#")[0]) && !href.startsWith("/#"));
-          const isTalente = href === "/talente-finden";
-          return (
-            <li key={label}>
-              <Link href={href} style={{
-                display: "inline-flex", alignItems: "center",
-                fontSize: 13, fontWeight: active ? 600 : 400,
-                letterSpacing: "0.005em",
-                color: isTalente
-                  ? (active ? "#1a4ec8" : "#1d57e0")
-                  : active ? "#1a4ec8" : "rgba(20,30,60,0.75)",
-                textDecoration: "none",
-                padding: "6px 12px",
-                borderRadius: 8,
-                background: isTalente && !active
-                  ? "rgba(29,87,224,0.07)"
-                  : active ? "rgba(29,87,224,0.08)" : "transparent",
-                transition: "all 0.15s ease",
-                position: "relative",
+        {/* Logo */}
+        <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+          <Image src="/phe-logo.png" alt="PHE Perm Engineering" height={36} width={180}
+            style={{ height: isMobile ? 30 : 36, width: "auto" }} priority />
+        </Link>
+
+        {/* Desktop center links */}
+        {!isMobile && (
+          <ul style={{
+            display: "flex", gap: 2, listStyle: "none", margin: 0, padding: 0,
+            position: "absolute", left: "50%", transform: "translateX(-50%)",
+          }}>
+            {NAV_LINKS.filter(([, href]) => href !== "/kontakt").map(([label, href]) => {
+              const active = pathname === href || (href !== "/" && pathname.startsWith(href.split("#")[0]) && !href.startsWith("/#"));
+              const isTalente = href === "/talente-finden";
+              return (
+                <li key={label}>
+                  <Link href={href} style={{
+                    display: "inline-flex", alignItems: "center",
+                    fontSize: 13, fontWeight: active ? 600 : 400,
+                    color: isTalente ? (active ? "#1a4ec8" : "#1d57e0") : active ? "#1a4ec8" : "rgba(20,30,60,0.75)",
+                    textDecoration: "none",
+                    padding: "6px 10px", borderRadius: 8,
+                    background: isTalente && !active ? "rgba(29,87,224,0.07)" : active ? "rgba(29,87,224,0.08)" : "transparent",
+                    transition: "all 0.15s ease",
+                  }}>{label}</Link>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+
+        {/* Desktop right */}
+        {!isMobile && (
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+            <Link href="/kontakt" style={{
+              fontSize: 13, color: "rgba(20,30,60,0.6)",
+              textDecoration: "none", padding: "6px 10px", borderRadius: 8,
+            }}>Kontakt</Link>
+            <Link href={WA_LINK} style={{
+              background: "#22c55e", color: "#fff", fontSize: 13, fontWeight: 600,
+              padding: "8px 14px", borderRadius: 20, textDecoration: "none",
+              display: "flex", alignItems: "center", gap: 5,
+              boxShadow: "0 1px 4px rgba(34,197,94,0.35)",
+            }}>
+              <WhatsAppIcon size={14} /> Jetzt bewerben
+            </Link>
+          </div>
+        )}
+
+        {/* Mobile right: WA icon + hamburger */}
+        {isMobile && (
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <Link href={WA_LINK} style={{
+              background: "#22c55e", color: "#fff",
+              width: 36, height: 36, borderRadius: "50%",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: "0 1px 4px rgba(34,197,94,0.35)",
+            }}>
+              <WhatsAppIcon size={18} />
+            </Link>
+            <button
+              onClick={() => setOpen(o => !o)}
+              aria-label="Menü"
+              style={{
+                background: "none", border: "none", cursor: "pointer",
+                padding: "6px", display: "flex", flexDirection: "column",
+                gap: 5, alignItems: "center", justifyContent: "center",
+                width: 36, height: 36,
+              }}
+            >
+              <span style={{
+                display: "block", width: 22, height: 2, background: "#141e3c",
+                borderRadius: 2, transition: "transform 0.2s, opacity 0.2s",
+                transform: open ? "translateY(7px) rotate(45deg)" : "none",
+              }}/>
+              <span style={{
+                display: "block", width: 22, height: 2, background: "#141e3c",
+                borderRadius: 2, transition: "opacity 0.2s",
+                opacity: open ? 0 : 1,
+              }}/>
+              <span style={{
+                display: "block", width: 22, height: 2, background: "#141e3c",
+                borderRadius: 2, transition: "transform 0.2s, opacity 0.2s",
+                transform: open ? "translateY(-7px) rotate(-45deg)" : "none",
+              }}/>
+            </button>
+          </div>
+        )}
+      </nav>
+
+      {/* Mobile dropdown menu */}
+      {isMobile && (
+        <div style={{
+          position: "fixed", top: 58, left: 0, right: 0, zIndex: 99,
+          background: "rgba(255,255,255,0.97)",
+          backdropFilter: "blur(20px)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+          borderBottom: "1px solid rgba(0,0,0,0.08)",
+          overflow: "hidden",
+          maxHeight: open ? "100vh" : 0,
+          transition: "max-height 0.3s ease",
+          pointerEvents: open ? "auto" : "none",
+        }}>
+          <ul style={{ listStyle: "none", padding: "12px 0 20px" }}>
+            {NAV_LINKS.map(([label, href]) => {
+              const active = pathname === href || (href !== "/" && pathname.startsWith(href.split("#")[0]) && !href.startsWith("/#"));
+              const isTalente = href === "/talente-finden";
+              return (
+                <li key={label}>
+                  <Link href={href} style={{
+                    display: "block", padding: "13px 24px",
+                    fontSize: 16, fontWeight: active ? 600 : 400,
+                    color: isTalente ? "#1d57e0" : active ? "#1a4ec8" : "#141e3c",
+                    textDecoration: "none",
+                    borderLeft: active ? "3px solid #1a4ec8" : "3px solid transparent",
+                    background: active ? "rgba(29,87,224,0.05)" : "transparent",
+                  }}>{label}</Link>
+                </li>
+              );
+            })}
+            <li style={{ padding: "12px 24px 0" }}>
+              <Link href={WA_LINK} style={{
+                display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                background: "#22c55e", color: "#fff",
+                fontSize: 15, fontWeight: 700, padding: "13px 20px",
+                borderRadius: 12, textDecoration: "none",
               }}>
-                {label}
+                <WhatsAppIcon size={16} /> Jetzt bewerben
               </Link>
             </li>
-          );
-        })}
-      </ul>
-
-      {/* Right: Kontakt + WhatsApp */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
-        <Link href="/kontakt" style={{
-          fontSize: 13, fontWeight: 400,
-          color: "rgba(20,30,60,0.6)",
-          textDecoration: "none", padding: "6px 10px", borderRadius: 8,
-        }}>
-          Kontakt
-        </Link>
-        <Link href={WA_LINK} style={{
-          background: "#22c55e",
-          color: "#fff", fontSize: 13, fontWeight: 600,
-          padding: "8px 16px", borderRadius: 20,
-          textDecoration: "none",
-          display: "flex", alignItems: "center", gap: 5,
-          letterSpacing: "0.01em",
-          boxShadow: "0 1px 4px rgba(34,197,94,0.35)",
-        }}>
-          <WhatsAppIcon size={14} /> Jetzt bewerben
-        </Link>
-      </div>
-    </nav>
+          </ul>
+        </div>
+      )}
+    </>
   );
 }

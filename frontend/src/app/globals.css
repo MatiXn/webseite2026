@@ -84,3 +84,165 @@ body {
   text-transform: uppercase;
   margin-bottom: 16px;
 }
+
+/* ─── Responsive layout helpers ─── */
+
+/* 2-column → 1-column on mobile */
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+@media (max-width: 767px) {
+  .grid-2col { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* 3-column → 1-column on mobile */
+.grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 767px) {
+  .grid-3col { grid-template-columns: 1fr; gap: 16px; }
+}
+
+/* 4-column → 2-column on tablet, 1-column on mobile */
+.grid-4col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+@media (max-width: 899px) {
+  .grid-4col { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 549px) {
+  .grid-4col { grid-template-columns: 1fr; }
+}
+
+/* Section padding */
+.section-pad {
+  padding: 64px 48px;
+}
+@media (max-width: 767px) {
+  .section-pad { padding: 48px 20px; }
+}
+
+/* Hero two-column split */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+@media (max-width: 899px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+}
+
+/* Hide job-fan cards on mobile (complex 3D layout doesn't scale) */
+@media (max-width: 899px) {
+  .job-fan-wrapper { display: none; }
+  .hero-text { text-align: center; align-items: center; }
+}
+
+/* Footer grid */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr 1fr;
+  gap: 32px;
+}
+@media (max-width: 767px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+}
+@media (max-width: 449px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* Stats row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 767px) {
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+
+/* Talente-Finden hero grid */
+.talente-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  max-width: 1140px;
+  margin: 0 auto;
+  width: 100%;
+}
+@media (max-width: 899px) {
+  .talente-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+/* Process steps */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  text-align: left;
+}
+@media (max-width: 767px) {
+  .steps-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+}
+@media (max-width: 449px) {
+  .steps-grid { grid-template-columns: 1fr; }
+}
+
+/* Benefits 2-col */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 599px) {
+  .benefits-grid { grid-template-columns: 1fr; }
+}
+
+/* Form grid 2-col → 1-col */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 549px) {
+  .form-grid { grid-template-columns: 1fr; }
+}
+
+/* CTA button row */
+.cta-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Section horizontal padding */
+.px-section {
+  padding-left: 48px;
+  padding-right: 48px;
+}
+@media (max-width: 767px) {
+  .px-section { padding-left: 20px; padding-right: 20px; }
+}
+
+/* Hero section min-height + padding */
+.hero-section {
+  min-height: calc(100vh - 58px);
+  display: flex;
+  align-items: center;
+  padding: 64px 48px 72px;
+}
+@media (max-width: 767px) {
+  .hero-section { padding: 40px 20px 56px; min-height: auto; }
+}

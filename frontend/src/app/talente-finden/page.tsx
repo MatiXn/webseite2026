@@ -340,7 +340,7 @@ function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+      <div className="form-grid">
         <div><label style={lbl}>Unternehmen *</label>
           <input style={inp} placeholder="Musterfirma GmbH" value={form.company} onChange={set("company")} required/>
         </div>
@@ -398,15 +398,8 @@ export default function TalenteFindPage() {
       <main style={{ position: "relative", zIndex: 5 }}>
 
         {/* HERO */}
-        <section style={{
-          minHeight: "calc(100vh - 58px)",
-          display: "flex", alignItems: "center",
-          padding: "64px 48px 72px",
-        }}>
-          <div style={{
-            maxWidth: 1140, margin: "0 auto", width: "100%",
-            display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center",
-          }}>
+        <section className="hero-section">
+          <div className="talente-hero-grid">
             <div>
               <span style={{
                 display: "inline-block", fontSize: 11, fontWeight: 700,
@@ -417,7 +410,7 @@ export default function TalenteFindPage() {
               }}>Für Unternehmen in Deutschland</span>
 
               <h1 style={{
-                fontSize: "clamp(30px,4vw,54px)", fontWeight: 900, lineHeight: 1.1,
+                fontSize: "clamp(28px,5vw,54px)", fontWeight: 900, lineHeight: 1.1,
                 color: "#fff", marginBottom: 18, letterSpacing: "-0.03em",
               }}>
                 Finden Sie Ihre<br/>
@@ -428,7 +421,7 @@ export default function TalenteFindPage() {
                 in Deutschland
               </h1>
 
-              <p style={{ fontSize: 16, color: "#6888aa", lineHeight: 1.72, marginBottom: 28, maxWidth: 440 }}>
+              <p style={{ fontSize: 15, color: "#6888aa", lineHeight: 1.72, marginBottom: 28, maxWidth: 440 }}>
                 PHE Perm Engineering vermittelt qualifizierte Elektro- &amp;
                 Technik-Fachkräfte in Festanstellung — schnell, persönlich, ohne Risiko.
               </p>
@@ -462,7 +455,7 @@ export default function TalenteFindPage() {
             <div style={{
               background: "rgba(5,13,36,0.84)", backdropFilter: "blur(22px)",
               border: "1px solid rgba(60,110,230,0.22)", borderRadius: 18,
-              padding: "30px 30px", boxShadow: "0 24px 80px rgba(0,0,0,0.5)",
+              padding: "28px 24px", boxShadow: "0 24px 80px rgba(0,0,0,0.5)",
             }}>
               <h2 style={{ fontSize: 18, fontWeight: 800, color: "#e8f0ff", marginBottom: 4 }}>
                 Jetzt Talente anfragen
@@ -476,14 +469,14 @@ export default function TalenteFindPage() {
         </section>
 
         {/* PROCESS */}
-        <section style={{
+        <section className="section-pad px-section" style={{
           background: "rgba(4,10,26,0.96)", backdropFilter: "blur(8px)",
-          borderTop: "1px solid rgba(60,100,220,0.12)", padding: "64px 48px",
+          borderTop: "1px solid rgba(60,100,220,0.12)",
         }}>
           <div style={{ maxWidth: 960, margin: "0 auto", textAlign: "center" }}>
-            <h2 style={{ fontSize: 26, fontWeight: 800, color: "#e8f0ff", marginBottom: 8 }}>So einfach funktioniert es</h2>
-            <p style={{ color: "#3a5070", fontSize: 14, marginBottom: 44 }}>Von der Anfrage zur besetzten Stelle — in 4 Schritten</p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 20, textAlign: "left" }}>
+            <h2 style={{ fontSize: "clamp(20px,3vw,26px)", fontWeight: 800, color: "#e8f0ff", marginBottom: 8 }}>So einfach funktioniert es</h2>
+            <p style={{ color: "#3a5070", fontSize: 14, marginBottom: 40 }}>Von der Anfrage zur besetzten Stelle — in 4 Schritten</p>
+            <div className="steps-grid">
               {[
                 { s: "01", t: "Anfrage stellen",  d: "Per Formular, Telefon oder WhatsApp — Ihr Bedarf in wenigen Minuten übermittelt." },
                 { s: "02", t: "Matching",          d: "Wir analysieren Ihre Anforderungen und matchen Kandidaten aus unserem Pool." },
@@ -494,7 +487,7 @@ export default function TalenteFindPage() {
                   background: "rgba(18,30,65,0.6)", border: "1px solid rgba(60,100,220,0.18)",
                   borderRadius: 12, padding: "20px 16px",
                 }}>
-                  <div style={{ fontSize: 34, fontWeight: 900, color: "rgba(60,110,230,0.18)", letterSpacing: "-0.04em", marginBottom: 10 }}>{item.s}</div>
+                  <div style={{ fontSize: 32, fontWeight: 900, color: "rgba(60,110,230,0.18)", letterSpacing: "-0.04em", marginBottom: 10 }}>{item.s}</div>
                   <h3 style={{ fontSize: 14, fontWeight: 800, color: "#c0d8ff", marginBottom: 6 }}>{item.t}</h3>
                   <p style={{ fontSize: 12.5, color: "#3a5070", lineHeight: 1.65 }}>{item.d}</p>
                 </div>
@@ -504,14 +497,14 @@ export default function TalenteFindPage() {
         </section>
 
         {/* BENEFITS */}
-        <section style={{
-          background: "rgba(3,8,22,0.97)", padding: "64px 48px",
+        <section className="section-pad px-section" style={{
+          background: "rgba(3,8,22,0.97)",
           borderTop: "1px solid rgba(60,100,220,0.1)",
         }}>
           <div style={{ maxWidth: 960, margin: "0 auto" }}>
-            <h2 style={{ fontSize: 24, fontWeight: 800, color: "#e8f0ff", marginBottom: 6, textAlign: "center" }}>Warum PHE?</h2>
-            <p style={{ color: "#3a5070", fontSize: 14, marginBottom: 36, textAlign: "center" }}>Ihr Partner für Fachkräfte in Elektro, Mechatronik &amp; Bau</p>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+            <h2 style={{ fontSize: "clamp(18px,3vw,24px)", fontWeight: 800, color: "#e8f0ff", marginBottom: 6, textAlign: "center" }}>Warum PHE?</h2>
+            <p style={{ color: "#3a5070", fontSize: 14, marginBottom: 32, textAlign: "center" }}>Ihr Partner für Fachkräfte in Elektro, Mechatronik &amp; Bau</p>
+            <div className="benefits-grid">
               {[
                 { t: "Schnelle Besetzung",    d: "Ø 3–6 Wochen von Anfrage bis Vertragsabschluss" },
                 { t: "Qualifizierte Profile",  d: "Nur geprüfte Fachkräfte mit passendem Background" },
@@ -531,22 +524,22 @@ export default function TalenteFindPage() {
         </section>
 
         {/* CTA */}
-        <section style={{
+        <section className="section-pad px-section" style={{
           background: "linear-gradient(90deg,rgba(16,42,100,0.97),rgba(8,52,124,0.97))",
           backdropFilter: "blur(8px)",
-          borderTop: "1px solid rgba(60,110,230,0.2)", padding: "48px 48px", textAlign: "center",
+          borderTop: "1px solid rgba(60,110,230,0.2)", textAlign: "center",
         }}>
           <div style={{ maxWidth: 640, margin: "0 auto" }}>
-            <h2 style={{ fontSize: 22, fontWeight: 800, color: "#fff", marginBottom: 10 }}>Lieber direkt sprechen?</h2>
+            <h2 style={{ fontSize: "clamp(18px,3vw,22px)", fontWeight: 800, color: "#fff", marginBottom: 10 }}>Lieber direkt sprechen?</h2>
             <p style={{ color: "#6090b8", fontSize: 14, marginBottom: 24 }}>Rufen Sie uns an oder schreiben Sie uns auf WhatsApp — kostenlos und unverbindlich.</p>
-            <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+            <div className="cta-buttons">
               <a href="tel:+492111586310" style={{
-                background: "#fff", color: "#0d1e42", fontSize: 13.5, fontWeight: 700,
-                padding: "11px 22px", borderRadius: 10, textDecoration: "none",
+                background: "#fff", color: "#0d1e42", fontSize: 14, fontWeight: 700,
+                padding: "13px 24px", borderRadius: 10, textDecoration: "none",
               }}>0211 158 63 100</a>
               <a href="https://wa.me/491739980100?text=Hallo%20PHE-Team,%20ich%20suche%20Fachkräfte." style={{
-                background: "#22c55e", color: "#fff", fontSize: 13.5, fontWeight: 700,
-                padding: "11px 22px", borderRadius: 10, textDecoration: "none",
+                background: "#22c55e", color: "#fff", fontSize: 14, fontWeight: 700,
+                padding: "13px 24px", borderRadius: 10, textDecoration: "none",
               }}>WhatsApp anfragen</a>
             </div>
           </div>
