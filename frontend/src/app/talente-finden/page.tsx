@@ -21,128 +21,112 @@ const VOLUMES = [
 ];
 
 // ─────────────────────────────────────────────────────────────────
-// Germany outline — clockwise, SVG coords in viewBox 0 0 760 640
-// Approximated from real border coordinates, scaled to fill space.
+// Germany outline — real geographic coordinates converted to SVG.
+// Formula: x = (lon - 5.85) * 74 + 40,  y = (55.05 - lat) * 72 + 40
+// Clockwise from NW Schleswig coast.
 // ─────────────────────────────────────────────────────────────────
 const DE_PATH = `
-  M 290  10
-  L 340  12
-  L 370   5
-  L 430  25
-  L 470  15
-  L 510  28
-  L 560  40
-  L 590  62
-  L 620  65
-  L 640  80
-  L 700  90
-  L 720 105
-  L 740 130
-  L 745 165
-  L 748 220
-  L 750 265
-  L 748 310
-  L 750 340
-  L 745 375
-  L 720 400
-  L 690 410
-  L 680 430
-  L 660 445
-  L 640 445
-  L 620 460
-  L 610 490
-  L 590 510
-  L 575 530
-  L 555 545
-  L 530 550
-  L 510 555
-  L 490 565
-  L 470 580
-  L 450 600
-  L 430 610
-  L 400 615
-  L 380 610
-  L 360 605
-  L 335 615
-  L 310 625
-  L 290 620
-  L 270 610
-  L 250 600
-  L 230 580
-  L 210 575
-  L 200 555
-  L 195 530
-  L 165 520
-  L 140 510
-  L 115 515
-  L 100 505
-  L  90 490
-  L  65 478
-  L  45 465
-  L  35 445
-  L  30 420
-  L  15 400
-  L  10 378
-  L  12 355
-  L  22 330
-  L  18 305
-  L  25 280
-  L  40 258
-  L  55 242
-  L  50 218
-  L  62 198
-  L  80 182
-  L  75 160
-  L  90 148
-  L 100 128
-  L 105 105
-  L  98  88
-  L 110  72
-  L 130  60
-  L 160  52
-  L 185  48
-  L 210  38
-  L 240  30
-  L 265  15
+  M 252  67
+  L 274  51
+  L 310  56
+  L 340  56
+  L 362  62
+  L 399  88
+  L 421  95
+  L 462 110
+  L 506 109
+  L 554 104
+  L 581  92
+  L 611 111
+  L 645 125
+  L 667 141
+  L 673 162
+  L 675 193
+  L 686 234
+  L 697 263
+  L 701 292
+  L 715 321
+  L 704 339
+  L 681 359
+  L 629 383
+  L 594 425
+  L 575 468
+  L 601 506
+  L 566 566
+  L 529 580
+  L 426 589
+  L 367 580
+  L 312 582
+  L 273 573
+  L 199 577
+  L 170 580
+  L 178 544
+  L 186 508
+  L 159 459
+  L 133 441
+  L  89 428
+  L  77 412
+  L  66 394
+  L  58 367
+  L  56 351
+  L  49 328
+  L  58 296
+  L  64 272
+  L  66 252
+  L  99 220
+  L 127 232
+  L 132 239
+  L 132 212
+  L 132 170
+  L 139 162
+  L 161 152
+  L 199 145
+  L 221 135
+  L 236 126
+  L 247 105
   Z
 `;
 
-// Centroid for scale transforms
-const CX = 390;
-const CY = 320;
+// Centroid: Germany ~10.45°E, 51.1°N → x=(10.45-5.85)*74+40=380, y=(55.05-51.1)*72+40=324
+const CX = 380;
+const CY = 324;
 function ct(s: number) {
   return `translate(${CX * (1 - s)} ${CY * (1 - s)}) scale(${s})`;
 }
 
-// Major German cities + Ruhrgebiet industrial areas
+// Cities — real coords: x=(lon-5.85)*74+40, y=(55.05-lat)*72+40
 const CITIES = [
-  // Metropolen — größere Dots, pulse
-  { x: 545, y: 120, label: "Berlin",      r: 5.5, delay: "0s",   lx:  7, ly:  4, pulse: true  },
-  { x: 310, y:  65, label: "Hamburg",     r: 4.5, delay: "0.6s", lx:  7, ly:  4, pulse: false },
-  { x: 208, y: 258, label: "Düsseldorf",  r: 4.5, delay: "0.3s", lx:-72, ly:  4, pulse: true  },
-  { x: 415, y: 540, label: "München",     r: 4.5, delay: "1.5s", lx:  7, ly:  4, pulse: true  },
-  { x: 285, y: 355, label: "Frankfurt",   r: 4.5, delay: "0.9s", lx:  7, ly:  4, pulse: false },
-  // Ruhrgebiet — Industrieherz
-  { x: 195, y: 243, label: "Duisburg",    r: 3,   delay: "0.8s", lx:-56, ly:  4, pulse: false },
-  { x: 232, y: 245, label: "Essen",       r: 3,   delay: "1.4s", lx:  7, ly:  4, pulse: false },
-  { x: 258, y: 246, label: "Bochum",      r: 3,   delay: "2.0s", lx:  7, ly:  4, pulse: false },
-  { x: 268, y: 310, label: "Dortmund",    r: 3.5, delay: "0.4s", lx:  7, ly:  4, pulse: false },
-  { x: 246, y: 270, label: "Wuppertal",   r: 2.8, delay: "1.7s", lx:  7, ly:  4, pulse: false },
-  { x: 220, y: 285, label: "Köln",        r: 4,   delay: "1.2s", lx:-40, ly:  4, pulse: false },
-  // Nordwesten
-  { x: 290, y: 170, label: "Bremen",      r: 3,   delay: "1.9s", lx:  7, ly:  4, pulse: false },
-  { x: 390, y: 170, label: "Hannover",    r: 3.5, delay: "0.7s", lx:  7, ly:  4, pulse: false },
-  // Mitte / Osten
-  { x: 490, y: 205, label: "Magdeburg",   r: 3,   delay: "3.1s", lx:  7, ly:  4, pulse: false },
-  { x: 455, y: 300, label: "Leipzig",     r: 3.5, delay: "0.3s", lx:  7, ly:  4, pulse: false },
-  { x: 530, y: 285, label: "Dresden",     r: 3.5, delay: "2.5s", lx:  7, ly:  4, pulse: false },
-  { x: 590, y: 370, label: "Erfurt",      r: 3,   delay: "2.8s", lx:  7, ly:  4, pulse: false },
+  // Metropolen
+  { x: 593, y: 222, label: "Berlin",      r: 5.5, delay: "0s",   lx:  7, ly:  4, pulse: true  },
+  { x: 347, y: 148, label: "Hamburg",     r: 4.5, delay: "0.6s", lx:  7, ly:  4, pulse: false },
+  { x: 109, y: 315, label: "Düsseldorf",  r: 4.5, delay: "0.3s", lx:-72, ly:  4, pulse: true  },
+  { x: 462, y: 536, label: "München",     r: 4.5, delay: "1.5s", lx:  7, ly:  4, pulse: true  },
+  { x: 249, y: 393, label: "Frankfurt",   r: 4.5, delay: "0.9s", lx:  7, ly:  4, pulse: false },
+  // Ruhrgebiet
+  { x: 108, y: 301, label: "Duisburg",    r: 3,   delay: "0.8s", lx:-56, ly:  4, pulse: false },
+  { x: 126, y: 299, label: "Essen",       r: 3,   delay: "1.4s", lx:  7, ly:  4, pulse: false },
+  { x: 142, y: 297, label: "Bochum",      r: 3,   delay: "2.0s", lx:  7, ly:  4, pulse: false },
+  { x: 159, y: 295, label: "Dortmund",    r: 3.5, delay: "0.4s", lx:  7, ly:  4, pulse: false },
+  { x: 140, y: 312, label: "Wuppertal",   r: 2.8, delay: "1.7s", lx:  7, ly:  4, pulse: false },
+  { x: 122, y: 335, label: "Köln",        r: 4,   delay: "1.2s", lx:-42, ly:  4, pulse: false },
+  { x:  57, y: 347, label: "Aachen",      r: 2.8, delay: "3.8s", lx:-50, ly:  4, pulse: false },
+  // Nordwesten / Mitte
+  { x: 259, y: 181, label: "Bremen",      r: 3,   delay: "1.9s", lx:  7, ly:  4, pulse: false },
+  { x: 327, y: 233, label: "Hannover",    r: 3.5, delay: "0.7s", lx:  7, ly:  4, pulse: false },
+  { x: 171, y: 262, label: "Münster",     r: 3,   delay: "2.3s", lx:-52, ly:  4, pulse: false },
+  { x: 238, y: 259, label: "Bielefeld",   r: 3,   delay: "3.0s", lx:  7, ly:  4, pulse: false },
+  { x: 310, y: 309, label: "Kassel",      r: 3,   delay: "2.9s", lx:  7, ly:  4, pulse: false },
+  // Osten
+  { x: 468, y: 251, label: "Magdeburg",   r: 3,   delay: "3.1s", lx:  7, ly:  4, pulse: false },
+  { x: 522, y: 307, label: "Leipzig",     r: 3.5, delay: "0.3s", lx:  7, ly:  4, pulse: false },
+  { x: 620, y: 328, label: "Dresden",     r: 3.5, delay: "2.5s", lx:  7, ly:  4, pulse: false },
+  { x: 421, y: 332, label: "Erfurt",      r: 3,   delay: "2.8s", lx:  7, ly:  4, pulse: false },
   // Süden
-  { x: 380, y: 440, label: "Nürnberg",   r: 3.5, delay: "1.8s", lx:  7, ly:  4, pulse: false },
-  { x: 320, y: 500, label: "Stuttgart",   r: 4,   delay: "2.2s", lx:-60, ly:  4, pulse: false },
-  { x: 250, y: 450, label: "Karlsruhe",   r: 2.8, delay: "3.5s", lx:  7, ly:  4, pulse: false },
-  { x: 270, y: 390, label: "Mannheim",    r: 2.8, delay: "2.6s", lx:  7, ly:  4, pulse: false },
-  { x: 385, y: 520, label: "Augsburg",    r: 2.8, delay: "3.2s", lx:  7, ly:  4, pulse: false },
+  { x: 427, y: 442, label: "Nürnberg",   r: 3.5, delay: "1.8s", lx:  7, ly:  4, pulse: false },
+  { x: 285, y: 490, label: "Stuttgart",   r: 4,   delay: "2.2s", lx:-60, ly:  4, pulse: false },
+  { x: 229, y: 472, label: "Karlsruhe",   r: 2.8, delay: "3.5s", lx:  7, ly:  4, pulse: false },
+  { x: 234, y: 436, label: "Mannheim",    r: 2.8, delay: "2.6s", lx:  7, ly:  4, pulse: false },
+  { x: 410, y: 520, label: "Augsburg",    r: 2.8, delay: "3.2s", lx:  7, ly:  4, pulse: false },
 ];
 
 // Flowing contour rings — lange Striche, sanfte Abstände → gleichmäßiger Flow
