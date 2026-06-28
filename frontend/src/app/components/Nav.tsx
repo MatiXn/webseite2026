@@ -36,12 +36,9 @@ export default function Nav() {
       height: 58,
       display: "flex", alignItems: "center", justifyContent: "space-between",
     }}>
-      {/* Logo — nur das Symbol-Icon (linker Teil des Logos) */}
       <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
-        <div style={{ overflow: "hidden", width: 42, height: 32, flexShrink: 0 }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/phe-logo.png" alt="PHE" style={{ height: 32, width: "auto", display: "block" }} />
-        </div>
+        <Image src="/phe-logo.png" alt="PHE Perm Engineering" height={36} width={180}
+          style={{ height: 36, width: "auto" }} priority />
       </Link>
 
       {/* Center links */}
@@ -70,12 +67,6 @@ export default function Nav() {
                 transition: "all 0.15s ease",
                 position: "relative",
               }}>
-                {isTalente && (
-                  <span style={{
-                    width: 5, height: 5, borderRadius: "50%",
-                    background: "#1d57e0", marginRight: 5, flexShrink: 0,
-                  }} />
-                )}
                 {label}
               </Link>
             </li>
