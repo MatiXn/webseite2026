@@ -36,10 +36,12 @@ export default function Nav() {
       height: 58,
       display: "flex", alignItems: "center", justifyContent: "space-between",
     }}>
-      {/* Logo */}
+      {/* Logo — nur das Symbol-Icon (linker Teil des Logos) */}
       <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
-        <Image src="/phe-logo.png" alt="PHE Perm Engineering" height={32} width={160}
-          style={{ height: 32, width: "auto" }} priority />
+        <div style={{ overflow: "hidden", width: 42, height: 32, flexShrink: 0 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/phe-logo.png" alt="PHE" style={{ height: 32, width: "auto", display: "block" }} />
+        </div>
       </Link>
 
       {/* Center links */}
