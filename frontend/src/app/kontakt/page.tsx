@@ -113,7 +113,7 @@ export default function KontaktPage() {
 
             {/* Social */}
             <div>
-              <p style={{ fontSize: 13, fontWeight: 700, color: "var(--gray)", marginBottom: 12 }}>Folgen Sie uns</p>
+              <p style={{ fontSize: 13, fontWeight: 700, color: "var(--gray)", marginBottom: 12 }}>Auch erreichbar auf</p>
               <div style={{ display: "flex", gap: 12 }}>
                 {[
                   { icon: <InstagramIcon />, label: "Instagram", href: "https://instagram.com/phe_perm_engineering" },
@@ -210,11 +210,12 @@ export default function KontaktPage() {
 
       <div style={{ background: "var(--bg)", borderTop: "1px solid var(--border)" }}>
         <FaqSection title="Häufige Fragen zum Kontakt" items={[
-          { q: "Wie kann ich PHE Perm Engineering am schnellsten erreichen?", a: "Am schnellsten erreichen Sie uns via WhatsApp unter +49 173 9980100. Wir antworten in der Regel innerhalb weniger Stunden — auch abends und am Wochenende." },
-          { q: "Wie schnell antwortet PHE auf Anfragen?", a: "Auf WhatsApp-Nachrichten antworten wir meist innerhalb von 2–4 Stunden. E-Mails beantworten wir innerhalb von 24 Stunden an Werktagen." },
+          { q: "Wie kann ich PHE Perm Engineering am schnellsten erreichen?", a: "Am schnellsten erreichen Sie uns telefonisch unter 0211 158 63 100 oder via WhatsApp. Wir sind für Sie da und antworten in der Regel innerhalb weniger Stunden." },
+          { q: "Kann ich PHE auch telefonisch kontaktieren?", a: "Ja, Sie erreichen uns direkt unter 0211 158 63 100. Für schnelle Rückfragen stehen wir Ihnen auch gerne per WhatsApp oder telefonisch zur Verfügung — ganz wie es Ihnen am liebsten ist." },
+          { q: "Auf welchen Wegen kann ich Fragen stellen?", a: "Sie können uns jederzeit per WhatsApp oder telefonisch kontaktieren. Beide Wege sind schnell und direkt — wir antworten zeitnah auf Ihre Anfrage." },
           { q: "Wo befindet sich das Büro von PHE Perm Engineering?", a: "Unser Büro befindet sich in der Hüttenstraße 30, 40215 Düsseldorf. Gerne können Sie uns persönlich besuchen — vereinbaren Sie vorab telefonisch oder per WhatsApp einen Termin." },
+          { q: "Auf welchen sozialen Netzwerken ist PHE aktiv?", a: "Sie finden uns auf Instagram und LinkedIn. Dort teilen wir regelmäßig neue Stellenangebote und Karrieretipps — folgen Sie uns, um immer auf dem Laufenden zu bleiben." },
           { q: "Kann ich auch als Unternehmen Fachkräfte anfragen?", a: "Ja. Wählen Sie im Kontaktformular 'Ich suche Fachkräfte' und beschreiben Sie Ihre Anforderungen. Wir melden uns zeitnah mit passenden Kandidatenprofilen." },
-          { q: "Auf welchen sozialen Netzwerken ist PHE aktiv?", a: "Sie finden uns auf Instagram (@phe_perm_engineering mit über 327.000 Followern) und auf LinkedIn. Dort teilen wir regelmäßig neue Stellenangebote und Karrieretipps." },
         ]} />
       </div>
 
