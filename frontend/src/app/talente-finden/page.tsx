@@ -114,41 +114,54 @@ function ct(s: number) {
   return `translate(${CX * (1 - s)} ${CY * (1 - s)}) scale(${s})`;
 }
 
-// Major German cities
+// Major German cities + Ruhrgebiet industrial areas
 const CITIES = [
-  { x: 545, y: 120, label: "Berlin",      r: 5.5, delay: "0s",   lx:  7, ly: 4, pulse: true  },
-  { x: 310, y:  65, label: "Hamburg",     r: 4.5, delay: "0.6s", lx:  7, ly: 4, pulse: false },
-  { x: 220, y: 280, label: "Köln",        r: 4,   delay: "1.2s", lx:-40, ly: 4, pulse: false },
-  { x: 208, y: 258, label: "Düsseldorf",  r: 4,   delay: "0.3s", lx:-68, ly: 4, pulse: false },
-  { x: 268, y: 310, label: "Dortmund",    r: 3.5, delay: "0.4s", lx:-58, ly: 4, pulse: false },
-  { x: 285, y: 355, label: "Frankfurt",   r: 5,   delay: "0.9s", lx:  7, ly: 4, pulse: true  },
-  { x: 380, y: 440, label: "Nürnberg",   r: 3.5, delay: "1.8s", lx:  7, ly: 4, pulse: false },
-  { x: 320, y: 500, label: "Stuttgart",   r: 4,   delay: "2.2s", lx:-60, ly: 4, pulse: false },
-  { x: 415, y: 540, label: "München",     r: 4.5, delay: "1.5s", lx:  7, ly: 4, pulse: true  },
-  { x: 455, y: 300, label: "Leipzig",     r: 3.5, delay: "0.3s", lx:  7, ly: 4, pulse: false },
-  { x: 530, y: 285, label: "Dresden",     r: 3.5, delay: "2.5s", lx:  7, ly: 4, pulse: false },
-  { x: 290, y: 170, label: "Bremen",      r: 3,   delay: "1.9s", lx:  7, ly: 4, pulse: false },
-  { x: 390, y: 170, label: "Hannover",    r: 3.5, delay: "0.7s", lx:  7, ly: 4, pulse: false },
-  { x: 490, y: 205, label: "Magdeburg",   r: 3,   delay: "3.1s", lx:  7, ly: 4, pulse: false },
-  { x: 590, y: 370, label: "Erfurt",      r: 3,   delay: "2.8s", lx:  7, ly: 4, pulse: false },
+  // Metropolen — größere Dots, pulse
+  { x: 545, y: 120, label: "Berlin",      r: 5.5, delay: "0s",   lx:  7, ly:  4, pulse: true  },
+  { x: 310, y:  65, label: "Hamburg",     r: 4.5, delay: "0.6s", lx:  7, ly:  4, pulse: false },
+  { x: 208, y: 258, label: "Düsseldorf",  r: 4.5, delay: "0.3s", lx:-72, ly:  4, pulse: true  },
+  { x: 415, y: 540, label: "München",     r: 4.5, delay: "1.5s", lx:  7, ly:  4, pulse: true  },
+  { x: 285, y: 355, label: "Frankfurt",   r: 4.5, delay: "0.9s", lx:  7, ly:  4, pulse: false },
+  // Ruhrgebiet — Industrieherz
+  { x: 195, y: 243, label: "Duisburg",    r: 3,   delay: "0.8s", lx:-56, ly:  4, pulse: false },
+  { x: 232, y: 245, label: "Essen",       r: 3,   delay: "1.4s", lx:  7, ly:  4, pulse: false },
+  { x: 258, y: 246, label: "Bochum",      r: 3,   delay: "2.0s", lx:  7, ly:  4, pulse: false },
+  { x: 268, y: 310, label: "Dortmund",    r: 3.5, delay: "0.4s", lx:  7, ly:  4, pulse: false },
+  { x: 246, y: 270, label: "Wuppertal",   r: 2.8, delay: "1.7s", lx:  7, ly:  4, pulse: false },
+  { x: 220, y: 285, label: "Köln",        r: 4,   delay: "1.2s", lx:-40, ly:  4, pulse: false },
+  // Nordwesten
+  { x: 290, y: 170, label: "Bremen",      r: 3,   delay: "1.9s", lx:  7, ly:  4, pulse: false },
+  { x: 390, y: 170, label: "Hannover",    r: 3.5, delay: "0.7s", lx:  7, ly:  4, pulse: false },
+  // Mitte / Osten
+  { x: 490, y: 205, label: "Magdeburg",   r: 3,   delay: "3.1s", lx:  7, ly:  4, pulse: false },
+  { x: 455, y: 300, label: "Leipzig",     r: 3.5, delay: "0.3s", lx:  7, ly:  4, pulse: false },
+  { x: 530, y: 285, label: "Dresden",     r: 3.5, delay: "2.5s", lx:  7, ly:  4, pulse: false },
+  { x: 590, y: 370, label: "Erfurt",      r: 3,   delay: "2.8s", lx:  7, ly:  4, pulse: false },
+  // Süden
+  { x: 380, y: 440, label: "Nürnberg",   r: 3.5, delay: "1.8s", lx:  7, ly:  4, pulse: false },
+  { x: 320, y: 500, label: "Stuttgart",   r: 4,   delay: "2.2s", lx:-60, ly:  4, pulse: false },
+  { x: 250, y: 450, label: "Karlsruhe",   r: 2.8, delay: "3.5s", lx:  7, ly:  4, pulse: false },
+  { x: 270, y: 390, label: "Mannheim",    r: 2.8, delay: "2.6s", lx:  7, ly:  4, pulse: false },
+  { x: 385, y: 520, label: "Augsburg",    r: 2.8, delay: "3.2s", lx:  7, ly:  4, pulse: false },
 ];
 
-// Flowing contour rings — each flows at a different speed/dash length
+// Flowing contour rings — lange Striche, sanfte Abstände → gleichmäßiger Flow
 const RINGS = [
-  { scale: 1.00, dash: 22,  gap: 8,  dur: 22, stroke: "#1b3575", width: 1.2, opacity: 0.65 },
-  { scale: 0.91, dash: 16,  gap: 9,  dur: 16, stroke: "#20408e", width: 1.0, opacity: 0.72 },
-  { scale: 0.82, dash: 11,  gap: 8,  dur: 12, stroke: "#2850a8", width: 0.9, opacity: 0.78 },
-  { scale: 0.73, dash:  8,  gap: 7,  dur:  9, stroke: "#3462be", width: 0.8, opacity: 0.84 },
-  { scale: 0.63, dash:  5,  gap: 5,  dur:  7, stroke: "#3e72d8", width: 0.7, opacity: 0.90 },
+  { scale: 1.00, dash: 40, gap: 14, dur: 32, stroke: "#182e68", width: 1.3, opacity: 0.60 },
+  { scale: 0.91, dash: 30, gap: 12, dur: 24, stroke: "#1e3a82", width: 1.1, opacity: 0.68 },
+  { scale: 0.82, dash: 22, gap: 10, dur: 18, stroke: "#26489c", width: 1.0, opacity: 0.75 },
+  { scale: 0.73, dash: 16, gap:  8, dur: 14, stroke: "#3058b2", width: 0.9, opacity: 0.82 },
+  { scale: 0.63, dash: 10, gap:  6, dur: 10, stroke: "#3a6acc", width: 0.8, opacity: 0.90 },
 ];
 
-// Traveling particles along the border — animateMotion on the DE_PATH
+// Traveling particles — verschiedene Geschwindigkeiten, sanfter Verlauf
 const PARTICLES = [
-  { dur: "18s", begin: "0s",   r: 2.8, color: "#6aacff" },
-  { dur: "14s", begin: "4.5s", r: 2.2, color: "#90c8ff" },
-  { dur: "22s", begin: "9s",   r: 1.8, color: "#4888f0" },
-  { dur: "11s", begin: "2s",   r: 2.0, color: "#80d0ff" },
-  { dur: "28s", begin: "6s",   r: 1.5, color: "#3860d0" },
+  { dur: "24s", begin: "0s",    r: 3.2, color: "#5aa8ff" },
+  { dur: "18s", begin: "6s",    r: 2.4, color: "#88caff" },
+  { dur: "32s", begin: "12s",   r: 2.0, color: "#4080e8" },
+  { dur: "14s", begin: "3s",    r: 2.8, color: "#70b8ff" },
+  { dur: "40s", begin: "8s",    r: 1.6, color: "#3060c8" },
+  { dur: "20s", begin: "16s",   r: 2.0, color: "#90d0ff" },
 ];
 
 function GermanyMapBg() {
