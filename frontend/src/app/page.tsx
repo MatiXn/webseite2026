@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FaqSection from "./components/FaqSection";
 import JsonLd from "./components/JsonLd";
+import Nav from "./components/Nav";
 import { useEffect, useState } from "react";
 
 const WA_LINK = "https://wa.me/491739980100";
@@ -274,39 +275,7 @@ export default function Home() {
         ]
       }} />
       {/* ── NAV ── */}
-      <nav style={{
-        position: "sticky", top: 0, zIndex: 100,
-        background: "rgba(255,255,255,0.95)", backdropFilter: "blur(12px)",
-        borderBottom: "1px solid var(--border)", padding: "0 48px",
-        height: 64, display: "flex", alignItems: "center", justifyContent: "space-between"
-      }}>
-        <Link href="/" style={{ display: "flex", alignItems: "center" }}>
-          <Image src="/phe-logo.png" alt="PHE Perm Engineering" height={36} width={180} style={{ height: 36, width: "auto" }} priority />
-        </Link>
-        <ul style={{ display: "flex", gap: 32, listStyle: "none" }}>
-          {[
-            ["Stellenangebote", "/jobs"],
-            ["Lebenslauf erstellen", "/lebenslauf-erstellen"],
-            ["So funktioniert's", "#how"],
-            ["YAFTO", "#yafto"],
-            ["Über uns", "/ueber-uns"],
-          ].map(([l, h]) => (
-            <li key={l}>
-              <Link href={h} style={{ fontSize: 14, fontWeight: 500, color: "var(--navy)", textDecoration: "none", opacity: 0.75 }}>{l}</Link>
-            </li>
-          ))}
-        </ul>
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <Link href="/kontakt" style={{ fontSize: 14, fontWeight: 500, color: "var(--navy)", textDecoration: "none", opacity: 0.7 }}>Kontakt</Link>
-          <Link href={WA_LINK} style={{
-            background: "var(--wa)", color: "#fff", fontSize: 14, fontWeight: 700,
-            padding: "10px 20px", borderRadius: 8, textDecoration: "none",
-            display: "flex", alignItems: "center", gap: 6
-          }}>
-            <WhatsAppIcon size={16} /> Jetzt bewerben
-          </Link>
-        </div>
-      </nav>
+      <Nav />
 
       {/* ── HERO ── */}
       <section style={{ padding: "80px 48px 60px", maxWidth: 1200, margin: "0 auto" }}>
