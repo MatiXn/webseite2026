@@ -107,59 +107,48 @@ const DE_PATH = `
   Z
 `;
 
-// Centroid for transform-origin trick
+// Centroid for scale transforms
 const CX = 390;
 const CY = 320;
-
 function ct(s: number) {
   return `translate(${CX * (1 - s)} ${CY * (1 - s)}) scale(${s})`;
 }
 
-// Major German cities in the same coordinate space
+// Major German cities
 const CITIES = [
-  { x: 545, y: 120, label: "Berlin",     r: 5.5, delay: "0s"   },
-  { x: 310, y:  65, label: "Hamburg",    r: 4.5, delay: "0.6s" },
-  { x: 220, y: 280, label: "Köln",       r: 4,   delay: "1.2s" },
-  { x: 270, y: 310, label: "Dortmund",   r: 3.5, delay: "0.4s" },
-  { x: 285, y: 355, label: "Frankfurt",  r: 5,   delay: "0.9s" },
-  { x: 380, y: 440, label: "Nürnberg",  r: 3.5, delay: "1.8s" },
-  { x: 320, y: 500, label: "Stuttgart",  r: 4,   delay: "2.2s" },
-  { x: 415, y: 540, label: "München",    r: 4.5, delay: "1.5s" },
-  { x: 455, y: 300, label: "Leipzig",    r: 3.5, delay: "0.3s" },
-  { x: 530, y: 285, label: "Dresden",    r: 3.5, delay: "2.5s" },
-  { x: 290, y: 170, label: "Bremen",     r: 3,   delay: "1.9s" },
-  { x: 390, y: 170, label: "Hannover",   r: 3.5, delay: "0.7s" },
+  { x: 545, y: 120, label: "Berlin",      r: 5.5, delay: "0s",   lx:  7, ly: 4, pulse: true  },
+  { x: 310, y:  65, label: "Hamburg",     r: 4.5, delay: "0.6s", lx:  7, ly: 4, pulse: false },
+  { x: 220, y: 280, label: "Köln",        r: 4,   delay: "1.2s", lx:-40, ly: 4, pulse: false },
+  { x: 208, y: 258, label: "Düsseldorf",  r: 4,   delay: "0.3s", lx:-68, ly: 4, pulse: false },
+  { x: 268, y: 310, label: "Dortmund",    r: 3.5, delay: "0.4s", lx:-58, ly: 4, pulse: false },
+  { x: 285, y: 355, label: "Frankfurt",   r: 5,   delay: "0.9s", lx:  7, ly: 4, pulse: true  },
+  { x: 380, y: 440, label: "Nürnberg",   r: 3.5, delay: "1.8s", lx:  7, ly: 4, pulse: false },
+  { x: 320, y: 500, label: "Stuttgart",   r: 4,   delay: "2.2s", lx:-60, ly: 4, pulse: false },
+  { x: 415, y: 540, label: "München",     r: 4.5, delay: "1.5s", lx:  7, ly: 4, pulse: true  },
+  { x: 455, y: 300, label: "Leipzig",     r: 3.5, delay: "0.3s", lx:  7, ly: 4, pulse: false },
+  { x: 530, y: 285, label: "Dresden",     r: 3.5, delay: "2.5s", lx:  7, ly: 4, pulse: false },
+  { x: 290, y: 170, label: "Bremen",      r: 3,   delay: "1.9s", lx:  7, ly: 4, pulse: false },
+  { x: 390, y: 170, label: "Hannover",    r: 3.5, delay: "0.7s", lx:  7, ly: 4, pulse: false },
+  { x: 490, y: 205, label: "Magdeburg",   r: 3,   delay: "3.1s", lx:  7, ly: 4, pulse: false },
+  { x: 590, y: 370, label: "Erfurt",      r: 3,   delay: "2.8s", lx:  7, ly: 4, pulse: false },
 ];
 
-const LABEL_OFFSETS: Record<string, [number, number]> = {
-  "Berlin":    [7,  4],
-  "Hamburg":   [7,  4],
-  "Köln":      [-40, 4],
-  "Dortmund":  [-58, 4],
-  "Frankfurt": [7,  4],
-  "Nürnberg":  [7,  4],
-  "Stuttgart": [-60, 4],
-  "München":   [7,  4],
-  "Leipzig":   [7,  4],
-  "Dresden":   [7,  4],
-  "Bremen":    [7,  4],
-  "Hannover":  [7,  4],
-};
-
-// Pulse rings: Frankfurt, Berlin, München, Hamburg
-const PULSE_CITIES = [
-  { x: 285, y: 355, delays: ["0s", "1.8s", "3.6s"] },
-  { x: 545, y: 120, delays: ["0.6s", "2.4s", "4.2s"] },
-  { x: 415, y: 540, delays: ["1.2s", "3.0s", "4.8s"] },
+// Flowing contour rings — each flows at a different speed/dash length
+const RINGS = [
+  { scale: 1.00, dash: 22,  gap: 8,  dur: 22, stroke: "#1b3575", width: 1.2, opacity: 0.65 },
+  { scale: 0.91, dash: 16,  gap: 9,  dur: 16, stroke: "#20408e", width: 1.0, opacity: 0.72 },
+  { scale: 0.82, dash: 11,  gap: 8,  dur: 12, stroke: "#2850a8", width: 0.9, opacity: 0.78 },
+  { scale: 0.73, dash:  8,  gap: 7,  dur:  9, stroke: "#3462be", width: 0.8, opacity: 0.84 },
+  { scale: 0.63, dash:  5,  gap: 5,  dur:  7, stroke: "#3e72d8", width: 0.7, opacity: 0.90 },
 ];
 
-// Each ring: dash + gap + speed (outer → inner, slower → faster)
-const RINGS: { scale: number; dash: number; gap: number; dur: number; stroke: string; width: number; opacity: number }[] = [
-  { scale: 1.00, dash: 18, gap: 10, dur: 18, stroke: "#1e3878", width: 1.1,  opacity: 0.70 },
-  { scale: 0.92, dash: 14, gap:  8, dur: 14, stroke: "#224090", width: 1.0,  opacity: 0.75 },
-  { scale: 0.83, dash: 10, gap:  7, dur: 11, stroke: "#2a4ea8", width: 0.95, opacity: 0.80 },
-  { scale: 0.74, dash:  8, gap:  6, dur:  9, stroke: "#3458b8", width: 0.85, opacity: 0.85 },
-  { scale: 0.64, dash:  6, gap:  5, dur:  7, stroke: "#3c68cc", width: 0.75, opacity: 0.90 },
+// Traveling particles along the border — animateMotion on the DE_PATH
+const PARTICLES = [
+  { dur: "18s", begin: "0s",   r: 2.8, color: "#6aacff" },
+  { dur: "14s", begin: "4.5s", r: 2.2, color: "#90c8ff" },
+  { dur: "22s", begin: "9s",   r: 1.8, color: "#4888f0" },
+  { dur: "11s", begin: "2s",   r: 2.0, color: "#80d0ff" },
+  { dur: "28s", begin: "6s",   r: 1.5, color: "#3860d0" },
 ];
 
 function GermanyMapBg() {
@@ -172,12 +161,16 @@ function GermanyMapBg() {
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3" result="b"/>
+          <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="3.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="particleGlow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="5" result="b"/>
             <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
           <radialGradient id="deGlow" cx="50%" cy="52%" r="50%">
-            <stop offset="0%" stopColor="#1e52d4" stopOpacity="0.18"/>
+            <stop offset="0%" stopColor="#1e52d4" stopOpacity="0.22"/>
             <stop offset="100%" stopColor="#1e52d4" stopOpacity="0"/>
           </radialGradient>
         </defs>
@@ -186,58 +179,61 @@ function GermanyMapBg() {
 
         {/* Subtle grid */}
         {[80,160,240,320,400,480,560].map(y => (
-          <line key={`h${y}`} x1="0" y1={y} x2="760" y2={y} stroke="#09132a" strokeWidth="0.5"/>
+          <line key={`h${y}`} x1="0" y1={y} x2="760" y2={y} stroke="#080f20" strokeWidth="0.5"/>
         ))}
         {[100,200,300,400,500,600,700].map(x => (
-          <line key={`v${x}`} x1={x} y1="0" x2={x} y2="640" stroke="#09132a" strokeWidth="0.5"/>
+          <line key={`v${x}`} x1={x} y1="0" x2={x} y2="640" stroke="#080f20" strokeWidth="0.5"/>
         ))}
 
-        {/* Ambient glow */}
+        {/* Ambient centre glow */}
         <ellipse cx="390" cy="330" rx="340" ry="280" fill="url(#deGlow)"/>
 
-        {/* Very faint fill so border is readable against grid */}
-        <path d={DE_PATH} fill="rgba(20,52,140,0.07)" stroke="none"/>
+        {/* Very faint country fill */}
+        <path d={DE_PATH} fill="rgba(20,52,140,0.06)" stroke="none"/>
 
         {/* ── FLOWING CONTOUR LINES ──
-            stroke-dashoffset animation moves the dashes along the path.
-            Each ring: different dash length, gap, and speed → layered flow effect. */}
+            stroke-dashoffset counts down → dashes travel forward along path */}
         {RINGS.map((r, i) => {
           const total = r.dash + r.gap;
           return (
-            <path
-              key={i}
-              d={DE_PATH}
-              fill="none"
-              stroke={r.stroke}
-              strokeWidth={r.width}
+            <path key={i} d={DE_PATH} fill="none"
+              stroke={r.stroke} strokeWidth={r.width}
               strokeDasharray={`${r.dash} ${r.gap}`}
               opacity={r.opacity}
               transform={r.scale < 1 ? ct(r.scale) : undefined}
             >
-              {/* Animate dashoffset: moves dashes forward along the path */}
-              <animate
-                attributeName="strokeDashoffset"
-                from="0"
-                to={`-${total}`}
-                dur={`${r.dur}s`}
-                repeatCount="indefinite"
-                calcMode="linear"
-              />
+              <animate attributeName="stroke-dashoffset"
+                from="0" to={`-${total}`}
+                dur={`${r.dur}s`} repeatCount="indefinite" calcMode="linear"/>
             </path>
           );
         })}
 
+        {/* ── TRAVELING GLOW PARTICLES along the outline ── */}
+        {PARTICLES.map((p, i) => (
+          <circle key={`p${i}`} r={p.r} fill={p.color} filter="url(#particleGlow)" opacity="0.9">
+            <animateMotion dur={p.dur} begin={p.begin} repeatCount="indefinite" calcMode="linear">
+              <mpath href={`#de-outline`}/>
+            </animateMotion>
+            <animate attributeName="opacity" values="0.2;1;1;0.2"
+              dur={p.dur} begin={p.begin} repeatCount="indefinite"/>
+          </circle>
+        ))}
+
+        {/* Invisible reference path for animateMotion particles */}
+        <path id="de-outline" d={DE_PATH} fill="none" stroke="none"/>
+
         {/* ── PULSE RINGS at major cities ── */}
-        {PULSE_CITIES.map((pc, pi) =>
-          pc.delays.map(delay => (
-            <circle key={`${pi}-${delay}`} cx={pc.x} cy={pc.y} r="6"
-              fill="none" stroke="#3870e8" strokeWidth="0.9">
-              <animate attributeName="r" values="6;40;6" dur="5s"
+        {CITIES.filter(c => c.pulse).map(c =>
+          ["0s","2s","4s"].map(delay => (
+            <circle key={`pulse-${c.label}-${delay}`} cx={c.x} cy={c.y} r="5"
+              fill="none" stroke="#4080f0" strokeWidth="0.8">
+              <animate attributeName="r" values="5;42;5" dur="6s"
                 begin={delay} repeatCount="indefinite"
-                calcMode="spline" keySplines="0.2 0 0.8 1;0.2 0 0.8 1"/>
-              <animate attributeName="opacity" values="0.65;0;0.65" dur="5s"
+                calcMode="spline" keySplines="0.15 0 0.85 1;0.15 0 0.85 1"/>
+              <animate attributeName="opacity" values="0.6;0;0.6" dur="6s"
                 begin={delay} repeatCount="indefinite"
-                calcMode="spline" keySplines="0.2 0 0.8 1;0.2 0 0.8 1"/>
+                calcMode="spline" keySplines="0.15 0 0.85 1;0.15 0 0.85 1"/>
             </circle>
           ))
         )}
@@ -245,23 +241,21 @@ function GermanyMapBg() {
         {/* ── CITY DOTS ── */}
         {CITIES.map(c => (
           <g key={c.label}>
-            <circle cx={c.x} cy={c.y} r={c.r + 4}
-              fill="none" stroke="#2a52b8" strokeWidth="0.6" opacity="0.22"/>
-            <circle cx={c.x} cy={c.y} r={c.r} fill="#e0eeff" filter="url(#glow)">
+            <circle cx={c.x} cy={c.y} r={c.r + 5}
+              fill="none" stroke="#2a52b8" strokeWidth="0.5" opacity="0.18"/>
+            <circle cx={c.x} cy={c.y} r={c.r} fill="#cce4ff" filter="url(#glow)">
               <animate attributeName="r"
-                values={`${c.r};${c.r * 1.3};${c.r}`}
-                dur="4s" begin={c.delay} repeatCount="indefinite"
+                values={`${c.r};${c.r * 1.35};${c.r}`}
+                dur="4.5s" begin={c.delay} repeatCount="indefinite"
                 calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/>
-              <animate attributeName="opacity" values="0.65;1;0.65"
-                dur="4s" begin={c.delay} repeatCount="indefinite"
+              <animate attributeName="opacity" values="0.6;1;0.6"
+                dur="4.5s" begin={c.delay} repeatCount="indefinite"
                 calcMode="spline" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/>
             </circle>
-            <circle cx={c.x} cy={c.y} r="1.8" fill="#4888f0"/>
-            <text
-              x={c.x + (LABEL_OFFSETS[c.label]?.[0] ?? 7)}
-              y={c.y + (LABEL_OFFSETS[c.label]?.[1] ?? 4)}
-              fill="#4a72b8" fontSize="9.5" fontFamily="system-ui,sans-serif"
-              fontWeight="600" opacity="0.8">
+            <circle cx={c.x} cy={c.y} r="1.8" fill="#5090ff"/>
+            <text x={c.x + c.lx} y={c.y + c.ly}
+              fill="#4a78cc" fontSize="9" fontFamily="system-ui,sans-serif"
+              fontWeight="700" opacity="0.85">
               {c.label}
             </text>
           </g>
@@ -269,14 +263,14 @@ function GermanyMapBg() {
 
         <text x="390" y="350" fill="#1a3268" fontSize="22"
           fontFamily="system-ui,sans-serif" fontWeight="900"
-          textAnchor="middle" letterSpacing="8" opacity="0.14">
+          textAnchor="middle" letterSpacing="8" opacity="0.12">
           DEUTSCHLAND
         </text>
       </svg>
 
       <div style={{
         position: "absolute", inset: 0,
-        background: "radial-gradient(ellipse 70% 65% at 50% 52%, rgba(5,11,28,0.28) 0%, rgba(5,11,28,0.72) 100%)",
+        background: "radial-gradient(ellipse 70% 65% at 50% 52%, rgba(5,11,28,0.22) 0%, rgba(5,11,28,0.68) 100%)",
       }}/>
     </div>
   );
