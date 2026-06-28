@@ -85,31 +85,110 @@ const WhatsAppIcon = ({ size = 16 }: { size?: number }) => (
 );
 
 const JOBS = [
-  {
-    category: "Elektrotechnik",
-    color: "#f59e0b",
-    title: "Elektroniker / Elektriker (m/w/d)",
-    location: "Frankfurt am Main",
-    salary: "bis 54.000 €/Jahr",
-    tags: ["Festanstellung", "Schaltschrankbau", "SPS"],
-  },
-  {
-    category: "Mechatronik",
-    color: "#3d7cc9",
-    title: "Mechatroniker / Industriemechaniker (m/w/d)",
-    location: "Stuttgart",
-    salary: "bis 58.000 €/Jahr",
-    tags: ["Festanstellung", "Wartung", "Instandhaltung"],
-  },
-  {
-    category: "IT / Automation",
-    color: "#7c3aed",
-    title: "SPS-Programmierer / Automatisierungstechniker (m/w/d)",
-    location: "München",
-    salary: "bis 72.000 €/Jahr",
-    tags: ["Festanstellung", "Siemens TIA Portal", "SCADA"],
-  },
+  { category: "Elektrotechnik", color: "#f59e0b", title: "Elektroniker für Betriebstechnik (m/w/d)", location: "Köln", salary: "45.000 – 54.000 €/Jahr", tags: ["Festanstellung", "Instandhaltung", "Keine Schicht"] },
+  { category: "IT / Automation", color: "#7c3aed", title: "SPS-Programmierer / Automatisierungstechniker (m/w/d)", location: "München", salary: "50.000 – 72.000 €/Jahr", tags: ["Festanstellung", "Siemens TIA Portal", "SCADA"] },
+  { category: "Mechatronik", color: "#3d7cc9", title: "Servicetechniker Kältetechnik (m/w/d)", location: "Hamburg", salary: "48.000 – 62.000 €/Jahr", tags: ["Festanstellung", "Kältetechnik", "Dienstwagen"] },
+  { category: "Elektrotechnik", color: "#f59e0b", title: "Servicetechniker Photovoltaik (m/w/d)", location: "Düsseldorf", salary: "44.000 – 54.000 €/Jahr", tags: ["Festanstellung", "Photovoltaik", "Außendienst"] },
+  { category: "Mechatronik", color: "#3d7cc9", title: "Mechatroniker als Servicetechniker (m/w/d)", location: "Berlin", salary: "45.000 – 58.000 €/Jahr", tags: ["Festanstellung", "Wartung", "Instandhaltung"] },
+  { category: "Elektrotechnik", color: "#f59e0b", title: "Elektroniker MSR / Gebäudeautomation (m/w/d)", location: "Frankfurt", salary: "48.000 – 60.000 €/Jahr", tags: ["Festanstellung", "MSR", "KNX"] },
 ];
+
+function JobCarousel() {
+  const [active, setActive] = useState(0);
+  const total = JOBS.length;
+
+  useEffect(() => {
+    const t = setInterval(() => setActive(i => (i + 1) % total), 3000);
+    return () => clearInterval(t);
+  }, [total]);
+
+  const LocationIcon = () => (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+    </svg>
+  );
+
+  return (
+    <div style={{ position: "relative", userSelect: "none" }}>
+      {/* Cards stack */}
+      <div style={{ position: "relative", height: 280 }}>
+        {JOBS.map((job, i) => {
+          const offset = (i - active + total) % total;
+          const isActive = offset === 0;
+          const isNext = offset === 1;
+          const isPrev = offset === total - 1;
+          const isVisible = isActive || isNext || isPrev;
+          if (!isVisible) return null;
+
+          let transform = "translateX(0) scale(1)";
+          let zIndex = 0;
+          let opacity = 0;
+
+          if (isActive) { transform = "translateX(0) scale(1)"; zIndex = 3; opacity = 1; }
+          else if (isNext) { transform = "translateX(calc(100% + 16px)) scale(0.92)"; zIndex = 2; opacity = 0.6; }
+          else if (isPrev) { transform = "translateX(calc(-100% - 16px)) scale(0.92)"; zIndex = 2; opacity = 0.6; }
+
+          return (
+            <div key={i} onClick={() => setActive(i)} style={{
+              position: "absolute", inset: 0,
+              transform, zIndex, opacity,
+              transition: "all 0.5s cubic-bezier(.22,1,.36,1)",
+              cursor: isActive ? "default" : "pointer",
+            }}>
+              <div style={{
+                background: "#fff", border: "1.5px solid var(--border)", borderRadius: 16,
+                padding: 24, height: "100%", boxSizing: "border-box",
+                boxShadow: isActive ? "0 12px 40px rgba(0,0,0,0.10)" : "none",
+                display: "flex", flexDirection: "column",
+              }}>
+                {/* Category */}
+                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 14 }}>
+                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: job.color, flexShrink: 0 }} />
+                  <span style={{ fontSize: 11, fontWeight: 700, color: job.color, textTransform: "uppercase", letterSpacing: "0.08em" }}>{job.category}</span>
+                  <span style={{ marginLeft: "auto", fontSize: 11, fontWeight: 600, background: "#f0f7ff", color: "var(--blue)", padding: "3px 8px", borderRadius: 6 }}>Festanstellung</span>
+                </div>
+                {/* Title */}
+                <h3 style={{ fontSize: 17, fontWeight: 800, color: "var(--navy)", lineHeight: 1.3, marginBottom: 12, flex: 1 }}>{job.title}</h3>
+                {/* Location + Salary */}
+                <div style={{ display: "flex", gap: 16, fontSize: 13, color: "var(--gray)", marginBottom: 16 }}>
+                  <span style={{ display: "flex", alignItems: "center", gap: 4 }}><LocationIcon /> {job.location}</span>
+                  <span style={{ fontWeight: 600, color: "var(--navy)" }}>{job.salary}</span>
+                </div>
+                {/* Tags */}
+                <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
+                  {job.tags.filter(t => t !== "Festanstellung").map(t => (
+                    <span key={t} style={{ fontSize: 11, fontWeight: 600, background: "var(--bg)", color: "var(--gray)", padding: "4px 10px", borderRadius: 6 }}>{t}</span>
+                  ))}
+                </div>
+                {/* CTA */}
+                <a href="https://wa.me/491739980100" style={{
+                  display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
+                  background: "var(--wa)", color: "#fff", fontSize: 13, fontWeight: 700,
+                  padding: "10px 16px", borderRadius: 10, textDecoration: "none",
+                }}>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+                  Jetzt bewerben
+                </a>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Dots */}
+      <div style={{ display: "flex", justifyContent: "center", gap: 6, marginTop: 16 }}>
+        {JOBS.map((_, i) => (
+          <button key={i} onClick={() => setActive(i)} style={{
+            width: i === active ? 20 : 7, height: 7, borderRadius: 4, border: "none",
+            background: i === active ? "var(--blue)" : "var(--border)",
+            cursor: "pointer", transition: "all 0.3s",
+            padding: 0,
+          }} />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 const STEPS = [
   {
@@ -201,46 +280,53 @@ export default function Home() {
       </nav>
 
       {/* ── HERO ── */}
-      <section style={{ textAlign: "center", padding: "100px 24px 80px", maxWidth: 860, margin: "0 auto" }}>
-        <div style={{
-          display: "inline-flex", alignItems: "center", gap: 6,
-          background: "#f0f7ff", border: "1px solid #c7dff7", color: "var(--blue)",
-          fontSize: 13, fontWeight: 600, padding: "6px 14px", borderRadius: 20, marginBottom: 28
-        }}>
-          <span style={{ background: "var(--blue)", color: "#fff", fontSize: 11, padding: "2px 8px", borderRadius: 10 }}>NEU</span>
-          Kostenloser CV-Generator verfügbar
-        </div>
+      <section style={{ padding: "80px 48px 60px", maxWidth: 1200, margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
 
-        <h1 style={{ fontSize: "clamp(40px,6vw,72px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.03em", color: "var(--navy)", marginBottom: 24 }}>
-          Ihr nächster Job als<br />
-          <span style={{ display: "inline-block", minWidth: 420, textAlign: "center" }}>
-            <SlideTitle />
-          </span>
-          <br />
-          <em className="grad-text" style={{ fontStyle: "normal" }}>Schnell. Direkt. Kostenlos.</em>
-        </h1>
+          {/* LEFT: Text */}
+          <div>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              background: "#f0f7ff", border: "1px solid #c7dff7", color: "var(--blue)",
+              fontSize: 13, fontWeight: 600, padding: "6px 14px", borderRadius: 20, marginBottom: 24
+            }}>
+              <span style={{ background: "var(--blue)", color: "#fff", fontSize: 11, padding: "2px 8px", borderRadius: 10 }}>NEU</span>
+              Kostenloser CV-Generator verfügbar
+            </div>
 
-        <p style={{ fontSize: 18, color: "var(--gray)", lineHeight: 1.7, marginBottom: 36, maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
-          PHE Perm Engineering vermittelt Fachkräfte in Festanstellung — persönlich, schnell und ohne Gebühren für Bewerber.
-        </p>
+            <h1 style={{ fontSize: "clamp(32px,4vw,58px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.03em", color: "var(--navy)", marginBottom: 20 }}>
+              Ihr nächster Job als<br />
+              <SlideTitle />
+              <br />
+              <em className="grad-text" style={{ fontStyle: "normal" }}>Schnell. Direkt. Kostenlos.</em>
+            </h1>
 
-        <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap", marginBottom: 56 }}>
-          <Link href={WA_LINK} className="btn-primary">
-            <WhatsAppIcon size={18} /> Via WhatsApp bewerben
-          </Link>
-          <a href={`mailto:${MAIL_APPLY}?subject=Bewerbung&body=Hallo PHE-Team,%0A%0Amein Name:%0ATelefonnummer:%0A%0AIch bewerbe mich und freue mich auf Ihre Rückmeldung.`} className="btn-ghost" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-            <MailIcon size={16} /> Per E-Mail bewerben
-          </a>
-        </div>
+            <p style={{ fontSize: 17, color: "var(--gray)", lineHeight: 1.7, marginBottom: 32, maxWidth: 480 }}>
+              PHE Perm Engineering vermittelt Fachkräfte in Festanstellung — persönlich, schnell und ohne Gebühren für Bewerber.
+            </p>
 
-        {/* Google rating summary */}
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 12, padding: "10px 20px" }}>
-          <GoogleIcon />
-          <div style={{ display: "flex", gap: 2 }}>
-            {[1,2,3,4,5].map(i => <StarIcon key={i} />)}
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 40 }}>
+              <Link href={WA_LINK} className="btn-primary">
+                <WhatsAppIcon size={18} /> Via WhatsApp bewerben
+              </Link>
+              <a href={`mailto:${MAIL_APPLY}?subject=Bewerbung&body=Hallo PHE-Team,%0A%0Amein Name:%0ATelefonnummer:%0A%0AIch bewerbe mich und freue mich auf Ihre Rückmeldung.`} className="btn-ghost" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <MailIcon size={16} /> Per E-Mail bewerben
+              </a>
+            </div>
+
+            {/* Google rating */}
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 12, padding: "10px 20px" }}>
+              <GoogleIcon />
+              <div style={{ display: "flex", gap: 2 }}>
+                {[1,2,3,4,5].map(i => <StarIcon key={i} />)}
+              </div>
+              <span style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>5.0</span>
+              <span style={{ fontSize: 13, color: "var(--gray)" }}>· 47 Google-Bewertungen</span>
+            </div>
           </div>
-          <span style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>5.0</span>
-          <span style={{ fontSize: 13, color: "var(--gray)" }}>· 47 Google-Bewertungen</span>
+
+          {/* RIGHT: Job Cards Carousel */}
+          <JobCarousel />
         </div>
       </section>
 
