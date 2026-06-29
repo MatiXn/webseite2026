@@ -298,6 +298,49 @@ const STEPS = [
   },
 ];
 
+function YaftoForm() {
+  const [email, setEmail] = useState("");
+  const [sent, setSent] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    window.location.href = `mailto:warteliste@yafto.de?subject=${encodeURIComponent("Warteliste: " + email)}&body=${encodeURIComponent(`Hallo YAFTO-Team,\n\nbitte tragt mich in die Warteliste ein:\n\nE-Mail: ${email}\n\nMit freundlichen Grüßen`)}`;
+    setSent(true);
+  };
+
+  if (sent) return (
+    <div style={{ textAlign: "center", padding: "16px 0", color: "#fff" }}>
+      <div style={{ fontSize: 28, marginBottom: 8 }}>✓</div>
+      <p style={{ fontSize: 15, fontWeight: 700 }}>Ihr E-Mail-Programm öffnet sich gleich.</p>
+      <p style={{ fontSize: 13, color: "rgba(255,255,255,.55)", marginTop: 4 }}>Bitte senden Sie die E-Mail ab, um Ihren Platz zu sichern.</p>
+    </div>
+  );
+
+  return (
+    <form onSubmit={handleSubmit} className="yafto-form">
+      <input
+        type="email"
+        required
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        placeholder="Ihre E-Mail-Adresse"
+        style={{
+          flex: 1, background: "rgba(255,255,255,.1)", border: "1.5px solid rgba(255,255,255,.2)",
+          color: "#fff", fontSize: 14, padding: "12px 16px", borderRadius: 8, outline: "none"
+        }}
+      />
+      <button type="submit" style={{
+        background: "linear-gradient(135deg,var(--blue),var(--violet))",
+        color: "#fff", fontSize: 14, fontWeight: 700, padding: "12px 20px",
+        borderRadius: 8, border: "none", cursor: "pointer", whiteSpace: "nowrap", fontFamily: "inherit"
+      }}>
+        Zur Warteliste anmelden
+      </button>
+    </form>
+  );
+}
+
 export default function Home() {
   const [modalJob, setModalJob] = useState<Job | null>(null);
   return (
@@ -653,23 +696,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <form onSubmit={(e) => e.preventDefault()} className="yafto-form">
-            <input
-              type="email"
-              placeholder="Ihre E-Mail-Adresse"
-              style={{
-                flex: 1, background: "rgba(255,255,255,.1)", border: "1.5px solid rgba(255,255,255,.2)",
-                color: "#fff", fontSize: 14, padding: "12px 16px", borderRadius: 8, outline: "none"
-              }}
-            />
-            <button type="submit" style={{
-              background: "linear-gradient(135deg,var(--blue),var(--violet))",
-              color: "#fff", fontSize: 14, fontWeight: 700, padding: "12px 20px",
-              borderRadius: 8, border: "none", cursor: "pointer", whiteSpace: "nowrap"
-            }}>
-              Zur Warteliste anmelden
-            </button>
-          </form>
+          <YaftoForm />
         </div>
       </section>
 
