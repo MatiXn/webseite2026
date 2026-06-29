@@ -411,6 +411,7 @@ export default function Home() {
       <Nav />
 
       {/* ── HERO ── */}
+      <div style={{ background: "#f7f9fc" }}>
       <section style={{ maxWidth: 1200, margin: "0 auto" }} className="section-pad px-section">
         <div className="hero-grid" style={{ gap: 64 }}>
 
@@ -425,7 +426,7 @@ export default function Home() {
               <Link href="/lebenslauf-erstellen" style={{ color: "inherit", textDecoration: "none" }}>Kostenloser CV-Generator verfügbar →</Link>
             </div>
 
-            <h1 style={{ fontSize: "clamp(32px,4vw,58px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.03em", color: "var(--navy)", marginBottom: 20 }}>
+            <h1 style={{ fontSize: "clamp(36px,4.5vw,64px)", fontWeight: 400, lineHeight: 1.02, letterSpacing: "-0.04em", color: "var(--navy)", marginBottom: 20 }}>
               Ihr nächster Job als<br />
               <SlideTitle />
               <br />
@@ -460,9 +461,10 @@ export default function Home() {
           <div className="job-fan-wrapper"><JobFan /></div>
         </div>
       </section>
+      </div>
 
       {/* ── STATS ── */}
-      <div style={{ background: "var(--bg)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "40px 24px" }}>
+      <div style={{ background: "#fff", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "40px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }} className="stats-row">
           {[
             { num: "5.000+", label: "Erfolgreiche Matches" },
@@ -471,20 +473,20 @@ export default function Home() {
             { num: "4.9★", label: "Bewertung unserer Kandidaten" },
           ].map((s) => (
             <div key={s.num}>
-              <div className="grad-text" style={{ fontSize: 36, fontWeight: 900, letterSpacing: "-0.02em" }}>{s.num}</div>
-              <div style={{ fontSize: 13, color: "var(--gray)", marginTop: 4, lineHeight: 1.4 }}>{s.label}</div>
+              <div className="grad-text" style={{ fontSize: 40, fontWeight: 500, letterSpacing: "-0.02em" }}>{s.num}</div>
+              <div style={{ fontSize: 14, color: "var(--gray)", marginTop: 4, lineHeight: 1.4 }}>{s.label}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* ── JOBS ── */}
-      <section style={{ padding: "80px 24px" }}>
+      <section style={{ padding: "80px 24px", background: "#f7f9fc" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div className="section-header-row">
             <div>
               <span className="tag">Aktuelle Stellen</span>
-              <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.025em", color: "var(--navy)" }}>
+              <h2 style={{ fontSize: 31, fontWeight: 400, lineHeight: 1.14, letterSpacing: "-0.02em", color: "var(--navy)" }}>
                 Offene Jobs, <em className="grad-text" style={{ fontStyle: "normal" }}>jetzt bewerben</em>
               </h2>
             </div>
@@ -536,11 +538,11 @@ export default function Home() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section id="how" style={{ background: "var(--bg)", padding: "64px 24px" }}>
+      <section id="how" style={{ background: "#fff", padding: "64px 24px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }} className="hero-grid">
           <div>
             <span className="tag">So funktioniert&apos;s</span>
-            <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.025em", color: "var(--navy)", marginBottom: 16 }}>
+            <h2 style={{ fontSize: 31, fontWeight: 400, lineHeight: 1.14, letterSpacing: "-0.02em", color: "var(--navy)", marginBottom: 16 }}>
               Von der Bewerbung<br />zum <em className="grad-text" style={{ fontStyle: "normal" }}>neuen Job</em> —<br />in 4 Schritten.
             </h2>
             <p style={{ fontSize: 17, color: "var(--gray)", lineHeight: 1.65, marginBottom: 36 }}>
@@ -575,10 +577,10 @@ export default function Home() {
       </section>
 
       {/* ── CV GENERATOR ── */}
-      <section id="lebenslauf" style={{ padding: "80px 24px" }}>
+      <section id="lebenslauf" style={{ padding: "80px 24px", background: "#f1f2ff" }}>
         <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
           <span className="tag">Kostenlos</span>
-          <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.025em", color: "var(--navy)", marginBottom: 16 }}>
+          <h2 style={{ fontSize: 31, fontWeight: 400, lineHeight: 1.14, letterSpacing: "-0.02em", color: "var(--navy)", marginBottom: 16 }}>
             Ihr <em className="grad-text" style={{ fontStyle: "normal" }}>professioneller Lebenslauf</em> in 5 Minuten.
           </h2>
           <p style={{ fontSize: 17, color: "var(--gray)", lineHeight: 1.65, marginBottom: 48, maxWidth: 560, margin: "0 auto 48px" }}>
@@ -610,12 +612,12 @@ export default function Home() {
       </section>
 
       {/* ── GOOGLE REVIEWS ── */}
-      <section style={{ padding: "80px 24px", overflow: "hidden" }}>
+      <section style={{ padding: "80px 24px", overflow: "hidden", background: "#f7f9fc" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div className="section-header-row">
             <div>
               <span className="tag">Bewerberstimmen</span>
-              <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.025em", color: "var(--navy)" }}>
+              <h2 style={{ fontSize: 31, fontWeight: 400, lineHeight: 1.14, letterSpacing: "-0.02em", color: "var(--navy)" }}>
                 Was unsere <em className="grad-text" style={{ fontStyle: "normal" }}>Bewerber sagen</em>
               </h2>
             </div>
