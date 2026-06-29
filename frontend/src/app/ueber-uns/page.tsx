@@ -23,17 +23,17 @@ const VALUES = [
   {
     num: "01",
     title: "Branchenfokus",
-    text: "Wir sind ausschließlich in Elektrotechnik, IT und Bau aktiv — keine Kompromisse, keine Ablenkung. Diese Spezialisierung macht uns zum besten Ansprechpartner für Fachkräfte und Unternehmen in diesen Bereichen.",
+    text: "Wir sind ausschließlich in Elektrotechnik, IT und Bau aktiv, keine Kompromisse, keine Ablenkung. Diese Spezialisierung macht uns zum besten Ansprechpartner für Fachkräfte und Unternehmen in diesen Bereichen.",
   },
   {
     num: "02",
     title: "Effizienter Prozess",
-    text: "Klare Abläufe, vordefinierte Pakete und direkte Kommunikation. Wir verschwenden keine Zeit — weder Ihre noch unsere. Von der ersten Anfrage bis zur erfolgreichen Einstellung in wenigen Wochen.",
+    text: "Klare Abläufe, vordefinierte Pakete und direkte Kommunikation. Wir verschwenden keine Zeit, weder Ihre noch unsere. Von der ersten Anfrage bis zur erfolgreichen Einstellung in wenigen Wochen.",
   },
   {
     num: "03",
     title: "Persönliche Betreuung",
-    text: "Ein fester Ansprechpartner vom Erstkontakt bis zum ersten Arbeitstag. Wir kennen unsere Kandidaten und unsere Kunden — das ist der Unterschied zu anonymen Jobbörsen.",
+    text: "Ein fester Ansprechpartner vom Erstkontakt bis zum ersten Arbeitstag. Wir kennen unsere Kandidaten und unsere Kunden, das ist der Unterschied zu anonymen Jobbörsen.",
   },
 ];
 
@@ -60,7 +60,7 @@ export default function UeberUnsPage() {
           </span>
         </h1>
         <p style={{ fontSize: 18, color: "var(--gray)", lineHeight: 1.7, maxWidth: 620 }}>
-          PHE-Perm Engineering Ingenieure &amp; Techniker GmbH ist eine spezialisierte Personalvermittlung für IT-, Elektro- und Baufachkräfte — mit Sitz in Düsseldorf und bundesweiter Reichweite.
+          PHE-Perm Engineering Ingenieure &amp; Techniker GmbH ist eine spezialisierte Personalvermittlung für IT-, Elektro- und Baufachkräfte, mit Sitz in Düsseldorf und bundesweiter Reichweite.
         </p>
       </section>
 
@@ -87,10 +87,10 @@ export default function UeberUnsPage() {
               Passgenaue Vermittlung ohne Umwege
             </h2>
             <p style={{ fontSize: 16, color: "var(--gray)", lineHeight: 1.8, marginBottom: 20 }}>
-              Wir glauben, dass der richtige Job das Leben verändert. Deshalb setzen wir alles daran, Fachkräfte und Unternehmen zusammenzubringen — schnell, effizient und menschlich.
+              Wir glauben, dass der richtige Job das Leben verändert. Deshalb setzen wir alles daran, Fachkräfte und Unternehmen zusammenzubringen, schnell, effizient und menschlich.
             </p>
             <p style={{ fontSize: 16, color: "var(--gray)", lineHeight: 1.8 }}>
-              Keine Zeitarbeit. Keine Leiharbeit. Nur direkte Festanstellungen — bei Unternehmen, die wirklich zu Ihnen passen.
+              Keine Zeitarbeit. Keine Leiharbeit. Nur direkte Festanstellungen, bei Unternehmen, die wirklich zu Ihnen passen.
             </p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
@@ -113,7 +113,7 @@ export default function UeberUnsPage() {
           Bereit für den nächsten Schritt?
         </h2>
         <p style={{ fontSize: 16, color: "var(--gray)", marginBottom: 32, maxWidth: 480, margin: "0 auto 32px" }}>
-          Kontaktieren Sie uns per WhatsApp oder E-Mail — kostenlos, unverbindlich und direkt.
+          Kontaktieren Sie uns per WhatsApp oder E-Mail, kostenlos, unverbindlich und direkt.
         </p>
         <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
           <a href={WA_LINK} style={{
@@ -137,10 +137,10 @@ export default function UeberUnsPage() {
         <FaqSection title="Häufige Fragen über PHE Perm Engineering" items={[
           { q: "Was ist PHE Perm Engineering?", a: "PHE-Perm Engineering Ingenieure & Techniker GmbH ist eine spezialisierte Personalvermittlung mit Sitz in Düsseldorf. Wir vermitteln Fachkräfte aus den Bereichen Elektrotechnik, IT & Automation und Bau in Festanstellungen bei deutschen Unternehmen." },
           { q: "Wo ist PHE Perm Engineering ansässig?", a: "Unser Hauptsitz befindet sich in der Hüttenstraße 30, 40215 Düsseldorf. Wir sind jedoch bundesweit tätig und vermitteln Stellen in über 80 deutschen Städten." },
-          { q: "Was unterscheidet PHE von anderen Personalvermittlungen?", a: "Wir sind ausschließlich auf IT, Elektro und Bau spezialisiert — keine Generalagentur. Das bedeutet: tiefes Branchenwissen, gezielte Kandidatenauswahl und echte Kontakte zu den richtigen Unternehmen. Dazu persönliche Betreuung statt anonymer Prozesse." },
-          { q: "Ist PHE eine Zeitarbeitsfirma?", a: "Nein. PHE Perm Engineering vermittelt ausschließlich Direktanstellungen — Sie werden direkt und unbefristet beim Unternehmen angestellt. Keine Zeitarbeit, keine Leiharbeit, keine befristeten Verträge." },
+          { q: "Was unterscheidet PHE von anderen Personalvermittlungen?", a: "Wir sind ausschließlich auf IT, Elektro und Bau spezialisiert, keine Generalagentur. Das bedeutet: tiefes Branchenwissen, gezielte Kandidatenauswahl und echte Kontakte zu den richtigen Unternehmen. Dazu persönliche Betreuung statt anonymer Prozesse." },
+          { q: "Ist PHE eine Zeitarbeitsfirma?", a: "Nein. PHE Perm Engineering vermittelt ausschließlich Direktanstellungen, Sie werden direkt und unbefristet beim Unternehmen angestellt. Keine Zeitarbeit, keine Leiharbeit, keine befristeten Verträge." },
           { q: "Wie viele Fachkräfte hat PHE bereits vermittelt?", a: "Wir haben Zugriff auf über 3.500 geprüfte Fachkräfte und haben bereits tausende erfolgreiche Matches in mehr als 80 deutschen Städten erzielt." },
-          { q: "Wer kann sich bei PHE bewerben?", a: "Alle Fachkräfte mit Qualifikationen in IT, Elektrotechnik oder Bau. Ob Berufseinsteiger oder erfahrene Führungskraft — wir finden die passende Stelle für Ihr Profil." },
+          { q: "Wer kann sich bei PHE bewerben?", a: "Alle Fachkräfte mit Qualifikationen in IT, Elektrotechnik oder Bau. Ob Berufseinsteiger oder erfahrene Führungskraft, wir finden die passende Stelle für Ihr Profil." },
         ]} />
       </div>
 
@@ -153,7 +153,7 @@ export default function UeberUnsPage() {
         "email": "info@phe-perm.de",
         "foundingLocation": "Düsseldorf",
         "address": { "@type": "PostalAddress", "streetAddress": "Hüttenstraße 30", "addressLocality": "Düsseldorf", "postalCode": "40215", "addressCountry": "DE" },
-        "description": "Spezialisierte Personalvermittlung für IT, Elektrotechnik und Bau — bundesweit, kostenlos für Bewerber, nur Festanstellungen.",
+        "description": "Spezialisierte Personalvermittlung für IT, Elektrotechnik und Bau, bundesweit, kostenlos für Bewerber, nur Festanstellungen.",
         "areaServed": "DE",
         "sameAs": ["https://www.instagram.com/phe_perm_engineering", "https://www.linkedin.com/company/phe-perm-engineering"]
       }} />

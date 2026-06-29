@@ -198,7 +198,7 @@ export default function JobsPage() {
       );
     }
 
-    // No location — return title matches directly
+    // No location, return title matches directly
     if (!loc) {
       setResult(q ? { type: "exact", jobs: pool } : null);
       return;
@@ -390,7 +390,7 @@ export default function JobsPage() {
             display: "flex", alignItems: "center", gap: 8,
           }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-            Keine exakten Treffer für <strong>&quot;{locationInput}&quot;</strong> — zeige {result.jobs.length} Job{result.jobs.length !== 1 ? "s" : ""} im Umkreis von 50 km.
+            Keine exakten Treffer für <strong>&quot;{locationInput}&quot;</strong>, zeige {result.jobs.length} Job{result.jobs.length !== 1 ? "s" : ""} im Umkreis von 50 km.
           </div>
         )}
         {result?.type === "none" && (
@@ -400,7 +400,7 @@ export default function JobsPage() {
           }}>
             <p style={{ fontSize: 18, fontWeight: 700, color: "var(--navy)", marginBottom: 8 }}>Keine Stellen gefunden</p>
             <p style={{ fontSize: 14, color: "var(--gray)", marginBottom: 20 }}>
-              Für Ihre Suche sind aktuell keine offenen Stellen verfügbar — auch nicht im 50-km-Umkreis.<br />
+              Für Ihre Suche sind aktuell keine offenen Stellen verfügbar, auch nicht im 50-km-Umkreis.<br />
               Senden Sie uns dennoch eine Initiativbewerbung via WhatsApp oder E-Mail.
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -456,7 +456,7 @@ export default function JobsPage() {
               Nichts Passendes dabei?
             </p>
             <p style={{ fontSize: 14, color: "var(--gray)", marginBottom: 24 }}>
-              Wir haben noch mehr Stellen die nicht online sind — schick uns eine WhatsApp und wir finden gemeinsam die richtige Position.
+              Wir haben noch mehr Stellen die nicht online sind, schick uns eine WhatsApp und wir finden gemeinsam die richtige Position.
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <a
@@ -487,12 +487,12 @@ export default function JobsPage() {
 
       <div style={{ background: "var(--bg)", borderTop: "1px solid var(--border)" }}>
         <FaqSection title="Häufige Fragen zu Stellenangeboten" items={[
-          { q: "Wie finde ich Jobs in meiner Nähe?", a: "Geben Sie Ihren Wohnort in das Suchfeld ein. Wenn keine Stelle direkt in Ihrer Stadt verfügbar ist, zeigen wir automatisch alle offenen Positionen im Umkreis von 50 km an — sortiert nach Entfernung." },
+          { q: "Wie finde ich Jobs in meiner Nähe?", a: "Geben Sie Ihren Wohnort in das Suchfeld ein. Wenn keine Stelle direkt in Ihrer Stadt verfügbar ist, zeigen wir automatisch alle offenen Positionen im Umkreis von 50 km an, sortiert nach Entfernung." },
           { q: "Was verdiene ich als Elektroniker in Deutschland?", a: "Das Gehalt variiert je nach Spezialisierung und Region. Elektroniker für Betriebstechnik verdienen typischerweise 40.000–56.000 €/Jahr, SPS-Programmierer und Automatisierungstechniker 55.000–75.000 €/Jahr. Wir verhandeln für Sie das bestmögliche Gehalt." },
           { q: "Wie kann ich mich auf eine Stelle bewerben?", a: "Sie haben zwei Möglichkeiten: Klicken Sie auf 'WhatsApp' für eine schnelle Bewerbung, oder wählen Sie 'E-Mail' und senden Sie Ihre Unterlagen (Lebenslauf, Zeugnisse) an bewerbung@phe-perm.de. Unser Team meldet sich innerhalb von 24 Stunden." },
-          { q: "Gibt es Stellen, die nicht online gelistet sind?", a: "Ja. Wir führen zahlreiche exklusive Positionen, die wir nicht öffentlich ausschreiben. Kontaktieren Sie uns per WhatsApp und beschreiben Sie, was Sie suchen — wir finden auch unveröffentlichte Stellen für Sie." },
-          { q: "Welche Qualifikationen brauche ich für Elektrotechnik-Jobs?", a: "Für die meisten Stellen wird eine abgeschlossene Berufsausbildung oder ein Studium im jeweiligen Bereich vorausgesetzt. Berufserfahrung ist von Vorteil, aber keine Voraussetzung — wir haben auch Einstiegspositionen für Berufsanfänger." },
-          { q: "Wie weit ist der Umkreis bei der Standortsuche?", a: "Wir suchen automatisch im Umkreis von 50 km um Ihren eingegebenen Ort. Falls Sie einen anderen Radius bevorzugen, kontaktieren Sie uns — wir suchen gezielt für Sie." },
+          { q: "Gibt es Stellen, die nicht online gelistet sind?", a: "Ja. Wir führen zahlreiche exklusive Positionen, die wir nicht öffentlich ausschreiben. Kontaktieren Sie uns per WhatsApp und beschreiben Sie, was Sie suchen, wir finden auch unveröffentlichte Stellen für Sie." },
+          { q: "Welche Qualifikationen brauche ich für Elektrotechnik-Jobs?", a: "Für die meisten Stellen wird eine abgeschlossene Berufsausbildung oder ein Studium im jeweiligen Bereich vorausgesetzt. Berufserfahrung ist von Vorteil, aber keine Voraussetzung, wir haben auch Einstiegspositionen für Berufsanfänger." },
+          { q: "Wie weit ist der Umkreis bei der Standortsuche?", a: "Wir suchen automatisch im Umkreis von 50 km um Ihren eingegebenen Ort. Falls Sie einen anderen Radius bevorzugen, kontaktieren Sie uns, wir suchen gezielt für Sie." },
         ]} />
       </div>
 

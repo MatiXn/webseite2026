@@ -30,7 +30,7 @@ export default function AgbPage() {
         <Section title="§ 2 Leistungsgegenstand">
           <p>
             PHE erbringt Dienstleistungen der Personalvermittlung. PHE vermittelt ausschließlich
-            Direktanstellungen (Festanstellungen) — keine Zeitarbeit, keine Leiharbeit. PHE ist
+            Direktanstellungen (Festanstellungen), keine Zeitarbeit, keine Leiharbeit. PHE ist
             kein Arbeitgeber der vermittelten Kandidaten.
           </p>
           <p style={{ marginTop: 8 }}>
@@ -90,7 +90,7 @@ export default function AgbPage() {
           <p>
             PHE haftet für Schäden aus der Verletzung von Leben, Körper oder Gesundheit unbeschränkt.
             Im Übrigen haftet PHE nur für Vorsatz und grobe Fahrlässigkeit. Die Haftung für leichte
-            Fahrlässigkeit ist — soweit gesetzlich zulässig — ausgeschlossen.
+            Fahrlässigkeit ist, soweit gesetzlich zulässig, ausgeschlossen.
           </p>
           <p style={{ marginTop: 8 }}>
             PHE übernimmt keine Garantie dafür, dass eine Vermittlung innerhalb eines bestimmten

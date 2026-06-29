@@ -95,7 +95,7 @@ ${form.vorname} ${form.nachname}`;
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
           <div>
             <h2 style={{ fontSize: 20, fontWeight: 800, color: "var(--navy)", marginBottom: 4 }}>Bei PHE bewerben</h2>
-            <p style={{ fontSize: 13, color: "var(--gray)" }}>Wir finden passende Stellen für Sie — kostenlos.</p>
+            <p style={{ fontSize: 13, color: "var(--gray)" }}>Wir finden passende Stellen für Sie, kostenlos.</p>
           </div>
           <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--gray)", fontSize: 20, lineHeight: 1, padding: 4 }}>✕</button>
         </div>
@@ -129,7 +129,7 @@ ${form.vorname} ${form.nachname}`;
             E-Mail öffnen & senden
           </button>
         </div>
-        <p style={{ fontSize: 11, color: "var(--gray-light)", textAlign: "center", marginTop: 12 }}>Ihr E-Mail-Programm öffnet sich — bitte PDF anhängen.</p>
+        <p style={{ fontSize: 11, color: "var(--gray-light)", textAlign: "center", marginTop: 12 }}>Ihr E-Mail-Programm öffnet sich, bitte PDF anhängen.</p>
       </div>
     </div>
   );
@@ -358,7 +358,7 @@ function TemplateB({ data }: { data: CVData }) {
   );
 }
 
-// ── Template C: Modern Grün — kein Foto, minimalistisch ─────────────────────
+// ── Template C: Modern Grün, kein Foto, minimalistisch ─────────────────────
 function TemplateC({ data }: { data: CVData }) {
   const name = [data.vorname, data.nachname].filter(Boolean).join(" ") || "Dein Name";
   const accent = "#059669";
@@ -448,7 +448,7 @@ function TemplateC({ data }: { data: CVData }) {
   );
 }
 
-// ── Template D: Elegant Grau — Foto links oben, helle Sidebar ───────────────
+// ── Template D: Elegant Grau, Foto links oben, helle Sidebar ───────────────
 function TemplateD({ data }: { data: CVData }) {
   const name = [data.vorname, data.nachname].filter(Boolean).join(" ") || "Dein Name";
   const accent = "#7c3aed";
@@ -651,7 +651,7 @@ export default function LebenslaufPage() {
         <div style={{ maxWidth: 1300, margin: "0 auto" }}>
           <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Kostenlos & ohne Anmeldung</p>
           <h1 style={{ fontSize: "clamp(26px,3.5vw,40px)", fontWeight: 900, color: "var(--navy)", letterSpacing: "-0.025em", marginBottom: 8 }}>Lebenslauf erstellen</h1>
-          <p style={{ fontSize: 15, color: "var(--gray)" }}>Füllen Sie das Formular aus — Ihr Lebenslauf wird live als Vorschau angezeigt und kann als PDF gespeichert werden.</p>
+          <p style={{ fontSize: 15, color: "var(--gray)" }}>Füllen Sie das Formular aus, Ihr Lebenslauf wird live als Vorschau angezeigt und kann als PDF gespeichert werden.</p>
         </div>
       </div>
 
@@ -660,7 +660,7 @@ export default function LebenslaufPage() {
         <div style={{ maxWidth: 1300, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
           <div>
             <p style={{ fontWeight: 800, color: "#fff", fontSize: 15, marginBottom: 2 }}>🎯 Lebenslauf fertig? Jetzt direkt bei PHE bewerben!</p>
-            <p style={{ color: "#93c5fd", fontSize: 13 }}>Wir finden passende Stellen für Sie — kostenlos & unverbindlich. Über 25 offene Positionen.</p>
+            <p style={{ color: "#93c5fd", fontSize: 13 }}>Wir finden passende Stellen für Sie, kostenlos & unverbindlich. Über 25 offene Positionen.</p>
           </div>
           <div style={{ display: "flex", gap: 10, flexShrink: 0 }}>
             <button
@@ -803,7 +803,7 @@ export default function LebenslaufPage() {
                 <Input label="Sprachen (kommagetrennt)" value={data.sprachen} onChange={v => set("sprachen", v)} placeholder="Deutsch (Muttersprache), Englisch (B2), ..." multiline />
                 <div style={{ padding: 14, background: "#f0f7ff", borderRadius: 10, border: "1.5px solid #c7dff7" }}>
                   <p style={{ fontSize: 13, color: "var(--blue)", fontWeight: 600, marginBottom: 4 }}>Tipp</p>
-                  <p style={{ fontSize: 13, color: "var(--gray)", lineHeight: 1.6 }}>Trennen Sie Einträge mit einem Komma — sie erscheinen als Liste in Ihrem Lebenslauf.</p>
+                  <p style={{ fontSize: 13, color: "var(--gray)", lineHeight: 1.6 }}>Trennen Sie Einträge mit einem Komma, sie erscheinen als Liste in Ihrem Lebenslauf.</p>
                 </div>
               </div>
             )}
@@ -839,7 +839,7 @@ export default function LebenslaufPage() {
             <div style={{ background: "linear-gradient(135deg,#f0f7ff,#f5f0ff)", border: "1.5px solid #c7dff7", borderRadius: 12, padding: 16 }}>
               <p style={{ fontSize: 14, fontWeight: 800, color: "var(--navy)", marginBottom: 4 }}>🎯 Jetzt bei PHE bewerben</p>
               <p style={{ fontSize: 12, color: "var(--gray)", lineHeight: 1.6, marginBottom: 12 }}>
-                Speichern Sie Ihr PDF und senden Sie es direkt an unser Team — wir finden passende Stellen für Sie. <strong>Kostenlos & unverbindlich.</strong>
+                Speichern Sie Ihr PDF und senden Sie es direkt an unser Team, wir finden passende Stellen für Sie. <strong>Kostenlos & unverbindlich.</strong>
               </p>
               <div style={{ display: "flex", gap: 8 }}>
                 <button
@@ -863,7 +863,7 @@ export default function LebenslaufPage() {
         {/* RIGHT: LIVE PREVIEW */}
         <div style={{ position: "sticky", top: 80 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-            <p style={{ fontSize: 13, fontWeight: 700, color: "var(--gray)" }}>Live-Vorschau — Vorlage {template}</p>
+            <p style={{ fontSize: 13, fontWeight: 700, color: "var(--gray)" }}>Live-Vorschau, Vorlage {template}</p>
             <button onClick={handlePrint} style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", border: "none", borderRadius: 8, background: "var(--navy)", color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 700, fontFamily: "inherit" }}>
               <DownloadIcon /> Als PDF speichern
             </button>
@@ -878,12 +878,12 @@ export default function LebenslaufPage() {
 
       <div style={{ background: "var(--bg)", borderTop: "1px solid var(--border)" }}>
         <FaqSection title="Häufige Fragen zum Lebenslauf-Generator" items={[
-          { q: "Was kostet der Lebenslauf-Generator?", a: "Der Lebenslauf-Generator ist vollständig kostenlos — kein Konto, keine versteckten Kosten, keine Wasserzeichen." },
-          { q: "Wie lange dauert die Erstellung eines Lebenslaufs?", a: "Mit unserem Generator sind Sie in ca. 5 Minuten fertig. Füllen Sie die vier Schritte aus — die Vorschau aktualisiert sich in Echtzeit." },
-          { q: "Kann ich zwischen verschiedenen Vorlagen wählen?", a: "Ja, es stehen 4 professionelle Vorlagen zur Auswahl: Klassisch Blau, Sidebar Links, Modern Grün und Elegant Violett — mit und ohne Foto." },
+          { q: "Was kostet der Lebenslauf-Generator?", a: "Der Lebenslauf-Generator ist vollständig kostenlos, kein Konto, keine versteckten Kosten, keine Wasserzeichen." },
+          { q: "Wie lange dauert die Erstellung eines Lebenslaufs?", a: "Mit unserem Generator sind Sie in ca. 5 Minuten fertig. Füllen Sie die vier Schritte aus, die Vorschau aktualisiert sich in Echtzeit." },
+          { q: "Kann ich zwischen verschiedenen Vorlagen wählen?", a: "Ja, es stehen 4 professionelle Vorlagen zur Auswahl: Klassisch Blau, Sidebar Links, Modern Grün und Elegant Violett, mit und ohne Foto." },
           { q: "Ist ein Bewerbungsfoto Pflicht?", a: "Nein, das Foto ist optional. Vorlage C (Modern Grün) eignet sich besonders gut ohne Foto. Die anderen Vorlagen zeigen das Foto prominent links oder oben." },
-          { q: "Wie bewerbe ich mich direkt bei PHE?", a: "Klicken Sie auf 'Per E-Mail bewerben' — ein Formular öffnet sich, Sie geben Name und Telefonnummer ein und Ihr E-Mail-Programm öffnet sich mit allen Daten. Bitte hängen Sie Ihr gespeichertes PDF daran." },
-          { q: "Sind die Vorlagen ATS-optimiert?", a: "Ja. Klare Struktur, lesbare Schriftarten — alles was Bewerbermanagementsysteme bevorzugen." },
+          { q: "Wie bewerbe ich mich direkt bei PHE?", a: "Klicken Sie auf 'Per E-Mail bewerben', ein Formular öffnet sich, Sie geben Name und Telefonnummer ein und Ihr E-Mail-Programm öffnet sich mit allen Daten. Bitte hängen Sie Ihr gespeichertes PDF daran." },
+          { q: "Sind die Vorlagen ATS-optimiert?", a: "Ja. Klare Struktur, lesbare Schriftarten, alles was Bewerbermanagementsysteme bevorzugen." },
         ]} />
       </div>
 

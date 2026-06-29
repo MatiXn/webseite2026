@@ -72,9 +72,9 @@ const MailIcon = ({ size = 14 }: { size?: number }) => (
 const REVIEWS = [
   { name: "Tobias M.", rating: 5, time: "vor 2 Wochen", text: "Super schnelle Vermittlung! Innerhalb von 3 Wochen hatte ich einen neuen Job als Elektriker mit besserem Gehalt. Sehr persönliche Betreuung, jederzeit erreichbar." },
   { name: "Sandra K.", rating: 5, time: "vor 1 Monat", text: "Ich war skeptisch gegenüber Personalvermittlern, aber PHE hat mich positiv überrascht. Kein Druck, ehrliche Beratung und genau die Stelle gefunden die ich gesucht habe." },
-  { name: "Michael R.", rating: 5, time: "vor 3 Wochen", text: "Als SPS-Programmierer fand ich über PHE eine tolle Stelle bei einem Automatisierungsunternehmen. Sehr professionell und kostenlos für Bewerber — absolut empfehlenswert!" },
+  { name: "Michael R.", rating: 5, time: "vor 3 Wochen", text: "Als SPS-Programmierer fand ich über PHE eine tolle Stelle bei einem Automatisierungsunternehmen. Sehr professionell und kostenlos für Bewerber, absolut empfehlenswert!" },
   { name: "Laura B.", rating: 5, time: "vor 2 Monaten", text: "Vom ersten WhatsApp bis zum Vertragsabschluss alles reibungslos. Das Team hat mich gut vorbereitet und immer auf dem Laufenden gehalten. Top Service!" },
-  { name: "Andreas H.", rating: 5, time: "vor 1 Woche", text: "Ich habe bereits 2 Stellen über PHE gefunden. Immer zuverlässig, ehrlich und sie finden wirklich passende Stellen — nicht einfach irgendwas." },
+  { name: "Andreas H.", rating: 5, time: "vor 1 Woche", text: "Ich habe bereits 2 Stellen über PHE gefunden. Immer zuverlässig, ehrlich und sie finden wirklich passende Stellen, nicht einfach irgendwas." },
 ];
 
 const StarIcon = () => (
@@ -241,7 +241,7 @@ function JobFan() {
                       <span key={t} style={{ fontSize: 10, fontWeight: 600, background: "var(--bg)", color: "var(--gray)", padding: "3px 8px", borderRadius: 5 }}>{t}</span>
                     ))}
                   </div>
-                  {/* CTA — only on active card */}
+                  {/* CTA, only on active card */}
                   {isCenter && (
                     <a
                       href={WA_LINK}
@@ -279,7 +279,7 @@ const STEPS = [
   {
     n: "1",
     title: "Kontaktaufnahme",
-    desc: "Nehmen Sie per WhatsApp oder E-Mail Kontakt auf — ohne Formulare, ohne Aufwand. Wir melden uns innerhalb von 24 Stunden.",
+    desc: "Nehmen Sie per WhatsApp oder E-Mail Kontakt auf, ohne Formulare, ohne Aufwand. Wir melden uns innerhalb von 24 Stunden.",
   },
   {
     n: "2",
@@ -289,12 +289,12 @@ const STEPS = [
   {
     n: "3",
     title: "Begleitung bis zur Einstellung",
-    desc: "Wir bereiten Sie auf Vorstellungsgespräche vor und unterstützen bei der Gehaltsverhandlung — vollständig kostenlos.",
+    desc: "Wir bereiten Sie auf Vorstellungsgespräche vor und unterstützen bei der Gehaltsverhandlung, vollständig kostenlos.",
   },
   {
     n: "4",
     title: "Festanstellung & Einstieg",
-    desc: "Vertragsunterzeichnung direkt beim Unternehmen — Ihr neuer Karriereabschnitt beginnt.",
+    desc: "Vertragsunterzeichnung direkt beim Unternehmen, Ihr neuer Karriereabschnitt beginnt.",
   },
 ];
 
@@ -393,7 +393,7 @@ export default function Home() {
             "telephone": "+491739980100",
             "email": "info@phe-perm.de",
             "address": { "@type": "PostalAddress", "streetAddress": "Hüttenstraße 30", "addressLocality": "Düsseldorf", "postalCode": "40215", "addressCountry": "DE" },
-            "description": "PHE Perm Engineering vermittelt Fachkräfte in Festanstellung in den Bereichen IT, Elektrotechnik und Bau — kostenlos für Bewerber.",
+            "description": "PHE Perm Engineering vermittelt Fachkräfte in Festanstellung in den Bereichen IT, Elektrotechnik und Bau, kostenlos für Bewerber.",
             "areaServed": "DE",
             "priceRange": "Kostenlos für Bewerber",
             "sameAs": ["https://www.instagram.com/phe_perm_engineering", "https://www.linkedin.com/company/phe-perm-engineering"]
@@ -405,7 +405,7 @@ export default function Home() {
               { "@type": "Question", "name": "Wie funktioniert die Bewerbung bei PHE?", "acceptedAnswer": { "@type": "Answer", "text": "Nehmen Sie per WhatsApp oder E-Mail Kontakt auf. Unser Team meldet sich innerhalb von 24 Stunden und unterbreitet passende Stellenangebote." } },
               { "@type": "Question", "name": "Wie lange dauert es, bis ich einen neuen Job finde?", "acceptedAnswer": { "@type": "Answer", "text": "Viele unserer Bewerber finden innerhalb von 2–6 Wochen eine neue Stelle." } },
               { "@type": "Question", "name": "Welche Jobs vermittelt PHE Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "Festanstellungen in Elektrotechnik, IT & Automation sowie Bau & TGA." } },
-              { "@type": "Question", "name": "Ist PHE Perm Engineering eine Zeitarbeitsfirma?", "acceptedAnswer": { "@type": "Answer", "text": "Nein. Wir vermitteln ausschließlich Festanstellungen direkt beim Unternehmen — keine Zeitarbeit, keine Leiharbeit." } },
+              { "@type": "Question", "name": "Ist PHE Perm Engineering eine Zeitarbeitsfirma?", "acceptedAnswer": { "@type": "Answer", "text": "Nein. Wir vermitteln ausschließlich Festanstellungen direkt beim Unternehmen, keine Zeitarbeit, keine Leiharbeit." } },
             ]
           }
         ]
@@ -436,7 +436,7 @@ export default function Home() {
             </h1>
 
             <p style={{ fontSize: 17, color: "var(--gray)", lineHeight: 1.7, marginBottom: 32, maxWidth: 480 }}>
-              PHE Perm Engineering vermittelt Fachkräfte in Festanstellung — persönlich, schnell und ohne Gebühren für Bewerber.
+              PHE Perm Engineering vermittelt Fachkräfte in Festanstellung, persönlich, schnell und ohne Gebühren für Bewerber.
             </p>
 
             <div className="hero-buttons">
@@ -459,7 +459,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* RIGHT: Job Cards Fan — hidden on mobile */}
+          {/* RIGHT: Job Cards Fan, hidden on mobile */}
           <div className="job-fan-wrapper"><JobFan /></div>
         </div>
       </section>
@@ -488,7 +488,7 @@ export default function Home() {
             <div>
               <span className="tag">Aktuelle Stellen</span>
               <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.025em", color: "var(--navy)" }}>
-                Offene Jobs — <em className="grad-text" style={{ fontStyle: "normal" }}>jetzt bewerben</em>
+                Offene Jobs, <em className="grad-text" style={{ fontStyle: "normal" }}>jetzt bewerben</em>
               </h2>
             </div>
             <Link href="/jobs" style={{ fontSize: 14, fontWeight: 600, color: "var(--blue)", textDecoration: "none", whiteSpace: "nowrap" }}>Alle Stellen ansehen →</Link>
@@ -585,12 +585,12 @@ export default function Home() {
             Ihr <em className="grad-text" style={{ fontStyle: "normal" }}>professioneller Lebenslauf</em> in 5 Minuten.
           </h2>
           <p style={{ fontSize: 17, color: "var(--gray)", lineHeight: 1.65, marginBottom: 48, maxWidth: 560, margin: "0 auto 48px" }}>
-            Erstellen Sie Ihren Lebenslauf mit einem unserer modernen Vorlagen — und laden Sie ihn sofort als PDF herunter.
+            Erstellen Sie Ihren Lebenslauf mit einem unserer modernen Vorlagen, und laden Sie ihn sofort als PDF herunter.
           </p>
           <div className="grid-3col" style={{ marginBottom: 48 }}>
             {[
-              { title: "4 moderne Templates", desc: "Professionelle Designs für IT, Elektro und Bau — optimiert für Bewerber in Deutschland." },
-              { title: "Fertig in 5 Minuten", desc: "Formular ausfüllen, Foto hochladen und als PDF herunterladen — ohne Registrierung." },
+              { title: "4 moderne Templates", desc: "Professionelle Designs für IT, Elektro und Bau, optimiert für Bewerber in Deutschland." },
+              { title: "Fertig in 5 Minuten", desc: "Formular ausfüllen, Foto hochladen und als PDF herunterladen, ohne Registrierung." },
               { title: "ATS-optimiert", desc: "Unsere Templates werden von modernen Bewerbermanagement-Systemen korrekt ausgelesen." },
             ].map((f, i) => (
               <div key={f.title} style={{ border: "1.5px solid var(--border)", borderRadius: 14, padding: 28, textAlign: "left" }}>
@@ -717,13 +717,13 @@ export default function Home() {
             <em style={{ fontStyle: "normal", background: "linear-gradient(135deg,#60a5fa,#c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>YAFTO</em>
           </h2>
           <p style={{ fontSize: 17, color: "rgba(255,255,255,.65)", lineHeight: 1.7, marginBottom: 48 }}>
-            Die neue Art der Stellenvermittlung in Deutschland. Ihr Profil — anonym. Unternehmen bewerben sich bei Ihnen. Sie entscheiden.
+            Die neue Art der Stellenvermittlung in Deutschland. Ihr Profil, anonym. Unternehmen bewerben sich bei Ihnen. Sie entscheiden.
           </p>
           <div className="grid-3col" style={{ marginBottom: 48, textAlign: "left" }}>
             {[
               { icon: "01", title: "100% Anonym", desc: "Ihr Name bleibt bis zur eigenen Freigabe vollständig anonym. Keine unerwünschten Kontaktversuche durch Dritte." },
-              { icon: "02", title: "Firmen kommen zu Ihnen", desc: "Unternehmen sehen Ihr Profil und nehmen Kontakt auf — Sie entscheiden, wen Sie kennenlernen möchten." },
-              { icon: "03", title: "Sie entscheiden", desc: "Kontaktanfragen annehmen oder ablehnen — Sie behalten jederzeit die Kontrolle. Kein Spam, keine Verpflichtung." },
+              { icon: "02", title: "Firmen kommen zu Ihnen", desc: "Unternehmen sehen Ihr Profil und nehmen Kontakt auf, Sie entscheiden, wen Sie kennenlernen möchten." },
+              { icon: "03", title: "Sie entscheiden", desc: "Kontaktanfragen annehmen oder ablehnen, Sie behalten jederzeit die Kontrolle. Kein Spam, keine Verpflichtung." },
             ].map((f) => (
               <div key={f.title} style={{ background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.1)", borderRadius: 14, padding: 24 }}>
                 <div style={{ fontSize: 13, fontWeight: 800, color: "rgba(255,255,255,.5)", marginBottom: 12, letterSpacing: "0.05em" }}>{f.icon}</div>
@@ -743,7 +743,7 @@ export default function Home() {
             <div>
               <Image src="/phe-logo.png" alt="PHE Perm Engineering" height={28} width={140} style={{ height: 28, width: "auto", marginBottom: 12 }} />
               <p style={{ fontSize: 13, color: "var(--gray)", lineHeight: 1.6 }}>
-                PHE Perm Engineering — Ihr Partner für Festanstellungen in IT, Elektro und Bau.
+                PHE Perm Engineering, Ihr Partner für Festanstellungen in IT, Elektro und Bau.
               </p>
             </div>
             {[
@@ -773,13 +773,13 @@ export default function Home() {
 
       {/* ── FAQ ── */}
       <FaqSection title="Häufige Fragen zur Jobvermittlung" items={[
-        { q: "Was kostet die Vermittlung durch PHE Perm Engineering?", a: "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE Perm Engineering wird ausschließlich vom Unternehmen vergütet — Ihnen entstehen keinerlei Kosten, weder für die Beratung noch für die Vermittlung." },
+        { q: "Was kostet die Vermittlung durch PHE Perm Engineering?", a: "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE Perm Engineering wird ausschließlich vom Unternehmen vergütet, Ihnen entstehen keinerlei Kosten, weder für die Beratung noch für die Vermittlung." },
         { q: "Wie funktioniert die Bewerbung bei PHE?", a: "Nehmen Sie per WhatsApp oder E-Mail Kontakt auf. Unser Team meldet sich innerhalb von 24 Stunden, bespricht Ihre Wünsche und Qualifikationen und unterbreitet passende Stellenangebote." },
         { q: "Wie lange dauert es, bis ich einen neuen Job finde?", a: "Viele unserer Bewerber finden innerhalb von 2–6 Wochen eine neue Stelle. Die genaue Dauer hängt von Beruf, Region und Ihren Gehaltsvorstellungen ab." },
         { q: "Welche Jobs vermittelt PHE Perm Engineering?", a: "Wir sind spezialisiert auf Festanstellungen in drei Bereichen: Elektrotechnik (Elektroniker, Elektriker, Elektroplaner), IT & Automation (SPS-Programmierer, Netzwerktechniker) sowie Bau & TGA (Bauleiter, Projektleiter, Oberbauleiter)." },
-        { q: "Kann ich mich bewerben, wenn ich keine aktuelle Stelle suche?", a: "Ja. Sie können sich jederzeit vormerken lassen — auch bei bestehender Beschäftigung. Wir informieren Sie diskret, sobald eine passende Position verfügbar ist." },
-        { q: "Ist PHE Perm Engineering eine Zeitarbeitsfirma?", a: "Nein. Wir vermitteln ausschließlich Festanstellungen direkt beim Unternehmen. Es gibt keine Zeitarbeit, keine Leiharbeit — Sie werden von Anfang an unbefristet angestellt." },
-        { q: "Was ist YAFTO?", a: "YAFTO ist unsere neue Plattform, auf der Sie Ihr Profil anonym veröffentlichen und Unternehmen sich bei Ihnen bewerben. Sie entscheiden, wen Sie kennenlernen möchten — ohne Druck und ohne Spam. Bald verfügbar." },
+        { q: "Kann ich mich bewerben, wenn ich keine aktuelle Stelle suche?", a: "Ja. Sie können sich jederzeit vormerken lassen, auch bei bestehender Beschäftigung. Wir informieren Sie diskret, sobald eine passende Position verfügbar ist." },
+        { q: "Ist PHE Perm Engineering eine Zeitarbeitsfirma?", a: "Nein. Wir vermitteln ausschließlich Festanstellungen direkt beim Unternehmen. Es gibt keine Zeitarbeit, keine Leiharbeit, Sie werden von Anfang an unbefristet angestellt." },
+        { q: "Was ist YAFTO?", a: "YAFTO ist unsere neue Plattform, auf der Sie Ihr Profil anonym veröffentlichen und Unternehmen sich bei Ihnen bewerben. Sie entscheiden, wen Sie kennenlernen möchten, ohne Druck und ohne Spam. Bald verfügbar." },
       ]} />
 
       <style>{`

@@ -66,12 +66,12 @@ export default function KontaktPage() {
             Wir sind für Sie da.
           </h1>
           <p style={{ fontSize: 17, color: "var(--gray)", lineHeight: 1.7, maxWidth: 520 }}>
-            Ob Sie als Bewerber eine neue Stelle suchen oder als Unternehmen Fachkräfte benötigen — sprechen Sie uns an. Schnell, direkt, persönlich.
+            Ob Sie als Bewerber eine neue Stelle suchen oder als Unternehmen Fachkräfte benötigen, sprechen Sie uns an. Schnell, direkt, persönlich.
           </p>
         </div>
 
         <div className="kontakt-grid" style={{ alignItems: "start" }}>
-          {/* LEFT — CONTACT INFO */}
+          {/* LEFT, CONTACT INFO */}
           <div>
             <div style={{ marginBottom: 40 }}>
               <h2 style={{ fontSize: 18, fontWeight: 800, color: "var(--navy)", marginBottom: 24 }}>Direktkontakt</h2>
@@ -100,7 +100,7 @@ export default function KontaktPage() {
             <div style={{ background: "#f0fff4", border: "1.5px solid #86efac", borderRadius: 12, padding: "20px 24px", marginBottom: 40 }}>
               <p style={{ fontSize: 14, fontWeight: 700, color: "#15803d", marginBottom: 6 }}>Lieber per WhatsApp?</p>
               <p style={{ fontSize: 13, color: "#16a34a", marginBottom: 14, lineHeight: 1.5 }}>
-                Die schnellste Art uns zu erreichen — wir antworten in der Regel innerhalb weniger Stunden.
+                Die schnellste Art uns zu erreichen, wir antworten in der Regel innerhalb weniger Stunden.
               </p>
               <a href={WA_LINK} target="_blank" rel="noreferrer" style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
@@ -132,7 +132,7 @@ export default function KontaktPage() {
             </div>
           </div>
 
-          {/* RIGHT — FORM */}
+          {/* RIGHT, FORM */}
           <div style={{ background: "var(--bg)", border: "1.5px solid var(--border)", borderRadius: 16, padding: "24px 20px" }}>
             {sent ? (
               <div style={{ textAlign: "center", padding: "40px 0" }}>
@@ -142,7 +142,7 @@ export default function KontaktPage() {
                   </svg>
                 </div>
                 <p style={{ fontSize: 20, fontWeight: 800, color: "var(--navy)", marginBottom: 8 }}>WhatsApp geöffnet</p>
-                <p style={{ fontSize: 14, color: "var(--gray)" }}>Ihre Nachricht ist vorbereitet — senden Sie diese jetzt ab.</p>
+                <p style={{ fontSize: 14, color: "var(--gray)" }}>Ihre Nachricht ist vorbereitet, senden Sie diese jetzt ab.</p>
                 <button onClick={() => setSent(false)} style={{ marginTop: 24, background: "none", border: "1.5px solid var(--border)", borderRadius: 8, padding: "10px 20px", fontSize: 14, cursor: "pointer", color: "var(--gray)" }}>
                   Neue Nachricht
                 </button>
@@ -211,10 +211,10 @@ export default function KontaktPage() {
       <div style={{ background: "var(--bg)", borderTop: "1px solid var(--border)" }}>
         <FaqSection title="Häufige Fragen zum Kontakt" items={[
           { q: "Wie kann ich PHE Perm Engineering am schnellsten erreichen?", a: "Am schnellsten erreichen Sie uns telefonisch unter 0211 158 63 100 oder via WhatsApp. Wir sind für Sie da und antworten in der Regel innerhalb weniger Stunden." },
-          { q: "Kann ich PHE auch telefonisch kontaktieren?", a: "Ja, Sie erreichen uns direkt unter 0211 158 63 100. Für schnelle Rückfragen stehen wir Ihnen auch gerne per WhatsApp oder telefonisch zur Verfügung — ganz wie es Ihnen am liebsten ist." },
-          { q: "Auf welchen Wegen kann ich Fragen stellen?", a: "Sie können uns jederzeit per WhatsApp oder telefonisch kontaktieren. Beide Wege sind schnell und direkt — wir antworten zeitnah auf Ihre Anfrage." },
-          { q: "Wo befindet sich das Büro von PHE Perm Engineering?", a: "Unser Büro befindet sich in der Hüttenstraße 30, 40215 Düsseldorf. Gerne können Sie uns persönlich besuchen — vereinbaren Sie vorab telefonisch oder per WhatsApp einen Termin." },
-          { q: "Auf welchen sozialen Netzwerken ist PHE aktiv?", a: "Sie finden uns auf Instagram und LinkedIn. Dort teilen wir regelmäßig neue Stellenangebote und Karrieretipps — folgen Sie uns, um immer auf dem Laufenden zu bleiben." },
+          { q: "Kann ich PHE auch telefonisch kontaktieren?", a: "Ja, Sie erreichen uns direkt unter 0211 158 63 100. Für schnelle Rückfragen stehen wir Ihnen auch gerne per WhatsApp oder telefonisch zur Verfügung, ganz wie es Ihnen am liebsten ist." },
+          { q: "Auf welchen Wegen kann ich Fragen stellen?", a: "Sie können uns jederzeit per WhatsApp oder telefonisch kontaktieren. Beide Wege sind schnell und direkt, wir antworten zeitnah auf Ihre Anfrage." },
+          { q: "Wo befindet sich das Büro von PHE Perm Engineering?", a: "Unser Büro befindet sich in der Hüttenstraße 30, 40215 Düsseldorf. Gerne können Sie uns persönlich besuchen, vereinbaren Sie vorab telefonisch oder per WhatsApp einen Termin." },
+          { q: "Auf welchen sozialen Netzwerken ist PHE aktiv?", a: "Sie finden uns auf Instagram und LinkedIn. Dort teilen wir regelmäßig neue Stellenangebote und Karrieretipps, folgen Sie uns, um immer auf dem Laufenden zu bleiben." },
           { q: "Kann ich auch als Unternehmen Fachkräfte anfragen?", a: "Ja. Wählen Sie im Kontaktformular 'Ich suche Fachkräfte' und beschreiben Sie Ihre Anforderungen. Wir melden uns zeitnah mit passenden Kandidatenprofilen." },
         ]} />
       </div>

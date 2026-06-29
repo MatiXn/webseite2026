@@ -167,7 +167,7 @@ export default function DatenschutzPage() {
         </Section>
 
         <Section title="5. Ihre Rechte als betroffene Person (Art. 15–22 DSGVO)">
-          <p>Sie haben jederzeit folgende Rechte — kostenlos und ohne Begründung:</p>
+          <p>Sie haben jederzeit folgende Rechte, kostenlos und ohne Begründung:</p>
           <ul style={ulStyle}>
             <li>
               <strong>Auskunft (Art. 15 DSGVO):</strong> Sie können jederzeit eine vollständige Kopie aller
@@ -195,7 +195,7 @@ export default function DatenschutzPage() {
             </li>
             <li>
               <strong>Widerruf der Einwilligung (Art. 7 Abs. 3 DSGVO):</strong> Eine erteilte Einwilligung
-              (z.B. zur Profilweitergabe) können Sie jederzeit widerrufen — ohne Nachteile für Sie.
+              (z.B. zur Profilweitergabe) können Sie jederzeit widerrufen, ohne Nachteile für Sie.
             </li>
           </ul>
           <div style={{ marginTop: 16, padding: 16, background: "#f0f7ff", borderRadius: 10, border: "1.5px solid #c7dff7" }}>
@@ -205,7 +205,7 @@ export default function DatenschutzPage() {
               <a href="mailto:info@phe-perm.de" style={linkStyle}>info@phe-perm.de</a>{" "}
               mit dem Betreff „Datenschutzanfrage – [Ihr Name]". Wir antworten innerhalb von 30 Tagen
               (Art. 12 Abs. 3 DSGVO). Bei komplexen Anfragen können wir die Frist einmalig um weitere
-              2 Monate verlängern — wir informieren Sie darüber.
+              2 Monate verlängern, wir informieren Sie darüber.
             </p>
           </div>
           <p style={{ marginTop: 12 }}>
@@ -224,9 +224,9 @@ export default function DatenschutzPage() {
           <ul style={ulStyle}>
             <li><strong>Verschlüsselung in Transit:</strong> Alle Datenübertragungen erfolgen ausschließlich über HTTPS/TLS 1.3</li>
             <li><strong>Verschlüsselung at Rest:</strong> Alle Datenbankdaten sind AES-256-verschlüsselt (Supabase)</li>
-            <li><strong>Zugriffskontrolle:</strong> Row-Level Security (RLS) in der Datenbank — jeder Mitarbeiter sieht nur die Kandidaten, die ihm zugewiesen sind</li>
+            <li><strong>Zugriffskontrolle:</strong> Row-Level Security (RLS) in der Datenbank, jeder Mitarbeiter sieht nur die Kandidaten, die ihm zugewiesen sind</li>
             <li><strong>Authentifizierung:</strong> Zwei-Faktor-Authentifizierung (2FA/TOTP) für alle Mitarbeiter-Accounts</li>
-            <li><strong>Rechtemanagement:</strong> Minimalprinzip — Mitarbeiter erhalten nur die Zugriffsrechte, die für ihre Aufgabe erforderlich sind</li>
+            <li><strong>Rechtemanagement:</strong> Minimalprinzip, Mitarbeiter erhalten nur die Zugriffsrechte, die für ihre Aufgabe erforderlich sind</li>
             <li><strong>Datensicherung:</strong> Tägliche automatische Backups mit 30-tägiger Aufbewahrung</li>
             <li><strong>Auftragsverarbeitung:</strong> AVV-Verträge mit allen externen Dienstleistern (Supabase, Vercel)</li>
             <li><strong>Pseudonymisierung:</strong> Kandidatenprofile werden bei der Weitergabe an Unternehmen pseudonymisiert (Name und Kontaktdaten werden erst nach Einwilligung übermittelt)</li>
@@ -256,7 +256,7 @@ export default function DatenschutzPage() {
         <Section title="9. Automatisierte Entscheidungsfindung (Art. 22 DSGVO)">
           <p>
             Unser System schlägt auf Basis von Qualifikation, Standort und Präferenzen passende Stellen vor
-            (Matching). Diese Vorschläge dienen der Unterstützung unserer Berater — die endgültige
+            (Matching). Diese Vorschläge dienen der Unterstützung unserer Berater, die endgültige
             Entscheidung über die Vermittlung trifft immer ein Mensch. Es findet keine automatisierte
             Entscheidungsfindung mit rechtlicher Wirkung statt.
           </p>

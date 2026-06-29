@@ -21,7 +21,7 @@ const VOLUMES = [
 ];
 
 // ─────────────────────────────────────────────────────────────────
-// Germany outline — real geographic coordinates converted to SVG.
+// Germany outline, real geographic coordinates converted to SVG.
 // Formula: x = (lon - 5.85) * 74 + 40,  y = (55.05 - lat) * 72 + 40
 // Clockwise from NW Schleswig coast.
 // ─────────────────────────────────────────────────────────────────
@@ -94,7 +94,7 @@ function ct(s: number) {
   return `translate(${CX * (1 - s)} ${CY * (1 - s)}) scale(${s})`;
 }
 
-// Cities — real coords: x=(lon-5.85)*74+40, y=(55.05-lat)*72+40
+// Cities, real coords: x=(lon-5.85)*74+40, y=(55.05-lat)*72+40
 const CITIES = [
   // Metropolen
   { x: 593, y: 222, label: "Berlin",      r: 5.5, delay: "0s",   lx:  7, ly:  4, pulse: true  },
@@ -129,7 +129,7 @@ const CITIES = [
   { x: 410, y: 520, label: "Augsburg",    r: 2.8, delay: "3.2s", lx:  7, ly:  4, pulse: false },
 ];
 
-// Flowing contour rings — lange Striche, sanfte Abstände → gleichmäßiger Flow
+// Flowing contour rings, lange Striche, sanfte Abstände → gleichmäßiger Flow
 const RINGS = [
   { scale: 1.00, dash: 40, gap: 14, dur: 32, stroke: "#182e68", width: 1.3, opacity: 0.60 },
   { scale: 0.91, dash: 30, gap: 12, dur: 24, stroke: "#1e3a82", width: 1.1, opacity: 0.68 },
@@ -138,7 +138,7 @@ const RINGS = [
   { scale: 0.63, dash: 10, gap:  6, dur: 10, stroke: "#3a6acc", width: 0.8, opacity: 0.90 },
 ];
 
-// Traveling particles — verschiedene Geschwindigkeiten, sanfter Verlauf
+// Traveling particles, verschiedene Geschwindigkeiten, sanfter Verlauf
 const PARTICLES = [
   { dur: "24s", begin: "0s",    r: 3.2, color: "#5aa8ff" },
   { dur: "18s", begin: "6s",    r: 2.4, color: "#88caff" },
@@ -423,7 +423,7 @@ export default function TalenteFindPage() {
 
               <p style={{ fontSize: 15, color: "#a0bcd8", lineHeight: 1.72, marginBottom: 28, maxWidth: 440 }}>
                 PHE Perm Engineering vermittelt qualifizierte Elektro- &amp;
-                Technik-Fachkräfte in Festanstellung — schnell, persönlich, ohne Risiko.
+                Technik-Fachkräfte in Festanstellung, schnell, persönlich, ohne Risiko.
               </p>
 
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 32 }}>
@@ -475,10 +475,10 @@ export default function TalenteFindPage() {
         }}>
           <div style={{ maxWidth: 960, margin: "0 auto", textAlign: "center" }}>
             <h2 style={{ fontSize: "clamp(20px,3vw,26px)", fontWeight: 800, color: "#e8f0ff", marginBottom: 8 }}>So einfach funktioniert es</h2>
-            <p style={{ color: "#8ab0d0", fontSize: 14, marginBottom: 40 }}>Von der Anfrage zur besetzten Stelle — in 4 Schritten</p>
+            <p style={{ color: "#8ab0d0", fontSize: 14, marginBottom: 40 }}>Von der Anfrage zur besetzten Stelle, in 4 Schritten</p>
             <div className="steps-grid">
               {[
-                { s: "01", t: "Anfrage stellen",  d: "Per Formular, Telefon oder WhatsApp — Ihr Bedarf in wenigen Minuten übermittelt." },
+                { s: "01", t: "Anfrage stellen",  d: "Per Formular, Telefon oder WhatsApp, Ihr Bedarf in wenigen Minuten übermittelt." },
                 { s: "02", t: "Matching",          d: "Wir analysieren Ihre Anforderungen und matchen Kandidaten aus unserem Pool." },
                 { s: "03", t: "Profile erhalten",  d: "Geprüfte Profile mit Qualifikation, Gehaltswunsch und Verfügbarkeit." },
                 { s: "04", t: "Einstellung",       d: "Wir koordinieren Interviews und begleiten bis zum Vertragsabschluss." },
@@ -508,7 +508,7 @@ export default function TalenteFindPage() {
               {[
                 { t: "Schnelle Besetzung",    d: "Ø 3–6 Wochen von Anfrage bis Vertragsabschluss" },
                 { t: "Qualifizierte Profile",  d: "Nur geprüfte Fachkräfte mit passendem Background" },
-                { t: "Persönliche Betreuung", d: "Fester Ansprechpartner — kein Callcenter" },
+                { t: "Persönliche Betreuung", d: "Fester Ansprechpartner, kein Callcenter" },
                 { t: "Erfolgsbasiert",         d: "Sie zahlen nur bei erfolgreicher Vermittlung" },
               ].map(b => (
                 <div key={b.t} style={{
@@ -531,7 +531,7 @@ export default function TalenteFindPage() {
         }}>
           <div style={{ maxWidth: 640, margin: "0 auto" }}>
             <h2 style={{ fontSize: "clamp(18px,3vw,22px)", fontWeight: 800, color: "#fff", marginBottom: 10 }}>Lieber direkt sprechen?</h2>
-            <p style={{ color: "#a0c0d8", fontSize: 14, marginBottom: 24 }}>Rufen Sie uns an oder schreiben Sie uns auf WhatsApp — kostenlos und unverbindlich.</p>
+            <p style={{ color: "#a0c0d8", fontSize: 14, marginBottom: 24 }}>Rufen Sie uns an oder schreiben Sie uns auf WhatsApp, kostenlos und unverbindlich.</p>
             <div className="cta-buttons">
               <a href="tel:+492111586310" style={{
                 background: "#fff", color: "#0d1e42", fontSize: 14, fontWeight: 700,

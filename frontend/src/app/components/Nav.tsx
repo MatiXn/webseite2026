@@ -51,7 +51,7 @@ export default function Nav() {
         height: 58,
         display: "flex", alignItems: "center", justifyContent: "space-between",
       }}>
-        {/* Logo — mix-blend-mode:multiply macht weiße Pixel transparent */}
+        {/* Logo, mix-blend-mode:multiply macht weiße Pixel transparent */}
         <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
           <Image src="/phe-logo.png" alt="PHE Perm Engineering" height={36} width={180}
             style={{ height: isMobile ? 30 : 36, width: "auto" }} priority />
