@@ -638,6 +638,7 @@ export default function LebenslaufPage() {
   };
 
   const STEPS = ["Persönliche Daten", "Berufserfahrung", "Ausbildung", "Fähigkeiten & Sprachen"];
+  const STEP_LABELS = ["Persönliche", "Berufserfahrung", "Ausbildung", "Fähigkeiten"];
   const sectionStyle = { display: "flex", flexDirection: "column" as const, gap: 14 };
 
   return (
@@ -692,11 +693,11 @@ export default function LebenslaufPage() {
             {STEPS.map((s, i) => (
               <button key={i} onClick={() => setStep(i)} style={{
                 flex: 1, padding: "8px 4px", borderRadius: 8, border: "none", cursor: "pointer",
-                fontSize: 11, fontWeight: 700, textAlign: "center",
+                fontSize: 11, fontWeight: 700, textAlign: "center", whiteSpace: "nowrap",
                 background: step === i ? "linear-gradient(135deg,var(--blue),var(--violet))" : "transparent",
                 color: step === i ? "#fff" : "var(--gray)", transition: "all .15s", fontFamily: "inherit",
               }}>
-                {i + 1}. {s.split(" ")[0]}
+                {i + 1}. {STEP_LABELS[i]}
               </button>
             ))}
           </div>
