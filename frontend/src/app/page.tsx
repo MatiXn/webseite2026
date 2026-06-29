@@ -8,6 +8,61 @@ import { useEffect, useState } from "react";
 
 const WA_LINK = "https://wa.me/491739980100";
 const MAIL_APPLY = "bewerbung@phe-perm.de";
+
+type Job = { title: string; category: string; location: string; salary: string; tags: string[]; color: string };
+
+function ApplyModal({ job, onClose }: { job: Job; onClose: () => void }) {
+  const [form, setForm] = useState({ vorname: "", nachname: "", telefon: "", position: job.title });
+  const inputStyle: React.CSSProperties = {
+    width: "100%", padding: "10px 14px", borderRadius: 8,
+    border: "1.5px solid var(--border)", fontSize: 14,
+    color: "var(--navy)", fontFamily: "inherit", outline: "none", boxSizing: "border-box",
+  };
+  const handleSubmit = () => {
+    const body = `Hallo PHE-Team,\n\nich möchte mich auf folgende Stelle bewerben:\n\nPosition: ${form.position}\nVorname: ${form.vorname}\nNachname: ${form.nachname}\nTelefonnummer: ${form.telefon}\n\nIch freue mich auf Ihre Rückmeldung.\n\nMit freundlichen Grüßen\n${form.vorname} ${form.nachname}`;
+    window.location.href = `mailto:${MAIL_APPLY}?subject=${encodeURIComponent(`Bewerbung: ${form.position}`)}&body=${encodeURIComponent(body)}`;
+    onClose();
+  };
+  return (
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: 24 }}>
+      <div onClick={e => e.stopPropagation()} style={{ background: "#fff", borderRadius: 16, padding: 32, width: "100%", maxWidth: 480, boxShadow: "0 20px 60px rgba(0,0,0,0.2)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
+          <div>
+            <h2 style={{ fontSize: 20, fontWeight: 800, color: "var(--navy)", marginBottom: 4 }}>Jetzt bewerben</h2>
+            <p style={{ fontSize: 13, color: "var(--gray)" }}>{form.position}</p>
+          </div>
+          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--gray)", fontSize: 20, lineHeight: 1, padding: 4 }}>✕</button>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <div style={{ display: "flex", gap: 12 }}>
+            <div style={{ flex: 1 }}>
+              <label style={{ fontSize: 12, fontWeight: 600, color: "var(--gray)", display: "block", marginBottom: 6 }}>Vorname *</label>
+              <input style={inputStyle} value={form.vorname} onChange={e => setForm(f => ({ ...f, vorname: e.target.value }))} placeholder="Max" />
+            </div>
+            <div style={{ flex: 1 }}>
+              <label style={{ fontSize: 12, fontWeight: 600, color: "var(--gray)", display: "block", marginBottom: 6 }}>Nachname *</label>
+              <input style={inputStyle} value={form.nachname} onChange={e => setForm(f => ({ ...f, nachname: e.target.value }))} placeholder="Mustermann" />
+            </div>
+          </div>
+          <div>
+            <label style={{ fontSize: 12, fontWeight: 600, color: "var(--gray)", display: "block", marginBottom: 6 }}>Telefonnummer *</label>
+            <input style={inputStyle} type="tel" value={form.telefon} onChange={e => setForm(f => ({ ...f, telefon: e.target.value }))} placeholder="+49 123 456789" />
+          </div>
+          <div>
+            <label style={{ fontSize: 12, fontWeight: 600, color: "var(--gray)", display: "block", marginBottom: 6 }}>Gewünschte Position</label>
+            <input style={inputStyle} value={form.position} onChange={e => setForm(f => ({ ...f, position: e.target.value }))} />
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
+          <button onClick={onClose} style={{ flex: 1, padding: "12px 0", borderRadius: 10, border: "1.5px solid var(--border)", background: "#fff", color: "var(--gray)", fontWeight: 600, fontSize: 14, cursor: "pointer", fontFamily: "inherit" }}>Abbrechen</button>
+          <button onClick={handleSubmit} disabled={!form.vorname || !form.nachname || !form.telefon} style={{ flex: 2, padding: "12px 0", borderRadius: 10, border: "none", background: (!form.vorname || !form.nachname || !form.telefon) ? "var(--border)" : "linear-gradient(135deg,var(--blue),var(--violet))", color: "#fff", fontWeight: 700, fontSize: 14, cursor: (!form.vorname || !form.nachname || !form.telefon) ? "not-allowed" : "pointer", fontFamily: "inherit" }}>E-Mail öffnen & absenden</button>
+        </div>
+        <p style={{ fontSize: 11, color: "var(--gray-light)", textAlign: "center", marginTop: 12 }}>Ihr E-Mail-Programm öffnet sich mit den ausgefüllten Daten.</p>
+      </div>
+    </div>
+  );
+}
+
 const MailIcon = ({ size = 14 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="4" width="20" height="16" rx="2" /><path d="M2 7l10 7 10-7" />
@@ -244,8 +299,10 @@ const STEPS = [
 ];
 
 export default function Home() {
+  const [modalJob, setModalJob] = useState<Job | null>(null);
   return (
     <>
+      {modalJob && <ApplyModal job={modalJob} onClose={() => setModalJob(null)} />}
       <JsonLd data={{
         "@context": "https://schema.org",
         "@graph": [
@@ -387,14 +444,14 @@ export default function Home() {
                   }}>
                     <WhatsAppIcon size={13} /> WhatsApp
                   </Link>
-                  <a href={`mailto:${MAIL_APPLY}?subject=${encodeURIComponent(`Bewerbung: ${job.title}`)}&body=${encodeURIComponent(`Hallo PHE-Team,\n\nich interessiere mich für: ${job.title}\n\nMein Name:\nTelefonnummer:\n\nMit freundlichen Grüßen`)}`} style={{
+                  <button onClick={() => setModalJob(job)} style={{
                     flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
                     background: "var(--bg)", color: "var(--navy)", fontSize: 12, fontWeight: 700,
-                    padding: "9px 12px", borderRadius: 8, textDecoration: "none",
-                    border: "1.5px solid var(--border)"
+                    padding: "9px 12px", borderRadius: 8, cursor: "pointer",
+                    border: "1.5px solid var(--border)", fontFamily: "inherit",
                   }}>
                     <MailIcon size={13} /> E-Mail
-                  </a>
+                  </button>
                 </div>
               </div>
             ))}
