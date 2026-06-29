@@ -461,7 +461,7 @@ export default function TalenteFindPage() {
                 Jetzt Talente anfragen
               </h2>
               <p style={{ fontSize: 13, color: "#3d5a7a", marginBottom: 20, lineHeight: 1.6 }}>
-                Ein Berater meldet sich innerhalb von 24 Stunden mit passenden Kandidatenprofilen.
+                Ein Berater meldet sich innerhalb von 24 Stunden.
               </p>
               <ContactForm/>
             </div>
