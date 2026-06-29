@@ -305,7 +305,9 @@ function YaftoForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    window.location.href = `mailto:warteliste@yafto.de?subject=${encodeURIComponent("Warteliste: " + email)}&body=${encodeURIComponent(`Hallo YAFTO-Team,\n\nbitte tragt mich in die Warteliste ein:\n\nE-Mail: ${email}\n\nMit freundlichen Grüßen`)}`;
+    const a = document.createElement("a");
+    a.href = `mailto:warteliste@yafto.de?subject=${encodeURIComponent("Warteliste: " + email)}&body=${encodeURIComponent(`Hallo YAFTO-Team,\n\nbitte tragt mich in die Warteliste ein:\n\nE-Mail: ${email}\n\nMit freundlichen Grüßen`)}`;
+    a.click();
     setSent(true);
   };
 
