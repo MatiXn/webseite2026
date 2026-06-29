@@ -55,7 +55,7 @@ function ApplyModal({ job, onClose }: { job: Job; onClose: () => void }) {
         </div>
         <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
           <button onClick={onClose} style={{ flex: 1, padding: "12px 0", borderRadius: 10, border: "1.5px solid var(--border)", background: "#fff", color: "var(--gray)", fontWeight: 600, fontSize: 14, cursor: "pointer", fontFamily: "inherit" }}>Abbrechen</button>
-          <button onClick={handleSubmit} disabled={!form.vorname || !form.nachname || !form.telefon} style={{ flex: 2, padding: "12px 0", borderRadius: 10, border: "none", background: (!form.vorname || !form.nachname || !form.telefon) ? "var(--border)" : "linear-gradient(135deg,var(--blue),var(--violet))", color: "#fff", fontWeight: 700, fontSize: 14, cursor: (!form.vorname || !form.nachname || !form.telefon) ? "not-allowed" : "pointer", fontFamily: "inherit" }}>E-Mail öffnen & absenden</button>
+          <button onClick={handleSubmit} disabled={!form.vorname || !form.nachname || !form.telefon} style={{ flex: 2, padding: "12px 0", borderRadius: 10, border: "none", background: (!form.vorname || !form.nachname || !form.telefon) ? "var(--border)" : "#1a91f0", color: "#fff", fontWeight: 700, fontSize: 14, cursor: (!form.vorname || !form.nachname || !form.telefon) ? "not-allowed" : "pointer", fontFamily: "inherit" }}>E-Mail öffnen & absenden</button>
         </div>
         <p style={{ fontSize: 11, color: "var(--gray-light)", textAlign: "center", marginTop: 12 }}>Ihr E-Mail-Programm öffnet sich mit den ausgefüllten Daten.</p>
       </div>
@@ -120,10 +120,7 @@ function SlideTitle() {
     <span
       style={{
         display: "inline-block",
-        background: "linear-gradient(135deg,#3d7cc9,#7c3aed)",
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-        backgroundClip: "text",
+        color: "var(--blue)",
         transform: visible ? "translateY(0)" : "translateY(-20px)",
         opacity: visible ? 1 : 0,
         transition: "transform 0.4s cubic-bezier(.22,1,.36,1), opacity 0.3s ease",
@@ -246,7 +243,7 @@ function JobFan() {
                     <a
                       href={WA_LINK}
                       onClick={e => e.stopPropagation()}
-                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--wa)", color: "#fff", fontSize: 12, fontWeight: 700, padding: "9px 14px", borderRadius: 9, textDecoration: "none" }}
+                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--wa)", color: "#fff", fontSize: 12, fontWeight: 700, padding: "9px 14px", borderRadius: 36, textDecoration: "none" }}
                     >
                       <WhatsAppIcon size={12} /> Jetzt bewerben
                     </a>
@@ -326,7 +323,7 @@ function YaftoForm() {
           }}>
             <div style={{
               width: 64, height: 64, borderRadius: "50%",
-              background: "linear-gradient(135deg,var(--blue),var(--violet))",
+              background: "#1a91f0",
               display: "flex", alignItems: "center", justifyContent: "center",
               margin: "0 auto 20px",
             }}>
@@ -344,9 +341,9 @@ function YaftoForm() {
               Wir informieren Sie, sobald YAFTO startet.
             </p>
             <button onClick={() => setSent(false)} style={{
-              background: "linear-gradient(135deg,var(--blue),var(--violet))",
+              background: "#1a91f0",
               color: "#fff", fontSize: 14, fontWeight: 700, padding: "12px 32px",
-              borderRadius: 10, border: "none", cursor: "pointer", fontFamily: "inherit",
+              borderRadius: 36, border: "none", cursor: "pointer", fontFamily: "inherit",
             }}>
               Alles klar!
             </button>
@@ -366,9 +363,9 @@ function YaftoForm() {
           }}
         />
         <button type="submit" style={{
-          background: "linear-gradient(135deg,var(--blue),var(--violet))",
+          background: "#1a91f0",
           color: "#fff", fontSize: 14, fontWeight: 700, padding: "12px 20px",
-          borderRadius: 8, border: "none", cursor: "pointer", whiteSpace: "nowrap", fontFamily: "inherit"
+          borderRadius: 36, border: "none", cursor: "pointer", whiteSpace: "nowrap", fontFamily: "inherit"
         }}>
           Zur Warteliste anmelden
         </button>
@@ -519,14 +516,14 @@ export default function Home() {
                   <Link href={WA_LINK} style={{
                     flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
                     background: "var(--wa)", color: "#fff", fontSize: 12, fontWeight: 700,
-                    padding: "9px 12px", borderRadius: 8, textDecoration: "none"
+                    padding: "9px 12px", borderRadius: 36, textDecoration: "none"
                   }}>
                     <WhatsAppIcon size={13} /> WhatsApp
                   </Link>
                   <button onClick={() => setModalJob(job)} style={{
                     flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
                     background: "var(--bg)", color: "var(--navy)", fontSize: 12, fontWeight: 700,
-                    padding: "9px 12px", borderRadius: 8, cursor: "pointer",
+                    padding: "9px 12px", borderRadius: 36, cursor: "pointer",
                     border: "1.5px solid var(--border)", fontFamily: "inherit",
                   }}>
                     <MailIcon size={13} /> E-Mail
@@ -554,7 +551,7 @@ export default function Home() {
                 <div key={s.n} style={{ display: "flex", gap: 20, padding: 20, borderRadius: 12 }}>
                   <div style={{
                     flexShrink: 0, width: 40, height: 40, borderRadius: 10,
-                    background: "linear-gradient(135deg,var(--blue),var(--violet))",
+                    background: "#1a91f0",
                     color: "#fff", fontSize: 15, fontWeight: 800,
                     display: "flex", alignItems: "center", justifyContent: "center"
                   }}>{s.n}</div>
@@ -596,7 +593,7 @@ export default function Home() {
               <div key={f.title} style={{ border: "1.5px solid var(--border)", borderRadius: 14, padding: 28, textAlign: "left" }}>
                 <div style={{
                   width: 36, height: 36, borderRadius: 8, marginBottom: 16,
-                  background: "linear-gradient(135deg,var(--blue),var(--violet))",
+                  background: "#1a91f0",
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   <span style={{ color: "#fff", fontSize: 13, fontWeight: 800 }}>0{i + 1}</span>
@@ -642,7 +639,7 @@ export default function Home() {
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
                   <div style={{
                     width: 40, height: 40, borderRadius: "50%",
-                    background: "linear-gradient(135deg,var(--blue),var(--violet))",
+                    background: "#1a91f0",
                     color: "#fff", fontWeight: 800, fontSize: 16,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     flexShrink: 0,
@@ -672,7 +669,7 @@ export default function Home() {
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
                   <div style={{
                     width: 40, height: 40, borderRadius: "50%",
-                    background: "linear-gradient(135deg,var(--blue),var(--violet))",
+                    background: "#1a91f0",
                     color: "#fff", fontWeight: 800, fontSize: 16,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     flexShrink: 0,
@@ -714,7 +711,7 @@ export default function Home() {
           </div>
           <h2 style={{ fontSize: "clamp(32px,5vw,56px)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.025em", marginBottom: 16 }}>
             Willkommen bei<br />
-            <em style={{ fontStyle: "normal", background: "linear-gradient(135deg,#60a5fa,#c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>YAFTO</em>
+            <em style={{ fontStyle: "normal", color: "#1a91f0" }}>YAFTO</em>
           </h2>
           <p style={{ fontSize: 17, color: "rgba(255,255,255,.65)", lineHeight: 1.7, marginBottom: 48 }}>
             Die neue Art der Stellenvermittlung in Deutschland. Ihr Profil, anonym. Unternehmen bewerben sich bei Ihnen. Sie entscheiden.

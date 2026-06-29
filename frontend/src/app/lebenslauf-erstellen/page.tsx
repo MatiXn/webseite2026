@@ -165,11 +165,11 @@ function TemplateA({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
   const accent = "#1e3a5f";
   const blue = "#3d7cc9";
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#1a1a2e", zoom }}>
+    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9.5pt", color: "#1a1a2e", zoom }}>
       {/* Header */}
-      <div style={{ background: accent, color: "#fff", padding: "28px 32px 24px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+      <div style={{ background: accent, color: "#fff", padding: "32px 36px 28px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
         <div style={{ flex: 1 }}>
-          <h1 style={{ fontSize: "22pt", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 4 }}>{name}</h1>
+          <h1 style={{ fontSize: "24pt", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 4 }}>{name}</h1>
           <p style={{ fontSize: "10.5pt", color: "#93c5fd", fontWeight: 600, marginBottom: 14 }}>{data.beruf || "Berufsbezeichnung"}</p>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 20px", fontSize: "8pt", color: "#cbd5e1" }}>
             {data.email && <span>✉ {data.email}</span>}
@@ -187,26 +187,26 @@ function TemplateA({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         <div style={{ padding: "22px 26px 28px" }}>
           {data.zusammenfassung && (
             <div style={{ marginBottom: 20 }}>
-              <SecHeading label="Profil" color={blue} />
-              <p style={{ lineHeight: 1.7, color: "#374151" }}>{data.zusammenfassung}</p>
+              <h2 style={{ fontSize: "8pt", fontWeight: 800, color: blue, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: 8, paddingBottom: 5, borderBottom: `2px solid ${blue}22` }}>Profil</h2>
+              <p style={{ lineHeight: 1.75, color: "#374151" }}>{data.zusammenfassung}</p>
             </div>
           )}
           <div style={{ marginBottom: 20 }}>
-            <SecHeading label="Berufserfahrung" color={blue} />
+            <h2 style={{ fontSize: "8pt", fontWeight: 800, color: blue, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: 8, paddingBottom: 5, borderBottom: `2px solid ${blue}22` }}>Berufserfahrung</h2>
             {data.stationen.filter(s => s.firma || s.position).map(s => (
-              <div key={s.id} style={{ marginBottom: 14 }}>
+              <div key={s.id} style={{ marginBottom: 18 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                  <p style={{ fontWeight: 700, fontSize: "10pt", color: "#111827" }}>{s.position || "Position"}</p>
+                  <p style={{ fontWeight: 700, fontSize: "10.5pt", color: "#111827" }}>{s.position || "Position"}</p>
                   <span style={{ fontSize: "7.5pt", color: "#6b7280", flexShrink: 0, marginLeft: 8 }}>{[s.von, s.bis].filter(Boolean).join(" – ")}</span>
                 </div>
                 <p style={{ color: blue, fontWeight: 600, marginBottom: 3 }}>{s.firma}</p>
-                {s.beschreibung && <p style={{ color: "#4b5563", lineHeight: 1.6 }}>{s.beschreibung}</p>}
+                {s.beschreibung && <p style={{ color: "#4b5563", lineHeight: 1.75 }}>{s.beschreibung}</p>}
               </div>
             ))}
             {!data.stationen.some(s => s.firma || s.position) && <p style={{ color: "#9ca3af", fontStyle: "italic" }}>Berufserfahrung hinzufügen...</p>}
           </div>
           <div>
-            <SecHeading label="Ausbildung" color={blue} />
+            <h2 style={{ fontSize: "8pt", fontWeight: 800, color: blue, textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: 8, paddingBottom: 5, borderBottom: `2px solid ${blue}22` }}>Ausbildung</h2>
             {data.ausbildung.filter(a => a.schule || a.abschluss).map(a => (
               <div key={a.id} style={{ marginBottom: 10 }}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -220,7 +220,7 @@ function TemplateA({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
           </div>
         </div>
         {/* Right */}
-        <div style={{ background: "#f0f4f8", padding: "22px 18px 28px", borderLeft: "1px solid #e2e8f0" }}>
+        <div style={{ background: "#f0f4f8", padding: "28px 20px 32px", borderLeft: "1px solid #e2e8f0" }}>
           {(data.geburtsdatum || data.geburtsort || data.nationalitaet) && (
             <div style={{ marginBottom: 20 }}>
               <SecHeading label="Persönliches" color={blue} />
@@ -253,9 +253,9 @@ function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
   const sidebar = "#1e3a5f";
   const accent = "#60a5fa";
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#1a1a2e", display: "flex", zoom }}>
+    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#1a1a2e", display: "flex", zoom }}>
       {/* Sidebar Left */}
-      <div style={{ width: "36%", background: sidebar, color: "#fff", padding: "32px 20px", display: "flex", flexDirection: "column", gap: 20, flexShrink: 0 }}>
+      <div style={{ width: "34%", background: sidebar, color: "#fff", padding: "36px 22px", display: "flex", flexDirection: "column", gap: 20, flexShrink: 0 }}>
         {/* Photo */}
         {data.foto ? (
           <div style={{ display: "flex", justifyContent: "center" }}>
@@ -268,12 +268,12 @@ function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         )}
         {/* Name */}
         <div style={{ textAlign: "center", borderBottom: "1px solid rgba(255,255,255,0.15)", paddingBottom: 20 }}>
-          <h1 style={{ fontSize: "13pt", fontWeight: 800, letterSpacing: "-0.01em", marginBottom: 4 }}>{name}</h1>
+          <h1 style={{ fontSize: "14pt", fontWeight: 800, letterSpacing: "-0.01em", marginBottom: 4 }}>{name}</h1>
           <p style={{ fontSize: "9pt", color: accent, fontWeight: 600 }}>{data.beruf || "Berufsbezeichnung"}</p>
         </div>
         {/* Kontakt */}
         <div>
-          <p style={{ fontSize: "7.5pt", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: accent, marginBottom: 8 }}>Kontakt</p>
+          <p style={{ fontSize: "7.5pt", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.14em", color: accent, marginBottom: 8 }}>Kontakt</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 5, fontSize: "8pt", color: "#cbd5e1" }}>
             {data.telefon && <span>📞 {data.telefon}</span>}
             {data.email && <span>✉ {data.email}</span>}
@@ -283,7 +283,7 @@ function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         {/* Persönliches */}
         {(data.geburtsdatum || data.geburtsort || data.nationalitaet) && (
           <div>
-            <p style={{ fontSize: "7.5pt", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: accent, marginBottom: 8 }}>Persönliches</p>
+            <p style={{ fontSize: "7.5pt", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.14em", color: accent, marginBottom: 8 }}>Persönliches</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 6, fontSize: "8pt", color: "#cbd5e1" }}>
               {data.geburtsdatum && <div><p style={{ color: "rgba(255,255,255,0.5)", fontSize: "7pt" }}>Geburtsdatum</p><p>{data.geburtsdatum}</p></div>}
               {data.geburtsort && <div><p style={{ color: "rgba(255,255,255,0.5)", fontSize: "7pt" }}>Geburtsort</p><p>{data.geburtsort}</p></div>}
@@ -294,10 +294,10 @@ function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         {/* Fähigkeiten */}
         {data.faehigkeiten && (
           <div>
-            <p style={{ fontSize: "7.5pt", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: accent, marginBottom: 8 }}>Fähigkeiten</p>
+            <p style={{ fontSize: "7.5pt", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.14em", color: accent, marginBottom: 8 }}>Fähigkeiten</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
               {data.faehigkeiten.split(",").map(s => s.trim()).filter(Boolean).map(s => (
-                <div key={s} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "8pt", color: "#cbd5e1" }}>
+                <div key={s} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "8pt", color: "#cbd5e1", lineHeight: 1.7 }}>
                   <span style={{ width: 5, height: 5, borderRadius: "50%", background: accent, flexShrink: 0 }} />{s}
                 </div>
               ))}
@@ -307,10 +307,10 @@ function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         {/* Sprachen */}
         {data.sprachen && (
           <div>
-            <p style={{ fontSize: "7.5pt", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: accent, marginBottom: 8 }}>Sprachen</p>
+            <p style={{ fontSize: "7.5pt", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.14em", color: accent, marginBottom: 8 }}>Sprachen</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
               {data.sprachen.split(",").map(s => s.trim()).filter(Boolean).map(s => (
-                <div key={s} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "8pt", color: "#cbd5e1" }}>
+                <div key={s} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "8pt", color: "#cbd5e1", lineHeight: 1.7 }}>
                   <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#a78bfa", flexShrink: 0 }} />{s}
                 </div>
               ))}
@@ -319,15 +319,15 @@ function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         )}
       </div>
       {/* Main Right */}
-      <div style={{ flex: 1, padding: "32px 24px 28px" }}>
+      <div style={{ flex: 1, padding: "32px 28px" }}>
         {data.zusammenfassung && (
           <div style={{ marginBottom: 22 }}>
-            <SecHeading label="Profil" color="#1e3a5f" />
+            <h2 style={{ fontSize: "7.5pt", fontWeight: 800, color: "#1e3a5f", textTransform: "uppercase", letterSpacing: "0.14em", marginBottom: 8, paddingBottom: 5, borderBottom: "2px solid #1e3a5f22" }}>Profil</h2>
             <p style={{ lineHeight: 1.7, color: "#374151" }}>{data.zusammenfassung}</p>
           </div>
         )}
         <div style={{ marginBottom: 22 }}>
-          <SecHeading label="Berufserfahrung" color="#1e3a5f" />
+          <h2 style={{ fontSize: "7.5pt", fontWeight: 800, color: "#1e3a5f", textTransform: "uppercase", letterSpacing: "0.14em", marginBottom: 8, paddingBottom: 5, borderBottom: "2px solid #1e3a5f22" }}>Berufserfahrung</h2>
           {data.stationen.filter(s => s.firma || s.position).map(s => (
             <div key={s.id} style={{ marginBottom: 14 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
@@ -335,13 +335,13 @@ function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
                 <span style={{ fontSize: "7.5pt", color: "#6b7280", flexShrink: 0, marginLeft: 8 }}>{[s.von, s.bis].filter(Boolean).join(" – ")}</span>
               </div>
               <p style={{ color: "#3d7cc9", fontWeight: 600, marginBottom: 3 }}>{s.firma}</p>
-              {s.beschreibung && <p style={{ color: "#4b5563", lineHeight: 1.6 }}>{s.beschreibung}</p>}
+              {s.beschreibung && <p style={{ color: "#4b5563", lineHeight: 1.7 }}>{s.beschreibung}</p>}
             </div>
           ))}
           {!data.stationen.some(s => s.firma || s.position) && <p style={{ color: "#9ca3af", fontStyle: "italic" }}>Berufserfahrung hinzufügen...</p>}
         </div>
         <div>
-          <SecHeading label="Ausbildung" color="#1e3a5f" />
+          <h2 style={{ fontSize: "7.5pt", fontWeight: 800, color: "#1e3a5f", textTransform: "uppercase", letterSpacing: "0.14em", marginBottom: 8, paddingBottom: 5, borderBottom: "2px solid #1e3a5f22" }}>Ausbildung</h2>
           {data.ausbildung.filter(a => a.schule || a.abschluss).map(a => (
             <div key={a.id} style={{ marginBottom: 10 }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -363,12 +363,12 @@ function TemplateC({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
   const name = [data.vorname, data.nachname].filter(Boolean).join(" ") || "Dein Name";
   const accent = "#059669";
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#111827", zoom }}>
+    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#111827", zoom }}>
       {/* Header */}
       <div style={{ borderBottom: `4px solid ${accent}`, padding: "28px 32px 22px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
           <div>
-            <h1 style={{ fontSize: "24pt", fontWeight: 900, letterSpacing: "-0.03em", color: "#111827", marginBottom: 4 }}>{name}</h1>
+            <h1 style={{ fontSize: "22pt", fontWeight: 900, letterSpacing: "-0.03em", color: "#111827", marginBottom: 4 }}>{name}</h1>
             <p style={{ fontSize: "11pt", color: accent, fontWeight: 700 }}>{data.beruf || "Berufsbezeichnung"}</p>
           </div>
           {data.foto && (
@@ -385,23 +385,23 @@ function TemplateC({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 0.55fr", padding: "0" }}>
         {/* Left */}
-        <div style={{ padding: "22px 24px 28px" }}>
+        <div style={{ padding: "24px 24px 32px" }}>
           {data.zusammenfassung && (
-            <div style={{ marginBottom: 20 }}>
+            <div style={{ marginBottom: 24 }}>
               <SecHeading label="Über mich" color={accent} />
               <p style={{ lineHeight: 1.7, color: "#374151" }}>{data.zusammenfassung}</p>
             </div>
           )}
-          <div style={{ marginBottom: 20 }}>
+          <div style={{ marginBottom: 24 }}>
             <SecHeading label="Berufserfahrung" color={accent} />
             {data.stationen.filter(s => s.firma || s.position).map(s => (
-              <div key={s.id} style={{ marginBottom: 14, paddingLeft: 12, borderLeft: `2px solid ${accent}33` }}>
+              <div key={s.id} style={{ marginBottom: 18, paddingLeft: 12, borderLeft: `2px solid ${accent}33` }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                   <p style={{ fontWeight: 700, fontSize: "10pt" }}>{s.position || "Position"}</p>
                   <span style={{ fontSize: "7.5pt", color: "#6b7280", flexShrink: 0, marginLeft: 8 }}>{[s.von, s.bis].filter(Boolean).join(" – ")}</span>
                 </div>
                 <p style={{ color: accent, fontWeight: 600, marginBottom: 3 }}>{s.firma}</p>
-                {s.beschreibung && <p style={{ color: "#4b5563", lineHeight: 1.6 }}>{s.beschreibung}</p>}
+                {s.beschreibung && <p style={{ color: "#4b5563", lineHeight: 1.7 }}>{s.beschreibung}</p>}
               </div>
             ))}
             {!data.stationen.some(s => s.firma || s.position) && <p style={{ color: "#9ca3af", fontStyle: "italic" }}>Berufserfahrung hinzufügen...</p>}
@@ -409,7 +409,7 @@ function TemplateC({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
           <div>
             <SecHeading label="Ausbildung" color={accent} />
             {data.ausbildung.filter(a => a.schule || a.abschluss).map(a => (
-              <div key={a.id} style={{ marginBottom: 10, paddingLeft: 12, borderLeft: `2px solid ${accent}33` }}>
+              <div key={a.id} style={{ marginBottom: 12, paddingLeft: 12, borderLeft: `2px solid ${accent}33` }}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <p style={{ fontWeight: 700 }}>{a.abschluss || "Abschluss"}</p>
                   <span style={{ fontSize: "7.5pt", color: "#6b7280" }}>{[a.von, a.bis].filter(Boolean).join(" – ")}</span>
@@ -454,7 +454,7 @@ function TemplateD({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
   const accent = "#7c3aed";
   const sidebar = "#1e1b4b";
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#1a1a2e", display: "flex", zoom }}>
+    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#1a1a2e", display: "flex", zoom }}>
       {/* Sidebar Left */}
       <div style={{ width: "35%", background: sidebar, color: "#fff", padding: "28px 18px", display: "flex", flexDirection: "column", gap: 18, flexShrink: 0 }}>
         {data.foto ? (
@@ -467,7 +467,7 @@ function TemplateD({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
           </div>
         )}
         <div style={{ textAlign: "center", paddingBottom: 16, borderBottom: "1px solid rgba(255,255,255,0.12)" }}>
-          <h1 style={{ fontSize: "12pt", fontWeight: 800, marginBottom: 4 }}>{name}</h1>
+          <h1 style={{ fontSize: "14pt", fontWeight: 800, marginBottom: 4 }}>{name}</h1>
           <p style={{ fontSize: "8.5pt", color: "#c4b5fd", fontWeight: 600 }}>{data.beruf || "Berufsbezeichnung"}</p>
         </div>
         <div>
@@ -524,13 +524,13 @@ function TemplateD({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         <div style={{ marginBottom: 20 }}>
           <SecHeading label="Berufserfahrung" color={accent} />
           {data.stationen.filter(s => s.firma || s.position).map(s => (
-            <div key={s.id} style={{ marginBottom: 14 }}>
+            <div key={s.id} style={{ marginBottom: 20 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <p style={{ fontWeight: 700, fontSize: "10pt", color: "#111827" }}>{s.position || "Position"}</p>
                 <span style={{ fontSize: "7.5pt", color: "#6b7280", flexShrink: 0, marginLeft: 8 }}>{[s.von, s.bis].filter(Boolean).join(" – ")}</span>
               </div>
               <p style={{ color: accent, fontWeight: 600, marginBottom: 3 }}>{s.firma}</p>
-              {s.beschreibung && <p style={{ color: "#4b5563", lineHeight: 1.6 }}>{s.beschreibung}</p>}
+              {s.beschreibung && <p style={{ color: "#4b5563", lineHeight: 1.7 }}>{s.beschreibung}</p>}
             </div>
           ))}
           {!data.stationen.some(s => s.firma || s.position) && <p style={{ color: "#9ca3af", fontStyle: "italic" }}>Berufserfahrung hinzufügen...</p>}
@@ -538,7 +538,7 @@ function TemplateD({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         <div>
           <SecHeading label="Ausbildung" color={accent} />
           {data.ausbildung.filter(a => a.schule || a.abschluss).map(a => (
-            <div key={a.id} style={{ marginBottom: 10 }}>
+            <div key={a.id} style={{ marginBottom: 20 }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={{ fontWeight: 700, color: "#111827" }}>{a.abschluss || "Abschluss"}</p>
                 <span style={{ fontSize: "7.5pt", color: "#6b7280" }}>{[a.von, a.bis].filter(Boolean).join(" – ")}</span>

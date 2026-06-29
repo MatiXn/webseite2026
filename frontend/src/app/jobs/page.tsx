@@ -121,7 +121,7 @@ ${form.vorname} ${form.nachname}`;
           <button
             onClick={onClose}
             style={{
-              flex: 1, padding: "12px 0", borderRadius: 10, border: "1.5px solid var(--border)",
+              flex: 1, padding: "12px 0", borderRadius: 36, border: "1.5px solid var(--border)",
               background: "#fff", color: "var(--gray)", fontWeight: 600, fontSize: 14,
               cursor: "pointer", fontFamily: "inherit",
             }}
@@ -132,8 +132,8 @@ ${form.vorname} ${form.nachname}`;
             onClick={handleSubmit}
             disabled={!form.vorname || !form.nachname || !form.telefon}
             style={{
-              flex: 2, padding: "12px 0", borderRadius: 10, border: "none",
-              background: (!form.vorname || !form.nachname || !form.telefon) ? "var(--border)" : "linear-gradient(135deg,var(--blue),var(--violet))",
+              flex: 2, padding: "12px 0", borderRadius: 36, border: "none",
+              background: (!form.vorname || !form.nachname || !form.telefon) ? "var(--border)" : "#1a91f0",
               color: "#fff", fontWeight: 700, fontSize: 14,
               cursor: (!form.vorname || !form.nachname || !form.telefon) ? "not-allowed" : "pointer",
               fontFamily: "inherit",
@@ -333,9 +333,9 @@ export default function JobsPage() {
               onClick={handleSearch}
               disabled={loading}
               style={{
-                background: loading ? "var(--gray-light)" : "linear-gradient(135deg,var(--blue),var(--violet))",
+                background: loading ? "var(--gray-light)" : "#1a91f0",
                 color: "#fff", fontWeight: 700, fontSize: 15,
-                padding: "0 32px", height: 52, borderRadius: 10, border: "none",
+                padding: "0 32px", height: 52, borderRadius: 36, border: "none",
                 cursor: loading ? "not-allowed" : "pointer", whiteSpace: "nowrap",
                 display: "flex", alignItems: "center", gap: 8,
               }}
@@ -348,7 +348,7 @@ export default function JobsPage() {
                 onClick={handleReset}
                 style={{
                   background: "#fff", color: "var(--gray)", fontWeight: 600, fontSize: 13,
-                  padding: "0 16px", height: 52, borderRadius: 10,
+                  padding: "0 16px", height: 52, borderRadius: 36,
                   border: "1.5px solid var(--border)", cursor: "pointer",
                   display: "flex", alignItems: "center", gap: 6,
                 }}
@@ -409,7 +409,7 @@ export default function JobsPage() {
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
                   background: "var(--wa)", color: "#fff", fontWeight: 700, fontSize: 14,
-                  padding: "12px 24px", borderRadius: 10, textDecoration: "none",
+                  padding: "12px 24px", borderRadius: 36, textDecoration: "none",
                 }}
               >
                 <WhatsAppIcon size={16} /> Via WhatsApp bewerben
@@ -419,7 +419,7 @@ export default function JobsPage() {
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
                   background: "#fff", color: "var(--navy)", fontWeight: 700, fontSize: 14,
-                  padding: "12px 24px", borderRadius: 10, textDecoration: "none",
+                  padding: "12px 24px", borderRadius: 36, textDecoration: "none",
                   border: "1.5px solid var(--border)",
                 }}
               >
@@ -464,7 +464,7 @@ export default function JobsPage() {
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
                   background: "var(--wa)", color: "#fff", fontWeight: 700, fontSize: 15,
-                  padding: "14px 28px", borderRadius: 10, textDecoration: "none",
+                  padding: "14px 28px", borderRadius: 36, textDecoration: "none",
                 }}
               >
                 <WhatsAppIcon size={16} /> Via WhatsApp bewerben
@@ -474,7 +474,7 @@ export default function JobsPage() {
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
                   background: "#fff", color: "var(--navy)", fontWeight: 700, fontSize: 15,
-                  padding: "14px 28px", borderRadius: 10, textDecoration: "none",
+                  padding: "14px 28px", borderRadius: 36, textDecoration: "none",
                   border: "1.5px solid var(--border)",
                 }}
               >
@@ -574,7 +574,7 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
             style={{
               flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
               background: "var(--wa)", color: "#fff", fontSize: 12, fontWeight: 700,
-              padding: "9px 12px", borderRadius: 8, textDecoration: "none",
+              padding: "9px 12px", borderRadius: 36, textDecoration: "none",
             }}
           >
             <WhatsAppIcon size={13} /> WhatsApp
@@ -584,7 +584,7 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
             style={{
               flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
               background: "var(--bg)", color: "var(--navy)", fontSize: 12, fontWeight: 700,
-              padding: "9px 12px", borderRadius: 8, border: "1.5px solid var(--border)",
+              padding: "9px 12px", borderRadius: 36, border: "1.5px solid var(--border)",
               cursor: "pointer", fontFamily: "inherit",
             }}
           >

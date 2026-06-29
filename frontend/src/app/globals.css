@@ -1,14 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  --blue: #3d7cc9;
-  --blue-dark: #2a5fa8;
-  --violet: #7c3aed;
-  --navy: #0f1e30;
-  --gray: #5a6878;
-  --gray-light: #8a9ab0;
-  --border: #e5eaf0;
-  --bg: #f8fafc;
+  /* Signal Blue system (DESIGN.md) */
+  --blue: #1a91f0;
+  --blue-dark: #016fd0;
+  --iris: #5660e8;
+  --violet: #5660e8;
+
+  /* Neutrals */
+  --navy: #0f141e;
+  --ink: #1e2532;
+  --gray: #656e83;
+  --gray-light: #828ba2;
+  --haze: #9fa6bb;
+  --chalk: #d9deeb;
+  --ash: #e7eaf4;
+  --border: #d9deeb;
+
+  /* Surfaces */
+  --bg: #f7f9fc;
+  --lavender: #f1f2ff;
+  --mint: #e7f4ed;
+  --blush: #ffebe4;
+
+  /* Functional */
   --green: #22c55e;
   --wa: #25d366;
 }
@@ -28,28 +43,26 @@ body {
 }
 
 .grad-text {
-  background: linear-gradient(135deg, var(--blue), var(--violet));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--blue);
 }
 
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, var(--blue), var(--violet));
+  background: var(--blue);
   color: #fff;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 500;
   padding: 14px 28px;
-  border-radius: 10px;
+  border-radius: 36px;
+  border: none;
   text-decoration: none;
-  transition: opacity 0.15s, transform 0.15s;
+  transition: background 0.15s;
+  letter-spacing: 0.021em;
 }
 .btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  background: var(--blue-dark);
 }
 
 .btn-ghost {
@@ -57,30 +70,31 @@ body {
   align-items: center;
   gap: 8px;
   background: transparent;
-  color: var(--navy);
+  color: var(--blue);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   padding: 14px 28px;
-  border-radius: 10px;
+  border-radius: 36px;
   text-decoration: none;
-  border: 1.5px solid var(--border);
+  border: 1.5px solid var(--chalk);
   transition: border-color 0.15s, color 0.15s;
+  letter-spacing: 0.021em;
 }
 .btn-ghost:hover {
   border-color: var(--blue);
-  color: var(--blue);
+  color: var(--blue-dark);
 }
 
 .tag {
   display: inline-block;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
   color: var(--blue);
-  background: #f0f7ff;
-  border: 1px solid #c7dff7;
-  padding: 4px 12px;
-  border-radius: 20px;
-  letter-spacing: 0.08em;
+  background: var(--lavender);
+  border: 1px solid var(--ash);
+  padding: 4px 14px;
+  border-radius: 100px;
+  letter-spacing: 0.129em;
   text-transform: uppercase;
   margin-bottom: 16px;
 }

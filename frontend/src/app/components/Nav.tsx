@@ -43,10 +43,10 @@ export default function Nav() {
     <>
       <nav style={{
         position: "sticky", top: 0, zIndex: 100,
-        background: "rgba(255,255,255,0.92)",
-        backdropFilter: "blur(24px) saturate(180%)",
-        WebkitBackdropFilter: "blur(24px) saturate(180%)",
-        boxShadow: "0 1px 0 rgba(0,0,0,0.08)",
+        background: "rgba(255,255,255,0.95)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        borderBottom: "1px solid #d9deeb",
         padding: isMobile ? "0 18px" : "0 32px",
         height: 58,
         display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -65,16 +65,15 @@ export default function Nav() {
           }}>
             {NAV_LINKS.filter(([, href]) => href !== "/kontakt").map(([label, href]) => {
               const active = pathname === href || (href !== "/" && pathname.startsWith(href.split("#")[0]) && !href.startsWith("/#"));
-              const isTalente = href === "/talente-finden";
               return (
                 <li key={label}>
                   <Link href={href} style={{
                     display: "inline-flex", alignItems: "center",
-                    fontSize: 13, fontWeight: active ? 600 : 400,
-                    color: active ? "#1a4ec8" : "rgba(20,30,60,0.75)",
+                    fontSize: 15, fontWeight: active ? 500 : 400,
+                    color: active ? "#1a91f0" : "rgba(30,37,50,0.7)",
                     textDecoration: "none",
                     padding: "6px 10px", borderRadius: 8,
-                    background: active ? "rgba(29,87,224,0.08)" : "transparent",
+                    background: "transparent",
                     transition: "all 0.15s ease",
                   }}>{label}</Link>
                 </li>
@@ -87,12 +86,12 @@ export default function Nav() {
         {!isMobile && (
           <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
             <Link href="/kontakt" style={{
-              fontSize: 13, color: "rgba(20,30,60,0.6)",
+              fontSize: 15, color: "rgba(30,37,50,0.7)",
               textDecoration: "none", padding: "6px 10px", borderRadius: 8,
             }}>Kontakt</Link>
             <Link href={WA_LINK} style={{
-              background: "#22c55e", color: "#fff", fontSize: 13, fontWeight: 600,
-              padding: "8px 14px", borderRadius: 20, textDecoration: "none",
+              background: "#22c55e", color: "#fff", fontSize: 13, fontWeight: 500,
+              padding: "8px 14px", borderRadius: 36, textDecoration: "none",
               display: "flex", alignItems: "center", gap: 5,
               boxShadow: "0 1px 4px rgba(34,197,94,0.35)",
             }}>
@@ -158,16 +157,14 @@ export default function Nav() {
           <ul style={{ listStyle: "none", padding: "12px 0 20px" }}>
             {NAV_LINKS.map(([label, href]) => {
               const active = pathname === href || (href !== "/" && pathname.startsWith(href.split("#")[0]) && !href.startsWith("/#"));
-              const isTalente = href === "/talente-finden";
               return (
                 <li key={label}>
                   <Link href={href} style={{
                     display: "block", padding: "13px 24px",
-                    fontSize: 16, fontWeight: active ? 600 : 400,
-                    color: isTalente ? "#1d57e0" : active ? "#1a4ec8" : "#141e3c",
+                    fontSize: 16, fontWeight: active ? 500 : 400,
+                    color: active ? "#1a91f0" : "#1e2532",
                     textDecoration: "none",
-                    borderLeft: active ? "3px solid #1a4ec8" : "3px solid transparent",
-                    background: active ? "rgba(29,87,224,0.05)" : "transparent",
+                    background: "transparent",
                   }}>{label}</Link>
                 </li>
               );
@@ -176,8 +173,8 @@ export default function Nav() {
               <Link href={WA_LINK} style={{
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                 background: "#22c55e", color: "#fff",
-                fontSize: 15, fontWeight: 700, padding: "13px 20px",
-                borderRadius: 12, textDecoration: "none",
+                fontSize: 15, fontWeight: 500, padding: "13px 20px",
+                borderRadius: 36, textDecoration: "none",
               }}>
                 <WhatsAppIcon size={16} /> Jetzt bewerben
               </Link>
