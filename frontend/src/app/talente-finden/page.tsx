@@ -313,7 +313,7 @@ function ContactForm() {
         <h3 style={{ fontSize: 20, fontWeight: 800, color: "#e8f0ff", marginBottom: 8 }}>
           Anfrage abgeschickt!
         </h3>
-        <p style={{ color: "#5a7898", fontSize: 14, lineHeight: 1.6 }}>
+        <p style={{ color: "#8ab0d0", fontSize: 14, lineHeight: 1.6 }}>
           Ihr E-Mail-Programm öffnet sich. Ein Berater meldet sich innerhalb von 24 Stunden.
         </p>
         <button onClick={() => setSent(false)} style={{
@@ -333,7 +333,7 @@ function ContactForm() {
     backdropFilter: "blur(4px)",
   };
   const lbl: React.CSSProperties = {
-    fontSize: 11, fontWeight: 600, color: "#4a6898",
+    fontSize: 11, fontWeight: 600, color: "#7aa8d0",
     textTransform: "uppercase", letterSpacing: "0.07em",
     marginBottom: 5, display: "block",
   };
@@ -373,7 +373,7 @@ function ContactForm() {
       </div>
       <button type="submit" disabled={!canSubmit} style={{
         background: canSubmit ? "linear-gradient(135deg,#1a4ed8,#3a80f0)" : "rgba(30,50,90,0.4)",
-        color: canSubmit ? "#fff" : "#304060", fontSize: 14, fontWeight: 700,
+        color: canSubmit ? "#fff" : "#7aa0c0", fontSize: 14, fontWeight: 700,
         padding: "13px 24px", borderRadius: 10,
         border: "1px solid rgba(70,130,240,0.35)",
         cursor: canSubmit ? "pointer" : "not-allowed", transition: "all 0.2s",
@@ -381,7 +381,7 @@ function ContactForm() {
       }}>
         Anfrage senden
       </button>
-      <p style={{ fontSize: 11.5, color: "#2e4460", marginTop: -2 }}>
+      <p style={{ fontSize: 11.5, color: "#7aa0c0", marginTop: -2 }}>
         * Pflichtfelder. Ein Berater meldet sich innerhalb von 24 Stunden.
       </p>
     </form>
@@ -421,7 +421,7 @@ export default function TalenteFindPage() {
                 in Deutschland
               </h1>
 
-              <p style={{ fontSize: 15, color: "#6888aa", lineHeight: 1.72, marginBottom: 28, maxWidth: 440 }}>
+              <p style={{ fontSize: 15, color: "#a0bcd8", lineHeight: 1.72, marginBottom: 28, maxWidth: 440 }}>
                 PHE Perm Engineering vermittelt qualifizierte Elektro- &amp;
                 Technik-Fachkräfte in Festanstellung — schnell, persönlich, ohne Risiko.
               </p>
@@ -445,7 +445,7 @@ export default function TalenteFindPage() {
                 ].map(s => (
                   <div key={s.n}>
                     <div style={{ fontSize: 20, fontWeight: 900, color: "#5aadff", letterSpacing: "-0.02em" }}>{s.n}</div>
-                    <div style={{ fontSize: 11.5, color: "#3a5878", marginTop: 2 }}>{s.l}</div>
+                    <div style={{ fontSize: 11.5, color: "#8ab0d0", marginTop: 2 }}>{s.l}</div>
                   </div>
                 ))}
               </div>
@@ -460,7 +460,7 @@ export default function TalenteFindPage() {
               <h2 style={{ fontSize: 18, fontWeight: 800, color: "#e8f0ff", marginBottom: 4 }}>
                 Jetzt Talente anfragen
               </h2>
-              <p style={{ fontSize: 13, color: "#3d5a7a", marginBottom: 20, lineHeight: 1.6 }}>
+              <p style={{ fontSize: 13, color: "#8ab0d0", marginBottom: 20, lineHeight: 1.6 }}>
                 Ein Berater meldet sich innerhalb von 24 Stunden.
               </p>
               <ContactForm/>
@@ -475,7 +475,7 @@ export default function TalenteFindPage() {
         }}>
           <div style={{ maxWidth: 960, margin: "0 auto", textAlign: "center" }}>
             <h2 style={{ fontSize: "clamp(20px,3vw,26px)", fontWeight: 800, color: "#e8f0ff", marginBottom: 8 }}>So einfach funktioniert es</h2>
-            <p style={{ color: "#3a5070", fontSize: 14, marginBottom: 40 }}>Von der Anfrage zur besetzten Stelle — in 4 Schritten</p>
+            <p style={{ color: "#8ab0d0", fontSize: 14, marginBottom: 40 }}>Von der Anfrage zur besetzten Stelle — in 4 Schritten</p>
             <div className="steps-grid">
               {[
                 { s: "01", t: "Anfrage stellen",  d: "Per Formular, Telefon oder WhatsApp — Ihr Bedarf in wenigen Minuten übermittelt." },
@@ -489,7 +489,7 @@ export default function TalenteFindPage() {
                 }}>
                   <div style={{ fontSize: 32, fontWeight: 900, color: "rgba(60,110,230,0.18)", letterSpacing: "-0.04em", marginBottom: 10 }}>{item.s}</div>
                   <h3 style={{ fontSize: 14, fontWeight: 800, color: "#c0d8ff", marginBottom: 6 }}>{item.t}</h3>
-                  <p style={{ fontSize: 12.5, color: "#3a5070", lineHeight: 1.65 }}>{item.d}</p>
+                  <p style={{ fontSize: 12.5, color: "#8ab0d0", lineHeight: 1.65 }}>{item.d}</p>
                 </div>
               ))}
             </div>
@@ -503,7 +503,7 @@ export default function TalenteFindPage() {
         }}>
           <div style={{ maxWidth: 960, margin: "0 auto" }}>
             <h2 style={{ fontSize: "clamp(18px,3vw,24px)", fontWeight: 800, color: "#e8f0ff", marginBottom: 6, textAlign: "center" }}>Warum PHE?</h2>
-            <p style={{ color: "#3a5070", fontSize: 14, marginBottom: 32, textAlign: "center" }}>Ihr Partner für Fachkräfte in Elektro, Mechatronik &amp; Bau</p>
+            <p style={{ color: "#8ab0d0", fontSize: 14, marginBottom: 32, textAlign: "center" }}>Ihr Partner für Fachkräfte in Elektro, Mechatronik &amp; Bau</p>
             <div className="benefits-grid">
               {[
                 { t: "Schnelle Besetzung",    d: "Ø 3–6 Wochen von Anfrage bis Vertragsabschluss" },
@@ -516,7 +516,7 @@ export default function TalenteFindPage() {
                   borderRadius: 12, padding: "18px 20px",
                 }}>
                   <div style={{ fontSize: 13.5, fontWeight: 800, color: "#c0d8ff", marginBottom: 4 }}>{b.t}</div>
-                  <div style={{ fontSize: 12.5, color: "#3a5070", lineHeight: 1.55 }}>{b.d}</div>
+                  <div style={{ fontSize: 12.5, color: "#8ab0d0", lineHeight: 1.55 }}>{b.d}</div>
                 </div>
               ))}
             </div>
@@ -531,7 +531,7 @@ export default function TalenteFindPage() {
         }}>
           <div style={{ maxWidth: 640, margin: "0 auto" }}>
             <h2 style={{ fontSize: "clamp(18px,3vw,22px)", fontWeight: 800, color: "#fff", marginBottom: 10 }}>Lieber direkt sprechen?</h2>
-            <p style={{ color: "#6090b8", fontSize: 14, marginBottom: 24 }}>Rufen Sie uns an oder schreiben Sie uns auf WhatsApp — kostenlos und unverbindlich.</p>
+            <p style={{ color: "#a0c0d8", fontSize: 14, marginBottom: 24 }}>Rufen Sie uns an oder schreiben Sie uns auf WhatsApp — kostenlos und unverbindlich.</p>
             <div className="cta-buttons">
               <a href="tel:+492111586310" style={{
                 background: "#fff", color: "#0d1e42", fontSize: 14, fontWeight: 700,
