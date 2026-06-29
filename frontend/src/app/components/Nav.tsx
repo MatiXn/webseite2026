@@ -51,10 +51,10 @@ export default function Nav() {
         height: 58,
         display: "flex", alignItems: "center", justifyContent: "space-between",
       }}>
-        {/* Logo */}
+        {/* Logo — mix-blend-mode:multiply macht weiße Pixel transparent */}
         <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
           <Image src="/phe-logo.png" alt="PHE Perm Engineering" height={36} width={180}
-            style={{ height: isMobile ? 30 : 36, width: "auto" }} priority />
+            style={{ height: isMobile ? 30 : 36, width: "auto", mixBlendMode: "multiply" }} priority />
         </Link>
 
         {/* Desktop center links */}
@@ -71,10 +71,10 @@ export default function Nav() {
                   <Link href={href} style={{
                     display: "inline-flex", alignItems: "center",
                     fontSize: 13, fontWeight: active ? 600 : 400,
-                    color: isTalente ? (active ? "#1a4ec8" : "#1d57e0") : active ? "#1a4ec8" : "rgba(20,30,60,0.75)",
+                    color: active ? "#1a4ec8" : "rgba(20,30,60,0.75)",
                     textDecoration: "none",
                     padding: "6px 10px", borderRadius: 8,
-                    background: isTalente && !active ? "rgba(29,87,224,0.07)" : active ? "rgba(29,87,224,0.08)" : "transparent",
+                    background: active ? "rgba(29,87,224,0.08)" : "transparent",
                     transition: "all 0.15s ease",
                   }}>{label}</Link>
                 </li>
