@@ -160,12 +160,12 @@ function SkillDots({ value, color }: { value: string; color: string }) {
 }
 
 // ── Template A: Klassisch Blau (photo top-right in header) ──────────────────
-function TemplateA({ data }: { data: CVData }) {
+function TemplateA({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
   const name = [data.vorname, data.nachname].filter(Boolean).join(" ") || "Dein Name";
   const accent = "#1e3a5f";
   const blue = "#3d7cc9";
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#1a1a2e" }}>
+    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#1a1a2e", zoom }}>
       {/* Header */}
       <div style={{ background: accent, color: "#fff", padding: "28px 32px 24px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
         <div style={{ flex: 1 }}>
@@ -248,12 +248,12 @@ function TemplateA({ data }: { data: CVData }) {
 }
 
 // ── Template B: Sidebar Links mit Foto (dark sidebar left) ───────────────────
-function TemplateB({ data }: { data: CVData }) {
+function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
   const name = [data.vorname, data.nachname].filter(Boolean).join(" ") || "Dein Name";
   const sidebar = "#1e3a5f";
   const accent = "#60a5fa";
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#1a1a2e", display: "flex" }}>
+    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#1a1a2e", display: "flex", zoom }}>
       {/* Sidebar Left */}
       <div style={{ width: "36%", background: sidebar, color: "#fff", padding: "32px 20px", display: "flex", flexDirection: "column", gap: 20, flexShrink: 0 }}>
         {/* Photo */}
@@ -359,11 +359,11 @@ function TemplateB({ data }: { data: CVData }) {
 }
 
 // ── Template C: Modern Grün, kein Foto, minimalistisch ─────────────────────
-function TemplateC({ data }: { data: CVData }) {
+function TemplateC({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
   const name = [data.vorname, data.nachname].filter(Boolean).join(" ") || "Dein Name";
   const accent = "#059669";
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#111827" }}>
+    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#111827", zoom }}>
       {/* Header */}
       <div style={{ borderBottom: `4px solid ${accent}`, padding: "28px 32px 22px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
@@ -449,12 +449,12 @@ function TemplateC({ data }: { data: CVData }) {
 }
 
 // ── Template D: Elegant Grau, Foto links oben, helle Sidebar ───────────────
-function TemplateD({ data }: { data: CVData }) {
+function TemplateD({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
   const name = [data.vorname, data.nachname].filter(Boolean).join(" ") || "Dein Name";
   const accent = "#7c3aed";
   const sidebar = "#1e1b4b";
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#1a1a2e", display: "flex" }}>
+    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "9pt", color: "#1a1a2e", display: "flex", zoom }}>
       {/* Sidebar Left */}
       <div style={{ width: "35%", background: sidebar, color: "#fff", padding: "28px 18px", display: "flex", flexDirection: "column", gap: 18, flexShrink: 0 }}>
         {data.foto ? (
@@ -553,11 +553,24 @@ function TemplateD({ data }: { data: CVData }) {
   );
 }
 
+function contentZoom(data: CVData): number {
+  const units =
+    data.stationen.filter(s => s.firma || s.position).length * 2.5 +
+    data.ausbildung.filter(a => a.schule || a.abschluss).length * 1.5 +
+    (data.zusammenfassung ? 2 : 0) +
+    (data.faehigkeiten ? 1 : 0) +
+    (data.sprachen ? 1 : 0);
+  // target ~14 units to fill a page; zoom down for dense, up for sparse
+  const zoom = Math.min(1.55, Math.max(1.0, 14 / Math.max(units, 5)));
+  return Math.round(zoom * 100) / 100;
+}
+
 function CVPreview({ data, template }: { data: CVData; template: TemplateId }) {
-  if (template === "B") return <TemplateB data={data} />;
-  if (template === "C") return <TemplateC data={data} />;
-  if (template === "D") return <TemplateD data={data} />;
-  return <TemplateA data={data} />;
+  const zoom = contentZoom(data);
+  if (template === "B") return <TemplateB data={data} zoom={zoom} />;
+  if (template === "C") return <TemplateC data={data} zoom={zoom} />;
+  if (template === "D") return <TemplateD data={data} zoom={zoom} />;
+  return <TemplateA data={data} zoom={zoom} />;
 }
 
 // ── Template Picker ──────────────────────────────────────────────────────────
