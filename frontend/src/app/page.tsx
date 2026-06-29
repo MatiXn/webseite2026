@@ -55,7 +55,7 @@ function ApplyModal({ job, onClose }: { job: Job; onClose: () => void }) {
         </div>
         <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
           <button onClick={onClose} style={{ flex: 1, padding: "12px 0", borderRadius: 10, border: "1.5px solid var(--border)", background: "#fff", color: "var(--gray)", fontWeight: 600, fontSize: 14, cursor: "pointer", fontFamily: "inherit" }}>Abbrechen</button>
-          <button onClick={handleSubmit} disabled={!form.vorname || !form.nachname || !form.telefon} style={{ flex: 2, padding: "12px 0", borderRadius: 10, border: "none", background: (!form.vorname || !form.nachname || !form.telefon) ? "var(--border)" : "#1a91f0", color: "#fff", fontWeight: 700, fontSize: 14, cursor: (!form.vorname || !form.nachname || !form.telefon) ? "not-allowed" : "pointer", fontFamily: "inherit" }}>E-Mail öffnen & absenden</button>
+          <button onClick={handleSubmit} disabled={!form.vorname || !form.nachname || !form.telefon} style={{ flex: 2, padding: "12px 0", borderRadius: 10, border: "none", background: (!form.vorname || !form.nachname || !form.telefon) ? "var(--border)" : "linear-gradient(135deg,var(--blue),var(--violet))", color: "#fff", fontWeight: 700, fontSize: 14, cursor: (!form.vorname || !form.nachname || !form.telefon) ? "not-allowed" : "pointer", fontFamily: "inherit" }}>E-Mail öffnen & absenden</button>
         </div>
         <p style={{ fontSize: 11, color: "var(--gray-light)", textAlign: "center", marginTop: 12 }}>Ihr E-Mail-Programm öffnet sich mit den ausgefüllten Daten.</p>
       </div>
@@ -120,7 +120,10 @@ function SlideTitle() {
     <span
       style={{
         display: "inline-block",
-        color: "var(--blue)",
+        background: "linear-gradient(135deg,#3d7cc9,#7c3aed)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        backgroundClip: "text",
         transform: visible ? "translateY(0)" : "translateY(-20px)",
         opacity: visible ? 1 : 0,
         transition: "transform 0.4s cubic-bezier(.22,1,.36,1), opacity 0.3s ease",
@@ -243,7 +246,7 @@ function JobFan() {
                     <a
                       href={WA_LINK}
                       onClick={e => e.stopPropagation()}
-                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--wa)", color: "#fff", fontSize: 12, fontWeight: 700, padding: "9px 14px", borderRadius: 36, textDecoration: "none" }}
+                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--wa)", color: "#fff", fontSize: 12, fontWeight: 700, padding: "9px 14px", borderRadius: 9, textDecoration: "none" }}
                     >
                       <WhatsAppIcon size={12} /> Jetzt bewerben
                     </a>
@@ -323,7 +326,7 @@ function YaftoForm() {
           }}>
             <div style={{
               width: 64, height: 64, borderRadius: "50%",
-              background: "#1a91f0",
+              background: "linear-gradient(135deg,var(--blue),var(--violet))",
               display: "flex", alignItems: "center", justifyContent: "center",
               margin: "0 auto 20px",
             }}>
@@ -341,9 +344,9 @@ function YaftoForm() {
               Wir informieren Sie, sobald YAFTO startet.
             </p>
             <button onClick={() => setSent(false)} style={{
-              background: "#1a91f0",
+              background: "linear-gradient(135deg,var(--blue),var(--violet))",
               color: "#fff", fontSize: 14, fontWeight: 700, padding: "12px 32px",
-              borderRadius: 36, border: "none", cursor: "pointer", fontFamily: "inherit",
+              borderRadius: 10, border: "none", cursor: "pointer", fontFamily: "inherit",
             }}>
               Alles klar!
             </button>
@@ -363,9 +366,9 @@ function YaftoForm() {
           }}
         />
         <button type="submit" style={{
-          background: "#1a91f0",
+          background: "linear-gradient(135deg,var(--blue),var(--violet))",
           color: "#fff", fontSize: 14, fontWeight: 700, padding: "12px 20px",
-          borderRadius: 36, border: "none", cursor: "pointer", whiteSpace: "nowrap", fontFamily: "inherit"
+          borderRadius: 8, border: "none", cursor: "pointer", whiteSpace: "nowrap", fontFamily: "inherit"
         }}>
           Zur Warteliste anmelden
         </button>
@@ -411,7 +414,6 @@ export default function Home() {
       <Nav />
 
       {/* ── HERO ── */}
-      <div style={{ background: "#f7f9fc" }}>
       <section style={{ maxWidth: 1200, margin: "0 auto" }} className="section-pad px-section">
         <div className="hero-grid" style={{ gap: 64 }}>
 
@@ -426,7 +428,7 @@ export default function Home() {
               <Link href="/lebenslauf-erstellen" style={{ color: "inherit", textDecoration: "none" }}>Kostenloser CV-Generator verfügbar →</Link>
             </div>
 
-            <h1 style={{ fontSize: "clamp(36px,4.5vw,64px)", fontWeight: 400, lineHeight: 1.02, letterSpacing: "-0.04em", color: "var(--navy)", marginBottom: 20 }}>
+            <h1 style={{ fontSize: "clamp(32px,4vw,58px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.03em", color: "var(--navy)", marginBottom: 20 }}>
               Ihr nächster Job als<br />
               <SlideTitle />
               <br />
@@ -461,10 +463,9 @@ export default function Home() {
           <div className="job-fan-wrapper"><JobFan /></div>
         </div>
       </section>
-      </div>
 
       {/* ── STATS ── */}
-      <div style={{ background: "#fff", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "40px 24px" }}>
+      <div style={{ background: "var(--bg)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "40px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }} className="stats-row">
           {[
             { num: "5.000+", label: "Erfolgreiche Matches" },
@@ -473,20 +474,20 @@ export default function Home() {
             { num: "4.9★", label: "Bewertung unserer Kandidaten" },
           ].map((s) => (
             <div key={s.num}>
-              <div className="grad-text" style={{ fontSize: 40, fontWeight: 500, letterSpacing: "-0.02em" }}>{s.num}</div>
-              <div style={{ fontSize: 14, color: "var(--gray)", marginTop: 4, lineHeight: 1.4 }}>{s.label}</div>
+              <div className="grad-text" style={{ fontSize: 36, fontWeight: 900, letterSpacing: "-0.02em" }}>{s.num}</div>
+              <div style={{ fontSize: 13, color: "var(--gray)", marginTop: 4, lineHeight: 1.4 }}>{s.label}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* ── JOBS ── */}
-      <section style={{ padding: "80px 24px", background: "#f7f9fc" }}>
+      <section style={{ padding: "80px 24px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div className="section-header-row">
             <div>
               <span className="tag">Aktuelle Stellen</span>
-              <h2 style={{ fontSize: 31, fontWeight: 400, lineHeight: 1.14, letterSpacing: "-0.02em", color: "var(--navy)" }}>
+              <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.025em", color: "var(--navy)" }}>
                 Offene Jobs, <em className="grad-text" style={{ fontStyle: "normal" }}>jetzt bewerben</em>
               </h2>
             </div>
@@ -518,14 +519,14 @@ export default function Home() {
                   <Link href={WA_LINK} style={{
                     flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
                     background: "var(--wa)", color: "#fff", fontSize: 12, fontWeight: 700,
-                    padding: "9px 12px", borderRadius: 36, textDecoration: "none"
+                    padding: "9px 12px", borderRadius: 8, textDecoration: "none"
                   }}>
                     <WhatsAppIcon size={13} /> WhatsApp
                   </Link>
                   <button onClick={() => setModalJob(job)} style={{
                     flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
                     background: "var(--bg)", color: "var(--navy)", fontSize: 12, fontWeight: 700,
-                    padding: "9px 12px", borderRadius: 36, cursor: "pointer",
+                    padding: "9px 12px", borderRadius: 8, cursor: "pointer",
                     border: "1.5px solid var(--border)", fontFamily: "inherit",
                   }}>
                     <MailIcon size={13} /> E-Mail
@@ -538,11 +539,11 @@ export default function Home() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section id="how" style={{ background: "#fff", padding: "64px 24px" }}>
+      <section id="how" style={{ background: "var(--bg)", padding: "64px 24px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }} className="hero-grid">
           <div>
             <span className="tag">So funktioniert&apos;s</span>
-            <h2 style={{ fontSize: 31, fontWeight: 400, lineHeight: 1.14, letterSpacing: "-0.02em", color: "var(--navy)", marginBottom: 16 }}>
+            <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.025em", color: "var(--navy)", marginBottom: 16 }}>
               Von der Bewerbung<br />zum <em className="grad-text" style={{ fontStyle: "normal" }}>neuen Job</em> —<br />in 4 Schritten.
             </h2>
             <p style={{ fontSize: 17, color: "var(--gray)", lineHeight: 1.65, marginBottom: 36 }}>
@@ -553,7 +554,7 @@ export default function Home() {
                 <div key={s.n} style={{ display: "flex", gap: 20, padding: 20, borderRadius: 12 }}>
                   <div style={{
                     flexShrink: 0, width: 40, height: 40, borderRadius: 10,
-                    background: "#1a91f0",
+                    background: "linear-gradient(135deg,var(--blue),var(--violet))",
                     color: "#fff", fontSize: 15, fontWeight: 800,
                     display: "flex", alignItems: "center", justifyContent: "center"
                   }}>{s.n}</div>
@@ -577,10 +578,10 @@ export default function Home() {
       </section>
 
       {/* ── CV GENERATOR ── */}
-      <section id="lebenslauf" style={{ padding: "80px 24px", background: "#f1f2ff" }}>
+      <section id="lebenslauf" style={{ padding: "80px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
           <span className="tag">Kostenlos</span>
-          <h2 style={{ fontSize: 31, fontWeight: 400, lineHeight: 1.14, letterSpacing: "-0.02em", color: "var(--navy)", marginBottom: 16 }}>
+          <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.025em", color: "var(--navy)", marginBottom: 16 }}>
             Ihr <em className="grad-text" style={{ fontStyle: "normal" }}>professioneller Lebenslauf</em> in 5 Minuten.
           </h2>
           <p style={{ fontSize: 17, color: "var(--gray)", lineHeight: 1.65, marginBottom: 48, maxWidth: 560, margin: "0 auto 48px" }}>
@@ -595,7 +596,7 @@ export default function Home() {
               <div key={f.title} style={{ border: "1.5px solid var(--border)", borderRadius: 14, padding: 28, textAlign: "left" }}>
                 <div style={{
                   width: 36, height: 36, borderRadius: 8, marginBottom: 16,
-                  background: "#1a91f0",
+                  background: "linear-gradient(135deg,var(--blue),var(--violet))",
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   <span style={{ color: "#fff", fontSize: 13, fontWeight: 800 }}>0{i + 1}</span>
@@ -612,12 +613,12 @@ export default function Home() {
       </section>
 
       {/* ── GOOGLE REVIEWS ── */}
-      <section style={{ padding: "80px 24px", overflow: "hidden", background: "#f7f9fc" }}>
+      <section style={{ padding: "80px 24px", overflow: "hidden" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div className="section-header-row">
             <div>
               <span className="tag">Bewerberstimmen</span>
-              <h2 style={{ fontSize: 31, fontWeight: 400, lineHeight: 1.14, letterSpacing: "-0.02em", color: "var(--navy)" }}>
+              <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.025em", color: "var(--navy)" }}>
                 Was unsere <em className="grad-text" style={{ fontStyle: "normal" }}>Bewerber sagen</em>
               </h2>
             </div>
@@ -641,7 +642,7 @@ export default function Home() {
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
                   <div style={{
                     width: 40, height: 40, borderRadius: "50%",
-                    background: "#1a91f0",
+                    background: "linear-gradient(135deg,var(--blue),var(--violet))",
                     color: "#fff", fontWeight: 800, fontSize: 16,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     flexShrink: 0,
@@ -671,7 +672,7 @@ export default function Home() {
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
                   <div style={{
                     width: 40, height: 40, borderRadius: "50%",
-                    background: "#1a91f0",
+                    background: "linear-gradient(135deg,var(--blue),var(--violet))",
                     color: "#fff", fontWeight: 800, fontSize: 16,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     flexShrink: 0,
@@ -713,7 +714,7 @@ export default function Home() {
           </div>
           <h2 style={{ fontSize: "clamp(32px,5vw,56px)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.025em", marginBottom: 16 }}>
             Willkommen bei<br />
-            <em style={{ fontStyle: "normal", color: "#1a91f0" }}>YAFTO</em>
+            <em style={{ fontStyle: "normal", background: "linear-gradient(135deg,#60a5fa,#c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>YAFTO</em>
           </h2>
           <p style={{ fontSize: 17, color: "rgba(255,255,255,.65)", lineHeight: 1.7, marginBottom: 48 }}>
             Die neue Art der Stellenvermittlung in Deutschland. Ihr Profil, anonym. Unternehmen bewerben sich bei Ihnen. Sie entscheiden.

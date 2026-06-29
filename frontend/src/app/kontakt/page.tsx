@@ -105,7 +105,7 @@ export default function KontaktPage() {
               <a href={WA_LINK} target="_blank" rel="noreferrer" style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
                 background: "var(--wa)", color: "#fff", fontWeight: 700, fontSize: 14,
-                padding: "10px 20px", borderRadius: 36, textDecoration: "none",
+                padding: "10px 20px", borderRadius: 8, textDecoration: "none",
               }}>
                 <WhatsAppIcon /> WhatsApp öffnen
               </a>
@@ -155,9 +155,9 @@ export default function KontaktPage() {
                 <div style={{ display: "flex", gap: 8, marginBottom: 24, background: "#fff", border: "1.5px solid var(--border)", borderRadius: 10, padding: 4 }}>
                   {[["bewerber", "Ich suche einen Job"], ["unternehmen", "Ich suche Fachkräfte"]].map(([val, lab]) => (
                     <button key={val} onClick={() => setForm(f => ({ ...f, type: val }))} style={{
-                      flex: 1, padding: "9px 0", borderRadius: 36, border: "none", cursor: "pointer",
+                      flex: 1, padding: "9px 0", borderRadius: 7, border: "none", cursor: "pointer",
                       fontSize: 13, fontWeight: 700,
-                      background: form.type === val ? "#1a91f0" : "transparent",
+                      background: form.type === val ? "linear-gradient(135deg,var(--blue),var(--violet))" : "transparent",
                       color: form.type === val ? "#fff" : "var(--gray)",
                       transition: "all .15s",
                     }}>
@@ -194,7 +194,7 @@ export default function KontaktPage() {
                   <button type="submit" style={{
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                     background: "var(--wa)", color: "#fff", fontWeight: 700, fontSize: 15,
-                    padding: "14px", borderRadius: 36, border: "none", cursor: "pointer",
+                    padding: "14px", borderRadius: 10, border: "none", cursor: "pointer",
                   }}>
                     <WhatsAppIcon /> Via WhatsApp senden
                   </button>

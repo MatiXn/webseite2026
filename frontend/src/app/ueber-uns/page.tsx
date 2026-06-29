@@ -119,14 +119,14 @@ export default function UeberUnsPage() {
           <a href={WA_LINK} style={{
             display: "inline-flex", alignItems: "center", gap: 8,
             background: "var(--wa)", color: "#fff", fontWeight: 700, fontSize: 15,
-            padding: "14px 28px", borderRadius: 36, textDecoration: "none",
+            padding: "14px 28px", borderRadius: 10, textDecoration: "none",
           }}>
             <WhatsAppIcon /> Jetzt bewerben
           </a>
           <Link href="/kontakt" style={{
             display: "inline-flex", alignItems: "center", gap: 8,
             border: "1.5px solid var(--border)", color: "var(--navy)", fontWeight: 600, fontSize: 15,
-            padding: "14px 28px", borderRadius: 36, textDecoration: "none",
+            padding: "14px 28px", borderRadius: 10, textDecoration: "none",
           }}>
             Kontakt aufnehmen
           </Link>
