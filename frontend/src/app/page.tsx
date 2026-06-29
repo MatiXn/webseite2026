@@ -309,35 +309,69 @@ function YaftoForm() {
     setSent(true);
   };
 
-  if (sent) return (
-    <div style={{ textAlign: "center", padding: "16px 0", color: "#fff" }}>
-      <div style={{ fontSize: 28, marginBottom: 8 }}>✓</div>
-      <p style={{ fontSize: 15, fontWeight: 700 }}>Ihr E-Mail-Programm öffnet sich gleich.</p>
-      <p style={{ fontSize: 13, color: "rgba(255,255,255,.55)", marginTop: 4 }}>Bitte senden Sie die E-Mail ab, um Ihren Platz zu sichern.</p>
-    </div>
-  );
-
   return (
-    <form onSubmit={handleSubmit} className="yafto-form">
-      <input
-        type="email"
-        required
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        placeholder="Ihre E-Mail-Adresse"
-        style={{
-          flex: 1, background: "rgba(255,255,255,.1)", border: "1.5px solid rgba(255,255,255,.2)",
-          color: "#fff", fontSize: 14, padding: "12px 16px", borderRadius: 8, outline: "none"
-        }}
-      />
-      <button type="submit" style={{
-        background: "linear-gradient(135deg,var(--blue),var(--violet))",
-        color: "#fff", fontSize: 14, fontWeight: 700, padding: "12px 20px",
-        borderRadius: 8, border: "none", cursor: "pointer", whiteSpace: "nowrap", fontFamily: "inherit"
-      }}>
-        Zur Warteliste anmelden
-      </button>
-    </form>
+    <>
+      {sent && (
+        <div onClick={() => setSent(false)} style={{
+          position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          zIndex: 1000, padding: 24,
+        }}>
+          <div onClick={e => e.stopPropagation()} style={{
+            background: "#fff", borderRadius: 20, padding: "40px 36px",
+            width: "100%", maxWidth: 440, textAlign: "center",
+            boxShadow: "0 24px 64px rgba(0,0,0,0.25)",
+          }}>
+            <div style={{
+              width: 64, height: 64, borderRadius: "50%",
+              background: "linear-gradient(135deg,var(--blue),var(--violet))",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              margin: "0 auto 20px",
+            }}>
+              <svg width={28} height={28} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <h2 style={{ fontSize: 22, fontWeight: 800, color: "var(--navy)", marginBottom: 10 }}>
+              Sie sind auf der Warteliste!
+            </h2>
+            <p style={{ fontSize: 14, color: "var(--gray)", lineHeight: 1.6, marginBottom: 8 }}>
+              Ihr E-Mail-Programm öffnet sich gleich. Bitte senden Sie die E-Mail ab, um Ihren Platz zu sichern.
+            </p>
+            <p style={{ fontSize: 13, color: "var(--gray-light)", marginBottom: 28 }}>
+              Wir informieren Sie, sobald YAFTO startet.
+            </p>
+            <button onClick={() => setSent(false)} style={{
+              background: "linear-gradient(135deg,var(--blue),var(--violet))",
+              color: "#fff", fontSize: 14, fontWeight: 700, padding: "12px 32px",
+              borderRadius: 10, border: "none", cursor: "pointer", fontFamily: "inherit",
+            }}>
+              Alles klar!
+            </button>
+          </div>
+        </div>
+      )}
+      <form onSubmit={handleSubmit} className="yafto-form">
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          placeholder="Ihre E-Mail-Adresse"
+          style={{
+            flex: 1, background: "rgba(255,255,255,.1)", border: "1.5px solid rgba(255,255,255,.2)",
+            color: "#fff", fontSize: 14, padding: "12px 16px", borderRadius: 8, outline: "none"
+          }}
+        />
+        <button type="submit" style={{
+          background: "linear-gradient(135deg,var(--blue),var(--violet))",
+          color: "#fff", fontSize: 14, fontWeight: 700, padding: "12px 20px",
+          borderRadius: 8, border: "none", cursor: "pointer", whiteSpace: "nowrap", fontFamily: "inherit"
+        }}>
+          Zur Warteliste anmelden
+        </button>
+      </form>
+    </>
   );
 }
 
