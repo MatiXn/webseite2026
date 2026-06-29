@@ -32,7 +32,7 @@ export default function DatenschutzPage() {
             Umfang verarbeitet, wurde gemäß Art. 37 DSGVO i.V.m. § 38 BDSG ein betrieblicher
             Datenschutzbeauftragter bestellt:<br />
             <span style={{ marginTop: 4, display: "block" }}>
-              Matin Askaryar · <a href="mailto:datenschutz@phe-perm.de" style={linkStyle}>datenschutz@phe-perm.de</a> · Tel. 0211 158 63 100
+              Matin Askaryar · <a href="mailto:info@phe-perm.de" style={linkStyle}>info@phe-perm.de</a> · Tel. 0211 158 63 100
             </span>
           </p>
         </Section>
@@ -202,7 +202,7 @@ export default function DatenschutzPage() {
             <p style={{ fontWeight: 700, color: "var(--navy)", marginBottom: 4 }}>So stellen Sie einen Antrag:</p>
             <p>
               Per E-Mail an{" "}
-              <a href="mailto:datenschutz@phe-perm.de" style={linkStyle}>datenschutz@phe-perm.de</a>{" "}
+              <a href="mailto:info@phe-perm.de" style={linkStyle}>info@phe-perm.de</a>{" "}
               mit dem Betreff „Datenschutzanfrage – [Ihr Name]". Wir antworten innerhalb von 30 Tagen
               (Art. 12 Abs. 3 DSGVO). Bei komplexen Anfragen können wir die Frist einmalig um weitere
               2 Monate verlängern — wir informieren Sie darüber.
