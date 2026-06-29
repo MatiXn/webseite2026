@@ -54,7 +54,7 @@ export default function Nav() {
         {/* Logo — mix-blend-mode:multiply macht weiße Pixel transparent */}
         <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
           <Image src="/phe-logo.png" alt="PHE Perm Engineering" height={36} width={180}
-            style={{ height: isMobile ? 30 : 36, width: "auto", mixBlendMode: "multiply" }} priority />
+            style={{ height: isMobile ? 30 : 36, width: "auto" }} priority />
         </Link>
 
         {/* Desktop center links */}
