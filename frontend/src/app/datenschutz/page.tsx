@@ -23,8 +23,8 @@ export default function DatenschutzPage() {
           <p>
             <strong>PHE-Perm Engineering Ingenieure &amp; Techniker GmbH</strong><br />
             Hüttenstraße 30, 40215 Düsseldorf<br />
-            E-Mail: <a href="mailto:datenschutz@phe-perm.de" style={linkStyle}>datenschutz@phe-perm.de</a><br />
-            Telefon: +49 173 9980100
+            E-Mail: <a href="mailto:info@phe-perm.de" style={linkStyle}>info@phe-perm.de</a><br />
+            Telefon: +49 211 158 63 100
           </p>
           <p style={{ marginTop: 12 }}>
             <strong>Datenschutzbeauftragter:</strong><br />
