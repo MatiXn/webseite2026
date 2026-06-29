@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Nav, { MAIL_APPLY, WA_LINK } from "../components/Nav";
 import FaqSection from "../components/FaqSection";
 import JsonLd from "../components/JsonLd";
@@ -598,7 +598,16 @@ export default function LebenslaufPage() {
   const [template, setTemplate] = useState<TemplateId>("A");
   const [step, setStep] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [mobileTab, setMobileTab] = useState<"form" | "preview">("form");
+  const [isMobile, setIsMobile] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 900);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const set = (key: keyof CVData, val: string) => setData(d => ({ ...d, [key]: val }));
 
@@ -680,11 +689,28 @@ export default function LebenslaufPage() {
         </div>
       </div>
 
+      {/* MOBILE TAB SWITCHER */}
+      {isMobile && (
+        <div style={{ display: "flex", background: "var(--bg)", borderBottom: "1px solid var(--border)", position: "sticky", top: 58, zIndex: 50 }}>
+          {(["form", "preview"] as const).map((tab) => (
+            <button key={tab} onClick={() => setMobileTab(tab)} style={{
+              flex: 1, padding: "13px 0", border: "none", cursor: "pointer",
+              background: mobileTab === tab ? "#fff" : "transparent",
+              fontFamily: "inherit", fontSize: 14, fontWeight: 700,
+              color: mobileTab === tab ? "var(--blue)" : "var(--gray)",
+              borderBottom: mobileTab === tab ? "2px solid var(--blue)" : "2px solid transparent",
+            }}>
+              {tab === "form" ? "✏️ Formular" : "👁 Vorschau"}
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* MAIN: FORM + PREVIEW */}
-      <div className="cv-layout px-section" style={{ maxWidth: 1300, margin: "0 auto", paddingTop: 32, paddingBottom: 80, gap: 40, alignItems: "start" }}>
+      <div className={isMobile ? "" : "cv-layout px-section"} style={{ maxWidth: isMobile ? "100%" : 1300, margin: "0 auto", paddingTop: isMobile ? 0 : 32, paddingBottom: 80, gap: 40, alignItems: "start", display: isMobile ? "block" : undefined }}>
 
         {/* LEFT: FORM */}
-        <div className="cv-sidebar">
+        <div className={isMobile ? "" : "cv-sidebar"} style={isMobile ? { display: mobileTab === "form" ? "block" : "none", padding: "20px 16px" } : undefined}>
           {/* Template picker */}
           <TemplatePicker selected={template} onChange={setTemplate} />
 
@@ -861,7 +887,12 @@ export default function LebenslaufPage() {
         </div>
 
         {/* RIGHT: LIVE PREVIEW */}
-        <div style={{ position: "sticky", top: 80 }}>
+        <div style={{
+          position: isMobile ? "static" : "sticky",
+          top: 80,
+          display: isMobile && mobileTab !== "preview" ? "none" : "block",
+          padding: isMobile ? "16px" : undefined,
+        }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
             <p style={{ fontSize: 13, fontWeight: 700, color: "var(--gray)" }}>Live-Vorschau, Vorlage {template}</p>
             <button onClick={handlePrint} style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", border: "none", borderRadius: 8, background: "var(--navy)", color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 700, fontFamily: "inherit" }}>
@@ -869,10 +900,20 @@ export default function LebenslaufPage() {
             </button>
           </div>
           <div style={{ border: "1.5px solid var(--border)", borderRadius: 10, overflow: "hidden", boxShadow: "0 8px 40px rgba(0,0,0,0.08)" }}>
-            <div ref={printRef} style={{ transform: "scale(0.72)", transformOrigin: "top left", width: "138.89%", height: "auto" }}>
+            <div ref={printRef} style={{
+              transform: isMobile ? `scale(${Math.min(1, (typeof window !== "undefined" ? window.innerWidth - 32 : 360) / 794)})` : "scale(0.72)",
+              transformOrigin: "top left",
+              width: isMobile ? `${Math.round(100 / Math.min(1, (typeof window !== "undefined" ? window.innerWidth - 32 : 360) / 794))}%` : "138.89%",
+              height: "auto",
+            }}>
               <CVPreview data={data} template={template} />
             </div>
           </div>
+          {isMobile && (
+            <button onClick={handlePrint} style={{ marginTop: 16, width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "14px", border: "none", borderRadius: 10, background: "var(--navy)", color: "#fff", cursor: "pointer", fontSize: 14, fontWeight: 700, fontFamily: "inherit" }}>
+              <DownloadIcon /> Als PDF speichern
+            </button>
+          )}
         </div>
       </div>
 
