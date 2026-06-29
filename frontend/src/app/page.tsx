@@ -425,7 +425,7 @@ export default function Home() {
               fontSize: 13, fontWeight: 600, padding: "6px 14px", borderRadius: 20, marginBottom: 24
             }}>
               <span style={{ background: "var(--blue)", color: "#fff", fontSize: 11, padding: "2px 8px", borderRadius: 10 }}>NEU</span>
-              Kostenloser CV-Generator verfügbar
+              <Link href="/lebenslauf-erstellen" style={{ color: "inherit", textDecoration: "none" }}>Kostenloser CV-Generator verfügbar →</Link>
             </div>
 
             <h1 style={{ fontSize: "clamp(32px,4vw,58px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.03em", color: "var(--navy)", marginBottom: 20 }}>
