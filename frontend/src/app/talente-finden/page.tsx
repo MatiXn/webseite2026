@@ -335,7 +335,7 @@ export default function TalenteFindPage() {
                 fontSize: 18, color: "rgba(255,255,255,0.6)",
                 lineHeight: 1.65, marginBottom: 36, maxWidth: 420,
               }}>
-                PHE Perm Engineering vermittelt qualifizierte Elektro- &amp;
+                PHE-Perm Engineering vermittelt qualifizierte Elektro- &amp;
                 Technik-Fachkräfte in Festanstellung — schnell, persönlich, ohne Risiko.
               </p>
 
@@ -345,7 +345,7 @@ export default function TalenteFindPage() {
                   "Kostenlose Erstberatung",
                   "Nur Festanstellung",
                   "Deutschlandweit",
-                  "48h Reaktionszeit",
+                  "12 Std. Reaktionszeit",
                 ].map(t => (
                   <span key={t} style={{
                     fontSize: 13, fontWeight: 500,

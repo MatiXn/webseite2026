@@ -393,7 +393,7 @@ export default function Home() {
             "telephone": "+491739980100",
             "email": "info@phe-perm.de",
             "address": { "@type": "PostalAddress", "streetAddress": "Hüttenstraße 30", "addressLocality": "Düsseldorf", "postalCode": "40215", "addressCountry": "DE" },
-            "description": "PHE Perm Engineering vermittelt Fachkräfte in Festanstellung in den Bereichen IT, Elektrotechnik und Bau, kostenlos für Bewerber.",
+            "description": "PHE-Perm Engineering vermittelt Fachkräfte in Festanstellung in den Bereichen IT, Elektrotechnik und Bau, kostenlos für Bewerber.",
             "areaServed": "DE",
             "priceRange": "Kostenlos für Bewerber",
             "sameAs": ["https://www.instagram.com/phe_perm_engineering", "https://www.linkedin.com/company/phe-perm-engineering"]
@@ -401,11 +401,11 @@ export default function Home() {
           {
             "@type": "FAQPage",
             "mainEntity": [
-              { "@type": "Question", "name": "Was kostet die Vermittlung durch PHE Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE Perm Engineering wird ausschließlich vom Unternehmen bezahlt." } },
+              { "@type": "Question", "name": "Was kostet die Vermittlung durch PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE-Perm Engineering wird ausschließlich vom Unternehmen bezahlt." } },
               { "@type": "Question", "name": "Wie funktioniert die Bewerbung bei PHE?", "acceptedAnswer": { "@type": "Answer", "text": "Nehmen Sie per WhatsApp oder E-Mail Kontakt auf. Unser Team meldet sich innerhalb von 24 Stunden und unterbreitet passende Stellenangebote." } },
               { "@type": "Question", "name": "Wie lange dauert es, bis ich einen neuen Job finde?", "acceptedAnswer": { "@type": "Answer", "text": "Viele unserer Bewerber finden innerhalb von 2–6 Wochen eine neue Stelle." } },
-              { "@type": "Question", "name": "Welche Jobs vermittelt PHE Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "Festanstellungen in Elektrotechnik, IT & Automation sowie Bau & TGA." } },
-              { "@type": "Question", "name": "Ist PHE Perm Engineering eine Zeitarbeitsfirma?", "acceptedAnswer": { "@type": "Answer", "text": "Nein. Wir vermitteln ausschließlich Festanstellungen direkt beim Unternehmen, keine Zeitarbeit, keine Leiharbeit." } },
+              { "@type": "Question", "name": "Welche Jobs vermittelt PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "Festanstellungen in Elektrotechnik, IT & Automation sowie Bau & TGA." } },
+              { "@type": "Question", "name": "Ist PHE-Perm Engineering eine Zeitarbeitsfirma?", "acceptedAnswer": { "@type": "Answer", "text": "Nein. Wir vermitteln ausschließlich Festanstellungen direkt beim Unternehmen, keine Zeitarbeit, keine Leiharbeit." } },
             ]
           }
         ]
@@ -436,7 +436,7 @@ export default function Home() {
             </h1>
 
             <p style={{ fontSize: 19, color: "#707070", lineHeight: 1.4, marginBottom: 32, maxWidth: 480 }}>
-              PHE Perm Engineering vermittelt Fachkräfte in Festanstellung, persönlich, schnell und ohne Gebühren für Bewerber.
+              PHE-Perm Engineering vermittelt Fachkräfte in Festanstellung, persönlich, schnell und ohne Gebühren für Bewerber.
             </p>
 
             <div className="hero-buttons">
@@ -469,7 +469,7 @@ export default function Home() {
         <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }} className="stats-row">
           {[
             { num: "5.000+", label: "Erfolgreiche Matches" },
-            { num: "48h", label: "Durchschnittliche Reaktionszeit" },
+            { num: "12 Std.", label: "Durchschnittliche Reaktionszeit" },
             { num: "100%", label: "Kostenlos für Bewerber" },
             { num: "4.9★", label: "Bewertung unserer Kandidaten" },
           ].map((s) => (
@@ -741,9 +741,9 @@ export default function Home() {
         <div style={{ maxWidth: 1100, margin: "0 auto", paddingTop: 40, paddingBottom: 20 }}>
           <div className="footer-grid" style={{ marginBottom: 40 }}>
             <div>
-              <Image src="/phe-logo.png" alt="PHE Perm Engineering" height={28} width={140} style={{ height: 28, width: "auto", marginBottom: 12 }} />
+              <Image src="/phe-logo.png" alt="PHE-Perm Engineering" height={28} width={140} style={{ height: 28, width: "auto", marginBottom: 12 }} />
               <p style={{ fontSize: 13, color: "var(--gray)", lineHeight: 1.6 }}>
-                PHE Perm Engineering, Ihr Partner für Festanstellungen in IT, Elektro und Bau.
+                PHE-Perm Engineering, Ihr Partner für Festanstellungen in IT, Elektro und Bau.
               </p>
             </div>
             {[
@@ -762,7 +762,7 @@ export default function Home() {
             ))}
           </div>
           <div className="footer-bottom">
-            <span>© 2026 PHE Perm Engineering GmbH. Alle Rechte vorbehalten.</span>
+            <span>© 2026 PHE-Perm Engineering GmbH. Alle Rechte vorbehalten.</span>
             <div>
               <Link href="/impressum" style={{ color: "var(--gray-light)", textDecoration: "none", marginLeft: 16 }}>Impressum</Link>
               <Link href="/datenschutz" style={{ color: "var(--gray-light)", textDecoration: "none", marginLeft: 16 }}>Datenschutz</Link>
@@ -773,12 +773,12 @@ export default function Home() {
 
       {/* ── FAQ ── */}
       <FaqSection title="Häufige Fragen zur Jobvermittlung" items={[
-        { q: "Was kostet die Vermittlung durch PHE Perm Engineering?", a: "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE Perm Engineering wird ausschließlich vom Unternehmen vergütet, Ihnen entstehen keinerlei Kosten, weder für die Beratung noch für die Vermittlung." },
+        { q: "Was kostet die Vermittlung durch PHE-Perm Engineering?", a: "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE-Perm Engineering wird ausschließlich vom Unternehmen vergütet, Ihnen entstehen keinerlei Kosten, weder für die Beratung noch für die Vermittlung." },
         { q: "Wie funktioniert die Bewerbung bei PHE?", a: "Nehmen Sie per WhatsApp oder E-Mail Kontakt auf. Unser Team meldet sich innerhalb von 24 Stunden, bespricht Ihre Wünsche und Qualifikationen und unterbreitet passende Stellenangebote." },
         { q: "Wie lange dauert es, bis ich einen neuen Job finde?", a: "Viele unserer Bewerber finden innerhalb von 2–6 Wochen eine neue Stelle. Die genaue Dauer hängt von Beruf, Region und Ihren Gehaltsvorstellungen ab." },
-        { q: "Welche Jobs vermittelt PHE Perm Engineering?", a: "Wir sind spezialisiert auf Festanstellungen in drei Bereichen: Elektrotechnik (Elektroniker, Elektriker, Elektroplaner), IT & Automation (SPS-Programmierer, Netzwerktechniker) sowie Bau & TGA (Bauleiter, Projektleiter, Oberbauleiter)." },
+        { q: "Welche Jobs vermittelt PHE-Perm Engineering?", a: "Wir sind spezialisiert auf Festanstellungen in drei Bereichen: Elektrotechnik (Elektroniker, Elektriker, Elektroplaner), IT & Automation (SPS-Programmierer, Netzwerktechniker) sowie Bau & TGA (Bauleiter, Projektleiter, Oberbauleiter)." },
         { q: "Kann ich mich bewerben, wenn ich keine aktuelle Stelle suche?", a: "Ja. Sie können sich jederzeit vormerken lassen, auch bei bestehender Beschäftigung. Wir informieren Sie diskret, sobald eine passende Position verfügbar ist." },
-        { q: "Ist PHE Perm Engineering eine Zeitarbeitsfirma?", a: "Nein. Wir vermitteln ausschließlich Festanstellungen direkt beim Unternehmen. Es gibt keine Zeitarbeit, keine Leiharbeit, Sie werden von Anfang an unbefristet angestellt." },
+        { q: "Ist PHE-Perm Engineering eine Zeitarbeitsfirma?", a: "Nein. Wir vermitteln ausschließlich Festanstellungen direkt beim Unternehmen. Es gibt keine Zeitarbeit, keine Leiharbeit, Sie werden von Anfang an unbefristet angestellt." },
         { q: "Was ist YAFTO?", a: "YAFTO ist unsere neue Plattform, auf der Sie Ihr Profil anonym veröffentlichen und Unternehmen sich bei Ihnen bewerben. Sie entscheiden, wen Sie kennenlernen möchten, ohne Druck und ohne Spam. Bald verfügbar." },
       ]} />
 

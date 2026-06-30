@@ -2,7 +2,7 @@ import Nav from "../components/Nav";
 import Link from "next/link";
 
 export const metadata = {
-  title: "AGB – PHE Perm Engineering",
+  title: "AGB – PHE-Perm Engineering",
   robots: "noindex",
 };
 

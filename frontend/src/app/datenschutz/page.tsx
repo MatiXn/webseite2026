@@ -2,7 +2,7 @@ import Nav from "../components/Nav";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Datenschutzerklärung – PHE Perm Engineering",
+  title: "Datenschutzerklärung – PHE-Perm Engineering",
   robots: "noindex",
 };
 
@@ -29,7 +29,7 @@ export default function DatenschutzPage() {
             </p>
             <p style={{ marginTop: 12 }}>
               <strong>Datenschutzbeauftragter:</strong><br />
-              Da PHE Perm Engineering regelmäßig personenbezogene Daten von Bewerbern und Kandidaten in großem
+              Da PHE-Perm Engineering regelmäßig personenbezogene Daten von Bewerbern und Kandidaten in großem
               Umfang verarbeitet, wurde gemäß Art. 37 DSGVO i.V.m. § 38 BDSG ein betrieblicher
               Datenschutzbeauftragter bestellt:<br />
               <span style={{ marginTop: 4, display: "block" }}>

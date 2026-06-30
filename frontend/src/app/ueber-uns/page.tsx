@@ -136,11 +136,11 @@ export default function UeberUnsPage() {
       </section>
 
       <div style={{ background: "#f5f5f7" }}>
-        <FaqSection title="Häufige Fragen über PHE Perm Engineering" items={[
-          { q: "Was ist PHE Perm Engineering?", a: "PHE-Perm Engineering Ingenieure & Techniker GmbH ist eine spezialisierte Personalvermittlung mit Sitz in Düsseldorf. Wir vermitteln Fachkräfte aus den Bereichen Elektrotechnik, IT & Automation und Bau in Festanstellungen bei deutschen Unternehmen." },
-          { q: "Wo ist PHE Perm Engineering ansässig?", a: "Unser Hauptsitz befindet sich in der Hüttenstraße 30, 40215 Düsseldorf. Wir sind jedoch bundesweit tätig und vermitteln Stellen in über 80 deutschen Städten." },
+        <FaqSection title="Häufige Fragen über PHE-Perm Engineering" items={[
+          { q: "Was ist PHE-Perm Engineering?", a: "PHE-Perm Engineering Ingenieure & Techniker GmbH ist eine spezialisierte Personalvermittlung mit Sitz in Düsseldorf. Wir vermitteln Fachkräfte aus den Bereichen Elektrotechnik, IT & Automation und Bau in Festanstellungen bei deutschen Unternehmen." },
+          { q: "Wo ist PHE-Perm Engineering ansässig?", a: "Unser Hauptsitz befindet sich in der Hüttenstraße 30, 40215 Düsseldorf. Wir sind jedoch bundesweit tätig und vermitteln Stellen in über 80 deutschen Städten." },
           { q: "Was unterscheidet PHE von anderen Personalvermittlungen?", a: "Wir sind ausschließlich auf IT, Elektro und Bau spezialisiert, keine Generalagentur. Das bedeutet: tiefes Branchenwissen, gezielte Kandidatenauswahl und echte Kontakte zu den richtigen Unternehmen. Dazu persönliche Betreuung statt anonymer Prozesse." },
-          { q: "Ist PHE eine Zeitarbeitsfirma?", a: "Nein. PHE Perm Engineering vermittelt ausschließlich Direktanstellungen, Sie werden direkt und unbefristet beim Unternehmen angestellt. Keine Zeitarbeit, keine Leiharbeit, keine befristeten Verträge." },
+          { q: "Ist PHE eine Zeitarbeitsfirma?", a: "Nein. PHE-Perm Engineering vermittelt ausschließlich Direktanstellungen, Sie werden direkt und unbefristet beim Unternehmen angestellt. Keine Zeitarbeit, keine Leiharbeit, keine befristeten Verträge." },
           { q: "Wie viele Fachkräfte hat PHE bereits vermittelt?", a: "Wir haben Zugriff auf über 3.500 geprüfte Fachkräfte und haben bereits tausende erfolgreiche Matches in mehr als 80 deutschen Städten erzielt." },
           { q: "Wer kann sich bei PHE bewerben?", a: "Alle Fachkräfte mit Qualifikationen in IT, Elektrotechnik oder Bau. Ob Berufseinsteiger oder erfahrene Führungskraft, wir finden die passende Stelle für Ihr Profil." },
         ]} />
