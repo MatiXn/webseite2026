@@ -1,20 +1,20 @@
 <svg viewBox="0 0 500 440" xmlns="http://www.w3.org/2000/svg" fill="none">
   <!-- 1: Linker langer Stab -->
-  <rect x="30" y="90" width="34" height="330" rx="17" fill="#3b7dc3"/>
+  <rect x="30" y="90" width="34" height="320" rx="17" fill="#3b7dc3"/>
 
-  <!-- 2: Große Klammer — Stab unten, Haken oben rechts -->
-  <path d="M 112 392 L 112 152 Q 112 132 132 132 L 184 132"
+  <!-- 2: Klammer — hakt oben rechts, kürzer als Bar 3 -->
+  <path d="M 112 390 L 112 150 Q 112 130 132 130 L 162 130"
         stroke="#3b7dc3" stroke-width="34" stroke-linecap="round"/>
 
-  <!-- 3: Mittlerer hoher Stab (höchster) -->
-  <rect x="200" y="38" width="34" height="384" rx="17" fill="#3b7dc3"/>
+  <!-- 3: Mittlerer hoher Stab (höchster, klar getrennt) -->
+  <rect x="205" y="38" width="34" height="384" rx="17" fill="#3b7dc3"/>
 
-  <!-- 4: Kleine Klammer — Stab unten, Haken oben rechts -->
-  <path d="M 284 328 L 284 156 Q 284 136 304 136 L 348 136"
+  <!-- 4: Kleine Klammer — verbindet optisch mit Pill 1 -->
+  <path d="M 293 322 L 293 150 Q 293 130 313 130 L 344 130"
         stroke="#3b7dc3" stroke-width="34" stroke-linecap="round"/>
 
-  <!-- 5–7: Drei horizontale Pills (E) -->
-  <rect x="366" y="119" width="110" height="34" rx="17" fill="#3b7dc3"/>
-  <rect x="366" y="199" width="110" height="34" rx="17" fill="#3b7dc3"/>
-  <rect x="366" y="279" width="110" height="34" rx="17" fill="#3b7dc3"/>
+  <!-- 5–7: Drei horizontale Pills -->
+  <rect x="358" y="113" width="112" height="34" rx="17" fill="#3b7dc3"/>
+  <rect x="358" y="193" width="112" height="34" rx="17" fill="#3b7dc3"/>
+  <rect x="358" y="273" width="112" height="34" rx="17" fill="#3b7dc3"/>
 </svg>
