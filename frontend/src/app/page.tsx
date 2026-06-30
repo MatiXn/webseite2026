@@ -159,9 +159,9 @@ const FAN_JOBS = [
 // Fan positions: offset 0 = active center, 1 = right, 2 = far-right, 3 = left
 const FAN_POS = [
   { ry:   0, tx:    0, tz:   0, scale: 1,    opacity: 1,    zIndex: 4 },
-  { ry: -32, tx:  185, tz: -80, scale: 0.84, opacity: 0.95, zIndex: 3 },
-  { ry: -52, tx:  310, tz: -180, scale: 0.68, opacity: 0.80, zIndex: 2 },
-  { ry:  32, tx: -185, tz: -80, scale: 0.84, opacity: 0.95, zIndex: 3 },
+  { ry: -32, tx:  225, tz: -80, scale: 0.84, opacity: 0.95, zIndex: 3 },
+  { ry: -52, tx:  375, tz: -180, scale: 0.68, opacity: 0.80, zIndex: 2 },
+  { ry:  32, tx: -225, tz: -80, scale: 0.84, opacity: 0.95, zIndex: 3 },
 ];
 
 function JobFan() {
@@ -182,7 +182,7 @@ function JobFan() {
   return (
     <div style={{ userSelect: "none", display: "flex", flexDirection: "column", alignItems: "center" }}>
       {/* 3-D fan container */}
-      <div style={{ perspective: "1100px", perspectiveOrigin: "50% 40%", width: "100%", height: 320, position: "relative" }}>
+      <div style={{ perspective: "1100px", perspectiveOrigin: "50% 40%", width: "100%", height: 380, position: "relative" }}>
         <div style={{ position: "absolute", inset: 0, transformStyle: "preserve-3d" }}>
           {FAN_JOBS.map((job, i) => {
             const offset = (i - active + total) % total;
@@ -196,10 +196,10 @@ function JobFan() {
                 style={{
                   position: "absolute",
                   top: "50%", left: "50%",
-                  width: 240,
-                  marginLeft: -120,
-                  marginTop: -140,
-                  height: 280,
+                  width: 295,
+                  marginLeft: -147,
+                  marginTop: -165,
+                  height: 330,
                   transform: `translateX(${pos.tx}px) translateZ(${pos.tz}px) rotateY(${pos.ry}deg) scale(${pos.scale})`,
                   transformOrigin: "center bottom",
                   opacity: pos.opacity,
