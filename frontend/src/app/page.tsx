@@ -566,7 +566,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div style={{ borderRadius: 20, overflow: "hidden", boxShadow: "0 24px 64px rgba(15,30,48,.12)", height: "100%", minHeight: 420 }}>
+          <div style={{ borderRadius: 20, overflow: "hidden", boxShadow: "0 24px 64px rgba(15,30,48,.12)", maxHeight: 480 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://d8j0ntlcm91z4.cloudfront.net/user_3DEnNUo30c9qxiRVMSnr83LGNJN/hf_20260621_105329_0ea54082-e7c5-4859-8fe6-644b64d3c17e_min.webp"

@@ -28,12 +28,20 @@ export default function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [hash, setHash] = useState("");
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 900);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
+  }, []);
+
+  useEffect(() => {
+    const onHash = () => setHash(window.location.hash);
+    onHash();
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
   // Close menu on route change
@@ -64,7 +72,7 @@ export default function Nav() {
             position: "absolute", left: "50%", transform: "translateX(-50%)",
           }}>
             {NAV_LINKS.filter(([, href]) => href !== "/kontakt").map(([label, href]) => {
-              const active = pathname === href || (href !== "/" && pathname.startsWith(href.split("#")[0]) && !href.startsWith("/#"));
+              const active = pathname === href || (href !== "/" && pathname.startsWith(href.split("#")[0]) && !href.startsWith("/#")) || (href.startsWith("/#") && hash === href.slice(1));
               return (
                 <li key={label}>
                   <Link href={href} style={{
@@ -157,7 +165,7 @@ export default function Nav() {
         }}>
           <ul style={{ listStyle: "none", padding: "12px 0 20px", margin: 0 }}>
             {NAV_LINKS.map(([label, href]) => {
-              const active = pathname === href || (href !== "/" && pathname.startsWith(href.split("#")[0]) && !href.startsWith("/#"));
+              const active = pathname === href || (href !== "/" && pathname.startsWith(href.split("#")[0]) && !href.startsWith("/#")) || (href.startsWith("/#") && hash === href.slice(1));
               return (
                 <li key={label}>
                   <Link href={href} style={{
