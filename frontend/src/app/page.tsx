@@ -164,7 +164,7 @@ const FAN_POS = [
   { ry:  32, tx: -225, tz: -80, scale: 0.84, opacity: 0.95, zIndex: 3 },
 ];
 
-function JobFan() {
+function JobFan({ onApply }: { onApply: (job: Job) => void }) {
   const [active, setActive] = useState(0);
   const total = FAN_JOBS.length;
 
@@ -244,10 +244,7 @@ function JobFan() {
                   {/* CTA, only on active card */}
                   {isCenter && (
                     <button
-                      onClick={e => {
-                        e.stopPropagation();
-                        window.location.href = `mailto:bewerbung@phe-perm.de?subject=${encodeURIComponent(`Bewerbung: ${job.title}`)}&body=${encodeURIComponent(`Hallo PHE-Team,\n\nich möchte mich auf folgende Stelle bewerben:\n\nPosition: ${job.title}\nOrt: ${job.location}\n\nMein Name:\nTelefonnummer:\n\nIch freue mich auf Ihre Rückmeldung.`)}`;
-                      }}
+                      onClick={e => { e.stopPropagation(); onApply(job); }}
                       style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--blue)", color: "#fff", fontSize: 12, fontWeight: 700, padding: "9px 14px", borderRadius: 9, border: "none", cursor: "pointer", fontFamily: "inherit" }}
                     >
                       <MailIcon size={12} /> Jetzt bewerben
@@ -442,10 +439,10 @@ export default function Home() {
             </p>
 
             <div className="hero-buttons">
-              <Link href={WA_LINK} className="btn-primary">
+              <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="btn-primary">
                 <WhatsAppIcon size={18} /> Via WhatsApp bewerben
-              </Link>
-              <a href={`mailto:${MAIL_APPLY}?subject=Bewerbung&body=Hallo PHE-Team,%0A%0Amein Name:%0ATelefonnummer:%0A%0AIch bewerbe mich und freue mich auf Ihre Rückmeldung.`} className="btn-ghost" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+              </a>
+              <a href={`mailto:${MAIL_APPLY}?subject=${encodeURIComponent("Bewerbung")}&body=${encodeURIComponent("Hallo PHE-Team,\n\nmein Name:\nTelefonnummer:\n\nIch bewerbe mich und freue mich auf Ihre Rückmeldung.")}`} className="btn-ghost" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
                 <MailIcon size={16} /> Per E-Mail bewerben
               </a>
             </div>
@@ -462,7 +459,7 @@ export default function Home() {
           </div>
 
           {/* RIGHT: Job Cards Fan, hidden on mobile */}
-          <div className="job-fan-wrapper"><JobFan /></div>
+          <div className="job-fan-wrapper"><JobFan onApply={setModalJob} /></div>
         </div>
       </section>
 
