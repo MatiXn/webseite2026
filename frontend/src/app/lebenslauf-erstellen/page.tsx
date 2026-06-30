@@ -591,7 +591,9 @@ export default function LebenslaufPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [heroVisible, setHeroVisible] = useState(false);
   const [previewHovered, setPreviewHovered] = useState(false);
+  const [previewScale, setPreviewScale] = useState(0.7);
   const printRef = useRef<HTMLDivElement>(null);
+  const previewColRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 900);
@@ -603,6 +605,18 @@ export default function LebenslaufPage() {
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 100);
     return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    const update = () => {
+      if (previewColRef.current) {
+        const w = previewColRef.current.offsetWidth;
+        setPreviewScale(Math.min(1, w / 794));
+      }
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   const set = (key: keyof CVData, val: string) => setData(d => ({ ...d, [key]: val }));
@@ -1001,7 +1015,7 @@ export default function LebenslaufPage() {
         </div>
 
         {/* RIGHT: LIVE PREVIEW */}
-        <div style={{
+        <div ref={previewColRef} style={{
           position: isMobile ? "static" : "sticky",
           top: 80,
           display: isMobile && mobileTab !== "preview" ? "none" : "block",
@@ -1027,19 +1041,22 @@ export default function LebenslaufPage() {
             onMouseEnter={() => setPreviewHovered(true)}
             onMouseLeave={() => setPreviewHovered(false)}
             style={{
+              position: "relative",
               borderRadius: 12,
               overflow: "hidden",
               transform: previewHovered ? "rotate(0deg)" : "rotate(-0.5deg)",
               transition: "transform 0.3s ease",
               background: "#fff",
-              maxWidth: "100%",
+              height: `${Math.round(1123 * previewScale)}px`,
             }}
           >
             <div ref={printRef} style={{
-              transform: isMobile ? `scale(${Math.min(1, (typeof window !== "undefined" ? window.innerWidth - 32 : 360) / 794)})` : "scale(0.72)",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "210mm",
+              transform: `scale(${previewScale})`,
               transformOrigin: "top left",
-              width: isMobile ? `${Math.round(100 / Math.min(1, (typeof window !== "undefined" ? window.innerWidth - 32 : 360) / 794))}%` : "138.89%",
-              height: "auto",
             }}>
               <CVPreview data={data} template={template} />
             </div>
