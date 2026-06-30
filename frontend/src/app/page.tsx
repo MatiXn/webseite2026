@@ -244,11 +244,11 @@ function JobFan() {
                   {/* CTA, only on active card */}
                   {isCenter && (
                     <a
-                      href={WA_LINK}
+                      href={`mailto:${MAIL_APPLY}?subject=${encodeURIComponent(`Bewerbung: ${job.title}`)}&body=${encodeURIComponent(`Hallo PHE-Team,\n\nich interessiere mich für die Stelle:\n\nPosition: ${job.title}\nOrt: ${job.location}\n\nMein Name:\nTelefonnummer:\n\nIch freue mich auf Ihre Rückmeldung.`)}`}
                       onClick={e => e.stopPropagation()}
-                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--wa)", color: "#fff", fontSize: 12, fontWeight: 700, padding: "9px 14px", borderRadius: 9, textDecoration: "none" }}
+                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--blue)", color: "#fff", fontSize: 12, fontWeight: 700, padding: "9px 14px", borderRadius: 9, textDecoration: "none" }}
                     >
-                      <WhatsAppIcon size={12} /> Jetzt bewerben
+                      <MailIcon size={12} /> Jetzt bewerben
                     </a>
                   )}
                   {!isCenter && (
