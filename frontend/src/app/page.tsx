@@ -95,7 +95,7 @@ const GoogleIcon = () => (
 const JOB_TITLES = [
   "Elektroniker",
   "Mechatroniker",
-  "SPS-Programmierer",
+  "SPS'ler",
   "Bauleiter",
   "Elektroplaner",
   "Projektleiter",
