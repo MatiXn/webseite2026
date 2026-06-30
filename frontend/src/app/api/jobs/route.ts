@@ -65,7 +65,7 @@ export async function GET() {
   }
 
   try {
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/A2:H1000?key=${apiKey}`;
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/A2:I1000?key=${apiKey}`;
     const res = await fetch(url, { next: { revalidate: 300 } });
 
     if (!res.ok) {
@@ -99,6 +99,7 @@ export async function GET() {
           category: validCategories.has(category) ? category : "elektro",
           description: (row[5] ?? "").trim(),
           tags: (row[6] ?? "").split(",").map((t: string) => t.trim()).filter(Boolean),
+          benefits: (row[8] ?? "").split(",").map((b: string) => b.trim()).filter(Boolean),
           posted: "Aktuell",
           type: "Festanstellung",
           lat,
