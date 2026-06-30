@@ -167,29 +167,29 @@ export default function KontaktPage() {
                 </div>
 
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                  <div className="grid-2col" style={{ gap: 12 }}>
+                  <div className="form-grid-2">
                     <div>
-                      <label style={{ fontSize: 12, fontWeight: 700, color: "var(--gray)", display: "block", marginBottom: 6 }}>Name *</label>
+                      <label className="form-label">Name *</label>
                       <input required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Ihr Name"
-                        style={{ width: "100%", padding: "12px 14px", border: "1.5px solid var(--border)", borderRadius: 10, fontSize: 14, fontFamily: "inherit", color: "#1d1d1f", outline: "none", background: "#fff" }} />
+                        className="form-input" style={{ background: "#fff", border: "1.5px solid var(--border)" }} />
                     </div>
                     <div>
-                      <label style={{ fontSize: 12, fontWeight: 700, color: "var(--gray)", display: "block", marginBottom: 6 }}>Telefon</label>
+                      <label className="form-label">Telefon</label>
                       <input value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} placeholder="+49 ..."
-                        style={{ width: "100%", padding: "12px 14px", border: "1.5px solid var(--border)", borderRadius: 10, fontSize: 14, fontFamily: "inherit", color: "#1d1d1f", outline: "none", background: "#fff" }} />
+                        className="form-input" style={{ background: "#fff", border: "1.5px solid var(--border)" }} />
                     </div>
                   </div>
                   <div>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: "var(--gray)", display: "block", marginBottom: 6 }}>E-Mail *</label>
+                    <label className="form-label">E-Mail *</label>
                     <input required type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} placeholder="deine@email.de"
-                      style={{ width: "100%", padding: "12px 14px", border: "1.5px solid var(--border)", borderRadius: 10, fontSize: 14, fontFamily: "inherit", color: "#1d1d1f", outline: "none", background: "#fff" }} />
+                      className="form-input" style={{ background: "#fff", border: "1.5px solid var(--border)" }} />
                   </div>
                   <div>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: "var(--gray)", display: "block", marginBottom: 6 }}>Nachricht *</label>
+                    <label className="form-label">Nachricht *</label>
                     <textarea required value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                       placeholder={form.type === "bewerber" ? "Welche Stelle suchen Sie? In welcher Region möchten Sie tätig sein?" : "Welche Fachkraft suchen Sie? Standort, Erfahrung etc."}
                       rows={5}
-                      style={{ width: "100%", padding: "12px 14px", border: "1.5px solid var(--border)", borderRadius: 10, fontSize: 14, fontFamily: "inherit", color: "#1d1d1f", outline: "none", resize: "vertical", background: "#fff" }} />
+                      className="form-input" style={{ resize: "vertical", background: "#fff", border: "1.5px solid var(--border)" }} />
                   </div>
                   <button type="submit" style={{
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 8,

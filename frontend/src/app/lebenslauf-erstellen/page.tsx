@@ -38,18 +38,12 @@ const EMPTY: CVData = {
 // ── Input Component (Apple style) ────────────────────────────────────────────
 function Input({ label, value, onChange, placeholder, type = "text", multiline = false }:
   { label: string; value: string; onChange: (v: string) => void; placeholder?: string; type?: string; multiline?: boolean }) {
-  const base: React.CSSProperties = {
-    width: "100%", padding: "10px 12px",
-    border: "1px solid #e8e8ed", borderRadius: 10,
-    fontSize: 14, fontFamily: "inherit", color: "#1d1d1f", outline: "none",
-    background: "#f5f5f7", boxSizing: "border-box",
-  };
   return (
     <div>
-      <label style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 5 }}>{label}</label>
+      <label className="form-label">{label}</label>
       {multiline
-        ? <textarea value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} rows={3} style={{ ...base, resize: "vertical" }} />
-        : <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} style={base} />
+        ? <textarea className="form-input" value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} rows={3} style={{ resize: "vertical" }} />
+        : <input className="form-input" type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} />
       }
     </div>
   );
@@ -832,11 +826,16 @@ export default function LebenslaufPage() {
             display: "flex",
             gap: 2,
             marginBottom: 20,
+            overflowX: "auto",
+            WebkitOverflowScrolling: "touch" as React.CSSProperties["WebkitOverflowScrolling"],
           }}>
             {STEPS.map((s, i) => (
               <button key={i} onClick={() => setStep(i)} style={{
-                flex: 1, padding: "8px 4px", borderRadius: 10, border: "none",
-                cursor: "pointer", fontSize: 13, fontWeight: 400,
+                flex: "0 0 auto", padding: isMobile ? "8px 12px" : "8px 4px",
+                minWidth: isMobile ? "auto" : 0,
+                flexGrow: isMobile ? 0 : 1,
+                borderRadius: 10, border: "none",
+                cursor: "pointer", fontSize: isMobile ? 13 : 13, fontWeight: 400,
                 textAlign: "center", whiteSpace: "nowrap",
                 background: step === i ? "#0071e3" : "transparent",
                 color: step === i ? "#fff" : "#707070",
@@ -871,17 +870,17 @@ export default function LebenslaufPage() {
                   </div>
                 </div>
 
-                <div className="grid-2col" style={{ gap: 12 }}>
+                <div className="form-grid-2">
                   <Input label="Vorname" value={data.vorname} onChange={v => set("vorname", v)} placeholder="Max" />
                   <Input label="Nachname" value={data.nachname} onChange={v => set("nachname", v)} placeholder="Mustermann" />
                 </div>
                 <Input label="Berufsbezeichnung" value={data.beruf} onChange={v => set("beruf", v)} placeholder="z.B. Elektroniker" />
-                <div className="grid-2col" style={{ gap: 12 }}>
+                <div className="form-grid-2">
                   <Input label="E-Mail" value={data.email} onChange={v => set("email", v)} placeholder="max@email.de" type="email" />
                   <Input label="Telefon" value={data.telefon} onChange={v => set("telefon", v)} placeholder="+49 ..." />
                 </div>
                 <Input label="Adresse" value={data.adresse} onChange={v => set("adresse", v)} placeholder="Stadt, PLZ" />
-                <div className="grid-2col" style={{ gap: 12 }}>
+                <div className="form-grid-2">
                   <Input label="Geburtsdatum" value={data.geburtsdatum} onChange={v => set("geburtsdatum", v)} placeholder="01.01.1990" />
                   <Input label="Geburtsort" value={data.geburtsort} onChange={v => set("geburtsort", v)} placeholder="Berlin" />
                 </div>
@@ -902,7 +901,7 @@ export default function LebenslaufPage() {
                     <div style={sectionStyle}>
                       <Input label="Firma" value={s.firma} onChange={v => setStation(s.id, "firma", v)} placeholder="Firma GmbH" />
                       <Input label="Position" value={s.position} onChange={v => setStation(s.id, "position", v)} placeholder="z.B. Elektroniker" />
-                      <div className="grid-2col" style={{ gap: 12 }}>
+                      <div className="form-grid-2">
                         <Input label="Von" value={s.von} onChange={v => setStation(s.id, "von", v)} placeholder="03/2020" />
                         <Input label="Bis" value={s.bis} onChange={v => setStation(s.id, "bis", v)} placeholder="heute" />
                       </div>
@@ -933,7 +932,7 @@ export default function LebenslaufPage() {
                     <div style={sectionStyle}>
                       <Input label="Schule / Universität / Betrieb" value={a.schule} onChange={v => setAusbildung(a.id, "schule", v)} placeholder="Berufsschule XY" />
                       <Input label="Abschluss / Ausbildungsberuf" value={a.abschluss} onChange={v => setAusbildung(a.id, "abschluss", v)} placeholder="z.B. Elektroniker für Betriebstechnik" />
-                      <div className="grid-2col" style={{ gap: 12 }}>
+                      <div className="form-grid-2">
                         <Input label="Von" value={a.von} onChange={v => setAusbildung(a.id, "von", v)} placeholder="09/2015" />
                         <Input label="Bis" value={a.bis} onChange={v => setAusbildung(a.id, "bis", v)} placeholder="07/2018" />
                       </div>
