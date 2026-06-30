@@ -611,13 +611,14 @@ export default function LebenslaufPage() {
     const update = () => {
       if (previewColRef.current) {
         const w = previewColRef.current.offsetWidth;
-        setPreviewScale(Math.min(1, w / 794));
+        const maxScale = isMobile ? 1 : 0.60;
+        setPreviewScale(Math.min(maxScale, w / 794));
       }
     };
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
-  }, []);
+  }, [isMobile]);
 
   const set = (key: keyof CVData, val: string) => setData(d => ({ ...d, [key]: val }));
 
