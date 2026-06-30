@@ -166,9 +166,9 @@ function TemplateA({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
   const accent = "#1e3a5f";
   const blue = "#3d7cc9";
   return (
-    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "11pt", color: "#1a1a2e", zoom, paddingLeft: "2.5cm", paddingRight: "2.0cm", paddingTop: "2.0cm", paddingBottom: "2.0cm", boxSizing: "border-box" }}>
-      {/* Header */}
-      <div style={{ background: accent, color: "#fff", padding: "28px 0 22px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginLeft: "-2.5cm", marginRight: "-2.0cm", paddingLeft: "2.5cm", paddingRight: "2.0cm" }}>
+    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "11pt", color: "#1a1a2e", zoom, paddingLeft: "2.5cm", paddingRight: "2.0cm", paddingBottom: "2.0cm", boxSizing: "border-box" }}>
+      {/* Header — läuft oben bündig, kein Top-Padding auf äußerem Wrapper */}
+      <div style={{ background: accent, color: "#fff", padding: "28px 0 22px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginLeft: "-2.5cm", marginRight: "-2.0cm", paddingLeft: "2.5cm", paddingRight: "2.8cm" }}>
         <div style={{ flex: 1 }}>
           <h1 style={{ fontSize: "24pt", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 4 }}>{name}</h1>
           <p style={{ fontSize: "12pt", color: "#93c5fd", fontWeight: 600, marginBottom: 14 }}>{data.beruf || "Berufsbezeichnung"}</p>
@@ -185,7 +185,7 @@ function TemplateA({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 0.62fr", marginLeft: "-2.5cm", marginRight: "-2.0cm" }}>
         {/* Left */}
-        <div style={{ padding: "22px 26px 28px 2.5cm" }}>
+        <div style={{ padding: "28px 26px 28px 2.5cm" }}>
           {data.zusammenfassung && (
             <div style={{ marginBottom: 20 }}>
               <h2 style={{ fontSize: "13pt", fontWeight: 700, color: blue, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8, paddingBottom: 5, borderBottom: `2px solid ${blue}44` }}>Profil</h2>
@@ -1027,7 +1027,7 @@ export default function LebenslaufPage() {
             onMouseEnter={() => setPreviewHovered(true)}
             onMouseLeave={() => setPreviewHovered(false)}
             style={{
-              borderRadius: 20,
+              borderRadius: 12,
               overflow: "hidden",
               transform: previewHovered ? "rotate(0deg)" : "rotate(-0.5deg)",
               transition: "transform 0.3s ease",
