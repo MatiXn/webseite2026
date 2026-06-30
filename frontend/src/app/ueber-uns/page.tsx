@@ -45,61 +45,61 @@ const WhatsAppIcon = ({ size = 16 }: { size?: number }) => (
 
 export default function UeberUnsPage() {
   return (
-    <>
+    <div style={{ background: "#f5f5f7", minHeight: "100vh" }}>
       <Nav />
 
-      {/* HERO */}
-      <section className="section-pad px-section" style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>
-          Über uns
-        </p>
-        <h1 style={{ fontSize: "clamp(32px,5vw,56px)", fontWeight: 900, color: "var(--navy)", letterSpacing: "-0.03em", lineHeight: 1.1, maxWidth: 700, marginBottom: 24 }}>
-          Menschen verbinden.<br />
-          <span style={{ background: "linear-gradient(135deg,var(--blue),var(--violet))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+      {/* HERO — on Fog (#f5f5f7) */}
+      <section style={{ background: "#f5f5f7", padding: "80px 24px 64px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontSize: 12, fontWeight: 700, color: "#0071e3", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>
+            Über uns
+          </p>
+          <h1 style={{ fontSize: "clamp(36px,5vw,56px)", fontWeight: 700, color: "#1d1d1f", letterSpacing: "-0.015em", lineHeight: 1.1, maxWidth: 700, marginBottom: 24 }}>
+            Menschen verbinden.<br />
             Karrieren gestalten.
-          </span>
-        </h1>
-        <p style={{ fontSize: 18, color: "var(--gray)", lineHeight: 1.7, maxWidth: 620 }}>
-          PHE-Perm Engineering Ingenieure &amp; Techniker GmbH ist eine spezialisierte Personalvermittlung für IT-, Elektro- und Baufachkräfte, mit Sitz in Düsseldorf und bundesweiter Reichweite.
-        </p>
+          </h1>
+          <p style={{ fontSize: 19, color: "#707070", lineHeight: 1.6, maxWidth: 620 }}>
+            PHE-Perm Engineering Ingenieure &amp; Techniker GmbH ist eine spezialisierte Personalvermittlung für IT-, Elektro- und Baufachkräfte, mit Sitz in Düsseldorf und bundesweiter Reichweite.
+          </p>
+        </div>
       </section>
 
-      {/* STATS */}
-      <section className="px-section" style={{ background: "var(--bg)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "48px 0" }}>
-        <div className="ueber-stats" style={{ maxWidth: 1100, margin: "0 auto", gap: 32 }}>
+      {/* STATS — on White */}
+      <section style={{ background: "#fff", padding: "64px 24px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 24 }}>
           {STATS.map(s => (
-            <div key={s.label} style={{ textAlign: "center" }}>
-              <p style={{ fontSize: 40, fontWeight: 900, color: "var(--navy)", letterSpacing: "-0.03em", marginBottom: 6 }}>{s.value}</p>
-              <p style={{ fontSize: 14, color: "var(--gray)", fontWeight: 500 }}>{s.label}</p>
+            <div key={s.label} style={{ background: "#f5f5f7", borderRadius: 28, padding: "36px 24px", textAlign: "center" }}>
+              <p style={{ fontSize: 44, fontWeight: 700, color: "#1d1d1f", letterSpacing: "-0.02em", marginBottom: 8 }}>{s.value}</p>
+              <p style={{ fontSize: 15, color: "#707070", fontWeight: 500 }}>{s.label}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* MISSION */}
-      <section className="section-pad px-section" style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div className="ueber-grid" style={{ alignItems: "center" }}>
+      {/* MISSION — on Fog */}
+      <section style={{ background: "#f5f5f7", padding: "80px 24px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
           <div>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#0071e3", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>
               Unsere Mission
             </p>
-            <h2 style={{ fontSize: "clamp(24px,3vw,36px)", fontWeight: 800, color: "var(--navy)", letterSpacing: "-0.025em", marginBottom: 20, lineHeight: 1.2 }}>
+            <h2 style={{ fontSize: 40, fontWeight: 700, color: "#1d1d1f", letterSpacing: "-0.015em", lineHeight: 1.1, marginBottom: 24 }}>
               Passgenaue Vermittlung ohne Umwege
             </h2>
-            <p style={{ fontSize: 16, color: "var(--gray)", lineHeight: 1.8, marginBottom: 20 }}>
+            <p style={{ fontSize: 17, color: "#707070", lineHeight: 1.6, marginBottom: 20 }}>
               Wir glauben, dass der richtige Job das Leben verändert. Deshalb setzen wir alles daran, Fachkräfte und Unternehmen zusammenzubringen, schnell, effizient und menschlich.
             </p>
-            <p style={{ fontSize: 16, color: "var(--gray)", lineHeight: 1.8 }}>
+            <p style={{ fontSize: 17, color: "#707070", lineHeight: 1.6 }}>
               Keine Zeitarbeit. Keine Leiharbeit. Nur direkte Festanstellungen, bei Unternehmen, die wirklich zu Ihnen passen.
             </p>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {VALUES.map(v => (
-              <div key={v.num} style={{ display: "flex", gap: 20, padding: 24, border: "1.5px solid var(--border)", borderRadius: 14, background: "#fff" }}>
-                <span style={{ fontSize: 13, fontWeight: 800, color: "var(--blue)", opacity: 0.5, flexShrink: 0, paddingTop: 2 }}>{v.num}</span>
+              <div key={v.num} style={{ display: "flex", gap: 20, padding: 28, borderRadius: 28, background: "#fff" }}>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "#0071e3", opacity: 0.5, flexShrink: 0, paddingTop: 2 }}>{v.num}</span>
                 <div>
-                  <p style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)", marginBottom: 6 }}>{v.title}</p>
-                  <p style={{ fontSize: 14, color: "var(--gray)", lineHeight: 1.6 }}>{v.text}</p>
+                  <p style={{ fontSize: 17, fontWeight: 600, color: "#1d1d1f", marginBottom: 8 }}>{v.title}</p>
+                  <p style={{ fontSize: 15, color: "#707070", lineHeight: 1.6 }}>{v.text}</p>
                 </div>
               </div>
             ))}
@@ -107,33 +107,35 @@ export default function UeberUnsPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="section-pad px-section" style={{ maxWidth: 1100, margin: "0 auto", textAlign: "center" }}>
-        <h2 style={{ fontSize: "clamp(24px,3vw,36px)", fontWeight: 800, color: "var(--navy)", marginBottom: 16 }}>
-          Bereit für den nächsten Schritt?
-        </h2>
-        <p style={{ fontSize: 16, color: "var(--gray)", marginBottom: 32, maxWidth: 480, margin: "0 auto 32px" }}>
-          Kontaktieren Sie uns per WhatsApp oder E-Mail, kostenlos, unverbindlich und direkt.
-        </p>
-        <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-          <a href={WA_LINK} style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            background: "var(--wa)", color: "#fff", fontWeight: 700, fontSize: 15,
-            padding: "14px 28px", borderRadius: 10, textDecoration: "none",
-          }}>
-            <WhatsAppIcon /> Jetzt bewerben
-          </a>
-          <Link href="/kontakt" style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            border: "1.5px solid var(--border)", color: "var(--navy)", fontWeight: 600, fontSize: 15,
-            padding: "14px 28px", borderRadius: 10, textDecoration: "none",
-          }}>
-            Kontakt aufnehmen
-          </Link>
+      {/* CTA — on White */}
+      <section style={{ background: "#fff", padding: "80px 24px", textAlign: "center" }}>
+        <div style={{ maxWidth: 640, margin: "0 auto" }}>
+          <h2 style={{ fontSize: 40, fontWeight: 700, color: "#1d1d1f", letterSpacing: "-0.015em", lineHeight: 1.1, marginBottom: 16 }}>
+            Bereit für den nächsten Schritt?
+          </h2>
+          <p style={{ fontSize: 17, color: "#707070", lineHeight: 1.6, marginBottom: 40 }}>
+            Kontaktieren Sie uns per WhatsApp oder E-Mail, kostenlos, unverbindlich und direkt.
+          </p>
+          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+            <a href={WA_LINK} style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              background: "#0071e3", color: "#fff", fontWeight: 600, fontSize: 17,
+              padding: "16px 32px", borderRadius: 999, textDecoration: "none",
+            }}>
+              <WhatsAppIcon /> Jetzt bewerben
+            </a>
+            <Link href="/kontakt" style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              background: "#f5f5f7", color: "#1d1d1f", fontWeight: 600, fontSize: 17,
+              padding: "16px 32px", borderRadius: 999, textDecoration: "none",
+            }}>
+              Kontakt aufnehmen
+            </Link>
+          </div>
         </div>
       </section>
 
-      <div style={{ background: "var(--bg)", borderTop: "1px solid var(--border)" }}>
+      <div style={{ background: "#f5f5f7" }}>
         <FaqSection title="Häufige Fragen über PHE Perm Engineering" items={[
           { q: "Was ist PHE Perm Engineering?", a: "PHE-Perm Engineering Ingenieure & Techniker GmbH ist eine spezialisierte Personalvermittlung mit Sitz in Düsseldorf. Wir vermitteln Fachkräfte aus den Bereichen Elektrotechnik, IT & Automation und Bau in Festanstellungen bei deutschen Unternehmen." },
           { q: "Wo ist PHE Perm Engineering ansässig?", a: "Unser Hauptsitz befindet sich in der Hüttenstraße 30, 40215 Düsseldorf. Wir sind jedoch bundesweit tätig und vermitteln Stellen in über 80 deutschen Städten." },
@@ -159,17 +161,17 @@ export default function UeberUnsPage() {
       }} />
 
       {/* FOOTER */}
-      <footer style={{ borderTop: "1px solid var(--border)", padding: "40px 48px", background: "var(--bg)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <p style={{ fontSize: 13, color: "var(--gray-light)" }}>
+      <footer style={{ background: "#f5f5f7", borderTop: "1px solid #d2d2d7", padding: "40px 24px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
+          <p style={{ fontSize: 13, color: "#707070" }}>
             © 2025 PHE-Perm Engineering Ingenieure & Techniker GmbH · Hüttenstraße 30, 40215 Düsseldorf
           </p>
           <div style={{ display: "flex", gap: 24 }}>
-            <Link href="/kontakt" style={{ fontSize: 13, color: "var(--gray)", textDecoration: "none" }}>Kontakt</Link>
-            <Link href="/jobs" style={{ fontSize: 13, color: "var(--gray)", textDecoration: "none" }}>Stellenangebote</Link>
+            <Link href="/kontakt" style={{ fontSize: 13, color: "#707070", textDecoration: "none" }}>Kontakt</Link>
+            <Link href="/jobs" style={{ fontSize: 13, color: "#707070", textDecoration: "none" }}>Stellenangebote</Link>
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 }

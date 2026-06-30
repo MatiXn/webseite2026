@@ -82,7 +82,7 @@ ${form.vorname} ${form.nachname}`;
       <div
         onClick={e => e.stopPropagation()}
         style={{
-          background: "#fff", borderRadius: 16, padding: 32,
+          background: "#fff", borderRadius: 28, padding: 32,
           width: "100%", maxWidth: 480, boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
         }}
       >
@@ -121,7 +121,7 @@ ${form.vorname} ${form.nachname}`;
           <button
             onClick={onClose}
             style={{
-              flex: 1, padding: "12px 0", borderRadius: 10, border: "1.5px solid var(--border)",
+              flex: 1, padding: "12px 0", borderRadius: 999, border: "1.5px solid var(--border)",
               background: "#fff", color: "var(--gray)", fontWeight: 600, fontSize: 14,
               cursor: "pointer", fontFamily: "inherit",
             }}
@@ -132,8 +132,8 @@ ${form.vorname} ${form.nachname}`;
             onClick={handleSubmit}
             disabled={!form.vorname || !form.nachname || !form.telefon}
             style={{
-              flex: 2, padding: "12px 0", borderRadius: 10, border: "none",
-              background: (!form.vorname || !form.nachname || !form.telefon) ? "var(--border)" : "linear-gradient(135deg,var(--blue),var(--violet))",
+              flex: 2, padding: "12px 0", borderRadius: 999, border: "none",
+              background: (!form.vorname || !form.nachname || !form.telefon) ? "var(--border)" : "#0071e3",
               color: "#fff", fontWeight: 700, fontSize: 14,
               cursor: (!form.vorname || !form.nachname || !form.telefon) ? "not-allowed" : "pointer",
               fontFamily: "inherit",
@@ -278,12 +278,12 @@ export default function JobsPage() {
       <Nav />
 
       {/* HEADER + SEARCH */}
-      <div className="section-pad" style={{ background: "var(--bg)", borderBottom: "1px solid var(--border)", paddingBottom: 32 }}>
+      <div className="section-pad" style={{ background: "#f5f5f7", borderBottom: "1px solid var(--border)", paddingBottom: 32 }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
             {jobsLoading ? "..." : jobs.length} offene Stellen
           </p>
-          <h1 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, color: "var(--navy)", letterSpacing: "-0.025em", marginBottom: 32 }}>
+          <h1 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 700, color: "#1d1d1f", letterSpacing: "-0.015em", lineHeight: 1.1, marginBottom: 32 }}>
             Stellenangebote
           </h1>
 
@@ -302,7 +302,7 @@ export default function JobsPage() {
                 onKeyDown={e => e.key === "Enter" && handleSearch()}
                 style={{
                   width: "100%", paddingLeft: 44, paddingRight: 16, height: 52,
-                  border: "1.5px solid var(--border)", borderRadius: 10,
+                  border: "1.5px solid var(--border)", borderRadius: 28,
                   fontSize: 15, color: "var(--navy)", outline: "none",
                   background: "#fff", fontFamily: "inherit",
                   transition: "border-color .15s",
@@ -322,7 +322,7 @@ export default function JobsPage() {
                 onKeyDown={e => e.key === "Enter" && handleSearch()}
                 style={{
                   width: "100%", paddingLeft: 40, paddingRight: 16, height: 52,
-                  border: "1.5px solid var(--border)", borderRadius: 10,
+                  border: "1.5px solid var(--border)", borderRadius: 28,
                   fontSize: 15, color: "var(--navy)", outline: "none",
                   background: "#fff", fontFamily: "inherit",
                 }}
@@ -333,9 +333,9 @@ export default function JobsPage() {
               onClick={handleSearch}
               disabled={loading}
               style={{
-                background: loading ? "var(--gray-light)" : "linear-gradient(135deg,var(--blue),var(--violet))",
+                background: loading ? "var(--gray-light)" : "#0071e3",
                 color: "#fff", fontWeight: 700, fontSize: 15,
-                padding: "0 32px", height: 52, borderRadius: 10, border: "none",
+                padding: "0 32px", height: 52, borderRadius: 999, border: "none",
                 cursor: loading ? "not-allowed" : "pointer", whiteSpace: "nowrap",
                 display: "flex", alignItems: "center", gap: 8,
               }}
@@ -348,7 +348,7 @@ export default function JobsPage() {
                 onClick={handleReset}
                 style={{
                   background: "#fff", color: "var(--gray)", fontWeight: 600, fontSize: 13,
-                  padding: "0 16px", height: 52, borderRadius: 10,
+                  padding: "0 16px", height: 52, borderRadius: 999,
                   border: "1.5px solid var(--border)", cursor: "pointer",
                   display: "flex", alignItems: "center", gap: 6,
                 }}
@@ -365,7 +365,7 @@ export default function JobsPage() {
                 key={cat.id}
                 onClick={() => setCategory(cat.id)}
                 style={{
-                  padding: "7px 16px", borderRadius: 20, fontSize: 13, fontWeight: 600,
+                  padding: "7px 16px", borderRadius: 999, fontSize: 13, fontWeight: 600,
                   border: "1.5px solid",
                   borderColor: category === cat.id ? "var(--blue)" : "var(--border)",
                   background: category === cat.id ? "#f0f7ff" : "#fff",
@@ -385,7 +385,7 @@ export default function JobsPage() {
         {result?.type === "radius" && (
           <div style={{
             marginTop: 24, padding: "14px 20px", background: "#fff8e1",
-            border: "1.5px solid #fbbf24", borderRadius: 10,
+            border: "1.5px solid #fbbf24", borderRadius: 16,
             fontSize: 14, color: "#92400e", fontWeight: 500,
             display: "flex", alignItems: "center", gap: 8,
           }}>
@@ -395,8 +395,8 @@ export default function JobsPage() {
         )}
         {result?.type === "none" && (
           <div style={{
-            marginTop: 24, padding: "32px", background: "var(--bg)",
-            border: "1.5px solid var(--border)", borderRadius: 14, textAlign: "center",
+            marginTop: 24, padding: "32px",
+            borderRadius: 28, textAlign: "center", background: "#fff",
           }}>
             <p style={{ fontSize: 18, fontWeight: 700, color: "var(--navy)", marginBottom: 8 }}>Keine Stellen gefunden</p>
             <p style={{ fontSize: 14, color: "var(--gray)", marginBottom: 20 }}>
@@ -409,7 +409,7 @@ export default function JobsPage() {
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
                   background: "var(--wa)", color: "#fff", fontWeight: 700, fontSize: 14,
-                  padding: "12px 24px", borderRadius: 10, textDecoration: "none",
+                  padding: "12px 24px", borderRadius: 999, textDecoration: "none",
                 }}
               >
                 <WhatsAppIcon size={16} /> Via WhatsApp bewerben
@@ -419,7 +419,7 @@ export default function JobsPage() {
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
                   background: "#fff", color: "var(--navy)", fontWeight: 700, fontSize: 14,
-                  padding: "12px 24px", borderRadius: 10, textDecoration: "none",
+                  padding: "12px 24px", borderRadius: 999, textDecoration: "none",
                   border: "1.5px solid var(--border)",
                 }}
               >
@@ -431,7 +431,7 @@ export default function JobsPage() {
       </div>
 
       {/* JOB GRID */}
-      <main className="px-section" style={{ maxWidth: 1100, margin: "0 auto", paddingTop: 32, paddingBottom: 80 }}>
+      <main className="px-section" style={{ maxWidth: 1100, margin: "0 auto", paddingTop: 32, paddingBottom: 80, background: "#f5f5f7" }}>
         {result?.type !== "none" && (
           <>
             <p style={{ fontSize: 13, color: "var(--gray)", marginBottom: 20 }}>
@@ -449,8 +449,8 @@ export default function JobsPage() {
         {/* CTA bottom */}
         {showJobs.length > 0 && (
           <div style={{
-            marginTop: 64, background: "var(--bg)", border: "1.5px solid var(--border)",
-            borderRadius: 16, padding: "40px", textAlign: "center",
+            marginTop: 64, background: "#f5f5f7", border: "none",
+            borderRadius: 28, padding: "40px", textAlign: "center",
           }}>
             <p style={{ fontSize: 20, fontWeight: 800, color: "var(--navy)", marginBottom: 8 }}>
               Nichts Passendes dabei?
@@ -464,7 +464,7 @@ export default function JobsPage() {
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
                   background: "var(--wa)", color: "#fff", fontWeight: 700, fontSize: 15,
-                  padding: "14px 28px", borderRadius: 10, textDecoration: "none",
+                  padding: "14px 28px", borderRadius: 999, textDecoration: "none",
                 }}
               >
                 <WhatsAppIcon size={16} /> Via WhatsApp bewerben
@@ -474,7 +474,7 @@ export default function JobsPage() {
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
                   background: "#fff", color: "var(--navy)", fontWeight: 700, fontSize: 15,
-                  padding: "14px 28px", borderRadius: 10, textDecoration: "none",
+                  padding: "14px 28px", borderRadius: 999, textDecoration: "none",
                   border: "1.5px solid var(--border)",
                 }}
               >
@@ -517,9 +517,8 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
     <>
     {showModal && <ApplyModal job={job} onClose={() => setShowModal(false)} />}
     <div style={{
-      border: "1.5px solid var(--border)", borderRadius: 14, padding: 24,
+      borderRadius: 28, padding: 24,
       background: "#fff", display: "flex", flexDirection: "column",
-      transition: "box-shadow .2s, border-color .2s",
     }}>
       {/* Category + distance */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
@@ -573,8 +572,8 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
             href={`${WA_LINK}?text=${encodeURIComponent(`Hallo, ich interessiere mich für die Stelle: ${job.title} in ${job.city}`)}`}
             style={{
               flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
-              background: "var(--wa)", color: "#fff", fontSize: 12, fontWeight: 700,
-              padding: "9px 12px", borderRadius: 8, textDecoration: "none",
+              background: "#22c55e", color: "#fff", fontSize: 12, fontWeight: 700,
+              padding: "9px 12px", borderRadius: 999, textDecoration: "none",
             }}
           >
             <WhatsAppIcon size={13} /> WhatsApp
@@ -583,8 +582,8 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
             onClick={() => setShowModal(true)}
             style={{
               flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
-              background: "var(--bg)", color: "var(--navy)", fontSize: 12, fontWeight: 700,
-              padding: "9px 12px", borderRadius: 8, border: "1.5px solid var(--border)",
+              background: "#f5f5f7", color: "#1d1d1f", fontSize: 12, fontWeight: 700,
+              padding: "9px 12px", borderRadius: 999, border: "none",
               cursor: "pointer", fontFamily: "inherit",
             }}
           >

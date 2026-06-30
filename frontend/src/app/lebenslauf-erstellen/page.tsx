@@ -35,17 +35,18 @@ const EMPTY: CVData = {
   faehigkeiten: "", sprachen: "", foto: "",
 };
 
-// ── Input Component ──────────────────────────────────────────────────────────
+// ── Input Component (Apple style) ────────────────────────────────────────────
 function Input({ label, value, onChange, placeholder, type = "text", multiline = false }:
   { label: string; value: string; onChange: (v: string) => void; placeholder?: string; type?: string; multiline?: boolean }) {
   const base: React.CSSProperties = {
-    width: "100%", padding: "10px 12px", border: "1.5px solid var(--border)", borderRadius: 8,
-    fontSize: 14, fontFamily: "inherit", color: "var(--navy)", outline: "none", background: "#fff",
-    boxSizing: "border-box",
+    width: "100%", padding: "10px 12px",
+    border: "1px solid #e8e8ed", borderRadius: 10,
+    fontSize: 14, fontFamily: "inherit", color: "#1d1d1f", outline: "none",
+    background: "#f5f5f7", boxSizing: "border-box",
   };
   return (
     <div>
-      <label style={{ fontSize: 11, fontWeight: 700, color: "var(--gray)", textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>{label}</label>
+      <label style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 5 }}>{label}</label>
       {multiline
         ? <textarea value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} rows={3} style={{ ...base, resize: "vertical" }} />
         : <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} style={base} />
@@ -84,52 +85,52 @@ ${form.vorname} ${form.nachname}`;
   };
 
   const inputStyle: React.CSSProperties = {
-    width: "100%", padding: "10px 14px", borderRadius: 8,
-    border: "1.5px solid var(--border)", fontSize: 14,
-    color: "var(--navy)", fontFamily: "inherit", outline: "none", boxSizing: "border-box",
+    width: "100%", padding: "10px 14px", borderRadius: 10,
+    border: "1px solid #e8e8ed", fontSize: 14, background: "#f5f5f7",
+    color: "#1d1d1f", fontFamily: "inherit", outline: "none", boxSizing: "border-box",
   };
 
   return (
-    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: 24 }}>
-      <div onClick={e => e.stopPropagation()} style={{ background: "#fff", borderRadius: 16, padding: 32, width: "100%", maxWidth: 480, boxShadow: "0 20px 60px rgba(0,0,0,0.2)" }}>
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: 24 }}>
+      <div onClick={e => e.stopPropagation()} style={{ background: "#fff", borderRadius: 20, padding: 32, width: "100%", maxWidth: 480 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
           <div>
-            <h2 style={{ fontSize: 20, fontWeight: 800, color: "var(--navy)", marginBottom: 4 }}>Bei PHE bewerben</h2>
-            <p style={{ fontSize: 13, color: "var(--gray)" }}>Wir finden passende Stellen für Sie, kostenlos.</p>
+            <h2 style={{ fontSize: 20, fontWeight: 700, color: "#1d1d1f", marginBottom: 4, letterSpacing: "-0.01em" }}>Bei PHE bewerben</h2>
+            <p style={{ fontSize: 13, color: "#707070" }}>Wir finden passende Stellen für Sie, kostenlos.</p>
           </div>
-          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--gray)", fontSize: 20, lineHeight: 1, padding: 4 }}>✕</button>
+          <button onClick={onClose} style={{ background: "#f5f5f7", border: "none", cursor: "pointer", color: "#707070", fontSize: 16, lineHeight: 1, padding: "6px 10px", borderRadius: 999 }}>✕</button>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           <div style={{ display: "flex", gap: 12 }}>
             <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 12, fontWeight: 600, color: "var(--gray)", display: "block", marginBottom: 6 }}>Vorname *</label>
+              <label style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 6 }}>Vorname *</label>
               <input style={inputStyle} value={form.vorname} onChange={e => setForm(f => ({ ...f, vorname: e.target.value }))} placeholder="Max" />
             </div>
             <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 12, fontWeight: 600, color: "var(--gray)", display: "block", marginBottom: 6 }}>Nachname *</label>
+              <label style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 6 }}>Nachname *</label>
               <input style={inputStyle} value={form.nachname} onChange={e => setForm(f => ({ ...f, nachname: e.target.value }))} placeholder="Mustermann" />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 12, fontWeight: 600, color: "var(--gray)", display: "block", marginBottom: 6 }}>Telefonnummer *</label>
+            <label style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 6 }}>Telefonnummer *</label>
             <input style={inputStyle} type="tel" value={form.telefon} onChange={e => setForm(f => ({ ...f, telefon: e.target.value }))} placeholder="+49 123 456789" />
           </div>
           <div>
-            <label style={{ fontSize: 12, fontWeight: 600, color: "var(--gray)", display: "block", marginBottom: 6 }}>Gewünschte Position / Berufsfeld</label>
+            <label style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 6 }}>Gewünschte Position / Berufsfeld</label>
             <input style={inputStyle} value={form.position} onChange={e => setForm(f => ({ ...f, position: e.target.value }))} placeholder="z.B. Elektroniker, Mechatroniker..." />
           </div>
         </div>
         <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
-          <button onClick={onClose} style={{ flex: 1, padding: "12px 0", borderRadius: 10, border: "1.5px solid var(--border)", background: "#fff", color: "var(--gray)", fontWeight: 600, fontSize: 14, cursor: "pointer", fontFamily: "inherit" }}>Abbrechen</button>
+          <button onClick={onClose} style={{ flex: 1, padding: "12px 0", borderRadius: 999, border: "1px solid #e8e8ed", background: "#fff", color: "#707070", fontWeight: 400, fontSize: 14, cursor: "pointer", fontFamily: "inherit" }}>Abbrechen</button>
           <button
             onClick={handleSubmit}
             disabled={!form.vorname || !form.nachname || !form.telefon}
-            style={{ flex: 2, padding: "12px 0", borderRadius: 10, border: "none", background: (!form.vorname || !form.nachname || !form.telefon) ? "var(--border)" : "linear-gradient(135deg,var(--blue),var(--violet))", color: "#fff", fontWeight: 700, fontSize: 14, cursor: (!form.vorname || !form.nachname || !form.telefon) ? "not-allowed" : "pointer", fontFamily: "inherit" }}
+            style={{ flex: 2, padding: "12px 0", borderRadius: 999, border: "none", background: (!form.vorname || !form.nachname || !form.telefon) ? "#e8e8ed" : "#0071e3", color: "#fff", fontWeight: 400, fontSize: 14, cursor: (!form.vorname || !form.nachname || !form.telefon) ? "not-allowed" : "pointer", fontFamily: "inherit" }}
           >
             E-Mail öffnen & senden
           </button>
         </div>
-        <p style={{ fontSize: 11, color: "var(--gray-light)", textAlign: "center", marginTop: 12 }}>Ihr E-Mail-Programm öffnet sich, bitte PDF anhängen.</p>
+        <p style={{ fontSize: 11, color: "#aeaeb2", textAlign: "center", marginTop: 12 }}>Ihr E-Mail-Programm öffnet sich, bitte PDF anhängen.</p>
       </div>
     </div>
   );
@@ -560,7 +561,6 @@ function contentZoom(data: CVData): number {
     (data.zusammenfassung ? 2 : 0) +
     (data.faehigkeiten ? 1 : 0) +
     (data.sprachen ? 1 : 0);
-  // target ~14 units to fill a page; zoom down for dense, up for sparse
   const zoom = Math.min(1.55, Math.max(1.0, 14 / Math.max(units, 5)));
   return Math.round(zoom * 100) / 100;
 }
@@ -573,37 +573,13 @@ function CVPreview({ data, template }: { data: CVData; template: TemplateId }) {
   return <TemplateA data={data} zoom={zoom} />;
 }
 
-// ── Template Picker ──────────────────────────────────────────────────────────
-const TEMPLATES: { id: TemplateId; label: string; desc: string; colors: string[]; photo: boolean }[] = [
-  { id: "A", label: "Klassisch Blau", desc: "Header-Foto rechts", colors: ["#1e3a5f", "#3d7cc9", "#f0f4f8"], photo: true },
-  { id: "B", label: "Sidebar Links", desc: "Foto & Daten links", colors: ["#1e3a5f", "#60a5fa", "#ffffff"], photo: true },
-  { id: "C", label: "Modern Grün", desc: "Minimalistisch, optional Foto", colors: ["#059669", "#f0fdf4", "#111827"], photo: false },
-  { id: "D", label: "Elegant Violett", desc: "Dunkle Sidebar links", colors: ["#1e1b4b", "#7c3aed", "#c4b5fd"], photo: true },
+// ── Template Picker (Apple pill tabs in preview area) ────────────────────────
+const TEMPLATES: { id: TemplateId; label: string; desc: string; colors: string[] }[] = [
+  { id: "A", label: "Klassisch", desc: "Blau", colors: ["#1e3a5f", "#3d7cc9", "#f0f4f8"] },
+  { id: "B", label: "Sidebar", desc: "Dunkel", colors: ["#1e3a5f", "#60a5fa", "#ffffff"] },
+  { id: "C", label: "Modern", desc: "Grün", colors: ["#059669", "#f0fdf4", "#111827"] },
+  { id: "D", label: "Elegant", desc: "Violett", colors: ["#1e1b4b", "#7c3aed", "#c4b5fd"] },
 ];
-
-function TemplatePicker({ selected, onChange }: { selected: TemplateId; onChange: (t: TemplateId) => void }) {
-  return (
-    <div style={{ marginBottom: 24 }}>
-      <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gray)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>Vorlage wählen</p>
-      <div className="grid-2col" style={{ gap: 8 }}>
-        {TEMPLATES.map(t => (
-          <button key={t.id} onClick={() => onChange(t.id)} style={{
-            padding: "10px 12px", borderRadius: 10, border: "2px solid",
-            borderColor: selected === t.id ? "var(--blue)" : "var(--border)",
-            background: selected === t.id ? "#f0f7ff" : "#fff",
-            cursor: "pointer", textAlign: "left", transition: "all .15s",
-          }}>
-            <div style={{ display: "flex", gap: 4, marginBottom: 6 }}>
-              {t.colors.map((c, i) => <span key={i} style={{ width: 14, height: 14, borderRadius: 3, background: c, border: "1px solid rgba(0,0,0,0.1)" }} />)}
-            </div>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "var(--navy)", marginBottom: 2 }}>{t.label}</p>
-            <p style={{ fontSize: 10, color: "var(--gray)" }}>{t.desc}</p>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 // ── MAIN PAGE ────────────────────────────────────────────────────────────────
 export default function LebenslaufPage() {
@@ -613,6 +589,8 @@ export default function LebenslaufPage() {
   const [showModal, setShowModal] = useState(false);
   const [mobileTab, setMobileTab] = useState<"form" | "preview">("form");
   const [isMobile, setIsMobile] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(false);
+  const [previewHovered, setPreviewHovered] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -620,6 +598,11 @@ export default function LebenslaufPage() {
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
+  }, []);
+
+  useEffect(() => {
+    const t = setTimeout(() => setHeroVisible(true), 100);
+    return () => clearTimeout(t);
   }, []);
 
   const set = (key: keyof CVData, val: string) => setData(d => ({ ...d, [key]: val }));
@@ -668,103 +651,210 @@ export default function LebenslaufPage() {
       <Nav />
       {showModal && <ApplyModal data={data} onClose={() => setShowModal(false)} />}
 
-      {/* HEADER */}
-      <div className="section-pad" style={{ background: "var(--bg)", borderBottom: "1px solid var(--border)", paddingBottom: 32 }}>
-        <div style={{ maxWidth: 1300, margin: "0 auto" }}>
-          <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Kostenlos & ohne Anmeldung</p>
-          <h1 style={{ fontSize: "clamp(26px,3.5vw,40px)", fontWeight: 900, color: "var(--navy)", letterSpacing: "-0.025em", marginBottom: 8 }}>Lebenslauf erstellen</h1>
-          <p style={{ fontSize: 15, color: "var(--gray)" }}>Füllen Sie das Formular aus, Ihr Lebenslauf wird live als Vorschau angezeigt und kann als PDF gespeichert werden.</p>
-        </div>
-      </div>
-
-      {/* PHE CTA BANNER */}
-      <div className="px-section" style={{ background: "linear-gradient(135deg,#1e3a5f,#3d7cc9)", paddingTop: 18, paddingBottom: 18 }}>
-        <div style={{ maxWidth: 1300, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
-          <div>
-            <p style={{ fontWeight: 800, color: "#fff", fontSize: 15, marginBottom: 2 }}>🎯 Lebenslauf fertig? Jetzt direkt bei PHE bewerben!</p>
-            <p style={{ color: "#93c5fd", fontSize: 13 }}>Wir finden passende Stellen für Sie, kostenlos & unverbindlich. Über 25 offene Positionen.</p>
+      {/* ── HERO SECTION ─────────────────────────────────────────────────── */}
+      <section style={{ background: "#f5f5f7", padding: isMobile ? "40px 24px 28px" : "64px 48px 40px", textAlign: "center" }}>
+        <div
+          style={{
+            opacity: heroVisible ? 1 : 0,
+            transform: heroVisible ? "translateY(0)" : "translateY(24px)",
+            transition: "opacity 0.6s ease, transform 0.6s ease",
+          }}
+        >
+          <div style={{
+            background: "#fff",
+            border: "1px solid #e8e8ed",
+            borderRadius: 999,
+            padding: "6px 16px",
+            fontSize: 13,
+            color: "#707070",
+            display: "inline-block",
+            marginBottom: 20,
+          }}>
+            Kostenloser Lebenslauf-Generator
           </div>
-          <div style={{ display: "flex", gap: 10, flexShrink: 0 }}>
+          <h1 style={{
+            fontSize: isMobile ? 36 : 52,
+            fontWeight: 700,
+            letterSpacing: "-0.025em",
+            color: "#1d1d1f",
+            lineHeight: 1.05,
+            marginBottom: 16,
+          }}>
+            Erstelle deinen perfekten<br />Lebenslauf
+          </h1>
+          <p style={{
+            fontSize: isMobile ? 17 : 19,
+            color: "#707070",
+            lineHeight: 1.5,
+            marginBottom: 32,
+          }}>
+            Professionelle Vorlagen. Sofort als PDF. Kostenlos.
+          </p>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <button
+              onClick={handlePrint}
+              style={{
+                display: "flex", alignItems: "center", gap: 8,
+                padding: "12px 24px", borderRadius: 999, border: "none",
+                background: "#0071e3", color: "#fff",
+                fontSize: 15, fontWeight: 400, cursor: "pointer", fontFamily: "inherit",
+              }}
+            >
+              <DownloadIcon /> Als PDF speichern
+            </button>
             <button
               onClick={() => setShowModal(true)}
-              style={{ display: "flex", alignItems: "center", gap: 7, padding: "10px 20px", borderRadius: 10, border: "none", background: "#fff", color: "#1e3a5f", fontWeight: 700, fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}
+              style={{
+                display: "flex", alignItems: "center", gap: 8,
+                padding: "12px 24px", borderRadius: 999,
+                border: "1px solid #e8e8ed", background: "#fff",
+                color: "#1d1d1f", fontSize: 15, fontWeight: 400,
+                cursor: "pointer", fontFamily: "inherit",
+              }}
             >
-              <MailIcon /> Per E-Mail bewerben
+              <MailIcon /> Bei PHE bewerben
             </button>
-            <a
-              href={`${WA_LINK}?text=${encodeURIComponent(`Hallo PHE-Team, ich habe meinen Lebenslauf erstellt und möchte mich bewerben.\n\nName: ${data.vorname} ${data.nachname}\nBeruf: ${data.beruf || "–"}`)}`}
-              target="_blank" rel="noreferrer"
-              style={{ display: "flex", alignItems: "center", gap: 7, padding: "10px 20px", borderRadius: 10, background: "#25d366", color: "#fff", fontWeight: 700, fontSize: 13, textDecoration: "none" }}
-            >
-              <WhatsAppIcon size={14} /> Via WhatsApp
-            </a>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* MOBILE TAB SWITCHER */}
+      {/* ── MOBILE TAB SWITCHER ──────────────────────────────────────────── */}
       {isMobile && (
-        <div style={{ display: "flex", background: "var(--bg)", borderBottom: "1px solid var(--border)", position: "sticky", top: 58, zIndex: 50 }}>
-          {(["form", "preview"] as const).map((tab) => (
-            <button key={tab} onClick={() => setMobileTab(tab)} style={{
-              flex: 1, padding: "13px 0", border: "none", cursor: "pointer",
-              background: mobileTab === tab ? "#fff" : "transparent",
-              fontFamily: "inherit", fontSize: 14, fontWeight: 700,
-              color: mobileTab === tab ? "var(--blue)" : "var(--gray)",
-              borderBottom: mobileTab === tab ? "2px solid var(--blue)" : "2px solid transparent",
-            }}>
-              {tab === "form" ? "✏️ Formular" : "👁 Vorschau"}
-            </button>
-          ))}
+        <div style={{
+          display: "flex", justifyContent: "center",
+          background: "#f5f5f7", padding: "12px 16px",
+          position: "sticky", top: 58, zIndex: 50,
+          borderBottom: "1px solid #e8e8ed",
+        }}>
+          <div style={{
+            background: "#e8e8ed", borderRadius: 999, padding: 3,
+            display: "inline-flex", gap: 2,
+          }}>
+            {(["form", "preview"] as const).map((tab) => (
+              <button key={tab} onClick={() => setMobileTab(tab)} style={{
+                padding: "8px 20px", borderRadius: 999, border: "none",
+                cursor: "pointer", fontFamily: "inherit",
+                fontSize: 15, fontWeight: 400,
+                background: mobileTab === tab ? "#fff" : "transparent",
+                color: "#1d1d1f",
+                transition: "background 0.2s ease",
+              }}>
+                {tab === "form" ? "Formular" : "Vorschau"}
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
-      {/* MAIN: FORM + PREVIEW */}
-      <div className={isMobile ? "" : "cv-layout px-section"} style={{ maxWidth: isMobile ? "100%" : 1300, margin: "0 auto", paddingTop: isMobile ? 0 : 32, paddingBottom: 80, gap: 40, alignItems: "start", display: isMobile ? "block" : undefined }}>
+      {/* ── MAIN: FORM + PREVIEW ─────────────────────────────────────────── */}
+      <div
+        className={isMobile ? "" : "cv-layout px-section"}
+        style={{
+          maxWidth: isMobile ? "100%" : 1300,
+          margin: "0 auto",
+          paddingTop: isMobile ? 0 : 40,
+          paddingBottom: 80,
+          gap: 40,
+          alignItems: "start",
+          display: isMobile ? "block" : undefined,
+          background: "#f5f5f7",
+        }}
+      >
 
         {/* LEFT: FORM */}
-        <div className={isMobile ? "" : "cv-sidebar"} style={isMobile ? { display: mobileTab === "form" ? "block" : "none", padding: "20px 16px" } : undefined}>
-          {/* Template picker */}
-          <TemplatePicker selected={template} onChange={setTemplate} />
+        <div
+          className={isMobile ? "" : "cv-sidebar"}
+          style={isMobile
+            ? { display: mobileTab === "form" ? "block" : "none", padding: "20px 16px" }
+            : { background: "#fff", borderRadius: 28, padding: 28 }
+          }
+        >
+          {/* Template selector — Apple pill tabs */}
+          <div style={{ marginBottom: 24 }}>
+            <p style={{ fontSize: 13, fontWeight: 500, color: "#707070", marginBottom: 10 }}>Vorlage wählen</p>
+            <div style={{
+              background: "#fff",
+              border: "1px solid #e8e8ed",
+              borderRadius: 28,
+              padding: "6px",
+              display: "inline-flex",
+              gap: 4,
+            }}>
+              {TEMPLATES.map(t => (
+                <button key={t.id} onClick={() => setTemplate(t.id)} style={{
+                  borderRadius: 999,
+                  padding: "8px 20px",
+                  fontSize: 14,
+                  fontWeight: 400,
+                  border: "none",
+                  cursor: "pointer",
+                  fontFamily: "inherit",
+                  background: template === t.id ? "#0071e3" : "transparent",
+                  color: template === t.id ? "#fff" : "#1d1d1f",
+                  transition: "background 0.2s ease, color 0.2s ease",
+                }}>
+                  {t.label}
+                </button>
+              ))}
+            </div>
+            <div style={{ marginTop: 8, display: "flex", gap: 4 }}>
+              {TEMPLATES.find(t => t.id === template)?.colors.map((c, i) => (
+                <span key={i} style={{ width: 12, height: 12, borderRadius: 3, background: c, border: "1px solid rgba(0,0,0,0.08)" }} />
+              ))}
+              <span style={{ fontSize: 12, color: "#707070", marginLeft: 4 }}>
+                {TEMPLATES.find(t => t.id === template)?.desc}
+              </span>
+            </div>
+          </div>
 
-          {/* Step nav */}
-          <div style={{ display: "flex", marginBottom: 24, background: "var(--bg)", border: "1.5px solid var(--border)", borderRadius: 12, padding: 4, gap: 4 }}>
+          {/* Step nav — Apple segmented control */}
+          <div style={{
+            background: "#fff",
+            border: "1px solid #e8e8ed",
+            borderRadius: 14,
+            padding: "4px",
+            display: "flex",
+            gap: 2,
+            marginBottom: 20,
+          }}>
             {STEPS.map((s, i) => (
               <button key={i} onClick={() => setStep(i)} style={{
-                flex: 1, padding: "8px 4px", borderRadius: 8, border: "none", cursor: "pointer",
-                fontSize: 11, fontWeight: 700, textAlign: "center", whiteSpace: "nowrap",
-                background: step === i ? "linear-gradient(135deg,var(--blue),var(--violet))" : "transparent",
-                color: step === i ? "#fff" : "var(--gray)", transition: "all .15s", fontFamily: "inherit",
+                flex: 1, padding: "8px 4px", borderRadius: 10, border: "none",
+                cursor: "pointer", fontSize: 13, fontWeight: 400,
+                textAlign: "center", whiteSpace: "nowrap",
+                background: step === i ? "#0071e3" : "transparent",
+                color: step === i ? "#fff" : "#707070",
+                transition: "background 0.2s ease, color 0.2s ease",
+                fontFamily: "inherit",
               }}>
-                {i + 1}. {STEP_LABELS[i]}
+                {STEP_LABELS[i]}
               </button>
             ))}
           </div>
 
-          <div style={{ border: "1.5px solid var(--border)", borderRadius: 14, padding: 24, background: "#fff" }}>
-            <h2 style={{ fontSize: 16, fontWeight: 800, color: "var(--navy)", marginBottom: 20 }}>{STEPS[step]}</h2>
+          {/* Form card */}
+          <div style={{ borderRadius: 14, padding: 0 }}>
+            <h2 style={{ fontSize: 17, fontWeight: 600, color: "#1d1d1f", marginBottom: 20, letterSpacing: "-0.01em" }}>{STEPS[step]}</h2>
 
             {/* STEP 0: Persönliche Daten */}
             {step === 0 && (
               <div style={sectionStyle}>
-                {/* Foto */}
                 <div>
-                  <label style={{ fontSize: 11, fontWeight: 700, color: "var(--gray)", textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 8 }}>Bewerbungsfoto (optional)</label>
+                  <label style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 8 }}>Bewerbungsfoto (optional)</label>
                   <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                     {data.foto ? (
-                      <img src={data.foto} alt="Foto" style={{ width: 56, height: 56, borderRadius: "50%", objectFit: "cover", border: "2px solid var(--border)" }} />
+                      <img src={data.foto} alt="Foto" style={{ width: 56, height: 56, borderRadius: "50%", objectFit: "cover", border: "2px solid #e8e8ed" }} />
                     ) : (
-                      <div style={{ width: 56, height: 56, borderRadius: "50%", background: "var(--bg)", border: "2px dashed var(--border)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, color: "var(--gray-light)" }}>?</div>
+                      <div style={{ width: 56, height: 56, borderRadius: "50%", background: "#f5f5f7", border: "2px dashed #e8e8ed", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, color: "#aeaeb2" }}>?</div>
                     )}
-                    <label style={{ cursor: "pointer", padding: "8px 16px", border: "1.5px solid var(--border)", borderRadius: 8, fontSize: 13, fontWeight: 600, color: "var(--gray)" }}>
+                    <label style={{ cursor: "pointer", padding: "8px 16px", border: "1px solid #e8e8ed", borderRadius: 999, fontSize: 13, fontWeight: 400, color: "#0071e3", background: "#f5f5f7" }}>
                       Foto wählen
                       <input type="file" accept="image/*" onChange={handleFoto} style={{ display: "none" }} />
                     </label>
-                    {data.foto && <button onClick={() => set("foto", "")} style={{ fontSize: 12, color: "var(--gray-light)", background: "none", border: "none", cursor: "pointer" }}>Entfernen</button>}
+                    {data.foto && <button onClick={() => set("foto", "")} style={{ fontSize: 12, color: "#707070", background: "none", border: "none", cursor: "pointer" }}>Entfernen</button>}
                   </div>
                 </div>
 
-                {/* Persönliche Angaben links & rechts */}
                 <div className="grid-2col" style={{ gap: 12 }}>
                   <Input label="Vorname" value={data.vorname} onChange={v => set("vorname", v)} placeholder="Max" />
                   <Input label="Nachname" value={data.nachname} onChange={v => set("nachname", v)} placeholder="Mustermann" />
@@ -788,10 +878,10 @@ export default function LebenslaufPage() {
             {step === 1 && (
               <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                 {data.stationen.map((s, i) => (
-                  <div key={s.id} style={{ padding: 16, border: "1.5px solid var(--border)", borderRadius: 10 }}>
+                  <div key={s.id} style={{ padding: 16, border: "1px solid #e8e8ed", borderRadius: 14, background: "#f5f5f7" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)" }}>Station {i + 1}</span>
-                      {data.stationen.length > 1 && <button onClick={() => removeStation(s.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--gray-light)" }}><TrashIcon /></button>}
+                      <span style={{ fontSize: 13, fontWeight: 600, color: "#1d1d1f" }}>Station {i + 1}</span>
+                      {data.stationen.length > 1 && <button onClick={() => removeStation(s.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#707070" }}><TrashIcon /></button>}
                     </div>
                     <div style={sectionStyle}>
                       <Input label="Firma" value={s.firma} onChange={v => setStation(s.id, "firma", v)} placeholder="Firma GmbH" />
@@ -804,7 +894,12 @@ export default function LebenslaufPage() {
                     </div>
                   </div>
                 ))}
-                <button onClick={addStation} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "10px", border: "1.5px dashed var(--border)", borderRadius: 10, background: "none", cursor: "pointer", fontSize: 13, fontWeight: 600, color: "var(--blue)", fontFamily: "inherit" }}>
+                <button onClick={addStation} style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                  padding: "10px", border: "1px solid #e8e8ed", borderRadius: 999,
+                  background: "#f5f5f7", cursor: "pointer", fontSize: 13,
+                  fontWeight: 400, color: "#0071e3", fontFamily: "inherit",
+                }}>
                   <PlusIcon /> Station hinzufügen
                 </button>
               </div>
@@ -814,10 +909,10 @@ export default function LebenslaufPage() {
             {step === 2 && (
               <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                 {data.ausbildung.map((a, i) => (
-                  <div key={a.id} style={{ padding: 16, border: "1.5px solid var(--border)", borderRadius: 10 }}>
+                  <div key={a.id} style={{ padding: 16, border: "1px solid #e8e8ed", borderRadius: 14, background: "#f5f5f7" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)" }}>Ausbildung {i + 1}</span>
-                      {data.ausbildung.length > 1 && <button onClick={() => removeAusbildung(a.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--gray-light)" }}><TrashIcon /></button>}
+                      <span style={{ fontSize: 13, fontWeight: 600, color: "#1d1d1f" }}>Ausbildung {i + 1}</span>
+                      {data.ausbildung.length > 1 && <button onClick={() => removeAusbildung(a.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#707070" }}><TrashIcon /></button>}
                     </div>
                     <div style={sectionStyle}>
                       <Input label="Schule / Universität / Betrieb" value={a.schule} onChange={v => setAusbildung(a.id, "schule", v)} placeholder="Berufsschule XY" />
@@ -829,7 +924,12 @@ export default function LebenslaufPage() {
                     </div>
                   </div>
                 ))}
-                <button onClick={addAusbildung} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "10px", border: "1.5px dashed var(--border)", borderRadius: 10, background: "none", cursor: "pointer", fontSize: 13, fontWeight: 600, color: "var(--blue)", fontFamily: "inherit" }}>
+                <button onClick={addAusbildung} style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                  padding: "10px", border: "1px solid #e8e8ed", borderRadius: 999,
+                  background: "#f5f5f7", cursor: "pointer", fontSize: 13,
+                  fontWeight: 400, color: "#0071e3", fontFamily: "inherit",
+                }}>
                   <PlusIcon /> Ausbildung hinzufügen
                 </button>
               </div>
@@ -840,27 +940,27 @@ export default function LebenslaufPage() {
               <div style={sectionStyle}>
                 <Input label="Fähigkeiten (kommagetrennt)" value={data.faehigkeiten} onChange={v => set("faehigkeiten", v)} placeholder="SPS-Programmierung, EPLAN, Schaltschrankbau, ..." multiline />
                 <Input label="Sprachen (kommagetrennt)" value={data.sprachen} onChange={v => set("sprachen", v)} placeholder="Deutsch (Muttersprache), Englisch (B2), ..." multiline />
-                <div style={{ padding: 14, background: "#f0f7ff", borderRadius: 10, border: "1.5px solid #c7dff7" }}>
-                  <p style={{ fontSize: 13, color: "var(--blue)", fontWeight: 600, marginBottom: 4 }}>Tipp</p>
-                  <p style={{ fontSize: 13, color: "var(--gray)", lineHeight: 1.6 }}>Trennen Sie Einträge mit einem Komma, sie erscheinen als Liste in Ihrem Lebenslauf.</p>
+                <div style={{ padding: 14, background: "#f0f7ff", borderRadius: 12, border: "1px solid #c7dff7" }}>
+                  <p style={{ fontSize: 13, color: "#0071e3", fontWeight: 500, marginBottom: 4 }}>Tipp</p>
+                  <p style={{ fontSize: 13, color: "#707070", lineHeight: 1.6 }}>Trennen Sie Einträge mit einem Komma, sie erscheinen als Liste in Ihrem Lebenslauf.</p>
                 </div>
               </div>
             )}
 
             {/* Step nav buttons */}
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: 24, paddingTop: 20, borderTop: "1px solid var(--border)" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop: 24, paddingTop: 20, borderTop: "1px solid #e8e8ed" }}>
               <button onClick={() => setStep(s => Math.max(0, s - 1))} disabled={step === 0}
-                style={{ padding: "9px 20px", border: "1.5px solid var(--border)", borderRadius: 8, background: "none", cursor: step === 0 ? "not-allowed" : "pointer", fontSize: 13, fontWeight: 600, color: step === 0 ? "var(--gray-light)" : "var(--navy)", fontFamily: "inherit" }}>
+                style={{ padding: "9px 20px", border: "1px solid #e8e8ed", borderRadius: 999, background: "#f5f5f7", cursor: step === 0 ? "not-allowed" : "pointer", fontSize: 13, fontWeight: 400, color: step === 0 ? "#aeaeb2" : "#1d1d1f", fontFamily: "inherit" }}>
                 Zurück
               </button>
               {step < 3 ? (
                 <button onClick={() => setStep(s => s + 1)}
-                  style={{ padding: "9px 24px", border: "none", borderRadius: 8, background: "linear-gradient(135deg,var(--blue),var(--violet))", color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 700, fontFamily: "inherit" }}>
+                  style={{ padding: "9px 24px", border: "none", borderRadius: 999, background: "#0071e3", color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 400, fontFamily: "inherit" }}>
                   Weiter →
                 </button>
               ) : (
                 <button onClick={handlePrint}
-                  style={{ display: "flex", alignItems: "center", gap: 8, padding: "9px 24px", border: "none", borderRadius: 8, background: "var(--navy)", color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 700, fontFamily: "inherit" }}>
+                  style={{ display: "flex", alignItems: "center", gap: 8, padding: "9px 24px", border: "none", borderRadius: 999, background: "#0071e3", color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 400, fontFamily: "inherit" }}>
                   <DownloadIcon /> Als PDF speichern
                 </button>
               )}
@@ -868,31 +968,31 @@ export default function LebenslaufPage() {
           </div>
 
           {/* PDF + Bewerben buttons */}
-          <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 8 }}>
+          <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 8 }}>
             <button onClick={handlePrint}
-              style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "12px", border: "1.5px solid var(--border)", borderRadius: 10, background: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600, color: "var(--navy)", fontFamily: "inherit" }}>
+              style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "12px", border: "1px solid #e8e8ed", borderRadius: 999, background: "#f5f5f7", cursor: "pointer", fontSize: 13, fontWeight: 400, color: "#0071e3", fontFamily: "inherit" }}>
               <DownloadIcon /> Lebenslauf als PDF speichern
             </button>
 
             {/* PHE CTA Card */}
-            <div style={{ background: "linear-gradient(135deg,#f0f7ff,#f5f0ff)", border: "1.5px solid #c7dff7", borderRadius: 12, padding: 16 }}>
-              <p style={{ fontSize: 14, fontWeight: 800, color: "var(--navy)", marginBottom: 4 }}>🎯 Jetzt bei PHE bewerben</p>
-              <p style={{ fontSize: 12, color: "var(--gray)", lineHeight: 1.6, marginBottom: 12 }}>
-                Speichern Sie Ihr PDF und senden Sie es direkt an unser Team, wir finden passende Stellen für Sie. <strong>Kostenlos & unverbindlich.</strong>
+            <div style={{ background: "#fff", border: "1px solid #e8e8ed", borderRadius: 20, padding: 20 }}>
+              <p style={{ fontSize: 15, fontWeight: 600, color: "#1d1d1f", marginBottom: 4, letterSpacing: "-0.01em" }}>Jetzt bei PHE bewerben</p>
+              <p style={{ fontSize: 13, color: "#707070", lineHeight: 1.6, marginBottom: 14 }}>
+                Speichern Sie Ihr PDF und senden Sie es direkt an unser Team — wir finden passende Stellen. <strong style={{ color: "#1d1d1f", fontWeight: 500 }}>Kostenlos & unverbindlich.</strong>
               </p>
               <div style={{ display: "flex", gap: 8 }}>
                 <button
                   onClick={() => setShowModal(true)}
-                  style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "10px 12px", borderRadius: 8, background: "var(--blue)", color: "#fff", fontSize: 12, fontWeight: 700, border: "none", cursor: "pointer", fontFamily: "inherit" }}
+                  style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "10px 12px", borderRadius: 999, background: "#0071e3", color: "#fff", fontSize: 13, fontWeight: 400, border: "none", cursor: "pointer", fontFamily: "inherit" }}
                 >
-                  <MailIcon /> Per E-Mail bewerben
+                  <MailIcon /> Per E-Mail
                 </button>
                 <a
                   href={`${WA_LINK}?text=${encodeURIComponent(`Hallo PHE-Team, ich habe meinen Lebenslauf mit Ihrem Generator erstellt und möchte mich bewerben.\n\nName: ${data.vorname} ${data.nachname}\nBeruf: ${data.beruf || "–"}\nTelefon: ${data.telefon || "–"}`)}`}
                   target="_blank" rel="noreferrer"
-                  style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "10px 12px", borderRadius: 8, background: "var(--wa)", color: "#fff", fontSize: 12, fontWeight: 700, textDecoration: "none" }}
+                  style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "10px 12px", borderRadius: 999, background: "#22c55e", color: "#fff", fontSize: 13, fontWeight: 400, textDecoration: "none" }}
                 >
-                  <WhatsAppIcon size={13} /> Via WhatsApp
+                  <WhatsAppIcon size={13} /> WhatsApp
                 </a>
               </div>
             </div>
@@ -906,13 +1006,31 @@ export default function LebenslaufPage() {
           display: isMobile && mobileTab !== "preview" ? "none" : "block",
           padding: isMobile ? "16px" : undefined,
         }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-            <p style={{ fontSize: 13, fontWeight: 700, color: "var(--gray)" }}>Live-Vorschau, Vorlage {template}</p>
-            <button onClick={handlePrint} style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", border: "none", borderRadius: 8, background: "var(--navy)", color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 700, fontFamily: "inherit" }}>
-              <DownloadIcon /> Als PDF speichern
+          {/* Template pill tabs above preview */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <p style={{ fontSize: 13, fontWeight: 400, color: "#707070" }}>Vorlage {template}</p>
+            <button onClick={handlePrint} style={{
+              display: "flex", alignItems: "center", gap: 6,
+              padding: "8px 18px", border: "none", borderRadius: 999,
+              background: "#0071e3", color: "#fff",
+              cursor: "pointer", fontSize: 13, fontWeight: 400, fontFamily: "inherit",
+            }}>
+              <DownloadIcon /> PDF speichern
             </button>
           </div>
-          <div style={{ border: "1.5px solid var(--border)", borderRadius: 10, overflow: "hidden", boxShadow: "0 8px 40px rgba(0,0,0,0.08)" }}>
+
+          {/* CV preview card with subtle rotation hover */}
+          <div
+            onMouseEnter={() => setPreviewHovered(true)}
+            onMouseLeave={() => setPreviewHovered(false)}
+            style={{
+              borderRadius: 20,
+              overflow: "hidden",
+              transform: previewHovered ? "rotate(0deg)" : "rotate(-0.5deg)",
+              transition: "transform 0.3s ease",
+              background: "#fff",
+            }}
+          >
             <div ref={printRef} style={{
               transform: isMobile ? `scale(${Math.min(1, (typeof window !== "undefined" ? window.innerWidth - 32 : 360) / 794)})` : "scale(0.72)",
               transformOrigin: "top left",
@@ -922,15 +1040,53 @@ export default function LebenslaufPage() {
               <CVPreview data={data} template={template} />
             </div>
           </div>
+
           {isMobile && (
-            <button onClick={handlePrint} style={{ marginTop: 16, width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "14px", border: "none", borderRadius: 10, background: "var(--navy)", color: "#fff", cursor: "pointer", fontSize: 14, fontWeight: 700, fontFamily: "inherit" }}>
+            <button onClick={handlePrint} style={{
+              marginTop: 16, width: "100%",
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+              padding: "14px", border: "none", borderRadius: 999,
+              background: "#0071e3", color: "#fff",
+              cursor: "pointer", fontSize: 14, fontWeight: 400, fontFamily: "inherit",
+            }}>
               <DownloadIcon /> Als PDF speichern
             </button>
+          )}
+
+          {/* Apply CTA below preview on desktop */}
+          {!isMobile && (
+            <div style={{ marginTop: 16, display: "flex", gap: 10 }}>
+              <button
+                onClick={() => setShowModal(true)}
+                style={{
+                  flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                  padding: "12px", borderRadius: 999, border: "none",
+                  background: "#22c55e", color: "#fff",
+                  fontSize: 14, fontWeight: 400, cursor: "pointer", fontFamily: "inherit",
+                }}
+              >
+                <MailIcon /> Bei PHE bewerben
+              </button>
+              <a
+                href={`${WA_LINK}?text=${encodeURIComponent(`Hallo PHE-Team, ich habe meinen Lebenslauf mit Ihrem Generator erstellt und möchte mich bewerben.\n\nName: ${data.vorname} ${data.nachname}\nBeruf: ${data.beruf || "–"}`)}`}
+                target="_blank" rel="noreferrer"
+                style={{
+                  flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
+                  padding: "12px", borderRadius: 999,
+                  background: "#f5f5f7", color: "#1d1d1f",
+                  fontSize: 14, fontWeight: 400, textDecoration: "none",
+                  border: "1px solid #e8e8ed",
+                }}
+              >
+                <WhatsAppIcon size={14} /> Via WhatsApp
+              </a>
+            </div>
           )}
         </div>
       </div>
 
-      <div style={{ background: "var(--bg)", borderTop: "1px solid var(--border)" }}>
+      {/* ── FAQ ──────────────────────────────────────────────────────────── */}
+      <div style={{ background: "#fff", borderTop: "1px solid #e8e8ed" }}>
         <FaqSection title="Häufige Fragen zum Lebenslauf-Generator" items={[
           { q: "Was kostet der Lebenslauf-Generator?", a: "Der Lebenslauf-Generator ist vollständig kostenlos, kein Konto, keine versteckten Kosten, keine Wasserzeichen." },
           { q: "Wie lange dauert die Erstellung eines Lebenslaufs?", a: "Mit unserem Generator sind Sie in ca. 5 Minuten fertig. Füllen Sie die vier Schritte aus, die Vorschau aktualisiert sich in Echtzeit." },

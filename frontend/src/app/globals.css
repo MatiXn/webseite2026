@@ -1,16 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  --blue: #3d7cc9;
-  --blue-dark: #2a5fa8;
-  --violet: #7c3aed;
-  --navy: #0f1e30;
-  --gray: #5a6878;
-  --gray-light: #8a9ab0;
-  --border: #e5eaf0;
-  --bg: #f8fafc;
+  /* Apple-style neutrals */
+  --ink: #1d1d1f;
+  --graphite: #707070;
+  --fog: #f5f5f7;
+  --snow: #ffffff;
+  --silver-mist: #e8e8ed;
+  --navy: #0f141e;
+  --gray: #707070;
+  --gray-light: #9fa6bb;
+  --border: #e8e8ed;
+  --bg: #f5f5f7;
+
+  /* Brand colors (PHE) */
+  --blue: #0071e3;
+  --blue-dark: #0064cc;
   --green: #22c55e;
   --wa: #25d366;
+
+  /* Legacy aliases */
+  --violet: #5660e8;
+  --lavender: #f1f2ff;
+  --mint: #e7f4ed;
+  --blush: #ffebe4;
+  --chalk: #e8e8ed;
+  --ash: #f5f5f7;
 }
 
 * {
@@ -21,35 +36,32 @@
 
 body {
   font-family: var(--font-inter, "Inter", sans-serif);
-  color: var(--navy);
-  background: #fff;
+  color: #1d1d1f;
+  background: #f5f5f7;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
 .grad-text {
-  background: linear-gradient(135deg, var(--blue), var(--violet));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #0071e3;
 }
 
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, var(--blue), var(--violet));
+  background: #0071e3;
   color: #fff;
-  font-size: 15px;
-  font-weight: 700;
-  padding: 14px 28px;
-  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 400;
+  padding: 12px 22px;
+  border-radius: 999px;
   text-decoration: none;
-  transition: opacity 0.15s, transform 0.15s;
+  letter-spacing: -0.1px;
+  transition: background 0.15s;
 }
 .btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  background: #0064cc;
 }
 
 .btn-ghost {
@@ -57,30 +69,30 @@ body {
   align-items: center;
   gap: 8px;
   background: transparent;
-  color: var(--navy);
-  font-size: 15px;
-  font-weight: 600;
-  padding: 14px 28px;
-  border-radius: 10px;
+  color: #0071e3;
+  font-size: 17px;
+  font-weight: 400;
+  padding: 12px 22px;
+  border-radius: 999px;
   text-decoration: none;
-  border: 1.5px solid var(--border);
+  border: 1.5px solid #e8e8ed;
+  letter-spacing: -0.1px;
   transition: border-color 0.15s, color 0.15s;
 }
 .btn-ghost:hover {
-  border-color: var(--blue);
-  color: var(--blue);
+  border-color: #0071e3;
 }
 
 .tag {
   display: inline-block;
   font-size: 12px;
-  font-weight: 700;
-  color: var(--blue);
-  background: #f0f7ff;
-  border: 1px solid #c7dff7;
+  font-weight: 400;
+  color: #1d1d1f;
+  background: #f5f5f7;
+  border: 1px solid #e8e8ed;
   padding: 4px 12px;
-  border-radius: 20px;
-  letter-spacing: 0.08em;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   margin-bottom: 16px;
 }

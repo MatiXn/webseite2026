@@ -53,7 +53,7 @@ export default function KontaktPage() {
   };
 
   return (
-    <>
+    <div style={{ background: "#f5f5f7", minHeight: "100vh" }}>
       <Nav />
 
       <div className="section-pad px-section" style={{ maxWidth: 1100, margin: "0 auto" }}>
@@ -62,7 +62,7 @@ export default function KontaktPage() {
           <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>
             Kontakt
           </p>
-          <h1 style={{ fontSize: "clamp(32px,5vw,52px)", fontWeight: 900, color: "var(--navy)", letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 16 }}>
+          <h1 style={{ fontSize: "clamp(32px,5vw,52px)", fontWeight: 700, color: "#1d1d1f", letterSpacing: "-0.015em", lineHeight: 1.1, marginBottom: 16 }}>
             Wir sind für Sie da.
           </h1>
           <p style={{ fontSize: 17, color: "var(--gray)", lineHeight: 1.7, maxWidth: 520 }}>
@@ -74,7 +74,7 @@ export default function KontaktPage() {
           {/* LEFT, CONTACT INFO */}
           <div>
             <div style={{ marginBottom: 40 }}>
-              <h2 style={{ fontSize: 18, fontWeight: 800, color: "var(--navy)", marginBottom: 24 }}>Direktkontakt</h2>
+              <h2 style={{ fontSize: 22, fontWeight: 700, color: "#1d1d1f", letterSpacing: "-0.015em", marginBottom: 24 }}>Direktkontakt</h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 {[
                   { icon: <PhoneIcon />, label: "Telefon", value: "0211 158 63 100", href: "tel:+4921115863100" },
@@ -83,8 +83,8 @@ export default function KontaktPage() {
                 ].map(item => (
                   <a key={item.label} href={item.href} target={item.label === "Adresse" ? "_blank" : undefined} rel="noreferrer" style={{
                     display: "flex", gap: 14, padding: "16px 20px",
-                    border: "1.5px solid var(--border)", borderRadius: 12, textDecoration: "none",
-                    background: "#fff", transition: "border-color .15s",
+                    borderRadius: 16, textDecoration: "none",
+                    background: "#fff",
                   }}>
                     <span style={{ color: "var(--blue)", flexShrink: 0, paddingTop: 1 }}>{item.icon}</span>
                     <div>
@@ -97,15 +97,15 @@ export default function KontaktPage() {
             </div>
 
             {/* WhatsApp CTA */}
-            <div style={{ background: "#f0fff4", border: "1.5px solid #86efac", borderRadius: 12, padding: "20px 24px", marginBottom: 40 }}>
-              <p style={{ fontSize: 14, fontWeight: 700, color: "#15803d", marginBottom: 6 }}>Lieber per WhatsApp?</p>
-              <p style={{ fontSize: 13, color: "#16a34a", marginBottom: 14, lineHeight: 1.5 }}>
+            <div style={{ background: "#fff", borderRadius: 28, padding: "20px 24px", marginBottom: 40 }}>
+              <p style={{ fontSize: 14, fontWeight: 700, color: "#1d1d1f", marginBottom: 6 }}>Lieber per WhatsApp?</p>
+              <p style={{ fontSize: 13, color: "#707070", marginBottom: 14, lineHeight: 1.5 }}>
                 Die schnellste Art uns zu erreichen, wir antworten in der Regel innerhalb weniger Stunden.
               </p>
               <a href={WA_LINK} target="_blank" rel="noreferrer" style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
-                background: "var(--wa)", color: "#fff", fontWeight: 700, fontSize: 14,
-                padding: "10px 20px", borderRadius: 8, textDecoration: "none",
+                background: "#22c55e", color: "#fff", fontWeight: 700, fontSize: 14,
+                padding: "10px 20px", borderRadius: 999, textDecoration: "none",
               }}>
                 <WhatsAppIcon /> WhatsApp öffnen
               </a>
@@ -121,7 +121,7 @@ export default function KontaktPage() {
                 ].map(s => (
                   <a key={s.label} href={s.href} target="_blank" rel="noreferrer" style={{
                     display: "flex", alignItems: "center", gap: 8,
-                    border: "1.5px solid var(--border)", borderRadius: 8,
+                    background: "#fff", borderRadius: 999,
                     padding: "9px 16px", textDecoration: "none",
                     fontSize: 13, fontWeight: 600, color: "var(--navy)",
                   }}>
@@ -133,7 +133,7 @@ export default function KontaktPage() {
           </div>
 
           {/* RIGHT, FORM */}
-          <div style={{ background: "var(--bg)", border: "1.5px solid var(--border)", borderRadius: 16, padding: "24px 20px" }}>
+          <div style={{ background: "#fff", borderRadius: 28, padding: "32px 28px" }}>
             {sent ? (
               <div style={{ textAlign: "center", padding: "40px 0" }}>
                 <div style={{ fontSize: 48, marginBottom: 16 }}>
@@ -143,21 +143,21 @@ export default function KontaktPage() {
                 </div>
                 <p style={{ fontSize: 20, fontWeight: 800, color: "var(--navy)", marginBottom: 8 }}>WhatsApp geöffnet</p>
                 <p style={{ fontSize: 14, color: "var(--gray)" }}>Ihre Nachricht ist vorbereitet, senden Sie diese jetzt ab.</p>
-                <button onClick={() => setSent(false)} style={{ marginTop: 24, background: "none", border: "1.5px solid var(--border)", borderRadius: 8, padding: "10px 20px", fontSize: 14, cursor: "pointer", color: "var(--gray)" }}>
+                <button onClick={() => setSent(false)} style={{ marginTop: 24, background: "none", border: "1.5px solid var(--border)", borderRadius: 999, padding: "10px 20px", fontSize: 14, cursor: "pointer", color: "var(--gray)" }}>
                   Neue Nachricht
                 </button>
               </div>
             ) : (
               <>
-                <h2 style={{ fontSize: 20, fontWeight: 800, color: "var(--navy)", marginBottom: 24 }}>Nachricht senden</h2>
+                <h2 style={{ fontSize: 22, fontWeight: 700, color: "#1d1d1f", letterSpacing: "-0.015em", marginBottom: 24 }}>Nachricht senden</h2>
 
                 {/* Type toggle */}
-                <div style={{ display: "flex", gap: 8, marginBottom: 24, background: "#fff", border: "1.5px solid var(--border)", borderRadius: 10, padding: 4 }}>
+                <div style={{ display: "flex", gap: 8, marginBottom: 24, background: "#f5f5f7", borderRadius: 999, padding: 4 }}>
                   {[["bewerber", "Ich suche einen Job"], ["unternehmen", "Ich suche Fachkräfte"]].map(([val, lab]) => (
                     <button key={val} onClick={() => setForm(f => ({ ...f, type: val }))} style={{
-                      flex: 1, padding: "9px 0", borderRadius: 7, border: "none", cursor: "pointer",
+                      flex: 1, padding: "9px 0", borderRadius: 999, border: "none", cursor: "pointer",
                       fontSize: 13, fontWeight: 700,
-                      background: form.type === val ? "linear-gradient(135deg,var(--blue),var(--violet))" : "transparent",
+                      background: form.type === val ? "#0071e3" : "transparent",
                       color: form.type === val ? "#fff" : "var(--gray)",
                       transition: "all .15s",
                     }}>
@@ -171,30 +171,30 @@ export default function KontaktPage() {
                     <div>
                       <label style={{ fontSize: 12, fontWeight: 700, color: "var(--gray)", display: "block", marginBottom: 6 }}>Name *</label>
                       <input required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Ihr Name"
-                        style={{ width: "100%", padding: "12px 14px", border: "1.5px solid var(--border)", borderRadius: 8, fontSize: 14, fontFamily: "inherit", color: "var(--navy)", outline: "none", background: "#fff" }} />
+                        style={{ width: "100%", padding: "12px 14px", border: "1.5px solid var(--border)", borderRadius: 10, fontSize: 14, fontFamily: "inherit", color: "#1d1d1f", outline: "none", background: "#fff" }} />
                     </div>
                     <div>
                       <label style={{ fontSize: 12, fontWeight: 700, color: "var(--gray)", display: "block", marginBottom: 6 }}>Telefon</label>
                       <input value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} placeholder="+49 ..."
-                        style={{ width: "100%", padding: "12px 14px", border: "1.5px solid var(--border)", borderRadius: 8, fontSize: 14, fontFamily: "inherit", color: "var(--navy)", outline: "none", background: "#fff" }} />
+                        style={{ width: "100%", padding: "12px 14px", border: "1.5px solid var(--border)", borderRadius: 10, fontSize: 14, fontFamily: "inherit", color: "#1d1d1f", outline: "none", background: "#fff" }} />
                     </div>
                   </div>
                   <div>
                     <label style={{ fontSize: 12, fontWeight: 700, color: "var(--gray)", display: "block", marginBottom: 6 }}>E-Mail *</label>
                     <input required type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} placeholder="deine@email.de"
-                      style={{ width: "100%", padding: "12px 14px", border: "1.5px solid var(--border)", borderRadius: 8, fontSize: 14, fontFamily: "inherit", color: "var(--navy)", outline: "none", background: "#fff" }} />
+                      style={{ width: "100%", padding: "12px 14px", border: "1.5px solid var(--border)", borderRadius: 10, fontSize: 14, fontFamily: "inherit", color: "#1d1d1f", outline: "none", background: "#fff" }} />
                   </div>
                   <div>
                     <label style={{ fontSize: 12, fontWeight: 700, color: "var(--gray)", display: "block", marginBottom: 6 }}>Nachricht *</label>
                     <textarea required value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                       placeholder={form.type === "bewerber" ? "Welche Stelle suchen Sie? In welcher Region möchten Sie tätig sein?" : "Welche Fachkraft suchen Sie? Standort, Erfahrung etc."}
                       rows={5}
-                      style={{ width: "100%", padding: "12px 14px", border: "1.5px solid var(--border)", borderRadius: 8, fontSize: 14, fontFamily: "inherit", color: "var(--navy)", outline: "none", resize: "vertical", background: "#fff" }} />
+                      style={{ width: "100%", padding: "12px 14px", border: "1.5px solid var(--border)", borderRadius: 10, fontSize: 14, fontFamily: "inherit", color: "#1d1d1f", outline: "none", resize: "vertical", background: "#fff" }} />
                   </div>
                   <button type="submit" style={{
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                     background: "var(--wa)", color: "#fff", fontWeight: 700, fontSize: 15,
-                    padding: "14px", borderRadius: 10, border: "none", cursor: "pointer",
+                    padding: "14px", borderRadius: 999, border: "none", cursor: "pointer",
                   }}>
                     <WhatsAppIcon /> Via WhatsApp senden
                   </button>
@@ -247,6 +247,6 @@ export default function KontaktPage() {
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 }
