@@ -555,13 +555,25 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
       </p>
 
       {/* Tags */}
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 18 }}>
+      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
         {job.tags.map(t => (
           <span key={t} style={{ fontSize: 11, fontWeight: 600, background: "var(--bg)", color: "var(--gray)", padding: "4px 10px", borderRadius: 6 }}>
             {t}
           </span>
         ))}
       </div>
+
+      {/* Benefits */}
+      {job.benefits?.length > 0 && (
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 18 }}>
+          {job.benefits.map(b => (
+            <span key={b} style={{ fontSize: 11, fontWeight: 600, color: "#166534", background: "#dcfce7", padding: "4px 10px", borderRadius: 6, display: "flex", alignItems: "center", gap: 4 }}>
+              <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="5" fill="#22c55e"/><path d="M3 5l1.5 1.5L7 3.5" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              {b}
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Footer */}
       <div style={{ marginTop: "auto", paddingTop: 16, borderTop: "1px solid var(--border)" }}>

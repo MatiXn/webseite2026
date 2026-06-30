@@ -11,6 +11,7 @@ export type Job = {
   tags: string[];
   description: string;
   posted: string;
+  benefits: string[];
 };
 
 export const JOBS: Job[] = [
@@ -27,6 +28,7 @@ export const JOBS: Job[] = [
     tags: ["Schaltschrankbau", "Instandhaltung", "Gleitzeit"],
     description: "Verdrahtung von Schaltschränken, Montage und elektrische Installation von Maschinen und Anlagen. Keine Schichtarbeit, saubere Produktionsumgebung.",
     posted: "vor 2 Tagen",
+    benefits: ["30 Tage Urlaub", "Gleitzeit", "Betriebliche Altersvorsorge", "Weiterbildungsbudget"],
   },
   {
     id: "2",
@@ -41,6 +43,7 @@ export const JOBS: Job[] = [
     tags: ["Kältetechnik", "Tiefkühlung", "Wartung"],
     description: "Wartung, Instandhaltung und Reparatur von Tiefkälteanlagen (bis –80 °C). Fehlerdiagnose und Austausch defekter Komponenten im Kundendienst.",
     posted: "vor 3 Tagen",
+    benefits: ["Firmenwagen (auch privat)", "30 Tage Urlaub", "Spesen & Auslöse", "Betriebliche Altersvorsorge"],
   },
   {
     id: "3",
@@ -55,6 +58,7 @@ export const JOBS: Job[] = [
     tags: ["Wartung", "Instandhaltung", "Außendienst"],
     description: "Wartung, Prüfung und Instandhaltung elektrischer Systeme und Anlagen beim Kunden vor Ort. Mo–Fr, keine Wochenendarbeit.",
     posted: "vor 1 Woche",
+    benefits: ["Keine Wochenendarbeit", "Firmenwagen", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "4",
@@ -69,6 +73,7 @@ export const JOBS: Job[] = [
     tags: ["Montage", "Elektroinstallation", "Inbetriebnahme"],
     description: "Installation und Montage von elektrotechnischen Anlagen beim Kunden vor Ort. Verkabelung, Anschlussarbeiten und Inbetriebnahme.",
     posted: "vor 4 Tagen",
+    benefits: ["Überstundenausgleich", "Weiterbildungsbudget", "Jobticket", "Betriebliche Altersvorsorge"],
   },
   {
     id: "5",
@@ -83,6 +88,7 @@ export const JOBS: Job[] = [
     tags: ["Instandhaltung", "Produktion", "Keine Schicht"],
     description: "Instandhaltung und Reparatur elektrischer Anlagen in einem Produktionsunternehmen. Feste Arbeitszeiten, keine Schichtarbeit.",
     posted: "vor 5 Tagen",
+    benefits: ["Keine Schichtarbeit", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Mitarbeiterrabatte"],
   },
   {
     id: "6",
@@ -97,6 +103,7 @@ export const JOBS: Job[] = [
     tags: ["Betriebstechnik", "Wartung", "Produktion"],
     description: "Sicherstellung der elektrischen Betriebsbereitschaft von Maschinen und Anlagen. Störungsbeseitigung und vorbeugende Wartung.",
     posted: "vor 6 Tagen",
+    benefits: ["30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge", "Kantine"],
   },
   {
     id: "7",
@@ -111,6 +118,7 @@ export const JOBS: Job[] = [
     tags: ["Siemens TIA Portal", "SPS", "Automatisierung"],
     description: "Entwicklung und Optimierung von SPS-Programmen für Produktionsanlagen. Inbetriebnahme und Optimierung von Automatisierungslösungen.",
     posted: "vor 3 Tagen",
+    benefits: ["Homeoffice möglich", "30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge"],
   },
   {
     id: "8",
@@ -125,6 +133,7 @@ export const JOBS: Job[] = [
     tags: ["Elektronik", "Instandhaltung", "Produktion"],
     description: "Wartung und Instandhaltung elektronischer Betriebsmittel. Fehlerdiagnose und Reparatur an Produktionsanlagen.",
     posted: "vor 1 Woche",
+    benefits: ["30 Tage Urlaub", "Schichtzulage", "Betriebliche Altersvorsorge", "Mitarbeiterrabatte"],
   },
   {
     id: "9",
@@ -139,6 +148,7 @@ export const JOBS: Job[] = [
     tags: ["Elektronik", "Betriebstechnik", "NRW"],
     description: "Instandhaltung und Reparatur elektronischer Anlagen in einem wachsenden Produktionsunternehmen. Abwechslungsreiche Aufgaben.",
     posted: "vor 2 Wochen",
+    benefits: ["30 Tage Urlaub", "Betriebliche Altersvorsorge", "Jobrad", "Mitarbeiterevents"],
   },
   {
     id: "10",
@@ -153,6 +163,7 @@ export const JOBS: Job[] = [
     tags: ["Mechatronik", "Montage", "Inbetriebnahme"],
     description: "Montage, Inbetriebnahme und Wartung mechatronischer Systeme. Abwechslungsreiche Tätigkeit in einem modernen Unternehmen.",
     posted: "vor 3 Tagen",
+    benefits: ["30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge", "Moderne Werkzeuge"],
   },
   {
     id: "11",
@@ -167,6 +178,7 @@ export const JOBS: Job[] = [
     tags: ["Vollkontinuierlich", "Schichtarbeit", "Produktion"],
     description: "Instandhaltung elektrischer Anlagen im Vollkontinuierlichen Schichtbetrieb. Attraktive Schichtzulagen, 30 Urlaubstage.",
     posted: "vor 5 Tagen",
+    benefits: ["30 Tage Urlaub", "Schichtzulage", "Betriebliche Altersvorsorge", "Kantine"],
   },
   {
     id: "12",
@@ -181,6 +193,7 @@ export const JOBS: Job[] = [
     tags: ["3-Schicht", "Instandhaltung", "Automatisierung"],
     description: "Elektrische Instandhaltung von Maschinen und Anlagen im 3-Schicht-Betrieb. Keine Wochenendarbeit, attraktive Schichtzulage.",
     posted: "vor 1 Woche",
+    benefits: ["Keine Wochenendarbeit", "Schichtzulage", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "13",
@@ -195,6 +208,7 @@ export const JOBS: Job[] = [
     tags: ["MSR-Technik", "Gebäudeautomation", "HLK"],
     description: "Planung, Installation und Inbetriebnahme von MSR-Technik in HLK-Anlagen. Service und Wartung von Gebäudeautomationssystemen.",
     posted: "vor 4 Tagen",
+    benefits: ["Firmenwagen", "30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge"],
   },
   {
     id: "14",
@@ -209,6 +223,7 @@ export const JOBS: Job[] = [
     tags: ["Service", "Außendienst", "Mechatronik"],
     description: "Wartung und Instandhaltung mechatronischer Anlagen beim Kunden. Serviceorientierter Einsatz im Raum Bremen.",
     posted: "vor 2 Tagen",
+    benefits: ["Firmenwagen (auch privat)", "Spesen & Auslöse", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "15",
@@ -223,6 +238,7 @@ export const JOBS: Job[] = [
     tags: ["Kältetechnik", "HKLS", "Klimaanlagen"],
     description: "Wartung, Instandhaltung und Reparatur von Kälte- und Klimaanlagen. Regionaler Einsatz, keine langen Reisen.",
     posted: "vor 3 Tagen",
+    benefits: ["Kein Übernachten", "Firmenwagen", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "16",
@@ -237,6 +253,7 @@ export const JOBS: Job[] = [
     tags: ["Photovoltaik", "Solartechnik", "Außendienst"],
     description: "Inbetriebnahme, Wartung und Instandsetzung von PV-Anlagen. Technische Analyse und Fehlerdiagnose an Solaranlagen.",
     posted: "vor 6 Tagen",
+    benefits: ["Firmenwagen (auch privat)", "Weiterbildungsbudget", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "17",
@@ -251,6 +268,7 @@ export const JOBS: Job[] = [
     tags: ["Anlagentechnik", "Elektrotechnik", "Montage"],
     description: "Montage und Inbetriebnahme elektrischer Anlagen. Wartung und Fehlersuche in der Betriebselektrik.",
     posted: "vor 1 Woche",
+    benefits: ["30 Tage Urlaub", "Betriebliche Altersvorsorge", "Jobticket", "Mitarbeiterevents"],
   },
   {
     id: "18",
@@ -265,6 +283,7 @@ export const JOBS: Job[] = [
     tags: ["Anlagentechnik", "Service", "Wartung"],
     description: "Service und Wartung von technischen Anlagen bei Industriekunden. Eigenverantwortliche Einsatzplanung, Dienstwagen.",
     posted: "vor 4 Tagen",
+    benefits: ["Firmenwagen (auch privat)", "Spesen & Auslöse", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "19",
@@ -279,6 +298,7 @@ export const JOBS: Job[] = [
     tags: ["SHK", "Sanitär", "Heizung"],
     description: "Installation und Wartung von Heizungs-, Sanitär- und Klimaanlagen. Kundendienst und Entstörung im Raum Frankfurt.",
     posted: "vor 2 Wochen",
+    benefits: ["30 Tage Urlaub", "Firmenwagen", "Weiterbildungsbudget", "Betriebliche Altersvorsorge"],
   },
   {
     id: "20",
@@ -293,6 +313,7 @@ export const JOBS: Job[] = [
     tags: ["Kältetechnik", "Mechatronik", "Berlin"],
     description: "Instandhaltung und Reparatur von Kälteanlagen. Wartung von Gewerbe- und Industriekälteanlagen im Raum Berlin.",
     posted: "vor 3 Tagen",
+    benefits: ["30 Tage Urlaub", "Betriebliche Altersvorsorge", "Jobticket", "Weiterbildungsbudget"],
   },
   {
     id: "21",
@@ -307,6 +328,7 @@ export const JOBS: Job[] = [
     tags: ["Service", "Mechatronik", "Außendienst"],
     description: "Eigenständige Wartung und Instandhaltung mechatronischer Systeme bei Kunden im Raum Köln.",
     posted: "vor 5 Tagen",
+    benefits: ["Firmenwagen (auch privat)", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Spesen & Auslöse"],
   },
   {
     id: "22",
@@ -321,6 +343,7 @@ export const JOBS: Job[] = [
     tags: ["Gebäudetechnik", "EIB/KNX", "Smart Home"],
     description: "Planung und Installation von Gebäudeautomationssystemen, KNX-Technik und Energieverteilung im Raum Düren.",
     posted: "vor 1 Woche",
+    benefits: ["Homeoffice möglich", "30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge"],
   },
   {
     id: "23",
@@ -335,6 +358,7 @@ export const JOBS: Job[] = [
     tags: ["Außendienst", "Dienstwagen", "Bundesweit"],
     description: "Service und Wartung elektrischer Anlagen bei Industriekunden bundesweit. Dienstwagen zur privaten Nutzung inklusive.",
     posted: "vor 2 Tagen",
+    benefits: ["Firmenwagen (auch privat)", "Spesen & Auslöse", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "24",
@@ -349,6 +373,7 @@ export const JOBS: Job[] = [
     tags: ["Instandhaltung", "Elektronik", "Automobil"],
     description: "Elektrische Instandhaltung von Produktionsanlagen in der Automobilindustrie. Moderne Arbeitsumgebung, attraktive Sozialleistungen.",
     posted: "vor 4 Tagen",
+    benefits: ["30 Tage Urlaub", "Betriebliche Altersvorsorge", "Kantine", "Mitarbeiterrabatte"],
   },
   {
     id: "25",
@@ -363,6 +388,7 @@ export const JOBS: Job[] = [
     tags: ["Kältetechnik", "Regional", "Klimaanlagen"],
     description: "Wartung und Reparatur von Kälte- und Klimaanlagen im regionalen Einsatz. Keine Übernachtungen, täglich nach Hause.",
     posted: "vor 6 Tagen",
+    benefits: ["Kein Übernachten", "Firmenwagen (auch privat)", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
 ];
 
