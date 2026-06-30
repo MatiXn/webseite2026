@@ -777,13 +777,14 @@ export default function LebenslaufPage() {
               border: "1px solid #e8e8ed",
               borderRadius: 28,
               padding: "6px",
-              display: "inline-flex",
+              display: "flex",
+              flexWrap: "wrap",
               gap: 4,
             }}>
               {TEMPLATES.map(t => (
                 <button key={t.id} onClick={() => setTemplate(t.id)} style={{
                   borderRadius: 999,
-                  padding: "8px 20px",
+                  padding: "8px 14px",
                   fontSize: 14,
                   fontWeight: 400,
                   border: "none",
@@ -1005,12 +1006,14 @@ export default function LebenslaufPage() {
           top: 80,
           display: isMobile && mobileTab !== "preview" ? "none" : "block",
           padding: isMobile ? "16px" : undefined,
+          overflow: "hidden",
+          minWidth: 0,
         }}>
           {/* Template pill tabs above preview */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-            <p style={{ fontSize: 13, fontWeight: 400, color: "#707070" }}>Vorlage {template}</p>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, gap: 8 }}>
+            <p style={{ fontSize: 13, fontWeight: 400, color: "#707070", flexShrink: 0 }}>Vorlage {template}</p>
             <button onClick={handlePrint} style={{
-              display: "flex", alignItems: "center", gap: 6,
+              display: "flex", alignItems: "center", gap: 6, flexShrink: 0,
               padding: "8px 18px", border: "none", borderRadius: 999,
               background: "#0071e3", color: "#fff",
               cursor: "pointer", fontSize: 13, fontWeight: 400, fontFamily: "inherit",
@@ -1029,6 +1032,7 @@ export default function LebenslaufPage() {
               transform: previewHovered ? "rotate(0deg)" : "rotate(-0.5deg)",
               transition: "transform 0.3s ease",
               background: "#fff",
+              maxWidth: "100%",
             }}
           >
             <div ref={printRef} style={{
