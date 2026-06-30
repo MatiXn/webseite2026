@@ -1,20 +1,20 @@
-<svg viewBox="0 0 500 440" xmlns="http://www.w3.org/2000/svg" fill="none">
-  <!-- 1: Linker langer Stab -->
-  <rect x="30" y="90" width="34" height="320" rx="17" fill="#3b7dc3"/>
+<svg viewBox="0 0 600 570" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <!-- 1: Langer Stab links (höchster nach unten) -->
+  <rect x="30" y="150" width="36" height="382" rx="18" fill="#3b7dc3"/>
 
-  <!-- 2: Klammer — hakt oben rechts, kürzer als Bar 3 -->
-  <path d="M 112 390 L 112 150 Q 112 130 132 130 L 162 130"
-        stroke="#3b7dc3" stroke-width="34" stroke-linecap="round"/>
+  <!-- 2: Rundes Ende OBEN, Haken UNTEN rechts (wie j) -->
+  <path d="M 122 147 L 122 342 Q 122 362 142 362 L 182 362"
+        stroke="#3b7dc3" stroke-width="36" stroke-linecap="round"/>
 
-  <!-- 3: Mittlerer hoher Stab (höchster, klar getrennt) -->
-  <rect x="205" y="38" width="34" height="384" rx="17" fill="#3b7dc3"/>
+  <!-- 3: Mittlerer Stab (höchster nach oben) -->
+  <rect x="217" y="31" width="36" height="354" rx="18" fill="#3b7dc3"/>
 
-  <!-- 4: Kleine Klammer — verbindet optisch mit Pill 1 -->
-  <path d="M 293 322 L 293 150 Q 293 130 313 130 L 344 130"
-        stroke="#3b7dc3" stroke-width="34" stroke-linecap="round"/>
+  <!-- 4: Haken OBEN rechts, rundes Ende UNTEN (wie Γ) -->
+  <path d="M 316 385 L 316 178 Q 316 158 336 158 L 393 158"
+        stroke="#3b7dc3" stroke-width="36" stroke-linecap="round"/>
 
   <!-- 5–7: Drei horizontale Pills -->
-  <rect x="358" y="113" width="112" height="34" rx="17" fill="#3b7dc3"/>
-  <rect x="358" y="193" width="112" height="34" rx="17" fill="#3b7dc3"/>
-  <rect x="358" y="273" width="112" height="34" rx="17" fill="#3b7dc3"/>
+  <rect x="406" y="177" width="146" height="36" rx="18" fill="#3b7dc3"/>
+  <rect x="406" y="262" width="146" height="36" rx="18" fill="#3b7dc3"/>
+  <rect x="406" y="347" width="146" height="36" rx="18" fill="#3b7dc3"/>
 </svg>
