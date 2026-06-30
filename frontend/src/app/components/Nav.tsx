@@ -53,8 +53,11 @@ export default function Nav() {
       }}>
         {/* Logo */}
         <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
-          <Image src="/phe-logo.png" alt="PHE Perm Engineering" height={36} width={180}
-            style={{ height: isMobile ? 30 : 36, width: "auto" }} priority />
+          <Image src="/phe-logo.svg" alt="PHE" height={32} width={32}
+            style={{ height: isMobile ? 26 : 30, width: "auto" }} priority />
+          <span style={{ fontSize: isMobile ? 14 : 15, fontWeight: 600, color: "#1d1d1f", letterSpacing: "-0.01em", marginLeft: 8 }}>
+            PHE Perm Engineering
+          </span>
         </Link>
 
         {/* Desktop center links */}
