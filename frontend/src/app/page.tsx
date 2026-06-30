@@ -243,13 +243,15 @@ function JobFan() {
                   </div>
                   {/* CTA, only on active card */}
                   {isCenter && (
-                    <a
-                      href={`mailto:${MAIL_APPLY}?subject=${encodeURIComponent(`Bewerbung: ${job.title}`)}&body=${encodeURIComponent(`Hallo PHE-Team,\n\nich interessiere mich für die Stelle:\n\nPosition: ${job.title}\nOrt: ${job.location}\n\nMein Name:\nTelefonnummer:\n\nIch freue mich auf Ihre Rückmeldung.`)}`}
-                      onClick={e => e.stopPropagation()}
-                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--blue)", color: "#fff", fontSize: 12, fontWeight: 700, padding: "9px 14px", borderRadius: 9, textDecoration: "none" }}
+                    <button
+                      onClick={e => {
+                        e.stopPropagation();
+                        window.location.href = `mailto:bewerbung@phe-perm.de?subject=${encodeURIComponent(`Bewerbung: ${job.title}`)}&body=${encodeURIComponent(`Hallo PHE-Team,\n\nich möchte mich auf folgende Stelle bewerben:\n\nPosition: ${job.title}\nOrt: ${job.location}\n\nMein Name:\nTelefonnummer:\n\nIch freue mich auf Ihre Rückmeldung.`)}`;
+                      }}
+                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "var(--blue)", color: "#fff", fontSize: 12, fontWeight: 700, padding: "9px 14px", borderRadius: 9, border: "none", cursor: "pointer", fontFamily: "inherit" }}
                     >
                       <MailIcon size={12} /> Jetzt bewerben
-                    </a>
+                    </button>
                   )}
                   {!isCenter && (
                     <div style={{ fontSize: 11, color: "var(--gray-light)", textAlign: "center" }}>Klicken zum Ansehen</div>
