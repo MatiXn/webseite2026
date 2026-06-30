@@ -282,14 +282,17 @@ body {
   .grid-2col { grid-template-columns: 1fr; gap: 32px; }
 }
 
-/* 3-column → 1-column on mobile */
+/* 3-column → 2-column on tablet → 1-column on mobile */
 .grid-3col {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
-@media (max-width: 767px) {
-  .grid-3col { grid-template-columns: 1fr; gap: 16px; }
+@media (max-width: 899px) {
+  .grid-3col { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+}
+@media (max-width: 549px) {
+  .grid-3col { grid-template-columns: 1fr; gap: 14px; }
 }
 
 /* 4-column → 2-column on tablet, 1-column on mobile */
@@ -356,7 +359,7 @@ body {
 /* Talente-Finden hero grid */
 .talente-hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 440px;
   gap: 56px;
   align-items: center;
   max-width: 1140px;
@@ -430,4 +433,48 @@ body {
 }
 @media (max-width: 767px) {
   .hero-section { padding: 40px 20px 56px; min-height: auto; }
+}
+
+/* Jobs search bar — stacks on mobile */
+.jobs-search {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.jobs-search-field {
+  position: relative;
+}
+.jobs-search-field--main { flex: 2; min-width: 220px; }
+.jobs-search-field--city { flex: 1; min-width: 150px; }
+@media (max-width: 599px) {
+  .jobs-search-field--main,
+  .jobs-search-field--city { flex: 1 1 100%; min-width: 0; }
+  .jobs-search-btn { width: 100%; justify-content: center; }
+}
+
+/* ── Talente-Finden Map Animations ─────────────────────────────────────────── */
+@keyframes drawMap {
+  from { stroke-dashoffset: 2200; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes cityPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+@keyframes cityRing {
+  0%   { r: 6; opacity: 0.5; }
+  100% { r: 18; opacity: 0; }
+}
+@keyframes lineFlow {
+  from { stroke-dashoffset: 40; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes mapFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

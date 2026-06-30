@@ -288,9 +288,9 @@ export default function JobsPage() {
           </h1>
 
           {/* SEARCH BAR */}
-          <div style={{ display: "flex", gap: 12, marginBottom: 24, flexWrap: "wrap" }}>
+          <div className="jobs-search" style={{ marginBottom: 24 }}>
             {/* Job title */}
-            <div style={{ flex: 2, position: "relative" }}>
+            <div className="jobs-search-field jobs-search-field--main">
               <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "var(--gray-light)", display: "flex" }}>
                 <SearchIcon />
               </span>
@@ -310,7 +310,7 @@ export default function JobsPage() {
               />
             </div>
             {/* Location */}
-            <div style={{ flex: 1, position: "relative" }}>
+            <div className="jobs-search-field jobs-search-field--city">
               <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "var(--gray-light)", display: "flex" }}>
                 <LocationIcon />
               </span>
@@ -332,6 +332,7 @@ export default function JobsPage() {
             <button
               onClick={handleSearch}
               disabled={loading}
+              className="jobs-search-btn"
               style={{
                 background: loading ? "var(--gray-light)" : "#0071e3",
                 color: "#fff", fontWeight: 700, fontSize: 15,
