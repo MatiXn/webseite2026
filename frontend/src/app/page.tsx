@@ -432,8 +432,8 @@ export default function Home() {
             </div>
 
             <h1 style={{ fontSize: "clamp(40px,5vw,72px)", fontWeight: 700, lineHeight: 1.05, letterSpacing: "-0.025em", color: "#1d1d1f", marginBottom: 20 }}>
-              <span style={{ whiteSpace: "nowrap" }}>Ihr nächster Job als <SlideTitle /></span>
-              <br />
+              Ihr nächster Job als<br />
+              <SlideTitle /><br />
               <em className="grad-text" style={{ fontStyle: "normal" }}>Schnell. Direkt. Kostenlos.</em>
             </h1>
 
