@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Nav, { WA_LINK } from "../components/Nav";
 import FaqSection from "../components/FaqSection";
+import Footer from "../components/Footer";
 import JsonLd from "../components/JsonLd";
 
 const WhatsAppIcon = ({ size = 16 }: { size?: number }) => (
@@ -235,18 +236,7 @@ export default function KontaktPage() {
         }
       }} />
 
-      {/* FOOTER */}
-      <footer style={{ borderTop: "1px solid var(--border)", padding: "40px 48px", background: "var(--bg)", marginTop: 40 }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <p style={{ fontSize: 13, color: "var(--gray-light)" }}>
-            © 2026 PHE-Perm Engineering Ingenieure & Techniker GmbH · Hüttenstraße 30, 40215 Düsseldorf
-          </p>
-          <div style={{ display: "flex", gap: 24 }}>
-            <Link href="/ueber-uns" style={{ fontSize: 13, color: "var(--gray)", textDecoration: "none" }}>Über uns</Link>
-            <Link href="/jobs" style={{ fontSize: 13, color: "var(--gray)", textDecoration: "none" }}>Stellenangebote</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

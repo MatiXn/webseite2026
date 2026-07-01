@@ -2,6 +2,7 @@
 import { useState, useCallback, useEffect } from "react";
 import Nav, { WA_LINK, MAIL_APPLY } from "../components/Nav";
 import FaqSection from "../components/FaqSection";
+import Footer from "../components/Footer";
 import JsonLd from "../components/JsonLd";
 import { JOBS as FALLBACK_JOBS, CATEGORIES, CATEGORY_COLORS, CATEGORY_LABELS, distanceKm, type Job } from "./data";
 
@@ -509,6 +510,7 @@ export default function JobsPage() {
           { "@type": "Question", "name": "Gibt es Stellen, die nicht online gelistet sind?", "acceptedAnswer": { "@type": "Answer", "text": "Ja, wir haben zahlreiche exklusive, nicht öffentlich ausgeschriebene Positionen. Schreib uns auf WhatsApp." } },
         ]
       }} />
+      <Footer />
     </>
   );
 }

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Nav, { WA_LINK } from "../components/Nav";
 import FaqSection from "../components/FaqSection";
+import Footer from "../components/Footer";
 import JsonLd from "../components/JsonLd";
 
 const TEAM = [
@@ -160,18 +161,7 @@ export default function UeberUnsPage() {
         "sameAs": ["https://www.instagram.com/phe_perm_engineering", "https://www.linkedin.com/company/phe-perm-engineering"]
       }} />
 
-      {/* FOOTER */}
-      <footer style={{ background: "#f5f5f7", borderTop: "1px solid #d2d2d7", padding: "40px 24px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-          <p style={{ fontSize: 13, color: "#707070" }}>
-            © 2026 PHE-Perm Engineering Ingenieure & Techniker GmbH · Hüttenstraße 30, 40215 Düsseldorf
-          </p>
-          <div style={{ display: "flex", gap: 24 }}>
-            <Link href="/kontakt" style={{ fontSize: 13, color: "#707070", textDecoration: "none" }}>Kontakt</Link>
-            <Link href="/jobs" style={{ fontSize: 13, color: "#707070", textDecoration: "none" }}>Stellenangebote</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
