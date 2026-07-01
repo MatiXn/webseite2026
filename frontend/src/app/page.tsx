@@ -428,8 +428,7 @@ export default function Home() {
             </div>
 
             <h1 style={{ fontSize: "clamp(40px,5vw,72px)", fontWeight: 700, lineHeight: 1.05, letterSpacing: "-0.025em", color: "#1d1d1f", marginBottom: 20 }}>
-              Ihr nächster Job als<br />
-              <SlideTitle />
+              <span style={{ whiteSpace: "nowrap" }}>Ihr nächster Job als <SlideTitle /></span>
               <br />
               <em className="grad-text" style={{ fontStyle: "normal" }}>Schnell. Direkt. Kostenlos.</em>
             </h1>
@@ -515,7 +514,7 @@ export default function Home() {
                   ))}
                 </div>
                 <div style={{ display: "flex", gap: 8 }}>
-                  <Link href={WA_LINK} style={{
+                  <Link href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{
                     flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
                     background: "var(--wa)", color: "#fff", fontSize: 12, fontWeight: 700,
                     padding: "9px 12px", borderRadius: 8, textDecoration: "none"
@@ -735,6 +734,17 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── FAQ ── */}
+      <FaqSection title="Häufige Fragen zur Jobvermittlung" items={[
+        { q: "Was kostet die Vermittlung durch PHE-Perm Engineering?", a: "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE-Perm Engineering wird ausschließlich vom Unternehmen vergütet, Ihnen entstehen keinerlei Kosten, weder für die Beratung noch für die Vermittlung." },
+        { q: "Wie funktioniert die Bewerbung bei PHE?", a: "Nehmen Sie per WhatsApp oder E-Mail Kontakt auf. Unser Team meldet sich innerhalb von 24 Stunden, bespricht Ihre Wünsche und Qualifikationen und unterbreitet passende Stellenangebote." },
+        { q: "Wie lange dauert es, bis ich einen neuen Job finde?", a: "Viele unserer Bewerber finden innerhalb von 2–6 Wochen eine neue Stelle. Die genaue Dauer hängt von Beruf, Region und Ihren Gehaltsvorstellungen ab." },
+        { q: "Welche Jobs vermittelt PHE-Perm Engineering?", a: "Wir sind spezialisiert auf Festanstellungen in drei Bereichen: Elektrotechnik (Elektroniker, Elektriker, Elektroplaner), IT & Automation (SPS-Programmierer, Netzwerktechniker) sowie Bau & TGA (Bauleiter, Projektleiter, Oberbauleiter)." },
+        { q: "Kann ich mich bewerben, wenn ich keine aktuelle Stelle suche?", a: "Ja. Sie können sich jederzeit vormerken lassen, auch bei bestehender Beschäftigung. Wir informieren Sie diskret, sobald eine passende Position verfügbar ist." },
+        { q: "Ist PHE-Perm Engineering eine Zeitarbeitsfirma?", a: "Nein. Wir vermitteln ausschließlich Festanstellungen direkt beim Unternehmen. Es gibt keine Zeitarbeit, keine Leiharbeit, Sie werden von Anfang an unbefristet angestellt." },
+        { q: "Was ist YAFTO?", a: "YAFTO ist unsere neue Plattform, auf der Sie Ihr Profil anonym veröffentlichen und Unternehmen sich bei Ihnen bewerben. Sie entscheiden, wen Sie kennenlernen möchten, ohne Druck und ohne Spam. Bald verfügbar." },
+      ]} />
+
       {/* ── FOOTER ── */}
       <footer style={{ background: "var(--bg)", borderTop: "1px solid var(--border)" }} className="px-section">
         <div style={{ maxWidth: 1100, margin: "0 auto", paddingTop: 40, paddingBottom: 20 }}>
@@ -754,7 +764,7 @@ export default function Home() {
                 <h4 style={{ fontSize: 13, fontWeight: 700, color: "var(--navy)", marginBottom: 14, textTransform: "uppercase", letterSpacing: "0.06em" }}>{col.title}</h4>
                 <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
                   {col.links.map(([l, h]) => (
-                    <li key={l}><Link href={h} style={{ fontSize: 13, color: "var(--gray)", textDecoration: "none" }}>{l}</Link></li>
+                    <li key={l}><Link href={h} {...(h.startsWith("https://wa.me") ? { target: "_blank", rel: "noopener noreferrer" } : {})} style={{ fontSize: 13, color: "var(--gray)", textDecoration: "none" }}>{l}</Link></li>
                   ))}
                 </ul>
               </div>
@@ -765,21 +775,11 @@ export default function Home() {
             <div>
               <Link href="/impressum" style={{ color: "var(--gray-light)", textDecoration: "none", marginLeft: 16 }}>Impressum</Link>
               <Link href="/datenschutz" style={{ color: "var(--gray-light)", textDecoration: "none", marginLeft: 16 }}>Datenschutz</Link>
+              <Link href="/agb" style={{ color: "var(--gray-light)", textDecoration: "none", marginLeft: 16 }}>AGB</Link>
             </div>
           </div>
         </div>
       </footer>
-
-      {/* ── FAQ ── */}
-      <FaqSection title="Häufige Fragen zur Jobvermittlung" items={[
-        { q: "Was kostet die Vermittlung durch PHE-Perm Engineering?", a: "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE-Perm Engineering wird ausschließlich vom Unternehmen vergütet, Ihnen entstehen keinerlei Kosten, weder für die Beratung noch für die Vermittlung." },
-        { q: "Wie funktioniert die Bewerbung bei PHE?", a: "Nehmen Sie per WhatsApp oder E-Mail Kontakt auf. Unser Team meldet sich innerhalb von 24 Stunden, bespricht Ihre Wünsche und Qualifikationen und unterbreitet passende Stellenangebote." },
-        { q: "Wie lange dauert es, bis ich einen neuen Job finde?", a: "Viele unserer Bewerber finden innerhalb von 2–6 Wochen eine neue Stelle. Die genaue Dauer hängt von Beruf, Region und Ihren Gehaltsvorstellungen ab." },
-        { q: "Welche Jobs vermittelt PHE-Perm Engineering?", a: "Wir sind spezialisiert auf Festanstellungen in drei Bereichen: Elektrotechnik (Elektroniker, Elektriker, Elektroplaner), IT & Automation (SPS-Programmierer, Netzwerktechniker) sowie Bau & TGA (Bauleiter, Projektleiter, Oberbauleiter)." },
-        { q: "Kann ich mich bewerben, wenn ich keine aktuelle Stelle suche?", a: "Ja. Sie können sich jederzeit vormerken lassen, auch bei bestehender Beschäftigung. Wir informieren Sie diskret, sobald eine passende Position verfügbar ist." },
-        { q: "Ist PHE-Perm Engineering eine Zeitarbeitsfirma?", a: "Nein. Wir vermitteln ausschließlich Festanstellungen direkt beim Unternehmen. Es gibt keine Zeitarbeit, keine Leiharbeit, Sie werden von Anfang an unbefristet angestellt." },
-        { q: "Was ist YAFTO?", a: "YAFTO ist unsere neue Plattform, auf der Sie Ihr Profil anonym veröffentlichen und Unternehmen sich bei Ihnen bewerben. Sie entscheiden, wen Sie kennenlernen möchten, ohne Druck und ohne Spam. Bald verfügbar." },
-      ]} />
 
       <style>{`
         @keyframes pulse {

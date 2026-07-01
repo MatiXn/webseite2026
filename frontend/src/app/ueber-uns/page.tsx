@@ -117,7 +117,7 @@ export default function UeberUnsPage() {
             Kontaktieren Sie uns per WhatsApp oder E-Mail, kostenlos, unverbindlich und direkt.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href={WA_LINK} style={{
+            <a href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               background: "#0071e3", color: "#fff", fontWeight: 600, fontSize: 17,
               padding: "16px 32px", borderRadius: 999, textDecoration: "none",
@@ -164,7 +164,7 @@ export default function UeberUnsPage() {
       <footer style={{ background: "#f5f5f7", borderTop: "1px solid #d2d2d7", padding: "40px 24px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
           <p style={{ fontSize: 13, color: "#707070" }}>
-            © 2025 PHE-Perm Engineering Ingenieure & Techniker GmbH · Hüttenstraße 30, 40215 Düsseldorf
+            © 2026 PHE-Perm Engineering Ingenieure & Techniker GmbH · Hüttenstraße 30, 40215 Düsseldorf
           </p>
           <div style={{ display: "flex", gap: 24 }}>
             <Link href="/kontakt" style={{ fontSize: 13, color: "#707070", textDecoration: "none" }}>Kontakt</Link>

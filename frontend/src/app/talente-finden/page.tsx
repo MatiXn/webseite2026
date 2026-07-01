@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import Nav from "@/app/components/Nav";
+import FaqSection from "@/app/components/FaqSection";
 
 const MAIL_EMPLOYER = "recruiting@phe-perm.de";
 
@@ -222,16 +225,16 @@ function ContactForm() {
         </div>
         <div>
           <label style={lbl}>Gesuchte Fachkräfte *</label>
-          <select style={inp} value={form.category} onChange={set("category")} required>
-            <option value="">Bitte wählen …</option>
-            {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+          <select style={{ ...inp, colorScheme: "dark" }} value={form.category} onChange={set("category")} required>
+            <option value="" style={{ background: "#1a2d45", color: "#fff" }}>Bitte wählen …</option>
+            {CATEGORIES.map(c => <option key={c} value={c} style={{ background: "#1a2d45", color: "#fff" }}>{c}</option>)}
           </select>
         </div>
         <div>
           <label style={lbl}>Anzahl</label>
-          <select style={inp} value={form.volume} onChange={set("volume")}>
-            <option value="">Bitte wählen …</option>
-            {VOLUMES.map(v => <option key={v} value={v}>{v}</option>)}
+          <select style={{ ...inp, colorScheme: "dark" }} value={form.volume} onChange={set("volume")}>
+            <option value="" style={{ background: "#1a2d45", color: "#fff" }}>Bitte wählen …</option>
+            {VOLUMES.map(v => <option key={v} value={v} style={{ background: "#1a2d45", color: "#fff" }}>{v}</option>)}
           </select>
         </div>
       </div>
@@ -488,7 +491,7 @@ export default function TalenteFindPage() {
               }}>
                 0211 158 63 100
               </a>
-              <a href="https://wa.me/491739980100?text=Hallo%20PHE-Team,%20ich%20suche%20Fachkräfte." style={{
+              <a href="https://wa.me/491739980100?text=Hallo%20PHE-Team,%20ich%20suche%20Fachkräfte." target="_blank" rel="noopener noreferrer" style={{
                 background: "rgba(255,255,255,0.08)",
                 border: "1px solid rgba(255,255,255,0.15)",
                 color: "#fff",
@@ -502,6 +505,61 @@ export default function TalenteFindPage() {
         </section>
 
       </main>
+
+      {/* ── FAQ ── */}
+      <FaqSection title="Häufige Fragen für Unternehmen" items={[
+        { q: "Was kostet die Vermittlung für Unternehmen?", a: "Die Vergütung ist erfolgsbasiert – Sie zahlen nur bei erfolgreicher Besetzung. Es gibt keine Vorabkosten oder Bearbeitungsgebühren." },
+        { q: "Wie schnell erhalten wir erste Kandidatenprofile?", a: "In der Regel erhalten Sie innerhalb von 3–5 Werktagen erste geprüfte Profile passend zu Ihren Anforderungen." },
+        { q: "Welche Fachkräfte vermittelt PHE?", a: "Wir sind spezialisiert auf Elektrotechnik, IT & Automation, Mechatronik, Kältetechnik sowie Bau & TGA – ausschließlich in Festanstellung." },
+        { q: "Wie läuft der Prozess ab?", a: "Nach Ihrer Anfrage analysieren wir Ihren Bedarf, matchen passende Kandidaten aus unserem Pool, liefern Ihnen geprüfte Profile und begleiten bis zum Vertragsabschluss." },
+        { q: "Vermittelt PHE auch Zeitarbeitnehmer?", a: "Nein. PHE-Perm Engineering vermittelt ausschließlich Festanstellungen direkt beim Unternehmen – keine Zeitarbeit, keine Leiharbeit." },
+      ]} />
+
+      {/* ── FOOTER ── */}
+      <footer style={{ background: "#f5f5f7", borderTop: "1px solid rgba(0,0,0,0.08)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 24px 20px" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 40, marginBottom: 40 }}>
+            <div style={{ minWidth: 180 }}>
+              <Image src="/phe-logo.png" alt="PHE-Perm Engineering" height={28} width={140} style={{ height: 28, width: "auto", marginBottom: 12 }} />
+              <p style={{ fontSize: 13, color: "#707070", lineHeight: 1.6 }}>
+                PHE-Perm Engineering, Ihr Partner für Festanstellungen in IT, Elektro und Bau.
+              </p>
+            </div>
+            <div>
+              <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1d1d1f", marginBottom: 14, textTransform: "uppercase", letterSpacing: "0.06em" }}>Für Bewerber</h4>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8, padding: 0 }}>
+                {[["Stellenangebote", "/jobs"], ["Lebenslauf erstellen", "/lebenslauf-erstellen"]].map(([l, h]) => (
+                  <li key={l}><Link href={h} style={{ fontSize: 13, color: "#707070", textDecoration: "none" }}>{l}</Link></li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1d1d1f", marginBottom: 14, textTransform: "uppercase", letterSpacing: "0.06em" }}>Unternehmen</h4>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8, padding: 0 }}>
+                {[["Talente finden", "/talente-finden"], ["Über PHE", "/ueber-uns"], ["Kontakt", "/kontakt"]].map(([l, h]) => (
+                  <li key={l}><Link href={h} style={{ fontSize: 13, color: "#707070", textDecoration: "none" }}>{l}</Link></li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1d1d1f", marginBottom: 14, textTransform: "uppercase", letterSpacing: "0.06em" }}>Rechtliches</h4>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8, padding: 0 }}>
+                {[["Impressum", "/impressum"], ["Datenschutz", "/datenschutz"], ["AGB", "/agb"]].map(([l, h]) => (
+                  <li key={l}><Link href={h} style={{ fontSize: 13, color: "#707070", textDecoration: "none" }}>{l}</Link></li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12, borderTop: "1px solid rgba(0,0,0,0.08)", paddingTop: 20 }}>
+            <span style={{ fontSize: 13, color: "#ababab" }}>© 2026 PHE-Perm Engineering GmbH. Alle Rechte vorbehalten.</span>
+            <div>
+              <Link href="/impressum" style={{ fontSize: 13, color: "#ababab", textDecoration: "none", marginLeft: 16 }}>Impressum</Link>
+              <Link href="/datenschutz" style={{ fontSize: 13, color: "#ababab", textDecoration: "none", marginLeft: 16 }}>Datenschutz</Link>
+              <Link href="/agb" style={{ fontSize: 13, color: "#ababab", textDecoration: "none", marginLeft: 16 }}>AGB</Link>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

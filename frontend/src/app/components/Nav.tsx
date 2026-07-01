@@ -100,7 +100,7 @@ export default function Nav() {
               letterSpacing: "-0.01em",
               textDecoration: "none", padding: "6px 10px", borderRadius: 8,
             }}>Kontakt</Link>
-            <Link href={WA_LINK} style={{
+            <Link href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{
               background: "#22c55e", color: "#fff", fontSize: 14, fontWeight: 400,
               padding: "8px 16px", borderRadius: 999, textDecoration: "none",
               display: "flex", alignItems: "center", gap: 5,
@@ -113,7 +113,7 @@ export default function Nav() {
         {/* Mobile right: WA button + hamburger */}
         {isMobile && (
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <Link href={WA_LINK} style={{
+            <Link href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{
               background: "#22c55e", color: "#fff",
               width: 36, height: 36, borderRadius: "50%",
               display: "flex", alignItems: "center", justifyContent: "center",
@@ -178,7 +178,7 @@ export default function Nav() {
               );
             })}
             <li style={{ padding: "12px 24px 0" }}>
-              <Link href={WA_LINK} style={{
+              <Link href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
                 background: "#22c55e", color: "#fff",
                 fontSize: 14, fontWeight: 400, padding: "8px 16px",

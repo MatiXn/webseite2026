@@ -407,6 +407,8 @@ export default function JobsPage() {
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <a
                 href={WA_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
                   background: "var(--wa)", color: "#fff", fontWeight: 700, fontSize: 14,
@@ -583,6 +585,8 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
         <div style={{ display: "flex", gap: 8 }}>
           <a
             href={`${WA_LINK}?text=${encodeURIComponent(`Hallo, ich interessiere mich für die Stelle: ${job.title} in ${job.city}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
               background: "#22c55e", color: "#fff", fontSize: 12, fontWeight: 700,
