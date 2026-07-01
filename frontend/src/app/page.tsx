@@ -70,11 +70,14 @@ const MailIcon = ({ size = 14 }: { size?: number }) => (
 );
 
 const REVIEWS = [
-  { name: "Tobias M.", rating: 5, time: "vor 2 Wochen", text: "Super schnelle Vermittlung! Innerhalb von 3 Wochen hatte ich einen neuen Job als Elektriker mit besserem Gehalt. Sehr persönliche Betreuung, jederzeit erreichbar." },
-  { name: "Sandra K.", rating: 5, time: "vor 1 Monat", text: "Ich war skeptisch gegenüber Personalvermittlern, aber PHE hat mich positiv überrascht. Kein Druck, ehrliche Beratung und genau die Stelle gefunden die ich gesucht habe." },
-  { name: "Michael R.", rating: 5, time: "vor 3 Wochen", text: "Als SPS-Programmierer fand ich über PHE eine tolle Stelle bei einem Automatisierungsunternehmen. Sehr professionell und kostenlos für Bewerber, absolut empfehlenswert!" },
-  { name: "Laura B.", rating: 5, time: "vor 2 Monaten", text: "Vom ersten WhatsApp bis zum Vertragsabschluss alles reibungslos. Das Team hat mich gut vorbereitet und immer auf dem Laufenden gehalten. Top Service!" },
-  { name: "Andreas H.", rating: 5, time: "vor 1 Woche", text: "Ich habe bereits 2 Stellen über PHE gefunden. Immer zuverlässig, ehrlich und sie finden wirklich passende Stellen, nicht einfach irgendwas." },
+  { name: "Romze", rating: 5, time: "vor einem Jahr", text: "Ich bin begeistert von meiner Erfahrung mit PHE. Das Team war äußerst professionell, freundlich und engagiert. Vom ersten Kontakt bis zur erfolgreichen Vermittlung fühlte ich mich hervorragend betreut. Sie haben meine Wünsche und Bedürfnisse stets in den Vordergrund gestellt." },
+  { name: "Francis Dorman", rating: 5, time: "vor einem Jahr", text: "Top Betreuung und klasse Service! Von Anfang an habe ich mich super aufgehoben gefühlt. Sehr empfehlenswert!" },
+  { name: "Mas Mozsavi", rating: 5, time: "vor einem Jahr", text: "Ich hatte das große Glück, Herrn Alexandros Selemidis von der PHE-Perm Engineering Ingenieure & Techniker GmbH kennenzulernen. Seine unermüdliche Unterstützung und sein tiefes Verständnis für meine beruflichen Ziele haben ihn für mich zu einem unverzichtbaren Partner gemacht." },
+  { name: "Birk Burmeister", rating: 5, time: "vor einem Jahr", text: "Mobin Askaryar von PHE-Perm Engineering hat mich bei meiner Jobsuche exzellent unterstützt. Seine Beratung war durchweg professionell und auf meine individuellen Bedürfnisse zugeschnitten. Ich kann PHE-Perm Engineering für die Jobsuche absolut weiterempfehlen." },
+  { name: "Romeo", rating: 5, time: "vor einem Jahr", text: "Ich möchte die außergewöhnliche und prompte Unterstützung von Alexandros Selemidis würdigen. Durch sein engagiertes Engagement gelang es mir, in kürzester Zeit eine passende Arbeitsstelle zu finden." },
+  { name: "Benedikt Pilz", rating: 5, time: "vor einem Jahr", text: "Bester Service den ich seit langem erlebt habe. Alexandros hat sich voll auf mich als Person eingestellt um meine aktuelle persönliche Situation zu verstehen und voll umfänglich auf meine Wünsche einzugehen." },
+  { name: "Milian Wuerges", rating: 5, time: "vor einem Jahr", text: "Kompetent, schnell und achtet sehr auf die Bedürfnisse der Kunden. Ich wurde direkt gefragt, was ich mir vorstelle, und mir wurden umfangreiche Fragen gestellt um einen für mich angenehmen Job zu finden." },
+  { name: "Norbert Lach", rating: 5, time: "vor einem Jahr", text: "Ich habe von Alex sofort eine Rückmeldung auf meine Bewerbung bekommen und wir haben über meine Qualifikationen gesprochen. In einer Woche hatte ich schon mein erstes Vorstellungsgespräch bei einem Unternehmen, wo alles gepasst hat." },
 ];
 
 const StarIcon = () => (
@@ -453,7 +456,7 @@ export default function Home() {
                 {[1,2,3,4,5].map(i => <StarIcon key={i} />)}
               </div>
               <span style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>5.0</span>
-              <span style={{ fontSize: 13, color: "var(--gray)" }}>· 47 Google-Bewertungen</span>
+              <span style={{ fontSize: 13, color: "var(--gray)" }}>· 32 Google-Bewertungen</span>
             </div>
           </div>
 
@@ -469,7 +472,7 @@ export default function Home() {
             { num: "5.000+", label: "Erfolgreiche Matches" },
             { num: "12 Std.", label: "Durchschnittliche Reaktionszeit" },
             { num: "100%", label: "Kostenlos für Bewerber" },
-            { num: "4.9★", label: "Bewertung unserer Kandidaten" },
+            { num: "5.0★", label: "Bewertung unserer Kandidaten" },
           ].map((s) => (
             <div key={s.num}>
               <div style={{ fontSize: 40, fontWeight: 700, color: "#0071e3", letterSpacing: "-0.02em" }}>{s.num}</div>
@@ -629,7 +632,7 @@ export default function Home() {
               <GoogleIcon />
               <div>
                 <div style={{ display: "flex", gap: 2, marginBottom: 2 }}>{[1,2,3,4,5].map(i => <StarIcon key={i} />)}</div>
-                <div style={{ fontSize: 11, color: "var(--gray)", fontWeight: 600 }}>47 Bewertungen auf Google</div>
+                <div style={{ fontSize: 11, color: "var(--gray)", fontWeight: 600 }}>32 Bewertungen auf Google</div>
               </div>
             </a>
           </div>
