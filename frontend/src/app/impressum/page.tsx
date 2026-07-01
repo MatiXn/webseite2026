@@ -1,5 +1,5 @@
 import Nav from "../components/Nav";
-import Link from "next/link";
+import Footer from "../components/Footer";
 
 export const metadata = {
   title: "Impressum – PHE-Perm Engineering",
@@ -19,118 +19,79 @@ export default function ImpressumPage() {
             Impressum
           </h1>
 
-          <Section title="Angaben gemäß § 5 TMG">
+          <Block title="Angaben gemäß § 5 Digitale-Dienste-Gesetz (DDG)">
             <p><strong>PHE-Perm Engineering Ingenieure &amp; Techniker GmbH</strong></p>
             <p>Hüttenstraße 30<br />40215 Düsseldorf<br />Deutschland</p>
-          </Section>
+          </Block>
 
-          <Section title="Vertreten durch">
-            <p>Geschäftsführer: <strong>Matin Askaryar</strong></p>
-          </Section>
+          <Block title="Vertreten durch">
+            <p>Geschäftsführer: Matin Askaryar</p>
+          </Block>
 
-          <Section title="Kontakt">
-            <p>
-              Telefon: <a href="tel:+492111586300" style={linkStyle}>0211 158 63 100</a><br />
-              E-Mail: <a href="mailto:info@phe-perm.de" style={linkStyle}>info@phe-perm.de</a><br />
-              Website: <a href="https://phe-perm.de" style={linkStyle}>phe-perm.de</a>
-            </p>
-          </Section>
+          <Block title="Kontakt">
+            <p>Telefon: +49 211 158 63 100</p>
+            <p>E-Mail: <a href="mailto:info@phe-perm.de" style={{ color: "#0071e3", textDecoration: "none" }}>info@phe-perm.de</a></p>
+            <p>Website: <a href="https://www.phe-perm.de" style={{ color: "#0071e3", textDecoration: "none" }}>www.phe-perm.de</a></p>
+          </Block>
 
-          <Section title="Handelsregister">
-            <p>
-              Registergericht: Amtsgericht Düsseldorf<br />
-              Registernummer: <strong>HRB 99512</strong>
-            </p>
-          </Section>
+          <Block title="Handelsregister">
+            <p>Registergericht: Amtsgericht Düsseldorf</p>
+            <p>Handelsregisternummer: HRB 99512</p>
+          </Block>
 
-          <Section title="Umsatzsteuer-Identifikationsnummer">
-            <p>
-              Gemäß § 27a Umsatzsteuergesetz:<br />
-              <strong>DE361209243</strong>
-            </p>
-          </Section>
+          <Block title="Umsatzsteuer-Identifikationsnummer">
+            <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz:</p>
+            <p><strong>DE361209243</strong></p>
+          </Block>
 
-          <Section title="Berufsrechtliche Regelungen">
-            <p>
-              PHE-Perm Engineering Ingenieure &amp; Techniker GmbH ist als Personalvermittler tätig.
-              Die Erlaubnis zur gewerbsmäßigen Arbeitnehmerüberlassung und Vermittlung wird durch die
-              Bundesagentur für Arbeit erteilt.
-            </p>
-            <p style={{ marginTop: 8 }}>
-              Erlaubnisbehörde: Bundesagentur für Arbeit, Regionaldirektion Nordrhein-Westfalen<br />
-              Erlaubnisart: Personalvermittlung (Direktvermittlung, keine Zeitarbeit)
-            </p>
-          </Section>
+          <Block title="Unternehmensgegenstand">
+            <p>Die PHE-Perm Engineering Ingenieure &amp; Techniker GmbH ist im Bereich der Personalvermittlung tätig und vermittelt ausschließlich Direktanstellungen zwischen Bewerbern und Unternehmen.</p>
+            <p>Eine Arbeitnehmerüberlassung, Leiharbeit oder Zeitarbeit wird nicht angeboten.</p>
+          </Block>
 
-          <Section title="Verantwortlich für den Inhalt gemäß § 55 Abs. 2 RStV">
-            <p>
-              Matin Askaryar<br />
-              Hüttenstraße 30, 40215 Düsseldorf
-            </p>
-          </Section>
+          <Block title="Verantwortlich für den Inhalt gemäß § 18 Abs. 2 Medienstaatsvertrag (MStV)">
+            <p>Matin Askaryar</p>
+            <p>PHE-Perm Engineering Ingenieure &amp; Techniker GmbH<br />Hüttenstraße 30<br />40215 Düsseldorf<br />Deutschland</p>
+          </Block>
 
-          <Section title="EU-Streitschlichtung">
-            <p>
-              Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:{" "}
-              <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer" style={linkStyle}>
-                https://ec.europa.eu/consumers/odr/
-              </a>
-            </p>
-            <p style={{ marginTop: 8 }}>
-              Unsere E-Mail-Adresse finden Sie oben im Impressum. Wir sind nicht bereit oder verpflichtet,
-              an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
-            </p>
-          </Section>
+          <Block title="Verbraucherstreitbeilegung">
+            <p>Die PHE-Perm Engineering Ingenieure &amp; Techniker GmbH ist weder bereit noch verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+          </Block>
 
-          <Section title="Haftung für Inhalte">
-            <p>
-              Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den
-              allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht
-              verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu
-              forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
-            </p>
-          </Section>
+          <Block title="Haftung für Inhalte">
+            <p>Als Diensteanbieter sind wir nach den allgemeinen gesetzlichen Vorschriften für eigene Inhalte auf diesen Webseiten verantwortlich.</p>
+            <p>Wir sind jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt.</p>
+            <p>Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden entsprechender Rechtsverletzungen werden wir die betreffenden Inhalte unverzüglich entfernen.</p>
+          </Block>
 
-          <Section title="Haftung für Links">
-            <p>
-              Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben.
-              Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der
-              verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
-            </p>
-          </Section>
+          <Block title="Haftung für Links">
+            <p>Unsere Website enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben.</p>
+            <p>Deshalb übernehmen wir für diese fremden Inhalte keine Gewähr. Für die Inhalte der verlinkten Seiten ist ausschließlich deren jeweiliger Betreiber oder Anbieter verantwortlich.</p>
+            <p>Zum Zeitpunkt der Verlinkung wurden die verlinkten Seiten auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zu diesem Zeitpunkt nicht erkennbar.</p>
+            <p>Eine dauerhafte inhaltliche Kontrolle der verlinkten Seiten ist ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden entsprechende Links unverzüglich entfernt.</p>
+          </Block>
 
-          <Section title="Urheberrecht">
-            <p>
-              Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen
-              Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
-              Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
-            </p>
-          </Section>
-
-          <div style={{ marginTop: 48, padding: 20, background: "#f5f5f7", borderRadius: 14, fontSize: 13, color: "#707070" }}>
-            Stand: Juni 2026 · Änderungen vorbehalten ·{" "}
-            <Link href="/datenschutz" style={linkStyle}>Datenschutzerklärung</Link>
-          </div>
+          <Block title="Urheberrecht">
+            <p>Die auf dieser Website veröffentlichten Inhalte, Texte, Grafiken, Bilder, Logos sowie sonstigen Werke unterliegen dem deutschen Urheberrecht und anderen gesetzlichen Schutzvorschriften.</p>
+            <p>Jede Vervielfältigung, Bearbeitung, Verbreitung oder sonstige Verwertung außerhalb der gesetzlichen Grenzen des Urheberrechts bedarf der vorherigen schriftlichen Zustimmung der PHE-Perm Engineering Ingenieure &amp; Techniker GmbH oder des jeweiligen Rechteinhabers.</p>
+            <p>Soweit Inhalte auf dieser Website nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet und entsprechend gekennzeichnet. Sollten Sie dennoch auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir die betreffenden Inhalte unverzüglich entfernen.</p>
+          </Block>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div style={{ marginBottom: 40 }}>
-      <h2 style={{ fontSize: 22, fontWeight: 600, color: "#1d1d1f", marginBottom: 12, paddingBottom: 8, borderBottom: "1px solid #d2d2d7" }}>
+    <section style={{ marginBottom: 36 }}>
+      <h2 style={{ fontSize: 17, fontWeight: 700, color: "#1d1d1f", marginBottom: 12, paddingBottom: 10, borderBottom: "1px solid #e5e5ea" }}>
         {title}
       </h2>
-      <div style={{ fontSize: 17, color: "#1d1d1f", lineHeight: 1.47 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, fontSize: 15, color: "#3d3d3f", lineHeight: 1.7 }}>
         {children}
       </div>
-    </div>
+    </section>
   );
 }
-
-const linkStyle: React.CSSProperties = {
-  color: "#0071e3",
-  textDecoration: "none",
-};
