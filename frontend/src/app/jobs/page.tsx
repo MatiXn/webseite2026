@@ -515,102 +515,190 @@ export default function JobsPage() {
   );
 }
 
-function JobCard({ job, distance }: { job: Job; distance?: number }) {
-  const [showModal, setShowModal] = useState(false);
+const CheckIcon = () => (
+  <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
+    <circle cx="5" cy="5" r="5" fill="#22c55e"/>
+    <path d="M3 5l1.5 1.5L7 3.5" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+function JobDetailModal({ job, onClose, onApply }: { job: Job; onClose: () => void; onApply: () => void }) {
   const color = CATEGORY_COLORS[job.category];
   return (
-    <>
-    {showModal && <ApplyModal job={job} onClose={() => setShowModal(false)} />}
-    <div style={{
-      borderRadius: 28, padding: 24,
-      background: "#fff", display: "flex", flexDirection: "column",
-    }}>
-      {/* Category + distance */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <span style={{ width: 7, height: 7, borderRadius: "50%", background: color, display: "inline-block", flexShrink: 0 }} />
-          <span style={{ fontSize: 11, fontWeight: 700, color, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-            {CATEGORY_LABELS[job.category]}
-          </span>
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.45)", zIndex: 500, display: "flex", alignItems: "flex-end", justifyContent: "center", padding: "0 0 0 0" }}>
+      <div onClick={e => e.stopPropagation()} style={{
+        background: "#fff", borderRadius: "24px 24px 0 0", width: "100%", maxWidth: 640,
+        maxHeight: "90vh", overflowY: "auto", padding: "28px 28px 40px",
+        boxShadow: "0 -8px 40px rgba(0,0,0,0.15)",
+      }}>
+        {/* Handle + close */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+          <div style={{ width: 40, height: 4, borderRadius: 2, background: "var(--border)", margin: "0 auto" }} />
+          <button onClick={onClose} style={{ background: "var(--bg)", border: "none", borderRadius: "50%", width: 32, height: 32, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--gray)" }}>
+            <CloseIcon />
+          </button>
         </div>
-        {distance !== undefined && (
-          <span style={{ fontSize: 11, fontWeight: 600, color: "var(--gray-light)", background: "var(--bg)", padding: "3px 8px", borderRadius: 6 }}>
-            {distance} km entfernt
-          </span>
+
+        {/* Category badge */}
+        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
+          <span style={{ width: 8, height: 8, borderRadius: "50%", background: color, display: "inline-block" }} />
+          <span style={{ fontSize: 11, fontWeight: 700, color, textTransform: "uppercase", letterSpacing: "0.08em" }}>{CATEGORY_LABELS[job.category]}</span>
+        </div>
+
+        {/* Title */}
+        <h2 style={{ fontSize: 22, fontWeight: 700, color: "var(--navy)", lineHeight: 1.2, marginBottom: 12 }}>{job.title}</h2>
+
+        {/* Meta */}
+        <div style={{ display: "flex", gap: 16, fontSize: 14, color: "var(--gray)", marginBottom: 20, flexWrap: "wrap" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 5 }}><LocationIcon /> {job.city}</span>
+          <span style={{ fontWeight: 600, color: "var(--navy)" }}>{job.salary}</span>
+          <span>{job.type}</span>
+        </div>
+
+        {/* Description */}
+        {job.description && (
+          <div style={{ marginBottom: 20 }}>
+            <h4 style={{ fontSize: 12, fontWeight: 700, color: "var(--navy)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>Stellenbeschreibung</h4>
+            <p style={{ fontSize: 14, color: "var(--gray)", lineHeight: 1.7 }}>{job.description}</p>
+          </div>
         )}
-      </div>
 
-      {/* Title */}
-      <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--navy)", lineHeight: 1.3, marginBottom: 10, flex: 1 }}>
-        {job.title}
-      </h3>
+        {/* Tags */}
+        {job.tags?.length > 0 && (
+          <div style={{ marginBottom: 20 }}>
+            <h4 style={{ fontSize: 12, fontWeight: 700, color: "var(--navy)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>Anforderungen</h4>
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+              {job.tags.map(t => (
+                <span key={t} style={{ fontSize: 12, fontWeight: 600, background: "var(--bg)", color: "var(--gray)", padding: "5px 12px", borderRadius: 8 }}>{t}</span>
+              ))}
+            </div>
+          </div>
+        )}
 
-      {/* Meta */}
-      <div style={{ display: "flex", gap: 12, fontSize: 13, color: "var(--gray)", marginBottom: 12, flexWrap: "wrap" }}>
-        <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-          <LocationIcon /> {job.city}
-        </span>
-        <span>{job.salary}</span>
-      </div>
+        {/* Benefits */}
+        {job.benefits?.length > 0 && (
+          <div style={{ marginBottom: 24 }}>
+            <h4 style={{ fontSize: 12, fontWeight: 700, color: "var(--navy)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>Benefits</h4>
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+              {job.benefits.map(b => (
+                <span key={b} style={{ fontSize: 12, fontWeight: 600, color: "#166534", background: "#dcfce7", padding: "5px 12px", borderRadius: 8, display: "flex", alignItems: "center", gap: 5 }}>
+                  <CheckIcon /> {b}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
-      {/* Description */}
-      <p style={{ fontSize: 13, color: "var(--gray)", lineHeight: 1.6, marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-        {job.description}
-      </p>
-
-      {/* Tags */}
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
-        {job.tags.map(t => (
-          <span key={t} style={{ fontSize: 11, fontWeight: 600, background: "var(--bg)", color: "var(--gray)", padding: "4px 10px", borderRadius: 6 }}>
-            {t}
-          </span>
-        ))}
-      </div>
-
-      {/* Benefits */}
-      {job.benefits?.length > 0 && (
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 18 }}>
-          {job.benefits.map(b => (
-            <span key={b} style={{ fontSize: 11, fontWeight: 600, color: "#166534", background: "#dcfce7", padding: "4px 10px", borderRadius: 6, display: "flex", alignItems: "center", gap: 4 }}>
-              <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="5" fill="#22c55e"/><path d="M3 5l1.5 1.5L7 3.5" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              {b}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {/* Footer */}
-      <div style={{ marginTop: "auto", paddingTop: 16, borderTop: "1px solid var(--border)" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-          <span style={{ fontSize: 12, color: "var(--gray-light)" }}>{job.posted}</span>
-        </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        {/* CTA buttons */}
+        <div style={{ display: "flex", gap: 10 }}>
           <a
             href={`${WA_LINK}?text=${encodeURIComponent(`Hallo, ich interessiere mich für die Stelle: ${job.title} in ${job.city}`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
-              background: "#22c55e", color: "#fff", fontSize: 12, fontWeight: 700,
-              padding: "9px 12px", borderRadius: 999, textDecoration: "none",
-            }}
+            target="_blank" rel="noopener noreferrer"
+            style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: "#22c55e", color: "#fff", fontSize: 14, fontWeight: 700, padding: "13px 16px", borderRadius: 999, textDecoration: "none" }}
           >
-            <WhatsAppIcon size={13} /> WhatsApp
+            <WhatsAppIcon size={16} /> Via WhatsApp bewerben
           </a>
           <button
-            onClick={() => setShowModal(true)}
-            style={{
-              flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
-              background: "#f5f5f7", color: "#1d1d1f", fontSize: 12, fontWeight: 700,
-              padding: "9px 12px", borderRadius: 999, border: "none",
-              cursor: "pointer", fontFamily: "inherit",
-            }}
+            onClick={onApply}
+            style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: "var(--navy)", color: "#fff", fontSize: 14, fontWeight: 700, padding: "13px 16px", borderRadius: 999, border: "none", cursor: "pointer", fontFamily: "inherit" }}
           >
-            <MailIcon size={13} /> E-Mail
+            <MailIcon size={15} /> Per E-Mail bewerben
           </button>
         </div>
       </div>
     </div>
+  );
+}
+
+function JobCard({ job, distance }: { job: Job; distance?: number }) {
+  const [showDetail, setShowDetail] = useState(false);
+  const [showApply, setShowApply] = useState(false);
+  const color = CATEGORY_COLORS[job.category];
+  return (
+    <>
+      {showDetail && (
+        <JobDetailModal
+          job={job}
+          onClose={() => setShowDetail(false)}
+          onApply={() => { setShowDetail(false); setShowApply(true); }}
+        />
+      )}
+      {showApply && <ApplyModal job={job} onClose={() => setShowApply(false)} />}
+      <div
+        onClick={() => setShowDetail(true)}
+        style={{ borderRadius: 28, padding: 24, background: "#fff", display: "flex", flexDirection: "column", cursor: "pointer" }}
+      >
+        {/* Category + distance */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <span style={{ width: 7, height: 7, borderRadius: "50%", background: color, display: "inline-block", flexShrink: 0 }} />
+            <span style={{ fontSize: 11, fontWeight: 700, color, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+              {CATEGORY_LABELS[job.category]}
+            </span>
+          </div>
+          {distance !== undefined && (
+            <span style={{ fontSize: 11, fontWeight: 600, color: "var(--gray-light)", background: "var(--bg)", padding: "3px 8px", borderRadius: 6 }}>
+              {distance} km entfernt
+            </span>
+          )}
+        </div>
+
+        {/* Title */}
+        <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--navy)", lineHeight: 1.3, marginBottom: 10, flex: 1 }}>
+          {job.title}
+        </h3>
+
+        {/* Meta */}
+        <div style={{ display: "flex", gap: 12, fontSize: 13, color: "var(--gray)", marginBottom: 12, flexWrap: "wrap" }}>
+          <span style={{ display: "flex", alignItems: "center", gap: 4 }}><LocationIcon /> {job.city}</span>
+          <span>{job.salary}</span>
+        </div>
+
+        {/* Description preview */}
+        <p style={{ fontSize: 13, color: "var(--gray)", lineHeight: 1.6, marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+          {job.description}
+        </p>
+
+        {/* Tags */}
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: job.benefits?.length > 0 ? 8 : 0 }}>
+          {job.tags.map(t => (
+            <span key={t} style={{ fontSize: 11, fontWeight: 600, background: "var(--bg)", color: "var(--gray)", padding: "4px 10px", borderRadius: 6 }}>{t}</span>
+          ))}
+        </div>
+
+        {/* Benefits preview */}
+        {job.benefits?.length > 0 && (
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 8, marginBottom: 4 }}>
+            {job.benefits.slice(0, 2).map(b => (
+              <span key={b} style={{ fontSize: 11, fontWeight: 600, color: "#166534", background: "#dcfce7", padding: "4px 10px", borderRadius: 6, display: "flex", alignItems: "center", gap: 4 }}>
+                <CheckIcon /> {b}
+              </span>
+            ))}
+            {job.benefits.length > 2 && (
+              <span style={{ fontSize: 11, fontWeight: 600, color: "#166534", background: "#dcfce7", padding: "4px 10px", borderRadius: 6 }}>+{job.benefits.length - 2} weitere</span>
+            )}
+          </div>
+        )}
+
+        {/* Footer */}
+        <div style={{ marginTop: "auto", paddingTop: 16, borderTop: "1px solid var(--border)" }}>
+          <div style={{ display: "flex", gap: 8 }} onClick={e => e.stopPropagation()}>
+            <a
+              href={`${WA_LINK}?text=${encodeURIComponent(`Hallo, ich interessiere mich für die Stelle: ${job.title} in ${job.city}`)}`}
+              target="_blank" rel="noopener noreferrer"
+              style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "#22c55e", color: "#fff", fontSize: 12, fontWeight: 700, padding: "9px 12px", borderRadius: 999, textDecoration: "none" }}
+            >
+              <WhatsAppIcon size={13} /> WhatsApp
+            </a>
+            <button
+              onClick={() => setShowApply(true)}
+              style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "#f5f5f7", color: "#1d1d1f", fontSize: 12, fontWeight: 700, padding: "9px 12px", borderRadius: 999, border: "none", cursor: "pointer", fontFamily: "inherit" }}
+            >
+              <MailIcon size={13} /> E-Mail
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
