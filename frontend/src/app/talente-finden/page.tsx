@@ -146,15 +146,48 @@ function ContactForm() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<{ email?: string; phone?: string }>({});
+
+  const PRIVATE_DOMAINS = [
+    "gmail", "googlemail", "yahoo", "hotmail", "outlook", "live", "msn",
+    "web", "gmx", "t-online", "freenet", "arcor", "aol", "icloud",
+    "me", "mac", "proton", "protonmail", "mailbox", "tutanota",
+  ];
+
+  const isBusinessEmail = (email: string) => {
+    const domain = email.split("@")[1]?.toLowerCase() ?? "";
+    const sld = domain.split(".")[0];
+    return !PRIVATE_DOMAINS.includes(sld);
+  };
+
+  const isGermanPhone = (phone: string) => {
+    if (!phone) return true; // optional field
+    const cleaned = phone.replace(/[\s\-()]/g, "");
+    return /^(\+49|0049|0)[1-9]\d{6,14}$/.test(cleaned);
+  };
 
   const set = (k: keyof typeof form) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       setForm(f => ({ ...f, [k]: e.target.value }));
+      if (k === "email") setFieldErrors(fe => ({ ...fe, email: undefined }));
+      if (k === "phone") setFieldErrors(fe => ({ ...fe, phone: undefined }));
+    };
 
-  const canSubmit = !!(form.company && form.contact && form.email && form.category) && !loading;
+  const validateFields = () => {
+    const errors: { email?: string; phone?: string } = {};
+    if (form.email && !isBusinessEmail(form.email))
+      errors.email = "Bitte geben Sie Ihre geschäftliche E-Mail-Adresse an (keine privaten Anbieter wie Gmail, GMX etc.).";
+    if (form.phone && !isGermanPhone(form.phone))
+      errors.phone = "Bitte geben Sie eine gültige deutsche Telefonnummer ein (z. B. +49 211 …).";
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const canSubmit = !!(form.company && form.contact && form.email && form.category && isBusinessEmail(form.email)) && !loading;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateFields()) return;
     setLoading(true);
     setError("");
     try {
@@ -231,12 +264,20 @@ function ContactForm() {
           <input style={inp} placeholder="Max Mustermann" value={form.contact} onChange={set("contact")} required />
         </div>
         <div>
-          <label style={lbl}>E-Mail *</label>
-          <input style={inp} type="email" placeholder="max@firma.de" value={form.email} onChange={set("email")} required />
+          <label style={lbl}>E-Mail * <span style={{ fontWeight: 400, opacity: 0.6 }}>(geschäftlich)</span></label>
+          <input
+            style={{ ...inp, borderColor: fieldErrors.email ? "#ff6b6b" : undefined }}
+            type="email" placeholder="max@firma.de" value={form.email} onChange={set("email")} required
+          />
+          {fieldErrors.email && <p style={{ fontSize: 12, color: "#ff6b6b", marginTop: 4 }}>{fieldErrors.email}</p>}
         </div>
         <div>
-          <label style={lbl}>Telefon</label>
-          <input style={inp} type="tel" placeholder="+49 211 ..." value={form.phone} onChange={set("phone")} />
+          <label style={lbl}>Telefon <span style={{ fontWeight: 400, opacity: 0.6 }}>(DE)</span></label>
+          <input
+            style={{ ...inp, borderColor: fieldErrors.phone ? "#ff6b6b" : undefined }}
+            type="tel" placeholder="+49 211 ..." value={form.phone} onChange={set("phone")}
+          />
+          {fieldErrors.phone && <p style={{ fontSize: 12, color: "#ff6b6b", marginTop: 4 }}>{fieldErrors.phone}</p>}
         </div>
         <div>
           <label style={lbl}>Gesuchte Fachkräfte *</label>
