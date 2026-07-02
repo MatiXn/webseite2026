@@ -38,6 +38,9 @@ export default function Footer() {
             </div>
           ))}
         </div>
+        <p style={{ fontSize: 12, color: "var(--gray-light)", lineHeight: 1.6, marginBottom: 16, borderTop: "1px solid var(--border)", paddingTop: 20 }}>
+          Aus Gründen der besseren Lesbarkeit verwenden wir auf unserer Website die männliche Form. Selbstverständlich sind bei uns alle Menschen (m/w/d) gleichermaßen willkommen.
+        </p>
         <div className="footer-bottom">
           <span>© 2026 PHE-Perm Engineering GmbH. Alle Rechte vorbehalten.</span>
           <div>
