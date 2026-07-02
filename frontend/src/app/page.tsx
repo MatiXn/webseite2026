@@ -97,12 +97,12 @@ const GoogleIcon = () => (
 );
 
 const JOB_TITLES = [
-  "Elektroniker",
-  "Mechatroniker",
-  "SPS'ler",
-  "Bauleiter",
-  "Elektroplaner",
-  "Projektleiter",
+  "Elektroniker (m/w/d)",
+  "Mechatroniker (m/w/d)",
+  "SPS'ler (m/w/d)",
+  "Bauleiter (m/w/d)",
+  "Elektroplaner (m/w/d)",
+  "Projektleiter (m/w/d)",
 ];
 
 function SlideTitle() {
@@ -630,61 +630,33 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="grid-3col">
-            {REVIEWS.slice(0, 3).map((r) => (
-              <div key={r.name} style={{ borderRadius: 28, padding: 24, background: "#fff", boxShadow: "none" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-                  <div style={{
-                    width: 40, height: 40, borderRadius: "50%",
-                    background: "linear-gradient(135deg,var(--blue),var(--violet))",
-                    color: "#fff", fontWeight: 800, fontSize: 16,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    flexShrink: 0,
-                  }}>
-                    {r.name[0]}
+          <div className="reviews-marquee">
+            <div className="reviews-marquee-track">
+              {[...REVIEWS, ...REVIEWS].map((r, idx) => (
+                <div key={idx} className="reviews-marquee-card">
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+                    <div style={{
+                      width: 40, height: 40, borderRadius: "50%",
+                      background: "linear-gradient(135deg,var(--blue),var(--violet))",
+                      color: "#fff", fontWeight: 800, fontSize: 16,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      flexShrink: 0,
+                    }}>
+                      {r.name[0]}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: "var(--navy)" }}>{r.name}</div>
+                      <div style={{ fontSize: 12, color: "var(--gray-light)" }}>{r.time}</div>
+                    </div>
+                    <div style={{ marginLeft: "auto" }}><GoogleIcon /></div>
                   </div>
-                  <div>
-                    <div style={{ fontSize: 14, fontWeight: 700, color: "var(--navy)" }}>{r.name}</div>
-                    <div style={{ fontSize: 12, color: "var(--gray-light)" }}>{r.time}</div>
+                  <div style={{ display: "flex", gap: 2, marginBottom: 10 }}>
+                    {[1,2,3,4,5].map(i => <StarIcon key={i} />)}
                   </div>
-                  <div style={{ marginLeft: "auto" }}>
-                    <GoogleIcon />
-                  </div>
+                  <p style={{ fontSize: 14, color: "var(--gray)", lineHeight: 1.65 }}>{r.text}</p>
                 </div>
-                <div style={{ display: "flex", gap: 2, marginBottom: 10 }}>
-                  {[1,2,3,4,5].map(i => <StarIcon key={i} />)}
-                </div>
-                <p style={{ fontSize: 14, color: "var(--gray)", lineHeight: 1.65 }}>{r.text}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* zweite Reihe */}
-          <div className="reviews-row-2">
-            {REVIEWS.slice(3).map((r) => (
-              <div key={r.name} style={{ borderRadius: 28, padding: 24, background: "#fff", boxShadow: "none" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-                  <div style={{
-                    width: 40, height: 40, borderRadius: "50%",
-                    background: "linear-gradient(135deg,var(--blue),var(--violet))",
-                    color: "#fff", fontWeight: 800, fontSize: 16,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    flexShrink: 0,
-                  }}>
-                    {r.name[0]}
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 14, fontWeight: 700, color: "var(--navy)" }}>{r.name}</div>
-                    <div style={{ fontSize: 12, color: "var(--gray-light)" }}>{r.time}</div>
-                  </div>
-                  <div style={{ marginLeft: "auto" }}><GoogleIcon /></div>
-                </div>
-                <div style={{ display: "flex", gap: 2, marginBottom: 10 }}>
-                  {[1,2,3,4,5].map(i => <StarIcon key={i} />)}
-                </div>
-                <p style={{ fontSize: 14, color: "var(--gray)", lineHeight: 1.65 }}>{r.text}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
