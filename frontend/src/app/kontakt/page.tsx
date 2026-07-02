@@ -44,13 +44,33 @@ const LinkedInIcon = () => (
 
 export default function KontaktPage() {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "", type: "bewerber" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `Hallo PHE-Team,%0A%0AName: ${form.name}%0AE-Mail: ${form.email}%0ATelefon: ${form.phone}%0AArt: ${form.type === "bewerber" ? "Bewerber" : "Unternehmen"}%0A%0ANachricht:%0A${form.message}`;
-    window.open(`${WA_LINK}?text=${msg}`, "_blank");
-    setSent(true);
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "contact",
+          contact: form.name,
+          email: form.email,
+          phone: form.phone,
+          message: `[${form.type === "bewerber" ? "Bewerber" : "Unternehmen"}]\n\n${form.message}`,
+        }),
+      });
+      if (!res.ok) throw new Error();
+      setSent(true);
+    } catch {
+      setError("Versand fehlgeschlagen. Bitte schreiben Sie uns direkt an info@phe-perm.de.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -137,14 +157,14 @@ export default function KontaktPage() {
           <div style={{ background: "#fff", borderRadius: 28, padding: "32px 28px" }}>
             {sent ? (
               <div style={{ textAlign: "center", padding: "40px 0" }}>
-                <div style={{ fontSize: 48, marginBottom: 16 }}>
-                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--wa)" strokeWidth="2.5" strokeLinecap="round">
+                <div style={{ marginBottom: 16 }}>
+                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#0071e3" strokeWidth="2.5" strokeLinecap="round">
                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
                   </svg>
                 </div>
-                <p style={{ fontSize: 20, fontWeight: 800, color: "var(--navy)", marginBottom: 8 }}>WhatsApp geöffnet</p>
-                <p style={{ fontSize: 14, color: "var(--gray)" }}>Ihre Nachricht ist vorbereitet, senden Sie diese jetzt ab.</p>
-                <button onClick={() => setSent(false)} style={{ marginTop: 24, background: "none", border: "1.5px solid var(--border)", borderRadius: 999, padding: "10px 20px", fontSize: 14, cursor: "pointer", color: "var(--gray)" }}>
+                <p style={{ fontSize: 20, fontWeight: 800, color: "var(--navy)", marginBottom: 8 }}>Nachricht gesendet!</p>
+                <p style={{ fontSize: 14, color: "var(--gray)", lineHeight: 1.6 }}>Vielen Dank – wir melden uns in der Regel innerhalb von 24 Stunden bei Ihnen.</p>
+                <button onClick={() => { setSent(false); setForm({ name: "", email: "", phone: "", message: "", type: "bewerber" }); }} style={{ marginTop: 24, background: "none", border: "1.5px solid var(--border)", borderRadius: 999, padding: "10px 20px", fontSize: 14, cursor: "pointer", color: "var(--gray)" }}>
                   Neue Nachricht
                 </button>
               </div>
@@ -192,15 +212,17 @@ export default function KontaktPage() {
                       rows={5}
                       className="form-input" style={{ resize: "vertical", background: "#fff", border: "1.5px solid var(--border)" }} />
                   </div>
-                  <button type="submit" style={{
+                  {error && <p style={{ fontSize: 13, color: "#e53e3e" }}>{error}</p>}
+                  <button type="submit" disabled={loading} style={{
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                    background: "var(--wa)", color: "#fff", fontWeight: 700, fontSize: 15,
-                    padding: "14px", borderRadius: 999, border: "none", cursor: "pointer",
+                    background: loading ? "#ccc" : "#0071e3", color: "#fff", fontWeight: 700, fontSize: 15,
+                    padding: "14px", borderRadius: 999, border: "none", cursor: loading ? "not-allowed" : "pointer",
+                    transition: "background 0.2s",
                   }}>
-                    <WhatsAppIcon /> Via WhatsApp senden
+                    {loading ? "Wird gesendet …" : "Nachricht senden →"}
                   </button>
                   <p style={{ fontSize: 12, color: "var(--gray-light)", textAlign: "center" }}>
-                    Ihre Nachricht wird via WhatsApp an unser Team weitergeleitet.
+                    Ihre Nachricht wird direkt per E-Mail an unser Team gesendet.
                   </p>
                 </form>
               </>
