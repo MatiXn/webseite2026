@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/app/components/Nav";
@@ -218,19 +219,22 @@ function ContactForm() {
     return (
       <div style={{ textAlign: "center", padding: "40px 20px" }}>
         <div style={{
-          width: 48, height: 48, borderRadius: "50%",
+          width: 56, height: 56, borderRadius: "50%",
           background: "rgba(59,114,184,0.2)", border: "2px solid rgba(59,114,184,0.5)",
           display: "flex", alignItems: "center", justifyContent: "center",
-          margin: "0 auto 16px", fontSize: 22, color: "#7eb3f0",
-        }}>✓</div>
-        <h3 style={{ fontSize: 20, fontWeight: 700, color: "#fff", marginBottom: 8 }}>
-          Anfrage gesendet!
+          margin: "0 auto 20px", fontSize: 26, color: "#7eb3f0",
+        }}>✉</div>
+        <h3 style={{ fontSize: 20, fontWeight: 700, color: "#fff", marginBottom: 10 }}>
+          Bitte bestätigen Sie Ihre E-Mail!
         </h3>
-        <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 15, lineHeight: 1.6 }}>
-          Vielen Dank – ein Berater meldet sich innerhalb von 24 Stunden bei Ihnen.
+        <p style={{ color: "rgba(255,255,255,0.7)", fontSize: 15, lineHeight: 1.7, maxWidth: 340, margin: "0 auto 8px" }}>
+          Wir haben eine Bestätigungs-E-Mail an <strong style={{ color: "#7eb3f0" }}>{form.email}</strong> gesendet.
+        </p>
+        <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 14, lineHeight: 1.6, maxWidth: 320, margin: "0 auto" }}>
+          Bitte klicken Sie auf den Link in der E-Mail – erst dann geht Ihre Anfrage bei uns ein.
         </p>
         <button onClick={() => { setSent(false); setForm({ company: "", contact: "", email: "", phone: "", category: "", volume: "", message: "" }); }} style={{
-          marginTop: 20, fontSize: 14, color: "#7eb3f0",
+          marginTop: 24, fontSize: 14, color: "#7eb3f0",
           background: "none", border: "none", cursor: "pointer", textDecoration: "underline",
         }}>
           Weitere Anfrage senden
@@ -312,8 +316,8 @@ function ContactForm() {
       }}>
         {loading ? "Wird gesendet …" : "Anfrage senden →"}
       </button>
-      <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginTop: -4 }}>
-        * Pflichtfelder. Ein Berater meldet sich innerhalb von 24 Stunden.
+      <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", marginTop: -4, lineHeight: 1.6 }}>
+        * Pflichtfelder. Nach dem Absenden erhalten Sie eine Bestätigungs-E-Mail — erst nach dem Klick auf den Link geht Ihre Anfrage bei uns ein.
       </p>
     </form>
   );
@@ -321,10 +325,35 @@ function ContactForm() {
 
 /* ── Page ──────────────────────────────────────────────────────────────── */
 
+function ConfirmBanner() {
+  const params = useSearchParams();
+  const confirm = params.get("confirm");
+  if (!confirm) return null;
+  if (confirm === "success") return (
+    <div style={{ background: "#dcfce7", border: "1px solid #86efac", borderRadius: 16, padding: "16px 20px", margin: "0 24px 24px", maxWidth: 700, marginLeft: "auto", marginRight: "auto" }}>
+      <p style={{ color: "#15803d", fontWeight: 700, fontSize: 15, marginBottom: 4 }}>✓ Anfrage erfolgreich bestätigt!</p>
+      <p style={{ color: "#166534", fontSize: 14 }}>Vielen Dank – ein Berater meldet sich innerhalb von 24 Stunden bei Ihnen.</p>
+    </div>
+  );
+  if (confirm === "invalid") return (
+    <div style={{ background: "#fef9c3", border: "1px solid #fde047", borderRadius: 16, padding: "16px 20px", margin: "0 24px 24px", maxWidth: 700, marginLeft: "auto", marginRight: "auto" }}>
+      <p style={{ color: "#854d0e", fontWeight: 700, fontSize: 15 }}>Link abgelaufen oder ungültig. Bitte senden Sie Ihre Anfrage erneut.</p>
+    </div>
+  );
+  return (
+    <div style={{ background: "#fee2e2", border: "1px solid #fca5a5", borderRadius: 16, padding: "16px 20px", margin: "0 24px 24px", maxWidth: 700, marginLeft: "auto", marginRight: "auto" }}>
+      <p style={{ color: "#991b1b", fontWeight: 700, fontSize: 15 }}>Fehler beim Verarbeiten der Anfrage. Bitte kontaktieren Sie uns direkt unter info@phe-perm.de.</p>
+    </div>
+  );
+}
+
 export default function TalenteFindPage() {
   return (
     <div style={{ background: "#f5f5f7", minHeight: "100vh" }}>
       <Nav />
+      <Suspense fallback={null}>
+        <ConfirmBanner />
+      </Suspense>
       <main>
 
         {/* ── HERO — dark navy with animated Germany map ── */}
