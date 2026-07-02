@@ -144,27 +144,41 @@ function ContactForm() {
     category: "", volume: "", message: "",
   });
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const set = (k: keyof typeof form) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
       setForm(f => ({ ...f, [k]: e.target.value }));
 
-  const canSubmit = !!(form.company && form.contact && form.email && form.category);
+  const canSubmit = !!(form.company && form.contact && form.email && form.category) && !loading;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const body = [
-      `Unternehmen: ${form.company}`,
-      `Ansprechpartner: ${form.contact}`,
-      `E-Mail: ${form.email}`,
-      `Telefon: ${form.phone}`,
-      `Bereich: ${form.category}`,
-      `Umfang: ${form.volume}`,
-      `\nNachricht:\n${form.message}`,
-    ].join("\n");
-    window.location.href =
-      `mailto:${MAIL_EMPLOYER}?subject=Talentanfrage%20–%20${encodeURIComponent(form.company)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "talent",
+          company: form.company,
+          contact: form.contact,
+          email: form.email,
+          phone: form.phone,
+          category: form.category,
+          count: form.volume,
+          message: form.message,
+        }),
+      });
+      if (!res.ok) throw new Error();
+      setSent(true);
+    } catch {
+      setError("Versand fehlgeschlagen. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt an info@phe-perm.de.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (sent) {
@@ -177,12 +191,12 @@ function ContactForm() {
           margin: "0 auto 16px", fontSize: 22, color: "#7eb3f0",
         }}>✓</div>
         <h3 style={{ fontSize: 20, fontWeight: 700, color: "#fff", marginBottom: 8 }}>
-          Anfrage abgeschickt!
+          Anfrage gesendet!
         </h3>
         <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 15, lineHeight: 1.6 }}>
-          Ihr E-Mail-Programm öffnet sich. Ein Berater meldet sich innerhalb von 24 Stunden.
+          Vielen Dank – ein Berater meldet sich innerhalb von 24 Stunden bei Ihnen.
         </p>
-        <button onClick={() => setSent(false)} style={{
+        <button onClick={() => { setSent(false); setForm({ company: "", contact: "", email: "", phone: "", category: "", volume: "", message: "" }); }} style={{
           marginTop: 20, fontSize: 14, color: "#7eb3f0",
           background: "none", border: "none", cursor: "pointer", textDecoration: "underline",
         }}>
@@ -245,6 +259,7 @@ function ContactForm() {
           placeholder="Kurz beschreiben: Anforderungen, Qualifikationen, Einsatzort …"
           value={form.message} onChange={set("message")} />
       </div>
+      {error && <p style={{ fontSize: 13, color: "#ff6b6b", marginBottom: -4 }}>{error}</p>}
       <button type="submit" disabled={!canSubmit} style={{
         background: canSubmit ? "#3b72b8" : "rgba(255,255,255,0.1)",
         color: canSubmit ? "#fff" : "rgba(255,255,255,0.35)",
@@ -254,7 +269,7 @@ function ContactForm() {
         cursor: canSubmit ? "pointer" : "not-allowed",
         transition: "background 0.2s",
       }}>
-        Anfrage senden →
+        {loading ? "Wird gesendet …" : "Anfrage senden →"}
       </button>
       <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginTop: -4 }}>
         * Pflichtfelder. Ein Berater meldet sich innerhalb von 24 Stunden.
