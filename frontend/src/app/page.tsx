@@ -623,7 +623,7 @@ export default function Home() {
               style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 10, padding: "10px 16px", textDecoration: "none" }}
             >
               <GoogleIcon />
-              <div style={{ fontSize: 13, color: "var(--gray)", fontWeight: 600 }}>32 Bewertungen auf Google</div>
+              <div style={{ fontSize: 13, color: "var(--gray)", fontWeight: 600 }}>Bewertungen auf Google</div>
             </a>
           </div>
 
