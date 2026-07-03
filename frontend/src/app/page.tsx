@@ -623,10 +623,7 @@ export default function Home() {
               style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 10, padding: "10px 16px", textDecoration: "none" }}
             >
               <GoogleIcon />
-              <div>
-                <div style={{ display: "flex", gap: 2, marginBottom: 2 }}>{[1,2,3,4,5].map(i => <StarIcon key={i} />)}</div>
-                <div style={{ fontSize: 11, color: "var(--gray)", fontWeight: 600 }}>32 Bewertungen auf Google</div>
-              </div>
+              <div style={{ fontSize: 13, color: "var(--gray)", fontWeight: 600 }}>32 Bewertungen auf Google</div>
             </a>
           </div>
 
@@ -646,7 +643,6 @@ export default function Home() {
                     </div>
                     <div>
                       <div style={{ fontSize: 14, fontWeight: 700, color: "var(--navy)" }}>{r.name}</div>
-                      <div style={{ fontSize: 12, color: "var(--gray-light)" }}>{r.time}</div>
                     </div>
                     <div style={{ marginLeft: "auto" }}><GoogleIcon /></div>
                   </div>
