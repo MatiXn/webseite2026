@@ -644,7 +644,7 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
         </div>
 
         {/* Title */}
-        <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--navy)", lineHeight: 1.3, marginBottom: 10, flex: 1 }}>
+        <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--navy)", lineHeight: 1.3, marginBottom: 10, minHeight: 44 }}>
           {job.title}
         </h3>
 
@@ -655,7 +655,7 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
         </div>
 
         {/* Description preview */}
-        <p style={{ fontSize: 13, color: "var(--gray)", lineHeight: 1.6, marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+        <p style={{ fontSize: 13, color: "var(--gray)", lineHeight: 1.6, marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", flex: 1 }}>
           {job.description}
         </p>
 
