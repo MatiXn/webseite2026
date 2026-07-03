@@ -233,14 +233,14 @@ function JobFan({ onApply }: { onApply: (job: Job) => void }) {
                     <span style={{ marginLeft: "auto", fontSize: 10, fontWeight: 600, background: "#f0f7ff", color: "var(--blue)", padding: "2px 7px", borderRadius: 5 }}>Festanstellung</span>
                   </div>
                   {/* Title */}
-                  <h3 style={{ fontSize: 14, fontWeight: 800, color: "var(--navy)", lineHeight: 1.35, marginBottom: 10, flex: 1 }}>{job.title}</h3>
+                  <h3 style={{ fontSize: 14, fontWeight: 800, color: "var(--navy)", lineHeight: 1.35, marginBottom: 10, minHeight: 38 }}>{job.title}</h3>
                   {/* Location + Salary */}
                   <div style={{ fontSize: 12, color: "var(--gray)", marginBottom: 10 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 3 }}><LocationIcon /> {job.location}</div>
                     <div style={{ fontWeight: 700, color: "var(--navy)", fontSize: 13 }}>{job.salary}</div>
                   </div>
                   {/* Tags */}
-                  <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 14 }}>
+                  <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 14, flex: 1, alignContent: "flex-start" }}>
                     {job.tags.map(t => (
                       <span key={t} style={{ fontSize: 10, fontWeight: 600, background: "var(--bg)", color: "var(--gray)", padding: "3px 8px", borderRadius: 5 }}>{t}</span>
                     ))}
