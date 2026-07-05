@@ -144,19 +144,20 @@ const WhatsAppIcon = ({ size = 16 }: { size?: number }) => (
   </svg>
 );
 
+// Muss mit den echten Stellen in jobs/data.ts übereinstimmen
 const JOBS = [
-  { category: "Elektrotechnik", color: "#f59e0b", title: "Elektroniker für Betriebstechnik (m/w/d)", location: "Köln", salary: "45.000 – 54.000 €/Jahr", tags: ["Festanstellung", "Instandhaltung", "Keine Schicht"] },
-  { category: "IT / Automation", color: "#7c3aed", title: "SPS-Programmierer / Automatisierungstechniker (m/w/d)", location: "München", salary: "50.000 – 72.000 €/Jahr", tags: ["Festanstellung", "Siemens TIA Portal", "SCADA"] },
-  { category: "Mechatronik", color: "#3d7cc9", title: "Servicetechniker Kältetechnik (m/w/d)", location: "Hamburg", salary: "48.000 – 62.000 €/Jahr", tags: ["Festanstellung", "Kältetechnik", "Dienstwagen"] },
+  { category: "Elektrotechnik", color: "#f59e0b", title: "Elektroniker für Betriebstechnik (m/w/d)", location: "Frankenthal", salary: "45.000 – 50.000 €/Jahr", tags: ["Festanstellung", "Instandhaltung", "Produktion"] },
+  { category: "IT / Automation", color: "#7c3aed", title: "SPS-Programmierer / Automatisierungstechniker (m/w/d)", location: "Langenfeld", salary: "50.000 – 65.000 €/Jahr", tags: ["Festanstellung", "Siemens TIA Portal", "SPS"] },
+  { category: "Mechatronik", color: "#3d7cc9", title: "Servicetechniker Kältetechnik (m/w/d)", location: "München", salary: "50.000 – 65.000 €/Jahr", tags: ["Festanstellung", "Kältetechnik", "Service"] },
   { category: "Elektrotechnik", color: "#f59e0b", title: "Servicetechniker Photovoltaik (m/w/d)", location: "Düsseldorf", salary: "44.000 – 54.000 €/Jahr", tags: ["Festanstellung", "Photovoltaik", "Außendienst"] },
-  { category: "Mechatronik", color: "#3d7cc9", title: "Mechatroniker als Servicetechniker (m/w/d)", location: "Berlin", salary: "45.000 – 58.000 €/Jahr", tags: ["Festanstellung", "Wartung", "Instandhaltung"] },
-  { category: "Elektrotechnik", color: "#f59e0b", title: "Elektroniker MSR / Gebäudeautomation (m/w/d)", location: "Frankfurt", salary: "48.000 – 60.000 €/Jahr", tags: ["Festanstellung", "MSR", "KNX"] },
+  { category: "Mechatronik", color: "#3d7cc9", title: "Mechatroniker als Servicetechniker (m/w/d)", location: "Bremen", salary: "44.000 – 54.000 €/Jahr", tags: ["Festanstellung", "Wartung", "Instandhaltung"] },
+  { category: "Elektrotechnik", color: "#f59e0b", title: "Elektroniker MSR-Technik / Gebäudeautomation (m/w/d)", location: "Köln", salary: "48.000 – 58.000 €/Jahr", tags: ["Festanstellung", "MSR", "Gebäudeautomation"] },
 ];
 
 const FAN_JOBS = [
-  { category: "Elektrotechnik", color: "#f59e0b", title: "Elektroniker für Betriebstechnik (m/w/d)", location: "Köln", salary: "45.000 – 54.000 €/Jahr", tags: ["Instandhaltung", "Keine Schicht"] },
-  { category: "IT / Automation", color: "#7c3aed", title: "SPS-Programmierer / Automatisierungstechniker (m/w/d)", location: "München", salary: "50.000 – 72.000 €/Jahr", tags: ["Siemens TIA Portal", "SCADA"] },
-  { category: "Mechatronik", color: "#3d7cc9", title: "Servicetechniker Kältetechnik (m/w/d)", location: "Hamburg", salary: "48.000 – 62.000 €/Jahr", tags: ["Kältetechnik", "Dienstwagen"] },
+  { category: "Elektrotechnik", color: "#f59e0b", title: "Elektroniker für Betriebstechnik (m/w/d)", location: "Frankenthal", salary: "45.000 – 50.000 €/Jahr", tags: ["Instandhaltung", "Produktion"] },
+  { category: "IT / Automation", color: "#7c3aed", title: "SPS-Programmierer / Automatisierungstechniker (m/w/d)", location: "Langenfeld", salary: "50.000 – 65.000 €/Jahr", tags: ["Siemens TIA Portal", "SPS"] },
+  { category: "Mechatronik", color: "#3d7cc9", title: "Servicetechniker Kältetechnik (m/w/d)", location: "München", salary: "50.000 – 65.000 €/Jahr", tags: ["Kältetechnik", "Service"] },
   { category: "Elektrotechnik", color: "#f59e0b", title: "Servicetechniker Photovoltaik (m/w/d)", location: "Düsseldorf", salary: "44.000 – 54.000 €/Jahr", tags: ["Photovoltaik", "Außendienst"] },
 ];
 
@@ -470,7 +471,7 @@ export default function Home() {
       <div style={{ background: "#fff", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "40px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }} className="stats-row">
           {[
-            { num: "5.000+", label: "Erfolgreiche Matches" },
+            { num: "3.500+", label: "Geprüfte Fachkräfte" },
             { num: "12 Std.", label: "Durchschnittliche Reaktionszeit" },
             { num: "100%", label: "Kostenlos für Bewerber" },
             { num: "5.0★", label: "Bewertung unserer Kandidaten" },

@@ -180,36 +180,24 @@ export default function JobsPage() {
       .finally(() => setJobsLoading(false));
   }, []);
 
+  // Der Standort-Snapshot (result) basiert immer auf ALLEN Jobs —
+  // Keyword und Kategorie werden live darübergefiltert (siehe unten).
+  // So bleiben Änderungen an Suchwort/Kategorie nach einer Standortsuche wirksam.
   const handleSearch = useCallback(async () => {
-    const q = query.trim().toLowerCase();
     const loc = locationInput.trim();
 
-    // Filter by category first
-    let pool = category === "all" ? jobs : jobs.filter(j => j.category === category);
-
-    // Filter by title keyword
-    if (q) {
-      pool = pool.filter(j =>
-        j.title.toLowerCase().includes(q) ||
-        j.tags.some(t => t.toLowerCase().includes(q)) ||
-        CATEGORY_LABELS[j.category].toLowerCase().includes(q)
-      );
-    }
-
-    // No location, return title matches directly
     if (!loc) {
-      setResult(q ? { type: "exact", jobs: pool } : null);
+      setResult(null); // Keyword-Filter läuft live, kein Snapshot nötig
       return;
     }
 
     setLoading(true);
     try {
       // Try exact city match first
-      const exactCity = pool.filter(j => j.city.toLowerCase().includes(loc.toLowerCase()) || j.region.toLowerCase().includes(loc.toLowerCase()));
+      const exactCity = jobs.filter(j => j.city.toLowerCase().includes(loc.toLowerCase()) || j.region.toLowerCase().includes(loc.toLowerCase()));
 
       if (exactCity.length > 0) {
         setResult({ type: "exact", jobs: exactCity });
-        setLoading(false);
         return;
       }
 
@@ -217,12 +205,11 @@ export default function JobsPage() {
       const geo = await geocodeCity(loc);
       if (!geo) {
         setResult({ type: "none" });
-        setLoading(false);
         return;
       }
 
       // Find jobs within 50km
-      const nearby = pool
+      const nearby = jobs
         .map(j => ({ ...j, distance: Math.round(distanceKm(geo.lat, geo.lng, j.lat, j.lng)) }))
         .filter(j => j.distance <= 50)
         .sort((a, b) => a.distance - b.distance);
@@ -235,7 +222,7 @@ export default function JobsPage() {
     } finally {
       setLoading(false);
     }
-  }, [query, locationInput, category, jobs]);
+  }, [locationInput, jobs]);
 
   const handleReset = () => {
     setQuery("");
@@ -316,7 +303,10 @@ export default function JobsPage() {
                 type="text"
                 placeholder="Stadt, z.B. Berlin"
                 value={locationInput}
-                onChange={e => setLocationInput(e.target.value)}
+                onChange={e => {
+                  setLocationInput(e.target.value);
+                  if (!e.target.value.trim()) setResult(null); // Ort gelöscht → Standortfilter aufheben
+                }}
                 onKeyDown={e => e.key === "Enter" && handleSearch()}
                 style={{
                   width: "100%", paddingLeft: 40, paddingRight: 16, height: 52,
@@ -389,7 +379,7 @@ export default function JobsPage() {
             display: "flex", alignItems: "center", gap: 8,
           }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-            Keine exakten Treffer für <strong>&quot;{locationInput}&quot;</strong>, zeige {result.jobs.length} Job{result.jobs.length !== 1 ? "s" : ""} im Umkreis von 50 km.
+            Keine exakten Treffer für <strong>&quot;{locationInput}&quot;</strong>, zeige {showJobs.length} Job{showJobs.length !== 1 ? "s" : ""} im Umkreis von 50 km.
           </div>
         )}
         {result?.type === "none" && (
@@ -462,6 +452,8 @@ export default function JobsPage() {
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <a
                 href={WA_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
                   background: "var(--wa)", color: "#fff", fontWeight: 700, fontSize: 15,

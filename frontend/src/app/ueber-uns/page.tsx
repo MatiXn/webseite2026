@@ -79,7 +79,7 @@ export default function UeberUnsPage() {
 
       {/* MISSION — on Fog */}
       <section style={{ background: "#f5f5f7", padding: "80px 24px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+        <div className="grid-2col" style={{ maxWidth: 1100, margin: "0 auto", alignItems: "center" }}>
           <div>
             <p style={{ fontSize: 12, fontWeight: 700, color: "#0071e3", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>
               Unsere Mission
