@@ -154,13 +154,10 @@ ${form.vorname} ${form.nachname}`;
 
 async function geocodeCity(city: string): Promise<{ lat: number; lng: number; display: string } | null> {
   try {
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city + ", Deutschland")}&format=json&limit=1&countrycodes=de`,
-      { headers: { "Accept-Language": "de" } }
-    );
+    // Geocoding läuft über unseren Server-Proxy — keine Besucherdaten an Dritte
+    const res = await fetch(`/api/geocode?q=${encodeURIComponent(city)}`);
     const data = await res.json();
-    if (!data.length) return null;
-    return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon), display: data[0].display_name.split(",")[0] };
+    return data?.ok ? data.result : null;
   } catch {
     return null;
   }

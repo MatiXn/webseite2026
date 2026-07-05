@@ -638,13 +638,10 @@ export default function LebenslaufPage() {
     const win = window.open("", "_blank", "width=900,height=700");
     if (!win) return;
     const style = win.document.createElement("style");
-    style.textContent = `*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',sans-serif}@page{size:A4;margin:0}`;
-    const link = win.document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap";
+    // Systemschriften statt Google Fonts (DSGVO: kein externer Font-Request)
+    style.textContent = `*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}@page{size:A4;margin:0}`;
     const body = win.document.createElement("div");
     body.innerHTML = content.innerHTML;
-    win.document.head.appendChild(link);
     win.document.head.appendChild(style);
     win.document.body.appendChild(body);
     win.document.title = "Lebenslauf";

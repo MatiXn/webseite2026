@@ -98,6 +98,12 @@ export default function DatenschutzPage() {
             <p>Rechtsgrundlagen: Art. 6 Abs. 1 lit. f DSGVO, § 25 Abs. 2 TDDDG.</p>
           </Block>
 
+          <Block title="7a. Umkreissuche in der Jobbörse (OpenStreetMap / Nominatim)">
+            <p>Wenn Sie in unserer Jobbörse einen Ort für die Umkreissuche eingeben, wird dieser Ortsname über unseren eigenen Server an den Geocoding-Dienst Nominatim der OpenStreetMap Foundation übermittelt, um die zugehörigen Koordinaten zu ermitteln.</p>
+            <p>Die Anfrage erfolgt ausschließlich serverseitig: Ihre IP-Adresse und sonstige Geräteinformationen werden dabei nicht an OpenStreetMap übertragen. Es wird lediglich der von Ihnen eingegebene Ortsname übermittelt.</p>
+            <p>Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Bereitstellung einer funktionsfähigen Umkreissuche).</p>
+          </Block>
+
           <Block title="8. Externe Links">
             <p>Unsere Website enthält Verlinkungen zu externen Websites und sozialen Netzwerken, insbesondere Google Maps, Google Bewertungen, Facebook, Instagram und LinkedIn.</p>
             <p>Erst durch das Anklicken eines Links wird eine Verbindung zum jeweiligen Anbieter hergestellt. Für die Verarbeitung personenbezogener Daten auf den jeweiligen Webseiten sind ausschließlich deren Betreiber verantwortlich.</p>

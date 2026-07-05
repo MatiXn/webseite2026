@@ -661,7 +661,7 @@ export default function Home() {
       <section id="yafto" style={{ background: "var(--navy)", color: "#fff", position: "relative", overflow: "hidden", padding: 0 }}>
         <div style={{
           position: "absolute", inset: 0,
-          backgroundImage: "url('https://d8j0ntlcm91z4.cloudfront.net/user_3DEnNUo30c9qxiRVMSnr83LGNJN/hf_20260621_102120_1fb16a6d-6626-477e-8870-a1e788e72cb4_min.webp')",
+          backgroundImage: "url('/yafto-bg.webp')",
           backgroundSize: "cover", backgroundPosition: "center", opacity: 0.2
         }} />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 800, margin: "0 auto", textAlign: "center", padding: "80px 24px" }}>

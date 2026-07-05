@@ -123,18 +123,33 @@ body {
   .section-header-row { flex-direction: column; align-items: flex-start; }
 }
 
-/* Reviews second row */
-.reviews-row-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-top: 20px;
-  max-width: 740px;
-  margin-left: auto;
-  margin-right: auto;
+/* Reviews marquee */
+@keyframes reviews-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
-@media (max-width: 649px) {
-  .reviews-row-2 { grid-template-columns: 1fr; max-width: 100%; }
+.reviews-marquee {
+  overflow: hidden;
+  margin: 0 -24px;
+  padding: 8px 0;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+.reviews-marquee-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: reviews-scroll 40s linear infinite;
+}
+.reviews-marquee:hover .reviews-marquee-track {
+  animation-play-state: paused;
+}
+.reviews-marquee-card {
+  width: 300px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  padding: 24px;
+  background: #fff;
 }
 
 /* YAFTO waitlist form */

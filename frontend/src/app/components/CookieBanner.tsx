@@ -39,23 +39,19 @@ export default function CookieBanner() {
         <div style={{ display: "flex", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
           <div style={{ flex: 1, minWidth: 280 }}>
             <p style={{ fontSize: 14, fontWeight: 700, color: "#1d1d1f", marginBottom: 6 }}>
-              Wir verwenden Cookies 🍪
+              Datenschutz auf dieser Website 🍪
             </p>
             <p style={{ fontSize: 13, color: "#707070", lineHeight: 1.6, marginBottom: details ? 12 : 0 }}>
-              Wir nutzen notwendige Cookies für den Betrieb der Website. Mit Ihrer Zustimmung verwenden wir außerdem Analyse-Cookies, um die Nutzung zu verstehen und zu verbessern.{" "}
+              Wir verwenden ausschließlich technisch notwendige Speicherung (z.&nbsp;B. für diese Einstellung). Es kommen keine Analyse- oder Tracking-Cookies zum Einsatz.{" "}
               <Link href="/datenschutz" style={{ color: "#0071e3", textDecoration: "none" }}>Datenschutzerklärung</Link>
             </p>
 
             {details && (
               <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
                 <CookieCategory
-                  title="Notwendige Cookies"
-                  desc="Erforderlich für den Grundbetrieb der Website (z. B. Speicherung Ihrer Cookie-Einstellung). Können nicht deaktiviert werden."
+                  title="Technisch notwendige Speicherung"
+                  desc="Erforderlich für den Grundbetrieb der Website (z. B. Speicherung Ihrer Auswahl in diesem Hinweis). Es werden keine Daten an Dritte übertragen."
                   always
-                />
-                <CookieCategory
-                  title="Analyse-Cookies"
-                  desc="Helfen uns zu verstehen, wie Besucher die Website nutzen (anonymisiert). Ermöglichen Verbesserungen des Angebots."
                 />
               </div>
             )}
@@ -70,24 +66,14 @@ export default function CookieBanner() {
 
           <div style={{ display: "flex", flexDirection: "column", gap: 8, justifyContent: "center", paddingTop: 4 }}>
             <button
-              onClick={() => accept("all")}
+              onClick={() => accept("necessary")}
               style={{
                 background: "#0071e3", color: "#fff", border: "none",
                 borderRadius: 999, padding: "11px 28px", fontSize: 14, fontWeight: 600,
                 cursor: "pointer", whiteSpace: "nowrap",
               }}
             >
-              Alle akzeptieren
-            </button>
-            <button
-              onClick={() => accept("necessary")}
-              style={{
-                background: "#f5f5f7", color: "#1d1d1f", border: "none",
-                borderRadius: 999, padding: "11px 28px", fontSize: 14, fontWeight: 600,
-                cursor: "pointer", whiteSpace: "nowrap",
-              }}
-            >
-              Nur notwendige
+              Verstanden
             </button>
           </div>
         </div>
