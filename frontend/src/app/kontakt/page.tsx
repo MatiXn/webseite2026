@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Nav, { WA_LINK } from "../components/Nav";
 import FaqSection from "../components/FaqSection";
 import Footer from "../components/Footer";
@@ -42,6 +43,29 @@ const LinkedInIcon = () => (
   </svg>
 );
 
+function ConfirmBanner() {
+  const params = useSearchParams();
+  const confirm = params.get("confirm");
+  if (!confirm) return null;
+
+  const config = {
+    success: { bg: "#dcfce7", border: "#22c55e", color: "#166534", text: "✓ E-Mail bestätigt! Ihre Nachricht ist bei uns eingegangen – wir melden uns in der Regel innerhalb von 24 Stunden." },
+    invalid: { bg: "#fff8e1", border: "#fbbf24", color: "#92400e", text: "Der Bestätigungslink ist ungültig oder abgelaufen. Bitte senden Sie Ihre Nachricht erneut." },
+    error: { bg: "#fee2e2", border: "#ef4444", color: "#991b1b", text: "Beim Verarbeiten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder schreiben Sie an info@phe-perm.de." },
+  }[confirm];
+  if (!config) return null;
+
+  return (
+    <div style={{
+      marginBottom: 32, padding: "14px 20px", background: config.bg,
+      border: `1.5px solid ${config.border}`, borderRadius: 16,
+      fontSize: 14, color: config.color, fontWeight: 600,
+    }}>
+      {config.text}
+    </div>
+  );
+}
+
 export default function KontaktPage() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -78,6 +102,9 @@ export default function KontaktPage() {
       <Nav />
 
       <div className="section-pad px-section" style={{ maxWidth: 1100, margin: "0 auto" }}>
+        <Suspense fallback={null}>
+          <ConfirmBanner />
+        </Suspense>
         {/* HEADER */}
         <div style={{ marginBottom: 64 }}>
           <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>
@@ -162,8 +189,11 @@ export default function KontaktPage() {
                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
                   </svg>
                 </div>
-                <p style={{ fontSize: 20, fontWeight: 800, color: "var(--navy)", marginBottom: 8 }}>Nachricht gesendet!</p>
-                <p style={{ fontSize: 14, color: "var(--gray)", lineHeight: 1.6 }}>Vielen Dank – wir melden uns in der Regel innerhalb von 24 Stunden bei Ihnen.</p>
+                <p style={{ fontSize: 20, fontWeight: 800, color: "var(--navy)", marginBottom: 8 }}>Bitte bestätigen Sie Ihre E-Mail!</p>
+                <p style={{ fontSize: 14, color: "var(--gray)", lineHeight: 1.6 }}>
+                  Wir haben Ihnen eine Bestätigungs-E-Mail an <strong>{form.email}</strong> gesendet.
+                  Erst nach dem Klick auf den Bestätigungslink geht Ihre Nachricht bei uns ein.
+                </p>
                 <button onClick={() => { setSent(false); setForm({ name: "", email: "", phone: "", message: "", type: "bewerber" }); }} style={{ marginTop: 24, background: "none", border: "1.5px solid var(--border)", borderRadius: 999, padding: "10px 20px", fontSize: 14, cursor: "pointer", color: "var(--gray)" }}>
                   Neue Nachricht
                 </button>
@@ -222,7 +252,7 @@ export default function KontaktPage() {
                     {loading ? "Wird gesendet …" : "Nachricht senden →"}
                   </button>
                   <p style={{ fontSize: 12, color: "var(--gray-light)", textAlign: "center" }}>
-                    Ihre Nachricht wird direkt per E-Mail an unser Team gesendet.
+                    Nach dem Absenden erhalten Sie eine Bestätigungs-E-Mail — erst nach dem Klick auf den Link geht Ihre Nachricht bei uns ein.
                   </p>
                 </form>
               </>
