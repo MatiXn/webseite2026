@@ -203,7 +203,7 @@ function TemplateA({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
           )}
           <div style={{ marginBottom: 20 }}>
             <h2 style={{ fontSize: "13pt", fontWeight: 700, color: blue, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8, paddingBottom: 5, borderBottom: `2px solid ${blue}44` }}>Berufserfahrung</h2>
-            {data.stationen.filter(s => s.firma || s.position).slice().reverse().map(s => (
+            {data.stationen.filter(s => s.firma || s.position).map(s => (
               <div key={s.id} style={{ marginBottom: 18 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                   <p style={{ fontWeight: 700, fontSize: "11pt", color: "#111827" }}>{s.position || "Position"}</p>
@@ -217,7 +217,7 @@ function TemplateA({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
           </div>
           <div>
             <h2 style={{ fontSize: "13pt", fontWeight: 700, color: blue, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8, paddingBottom: 5, borderBottom: `2px solid ${blue}44` }}>Ausbildung</h2>
-            {data.ausbildung.filter(a => a.schule || a.abschluss).slice().reverse().map(a => (
+            {data.ausbildung.filter(a => a.schule || a.abschluss).map(a => (
               <div key={a.id} style={{ marginBottom: 10 }}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <p style={{ fontWeight: 700, color: "#111827" }}>{a.abschluss || "Abschluss"}</p>
@@ -338,7 +338,7 @@ function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         )}
         <div style={{ marginBottom: 22 }}>
           <h2 style={{ fontSize: "13pt", fontWeight: 700, color: "#1e3a5f", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8, paddingBottom: 5, borderBottom: "2px solid #1e3a5f44" }}>Berufserfahrung</h2>
-          {data.stationen.filter(s => s.firma || s.position).slice().reverse().map(s => (
+          {data.stationen.filter(s => s.firma || s.position).map(s => (
             <div key={s.id} style={{ marginBottom: 14 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <p style={{ fontWeight: 700, fontSize: "11pt", color: "#111827" }}>{s.position || "Position"}</p>
@@ -352,7 +352,7 @@ function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         </div>
         <div>
           <h2 style={{ fontSize: "13pt", fontWeight: 700, color: "#1e3a5f", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8, paddingBottom: 5, borderBottom: "2px solid #1e3a5f44" }}>Ausbildung</h2>
-          {data.ausbildung.filter(a => a.schule || a.abschluss).slice().reverse().map(a => (
+          {data.ausbildung.filter(a => a.schule || a.abschluss).map(a => (
             <div key={a.id} style={{ marginBottom: 10 }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={{ fontWeight: 700, color: "#111827" }}>{a.abschluss || "Abschluss"}</p>
@@ -404,7 +404,7 @@ function TemplateC({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
           )}
           <div style={{ marginBottom: 24 }}>
             <SecHeading label="Berufserfahrung" color={accent} />
-            {data.stationen.filter(s => s.firma || s.position).slice().reverse().map(s => (
+            {data.stationen.filter(s => s.firma || s.position).map(s => (
               <div key={s.id} style={{ marginBottom: 18, paddingLeft: 12, borderLeft: `2px solid ${accent}33` }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                   <p style={{ fontWeight: 700, fontSize: "11pt" }}>{s.position || "Position"}</p>
@@ -418,7 +418,7 @@ function TemplateC({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
           </div>
           <div>
             <SecHeading label="Ausbildung" color={accent} />
-            {data.ausbildung.filter(a => a.schule || a.abschluss).slice().reverse().map(a => (
+            {data.ausbildung.filter(a => a.schule || a.abschluss).map(a => (
               <div key={a.id} style={{ marginBottom: 12, paddingLeft: 12, borderLeft: `2px solid ${accent}33` }}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <p style={{ fontWeight: 700 }}>{a.abschluss || "Abschluss"}</p>
@@ -533,7 +533,7 @@ function TemplateD({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         )}
         <div style={{ marginBottom: 20 }}>
           <SecHeading label="Berufserfahrung" color={accent} />
-          {data.stationen.filter(s => s.firma || s.position).slice().reverse().map(s => (
+          {data.stationen.filter(s => s.firma || s.position).map(s => (
             <div key={s.id} style={{ marginBottom: 20 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <p style={{ fontWeight: 700, fontSize: "11pt", color: "#111827" }}>{s.position || "Position"}</p>
@@ -547,7 +547,7 @@ function TemplateD({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         </div>
         <div>
           <SecHeading label="Ausbildung" color={accent} />
-          {data.ausbildung.filter(a => a.schule || a.abschluss).slice().reverse().map(a => (
+          {data.ausbildung.filter(a => a.schule || a.abschluss).map(a => (
             <div key={a.id} style={{ marginBottom: 20 }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={{ fontWeight: 700, color: "#111827" }}>{a.abschluss || "Abschluss"}</p>
