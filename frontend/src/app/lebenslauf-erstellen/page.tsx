@@ -15,6 +15,21 @@ const TrashIcon = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="no
 const DownloadIcon = () => <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>;
 const MailIcon = () => <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>;
 
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function BulletList({ text, color }: { text: string; color: string }) {
+  const items = text.split(/\n|,/).map(s => s.trim()).filter(Boolean);
+  return (
+    <ul style={{ paddingLeft: 0, margin: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 3 }}>
+      {items.map((item, i) => (
+        <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 6, fontSize: "10pt", color: "#4b5563", lineHeight: 1.5 }}>
+          <span style={{ width: 5, height: 5, borderRadius: "50%", background: color, flexShrink: 0, marginTop: "0.35em" }} />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 // ── Types ────────────────────────────────────────────────────────────────────
 type Station = { id: number; firma: string; position: string; von: string; bis: string; beschreibung: string };
 type Ausbildung = { id: number; schule: string; abschluss: string; von: string; bis: string };
@@ -195,7 +210,7 @@ function TemplateA({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
                   <span style={{ fontSize: "10pt", color: "#6b7280", flexShrink: 0, marginLeft: 8 }}>{[s.von, s.bis].filter(Boolean).join(" – ")}</span>
                 </div>
                 <p style={{ color: blue, fontWeight: 600, marginBottom: 3 }}>{s.firma}</p>
-                {s.beschreibung && <p style={{ color: "#4b5563", lineHeight: 1.5 }}>{s.beschreibung}</p>}
+                {s.beschreibung && <BulletList text={s.beschreibung} color={blue} />}
               </div>
             ))}
             {!data.stationen.some(s => s.firma || s.position) && <p style={{ color: "#9ca3af", fontStyle: "italic" }}>Berufserfahrung hinzufügen...</p>}
@@ -215,7 +230,7 @@ function TemplateA({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
           </div>
         </div>
         {/* Right */}
-        <div style={{ background: "#f0f4f8", padding: "28px 2.0cm 32px 20px", borderLeft: "1px solid #e2e8f0" }}>
+        <div style={{ background: "#f0f4f8", padding: "28px 20px 32px 20px", borderLeft: "1px solid #e2e8f0" }}>
           {(data.geburtsdatum || data.geburtsort || data.nationalitaet) && (
             <div style={{ marginBottom: 20 }}>
               <SecHeading label="Persönliches" color={blue} />
@@ -314,7 +329,7 @@ function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         )}
       </div>
       {/* Main Right */}
-      <div style={{ flex: 1, padding: "2.0cm 2.0cm 2.0cm 24px" }}>
+      <div style={{ flex: 1, padding: "2.0cm 20px 2.0cm 24px" }}>
         {data.zusammenfassung && (
           <div style={{ marginBottom: 22 }}>
             <h2 style={{ fontSize: "13pt", fontWeight: 700, color: "#1e3a5f", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8, paddingBottom: 5, borderBottom: "2px solid #1e3a5f44" }}>Profil</h2>
@@ -330,7 +345,7 @@ function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
                 <span style={{ fontSize: "10pt", color: "#6b7280", flexShrink: 0, marginLeft: 8 }}>{[s.von, s.bis].filter(Boolean).join(" – ")}</span>
               </div>
               <p style={{ color: "#3d7cc9", fontWeight: 600, marginBottom: 3 }}>{s.firma}</p>
-              {s.beschreibung && <p style={{ color: "#4b5563", lineHeight: 1.5 }}>{s.beschreibung}</p>}
+              {s.beschreibung && <BulletList text={s.beschreibung} color="#3d7cc9" />}
             </div>
           ))}
           {!data.stationen.some(s => s.firma || s.position) && <p style={{ color: "#9ca3af", fontStyle: "italic" }}>Berufserfahrung hinzufügen...</p>}
@@ -396,7 +411,7 @@ function TemplateC({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
                   <span style={{ fontSize: "10pt", color: "#6b7280", flexShrink: 0, marginLeft: 8 }}>{[s.von, s.bis].filter(Boolean).join(" – ")}</span>
                 </div>
                 <p style={{ color: accent, fontWeight: 600, marginBottom: 3 }}>{s.firma}</p>
-                {s.beschreibung && <p style={{ color: "#4b5563", lineHeight: 1.5 }}>{s.beschreibung}</p>}
+                {s.beschreibung && <BulletList text={s.beschreibung} color={accent} />}
               </div>
             ))}
             {!data.stationen.some(s => s.firma || s.position) && <p style={{ color: "#9ca3af", fontStyle: "italic" }}>Berufserfahrung hinzufügen...</p>}
@@ -416,7 +431,7 @@ function TemplateC({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
           </div>
         </div>
         {/* Right */}
-        <div style={{ background: "#f0fdf4", padding: "22px 2.0cm 2.0cm 18px", borderLeft: `1px solid ${accent}22` }}>
+        <div style={{ background: "#f0fdf4", padding: "22px 18px 2.0cm 18px", borderLeft: `1px solid ${accent}22` }}>
           {(data.geburtsdatum || data.geburtsort || data.nationalitaet) && (
             <div style={{ marginBottom: 20 }}>
               <SecHeading label="Persönliches" color={accent} />
@@ -509,7 +524,7 @@ function TemplateD({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         )}
       </div>
       {/* Main Right */}
-      <div style={{ flex: 1, padding: "2.0cm 2.0cm 2.0cm 22px" }}>
+      <div style={{ flex: 1, padding: "2.0cm 20px 2.0cm 22px" }}>
         {data.zusammenfassung && (
           <div style={{ marginBottom: 20 }}>
             <SecHeading label="Profil" color={accent} />
@@ -525,7 +540,7 @@ function TemplateD({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
                 <span style={{ fontSize: "10pt", color: "#6b7280", flexShrink: 0, marginLeft: 8 }}>{[s.von, s.bis].filter(Boolean).join(" – ")}</span>
               </div>
               <p style={{ color: accent, fontWeight: 600, marginBottom: 3 }}>{s.firma}</p>
-              {s.beschreibung && <p style={{ color: "#4b5563", lineHeight: 1.5 }}>{s.beschreibung}</p>}
+              {s.beschreibung && <BulletList text={s.beschreibung} color={accent} />}
             </div>
           ))}
           {!data.stationen.some(s => s.firma || s.position) && <p style={{ color: "#9ca3af", fontStyle: "italic" }}>Berufserfahrung hinzufügen...</p>}
@@ -581,6 +596,7 @@ export default function LebenslaufPage() {
   const [template, setTemplate] = useState<TemplateId>("A");
   const [step, setStep] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [showPdfHint, setShowPdfHint] = useState(false);
   const [mobileTab, setMobileTab] = useState<"form" | "preview">("form");
   const [isMobile, setIsMobile] = useState(false);
   const [heroVisible, setHeroVisible] = useState(false);
@@ -645,7 +661,7 @@ export default function LebenslaufPage() {
     win.document.head.appendChild(style);
     win.document.body.appendChild(body);
     win.document.title = "Lebenslauf";
-    setTimeout(() => { win.print(); }, 600);
+    setTimeout(() => { win.print(); setShowPdfHint(true); }, 600);
   };
 
   const STEPS = ["Persönliche Daten", "Berufserfahrung", "Ausbildung", "Fähigkeiten & Sprachen"];
@@ -656,6 +672,22 @@ export default function LebenslaufPage() {
     <>
       <Nav />
       {showModal && <ApplyModal data={data} onClose={() => setShowModal(false)} />}
+
+      {/* PDF-Hinweis nach dem Speichern */}
+      {showPdfHint && (
+        <div style={{ position: "fixed", bottom: 32, left: "50%", transform: "translateX(-50%)", zIndex: 2000, maxWidth: 480, width: "calc(100% - 32px)" }}>
+          <div style={{ background: "#1d1d1f", color: "#fff", borderRadius: 16, padding: "18px 20px", boxShadow: "0 12px 40px rgba(0,0,0,0.3)", display: "flex", gap: 14, alignItems: "flex-start" }}>
+            <span style={{ fontSize: 22, flexShrink: 0 }}>📎</span>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 4 }}>Lebenslauf gespeichert!</p>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", lineHeight: 1.5 }}>
+                Bitte hängen Sie Ihren Lebenslauf als PDF-Anhang mit in die E-Mail beim Bewerben an.
+              </p>
+            </div>
+            <button onClick={() => setShowPdfHint(false)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.5)", cursor: "pointer", fontSize: 18, lineHeight: 1, padding: 2, flexShrink: 0 }}>✕</button>
+          </div>
+        </div>
+      )}
 
       {/* ── HERO SECTION ─────────────────────────────────────────────────── */}
       <section style={{ background: "#f5f5f7", padding: isMobile ? "40px 24px 28px" : "64px 48px 40px", textAlign: "center" }}>
@@ -892,7 +924,9 @@ export default function LebenslaufPage() {
                 {data.stationen.map((s, i) => (
                   <div key={s.id} style={{ padding: 16, border: "1px solid #e8e8ed", borderRadius: 14, background: "#f5f5f7" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                      <span style={{ fontSize: 13, fontWeight: 600, color: "#1d1d1f" }}>Station {i + 1}</span>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: "#1d1d1f" }}>
+                        {i === 0 ? "Aktuelle Position" : `Station ${i + 1} (älter)`}
+                      </span>
                       {data.stationen.length > 1 && <button onClick={() => removeStation(s.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#707070" }}><TrashIcon /></button>}
                     </div>
                     <div style={sectionStyle}>
@@ -902,7 +936,7 @@ export default function LebenslaufPage() {
                         <Input label="Von" value={s.von} onChange={v => setStation(s.id, "von", v)} placeholder="03/2020" />
                         <Input label="Bis" value={s.bis} onChange={v => setStation(s.id, "bis", v)} placeholder="heute" />
                       </div>
-                      <Input label="Tätigkeiten" value={s.beschreibung} onChange={v => setStation(s.id, "beschreibung", v)} placeholder="Welche Tätigkeiten haben Sie ausgeführt?" multiline />
+                      <Input label="Tätigkeiten (je Zeile oder kommagetrennt)" value={s.beschreibung} onChange={v => setStation(s.id, "beschreibung", v)} placeholder={"Schaltschrankbau\nInstandhaltung elektrischer Anlagen\nFehlerdiagnose"} multiline />
                     </div>
                   </div>
                 ))}
