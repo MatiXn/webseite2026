@@ -42,7 +42,7 @@ const LinkedInIcon = ({ size = 14 }: { size?: number }) => (
   </svg>
 );
 
-const JOBS_URL = "https://www.phe-perm.de/jobs";
+const SITE_BASE = "https://www.phe-perm.de";
 
 function linkedInShareUrl(job: { title: string; city: string; salary: string; benefits?: string[]; description?: string }, jobUrl: string) {
   const benefits = job.benefits?.slice(0, 3).map(b => `✅ ${b}`).join("\n") ?? "";
@@ -625,7 +625,7 @@ function JobDetailModal({ job, jobUrl, onClose, onApply }: { job: Job; jobUrl: s
             title={`Stelle auf LinkedIn teilen: ${job.title}`}
             style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: "#0077B5", color: "#fff", fontSize: 14, fontWeight: 700, padding: "13px 16px", borderRadius: 999, textDecoration: "none", whiteSpace: "nowrap" }}
           >
-            <LinkedInIcon size={16} /> Teilen
+            <LinkedInIcon size={16} /> Auf LinkedIn teilen
           </a>
         </div>
       </div>
@@ -653,7 +653,7 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
     setShowDetail(false);
   };
 
-  const jobUrl = `${JOBS_URL}?job=${job.id}`;
+  const jobUrl = `${SITE_BASE}/jobs/${job.id}`;
   return (
     <>
       {showDetail && (
