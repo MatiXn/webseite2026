@@ -519,10 +519,27 @@ export default function JobsPage() {
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
-          { "@type": "Question", "name": "Wie finde ich Jobs in meiner Nähe?", "acceptedAnswer": { "@type": "Answer", "text": "Geben Sie Ihren Wohnort in das Suchfeld ein. Wir zeigen automatisch Jobs im Umkreis von 50 km an." } },
-          { "@type": "Question", "name": "Was verdiene ich als Elektroniker in Deutschland?", "acceptedAnswer": { "@type": "Answer", "text": "Elektroniker verdienen typischerweise 40.000–56.000 €/Jahr, SPS-Programmierer 55.000–75.000 €/Jahr." } },
-          { "@type": "Question", "name": "Wie kann ich mich auf eine Stelle bewerben?", "acceptedAnswer": { "@type": "Answer", "text": "Klicke auf den Bewerben-Button. WhatsApp öffnet sich mit einer vorausgefüllten Nachricht." } },
-          { "@type": "Question", "name": "Gibt es Stellen, die nicht online gelistet sind?", "acceptedAnswer": { "@type": "Answer", "text": "Ja, wir haben zahlreiche exklusive, nicht öffentlich ausgeschriebene Positionen. Schreib uns auf WhatsApp." } },
+          { "@type": "Question", "name": "Wie finde ich Jobs in meiner Nähe?", "acceptedAnswer": { "@type": "Answer", "text": "Geben Sie Ihren Wohnort oder Ihre Postleitzahl in das Suchfeld ein. PHE-Perm Engineering zeigt automatisch alle passenden Stellen im Umkreis von 50 km an." } },
+          { "@type": "Question", "name": "Was kostet die Jobvermittlung über PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE-Perm Engineering wird ausschließlich vom einstellenden Unternehmen vergütet – Bewerber zahlen keinen Cent." } },
+          { "@type": "Question", "name": "Was verdiene ich als Elektroniker in Deutschland?", "acceptedAnswer": { "@type": "Answer", "text": "Elektroniker für Betriebstechnik verdienen in Deutschland typischerweise 38.000–52.000 € brutto pro Jahr. Mit Berufserfahrung und Spezialisierung (z. B. SPS) sind 55.000–70.000 € möglich." } },
+          { "@type": "Question", "name": "Was verdient ein SPS-Programmierer in Deutschland?", "acceptedAnswer": { "@type": "Answer", "text": "SPS-Programmierer verdienen in Deutschland zwischen 45.000 und 75.000 € brutto jährlich, abhängig von Erfahrung und Region. In NRW und Bayern liegen die Gehälter überdurchschnittlich." } },
+          { "@type": "Question", "name": "Wie funktioniert die Bewerbung über PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "Klicken Sie bei der gewünschten Stelle auf 'Via WhatsApp bewerben' oder 'Per E-Mail bewerben'. Unser Team meldet sich innerhalb von 24 Stunden mit passenden Informationen zur Stelle und zum nächsten Schritt." } },
+          { "@type": "Question", "name": "Wie lange dauert es bis ich einen neuen Job finde?", "acceptedAnswer": { "@type": "Answer", "text": "Viele unserer Kandidaten finden über PHE-Perm Engineering innerhalb von 2 bis 6 Wochen eine neue Festanstellung. Die Dauer hängt von Qualifikation, Region und Gehaltsvorstellung ab." } },
+          { "@type": "Question", "name": "Ist PHE-Perm Engineering eine Zeitarbeitsfirma?", "acceptedAnswer": { "@type": "Answer", "text": "Nein. PHE-Perm Engineering vermittelt ausschließlich Festanstellungen direkt beim Unternehmen – keine Zeitarbeit, keine Leiharbeit, kein befristeter Vertrag." } },
+          { "@type": "Question", "name": "Welche Berufe vermittelt PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "PHE-Perm Engineering vermittelt Fachkräfte in den Bereichen Elektrotechnik (Elektroniker, Elektriker, Schaltanlagenbauer), Automatisierung (SPS-Programmierer, Steuerungstechniker), Mechatronik, IT (Netzwerktechniker, Software-Entwickler) sowie Bau (Bauleiter, Projektleiter TGA)." } },
+          { "@type": "Question", "name": "Gibt es Stellen die nicht online ausgeschrieben sind?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Viele unserer Stellen werden nicht öffentlich ausgeschrieben. Über unseren direkten Kontakt per WhatsApp erhalten Sie Zugang zu exklusiven Positionen, die nur über PHE-Perm Engineering besetzt werden." } },
+          { "@type": "Question", "name": "In welchen Bundesländern vermittelt PHE-Perm Engineering Jobs?", "acceptedAnswer": { "@type": "Answer", "text": "PHE-Perm Engineering vermittelt deutschlandweit – mit Schwerpunkten in NRW (Düsseldorf, Köln, Dortmund), Bayern (München), Hessen (Frankfurt) und Baden-Württemberg (Stuttgart, Mannheim)." } },
+          { "@type": "Question", "name": "Welche Unterlagen brauche ich für die Bewerbung?", "acceptedAnswer": { "@type": "Answer", "text": "Für die erste Kontaktaufnahme reicht Ihr Name, Ihre Telefonnummer und Ihre gewünschte Position. Für das Vorstellungsgespräch benötigen Sie Lebenslauf, Zeugnisse und Qualifikationsnachweise. Mit dem kostenlosen Lebenslauf-Generator von PHE-Perm können Sie Ihren CV direkt auf der Seite erstellen." } },
+          { "@type": "Question", "name": "Was ist der Unterschied zwischen Festanstellung und Zeitarbeit?", "acceptedAnswer": { "@type": "Answer", "text": "Bei einer Festanstellung werden Sie direkt vom Unternehmen eingestellt und haben volle Sozialleistungen, Kündigungsschutz und Urlaubsansprüche. Zeitarbeit bedeutet, dass Sie bei einer Zeitarbeitsfirma angestellt und an Betriebe verliehen werden – oft mit geringerer Planungssicherheit. PHE-Perm vermittelt ausschließlich Festanstellungen." } },
+          { "@type": "Question", "name": "Kann ich mich auch ohne vollständige Unterlagen bewerben?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Nehmen Sie einfach Kontakt auf und schildern Sie kurz Ihre Erfahrungen und Wünsche. Unser Team hilft Ihnen, den nächsten Schritt zu planen – auch wenn der Lebenslauf noch nicht fertig ist." } },
+        ]
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.phe-perm.de" },
+          { "@type": "ListItem", "position": 2, "name": "Stellenangebote", "item": "https://www.phe-perm.de/jobs" },
         ]
       }} />
       <Footer />
