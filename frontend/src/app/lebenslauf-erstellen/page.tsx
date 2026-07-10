@@ -574,8 +574,8 @@ function contentZoom(data: CVData): number {
   return Math.round(zoom * 100) / 100;
 }
 
-function CVPreview({ data, template }: { data: CVData; template: TemplateId }) {
-  const zoom = contentZoom(data);
+function CVPreview({ data, template, applyContentZoom = true }: { data: CVData; template: TemplateId; applyContentZoom?: boolean }) {
+  const zoom = applyContentZoom ? contentZoom(data) : 1;
   if (template === "B") return <TemplateB data={data} zoom={zoom} />;
   if (template === "C") return <TemplateC data={data} zoom={zoom} />;
   if (template === "D") return <TemplateD data={data} zoom={zoom} />;
@@ -658,9 +658,6 @@ export default function LebenslaufPage() {
     style.textContent = `*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}@page{size:A4;margin:0}`;
     const body = win.document.createElement("div");
     body.innerHTML = content.innerHTML;
-    // Strip preview zoom so the printed CV is full A4 size
-    const root = body.firstElementChild as HTMLElement | null;
-    if (root?.style) root.style.zoom = "";
     win.document.head.appendChild(style);
     win.document.body.appendChild(body);
     win.document.title = "Lebenslauf";
@@ -1070,7 +1067,12 @@ export default function LebenslaufPage() {
             </button>
           </div>
 
-          {/* CV preview card — scrollable */}
+          {/* Hidden print-ready CV (full size, with contentZoom for fitting) */}
+          <div ref={printRef} style={{ position: "absolute", left: -9999, top: 0, visibility: "hidden" }}>
+            <CVPreview data={data} template={template} />
+          </div>
+
+          {/* CV preview card — scrollable, no contentZoom so width stays full */}
           <div
             style={{
               borderRadius: 12,
@@ -1082,8 +1084,8 @@ export default function LebenslaufPage() {
               boxShadow: "0 2px 16px rgba(0,0,0,0.10)",
             }}
           >
-            <div ref={printRef} style={{ zoom: previewScale }}>
-              <CVPreview data={data} template={template} />
+            <div style={{ zoom: previewScale }}>
+              <CVPreview data={data} template={template} applyContentZoom={false} />
             </div>
           </div>
 
