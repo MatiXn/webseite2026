@@ -175,7 +175,7 @@ function TemplateA({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
   const accent = "#1e3a5f";
   const blue = "#3d7cc9";
   return (
-    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "11pt", color: "#1a1a2e", zoom, paddingLeft: "2.5cm", paddingRight: "2.0cm", paddingBottom: "2.0cm", boxSizing: "border-box" }}>
+    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "11pt", color: "#1a1a2e", zoom, paddingLeft: "2.5cm", paddingRight: "2.0cm", paddingBottom: "2.0cm", boxSizing: "border-box", overflow: "hidden", wordBreak: "break-word", overflowWrap: "break-word" }}>
       {/* Header — läuft oben bündig, kein Top-Padding auf äußerem Wrapper */}
       <div style={{ background: accent, color: "#fff", padding: "28px 0 22px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginLeft: "-2.5cm", marginRight: "-2.0cm", paddingLeft: "2.5cm", paddingRight: "2.8cm" }}>
         <div style={{ flex: 1 }}>
@@ -263,7 +263,7 @@ function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
   const sidebar = "#1e3a5f";
   const accent = "#60a5fa";
   return (
-    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "11pt", color: "#1a1a2e", display: "flex", zoom }}>
+    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "11pt", color: "#1a1a2e", display: "flex", zoom, overflow: "hidden", wordBreak: "break-word", overflowWrap: "break-word" }}>
       {/* Sidebar Left */}
       <div style={{ width: "34%", background: sidebar, color: "#fff", padding: "2.0cm 22px 2.0cm 2.5cm", display: "flex", flexDirection: "column", gap: 20, flexShrink: 0 }}>
         {/* Photo */}
@@ -373,7 +373,7 @@ function TemplateC({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
   const name = [data.vorname, data.nachname].filter(Boolean).join(" ") || "Dein Name";
   const accent = "#059669";
   return (
-    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "11pt", color: "#111827", zoom }}>
+    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "11pt", color: "#111827", zoom, overflow: "hidden", wordBreak: "break-word", overflowWrap: "break-word" }}>
       {/* Header */}
       <div style={{ borderBottom: `4px solid ${accent}`, padding: "2.0cm 2.0cm 22px 2.5cm" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
@@ -464,7 +464,7 @@ function TemplateD({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
   const accent = "#7c3aed";
   const sidebar = "#1e1b4b";
   return (
-    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "11pt", color: "#1a1a2e", display: "flex", zoom }}>
+    <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", background: "#fff", minHeight: "297mm", width: "210mm", fontSize: "11pt", color: "#1a1a2e", display: "flex", zoom, overflow: "hidden", wordBreak: "break-word", overflowWrap: "break-word" }}>
       {/* Sidebar Left */}
       <div style={{ width: "35%", background: sidebar, color: "#fff", padding: "2.0cm 18px 2.0cm 2.5cm", display: "flex", flexDirection: "column", gap: 18, flexShrink: 0 }}>
         {data.foto ? (
@@ -600,7 +600,7 @@ export default function LebenslaufPage() {
   const [mobileTab, setMobileTab] = useState<"form" | "preview">("form");
   const [isMobile, setIsMobile] = useState(false);
   const [heroVisible, setHeroVisible] = useState(false);
-  const [previewHovered, setPreviewHovered] = useState(false);
+  
   const [previewScale, setPreviewScale] = useState(0.7);
   const printRef = useRef<HTMLDivElement>(null);
   const previewColRef = useRef<HTMLDivElement>(null);
@@ -1067,17 +1067,14 @@ export default function LebenslaufPage() {
             </button>
           </div>
 
-          {/* CV preview card with subtle rotation hover */}
+          {/* CV preview card */}
           <div
-            onMouseEnter={() => setPreviewHovered(true)}
-            onMouseLeave={() => setPreviewHovered(false)}
             style={{
               position: "relative",
               borderRadius: 12,
               overflow: "hidden",
-              transform: previewHovered ? "rotate(0deg)" : "rotate(-0.5deg)",
-              transition: "transform 0.3s ease",
               background: "#fff",
+              width: `${Math.round(794 * previewScale)}px`,
               height: `${Math.round(1123 * previewScale)}px`,
             }}
           >
