@@ -36,6 +36,14 @@ const CloseIcon = () => (
   </svg>
 );
 
+const LinkedInIcon = ({ size = 14 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+  </svg>
+);
+
+const JOBS_URL = "https://www.phe-perm.de/jobs";
+
 type SearchResult =
   | { type: "exact"; jobs: Job[] }
   | { type: "radius"; jobs: (Job & { distance: number })[]; locationName: string }
@@ -579,7 +587,7 @@ function JobDetailModal({ job, onClose, onApply }: { job: Job; onClose: () => vo
         )}
 
         {/* CTA buttons */}
-        <div style={{ display: "flex", gap: 10 }}>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
           <a
             href={`${WA_LINK}?text=${encodeURIComponent(`Hallo, ich interessiere mich für die Stelle: ${job.title} in ${job.city}`)}`}
             target="_blank" rel="noopener noreferrer"
@@ -593,6 +601,14 @@ function JobDetailModal({ job, onClose, onApply }: { job: Job; onClose: () => vo
           >
             <MailIcon size={15} /> Per E-Mail bewerben
           </button>
+          <a
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(JOBS_URL)}`}
+            target="_blank" rel="noopener noreferrer"
+            title={`Stelle auf LinkedIn teilen: ${job.title}`}
+            style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: "#0077B5", color: "#fff", fontSize: 14, fontWeight: 700, padding: "13px 16px", borderRadius: 999, textDecoration: "none", whiteSpace: "nowrap" }}
+          >
+            <LinkedInIcon size={16} /> Teilen
+          </a>
         </div>
       </div>
     </div>
@@ -685,6 +701,14 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
             >
               <MailIcon size={13} /> E-Mail
             </button>
+            <a
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(JOBS_URL)}`}
+              target="_blank" rel="noopener noreferrer"
+              title={`Auf LinkedIn teilen: ${job.title}`}
+              style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: "#0077B5", color: "#fff", width: 36, height: 36, borderRadius: 999, textDecoration: "none", flexShrink: 0 }}
+            >
+              <LinkedInIcon size={15} />
+            </a>
           </div>
         </div>
       </div>
