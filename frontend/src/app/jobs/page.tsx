@@ -519,7 +519,7 @@ const CheckIcon = () => (
   </svg>
 );
 
-function JobDetailModal({ job, onClose, onApply }: { job: Job; onClose: () => void; onApply: () => void }) {
+function JobDetailModal({ job, jobUrl, onClose, onApply }: { job: Job; jobUrl: string; onClose: () => void; onApply: () => void }) {
   const color = CATEGORY_COLORS[job.category];
   return (
     <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.45)", zIndex: 500, display: "flex", alignItems: "flex-end", justifyContent: "center", padding: "0 0 0 0" }}>
@@ -602,7 +602,7 @@ function JobDetailModal({ job, onClose, onApply }: { job: Job; onClose: () => vo
             <MailIcon size={15} /> Per E-Mail bewerben
           </button>
           <a
-            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(JOBS_URL)}`}
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(jobUrl)}`}
             target="_blank" rel="noopener noreferrer"
             title={`Stelle auf LinkedIn teilen: ${job.title}`}
             style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: "#0077B5", color: "#fff", fontSize: 14, fontWeight: 700, padding: "13px 16px", borderRadius: 999, textDecoration: "none", whiteSpace: "nowrap" }}
@@ -619,18 +619,36 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
   const [showDetail, setShowDetail] = useState(false);
   const [showApply, setShowApply] = useState(false);
   const color = CATEGORY_COLORS[job.category];
+
+  // Auto-open wenn URL ?job=<id> enthält
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("job") === String(job.id)) setShowDetail(true);
+  }, [job.id]);
+
+  const openDetail = () => {
+    history.pushState({}, "", `/jobs?job=${job.id}`);
+    setShowDetail(true);
+  };
+  const closeDetail = () => {
+    history.pushState({}, "", "/jobs");
+    setShowDetail(false);
+  };
+
+  const jobUrl = `${JOBS_URL}?job=${job.id}`;
   return (
     <>
       {showDetail && (
         <JobDetailModal
           job={job}
-          onClose={() => setShowDetail(false)}
-          onApply={() => { setShowDetail(false); setShowApply(true); }}
+          jobUrl={jobUrl}
+          onClose={closeDetail}
+          onApply={() => { closeDetail(); setShowApply(true); }}
         />
       )}
       {showApply && <ApplyModal job={job} onClose={() => setShowApply(false)} />}
       <div
-        onClick={() => setShowDetail(true)}
+        onClick={openDetail}
         style={{ borderRadius: 28, padding: 24, background: "#fff", display: "flex", flexDirection: "column", cursor: "pointer" }}
       >
         {/* Category + distance */}
@@ -702,7 +720,7 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
               <MailIcon size={13} /> E-Mail
             </button>
             <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(JOBS_URL)}`}
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(jobUrl)}`}
               target="_blank" rel="noopener noreferrer"
               title={`Auf LinkedIn teilen: ${job.title}`}
               style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: "#0077B5", color: "#fff", width: 36, height: 36, borderRadius: 999, textDecoration: "none", flexShrink: 0 }}
