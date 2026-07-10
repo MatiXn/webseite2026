@@ -44,6 +44,24 @@ const LinkedInIcon = ({ size = 14 }: { size?: number }) => (
 
 const JOBS_URL = "https://www.phe-perm.de/jobs";
 
+function linkedInShareUrl(job: { title: string; city: string; salary: string; benefits?: string[]; description?: string }, jobUrl: string) {
+  const benefits = job.benefits?.slice(0, 3).map(b => `✅ ${b}`).join("\n") ?? "";
+  const text = `🚀 Neue Stelle: ${job.title} in ${job.city}
+
+${job.description ? job.description.slice(0, 120) + "…" : "Spannende Position in einem wachsenden Unternehmen."}
+
+📍 Ort: ${job.city}
+💰 Gehalt: ${job.salary}
+${benefits ? `\nBenefits:\n${benefits}` : ""}
+
+Kostenlos & unverbindlich bewerben 👇
+${jobUrl}
+
+#Jobs #Karriere #${job.city.split(",")[0].trim().replace(/\s/g, "")} #Elektrotechnik #PHEPerm`;
+
+  return `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(jobUrl)}&title=${encodeURIComponent(job.title + " – PHE-Perm Engineering")}&summary=${encodeURIComponent(text)}&source=${encodeURIComponent("phe-perm.de")}`;
+}
+
 type SearchResult =
   | { type: "exact"; jobs: Job[] }
   | { type: "radius"; jobs: (Job & { distance: number })[]; locationName: string }
@@ -602,7 +620,7 @@ function JobDetailModal({ job, jobUrl, onClose, onApply }: { job: Job; jobUrl: s
             <MailIcon size={15} /> Per E-Mail bewerben
           </button>
           <a
-            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(jobUrl)}`}
+            href={linkedInShareUrl(job, jobUrl)}
             target="_blank" rel="noopener noreferrer"
             title={`Stelle auf LinkedIn teilen: ${job.title}`}
             style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: "#0077B5", color: "#fff", fontSize: 14, fontWeight: 700, padding: "13px 16px", borderRadius: 999, textDecoration: "none", whiteSpace: "nowrap" }}
@@ -720,7 +738,7 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
               <MailIcon size={13} /> E-Mail
             </button>
             <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(jobUrl)}`}
+              href={linkedInShareUrl(job, jobUrl)}
               target="_blank" rel="noopener noreferrer"
               title={`Auf LinkedIn teilen: ${job.title}`}
               style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: "#0077B5", color: "#fff", width: 36, height: 36, borderRadius: 999, textDecoration: "none", flexShrink: 0 }}
