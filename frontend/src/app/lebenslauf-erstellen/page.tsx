@@ -658,6 +658,9 @@ export default function LebenslaufPage() {
     style.textContent = `*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}@page{size:A4;margin:0}`;
     const body = win.document.createElement("div");
     body.innerHTML = content.innerHTML;
+    // Strip preview zoom so the printed CV is full A4 size
+    const root = body.firstElementChild as HTMLElement | null;
+    if (root?.style) root.style.zoom = "";
     win.document.head.appendChild(style);
     win.document.body.appendChild(body);
     win.document.title = "Lebenslauf";
@@ -1067,25 +1070,19 @@ export default function LebenslaufPage() {
             </button>
           </div>
 
-          {/* CV preview card */}
+          {/* CV preview card — scrollable */}
           <div
             style={{
-              position: "relative",
               borderRadius: 12,
-              overflow: "hidden",
+              overflowY: "auto",
+              overflowX: "hidden",
               background: "#fff",
               width: `${Math.round(794 * previewScale)}px`,
-              height: `${Math.round(1123 * previewScale)}px`,
+              maxHeight: "75vh",
+              boxShadow: "0 2px 16px rgba(0,0,0,0.10)",
             }}
           >
-            <div ref={printRef} style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "210mm",
-              transform: `scale(${previewScale})`,
-              transformOrigin: "top left",
-            }}>
+            <div ref={printRef} style={{ zoom: previewScale }}>
               <CVPreview data={data} template={template} />
             </div>
           </div>
