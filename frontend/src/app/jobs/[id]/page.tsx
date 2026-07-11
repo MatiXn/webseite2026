@@ -6,6 +6,7 @@ import JsonLd from "../../components/JsonLd";
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 import ApplyForm from "./ApplyForm";
+import GoogleReviews from "./GoogleReviews";
 
 const CATEGORY_LABELS: Record<string, string> = {
   elektro: "Elektrotechnik",
@@ -158,7 +159,7 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
             Jetzt bewerben →
           </a>
           <div style={{ display: "flex", gap: 20, flexWrap: "wrap", marginTop: 20 }}>
-            {["100 % kostenlos & unverbindlich", "Antwort innerhalb von 24 h", "Kein Anschreiben nötig"].map(t => (
+            {["★ 5,0 auf Google (32 Bewertungen)", "100 % kostenlos & unverbindlich", "Antwort innerhalb von 24 h"].map(t => (
               <span key={t} style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.75)" }}>
                 ✓ {t}
               </span>
@@ -225,6 +226,9 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
             gesamten Bewerbungsprozess und antworten innerhalb von 24 Stunden.
           </p>
         </section>
+
+        {/* GOOGLE-BEWERTUNGEN */}
+        <GoogleReviews jobId={job.id} />
 
         {/* SO GEHT'S WEITER */}
         <section style={{
