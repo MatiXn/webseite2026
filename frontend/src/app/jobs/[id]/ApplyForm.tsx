@@ -87,7 +87,7 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
           opacity: loading ? 0.7 : 1,
         }}
       >
-        {loading ? "Wird gesendet…" : "Jetzt kostenlos bewerben →"}
+        {loading ? "Wird gesendet…" : "Jetzt bewerben →"}
       </button>
       <p style={{ fontSize: 12, color: "#86868b", textAlign: "center", lineHeight: 1.5 }}>
         🔒 Kostenlos & vertraulich. Ihre Daten werden nur zur Bearbeitung Ihrer Bewerbung verwendet.

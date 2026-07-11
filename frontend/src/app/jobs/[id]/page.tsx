@@ -146,7 +146,7 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
               textDecoration: "none",
             }}
           >
-            Jetzt kostenlos bewerben →
+            Jetzt bewerben →
           </a>
         </div>
       </div>
