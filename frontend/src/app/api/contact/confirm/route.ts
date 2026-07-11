@@ -24,13 +24,16 @@ export async function GET(req: NextRequest) {
   try {
     if (payload.type === "contact") {
       const { contact, email, phone, message } = payload;
+      const isBewerbung = typeof message === "string" && message.startsWith("[Bewerbung:");
       await resend.emails.send({
         from: FROM,
-        to: TO,
+        to: isBewerbung ? "bewerbung@phe-perm.de" : TO,
         replyTo: email,
-        subject: `Kontaktanfrage – ${contact || email}`,
+        subject: isBewerbung
+          ? `Bewerbung – ${contact || email}`
+          : `Kontaktanfrage – ${contact || email}`,
         html: `
-          <h2>Neue Kontaktanfrage über phe-perm.de</h2>
+          <h2>${isBewerbung ? "Neue Bewerbung" : "Neue Kontaktanfrage"} über phe-perm.de</h2>
           <p style="color:#22c55e;font-weight:700">&#10003; E-Mail-Adresse bestätigt</p>
           <table cellpadding="8" style="border-collapse:collapse;width:100%">
             <tr><td><strong>Name</strong></td><td>${escapeHtml(contact) || "–"}</td></tr>
