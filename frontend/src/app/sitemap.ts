@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { JOBS } from "./jobs/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://phe-perm.de";
+  const base = "https://www.phe-perm.de";
   const now = new Date();
 
   const staticPages: MetadataRoute.Sitemap = [
