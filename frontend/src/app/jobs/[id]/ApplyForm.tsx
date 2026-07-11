@@ -42,9 +42,12 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
         <h3 style={{ fontSize: 20, fontWeight: 700, color: "#166534", marginBottom: 8 }}>
           Fast geschafft!
         </h3>
-        <p style={{ fontSize: 15, color: "#15803d", lineHeight: 1.6 }}>
+        <p style={{ fontSize: 15, color: "#15803d", lineHeight: 1.6, marginBottom: 12 }}>
           Wir haben Ihnen eine E-Mail geschickt. Bitte bestätigen Sie Ihre Adresse,
           damit Ihre Bewerbung bei uns eingeht.
+        </p>
+        <p style={{ fontSize: 14, color: "#166534", lineHeight: 1.6, fontWeight: 600 }}>
+          Danach melden wir uns innerhalb von 24 Stunden telefonisch oder per E-Mail bei Ihnen.
         </p>
       </div>
     );
@@ -90,7 +93,8 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
         {loading ? "Wird gesendet…" : "Jetzt bewerben →"}
       </button>
       <p style={{ fontSize: 12, color: "#86868b", textAlign: "center", lineHeight: 1.5 }}>
-        🔒 Kostenlos & vertraulich. Ihre Daten werden nur zur Bearbeitung Ihrer Bewerbung verwendet.
+        🔒 100 % unverbindlich & vertraulich. Ihre Daten werden nur zur Bearbeitung
+        Ihrer Bewerbung verwendet – keine Weitergabe ohne Ihre Zustimmung.
       </p>
     </form>
   );

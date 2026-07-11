@@ -11,16 +11,16 @@ export const metadata: Metadata = {
 
 function buildCaption(job: (typeof JOBS)[number]): string {
   const benefits = job.benefits.slice(0, 4).map(b => `✅ ${b}`).join("\n");
-  return `🔍 Wir suchen: ${job.title} in ${job.city}!
+  return `💰 ${job.salary} – ${job.title} in ${job.city} gesucht!
 
-💰 ${job.salary}
 📍 ${job.city}, ${job.region}
-📃 ${job.type} – direkt beim Unternehmen
+📃 ${job.type} – direkt beim Unternehmen, keine Zeitarbeit
 
 Das erwartet dich:
 ${benefits}
 
-Die Vermittlung ist für dich zu 100 % kostenlos. Kein Anschreiben nötig – Bewerbung dauert nur 60 Sekunden. 👇
+Bewerbung dauert 60 Sekunden – ohne Anschreiben, ohne Lebenslauf.
+100 % kostenlos & unverbindlich. Wir melden uns innerhalb von 24 h. 👇
 
 🔗 Link in Bio oder direkt: phe-perm.de/jobs/${job.id}
 

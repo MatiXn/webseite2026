@@ -112,12 +112,21 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
         padding: "72px 24px 56px",
       }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <p style={{
-            fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.7)",
-            textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 16,
-          }}>
-            {CATEGORY_LABELS[job.category]} · {job.city}, {job.region}
-          </p>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 16 }}>
+            <p style={{
+              fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.7)",
+              textTransform: "uppercase", letterSpacing: "0.12em",
+            }}>
+              {CATEGORY_LABELS[job.category]} · {job.city}, {job.region}
+            </p>
+            <span style={{
+              fontSize: 12, fontWeight: 700, color: "#86efac",
+              background: "rgba(34,197,94,0.15)", border: "1px solid rgba(134,239,172,0.35)",
+              borderRadius: 999, padding: "4px 12px",
+            }}>
+              ● Aktiv auf Bewerbersuche · {job.posted}
+            </span>
+          </div>
           <h1 style={{
             fontSize: "clamp(30px,5vw,46px)", fontWeight: 800, color: "#fff",
             lineHeight: 1.15, letterSpacing: "-0.02em", marginBottom: 20,
@@ -148,6 +157,13 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
           >
             Jetzt bewerben →
           </a>
+          <div style={{ display: "flex", gap: 20, flexWrap: "wrap", marginTop: 20 }}>
+            {["100 % kostenlos & unverbindlich", "Antwort innerhalb von 24 h", "Kein Anschreiben nötig"].map(t => (
+              <span key={t} style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.75)" }}>
+                ✓ {t}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -210,6 +226,38 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
           </p>
         </section>
 
+        {/* SO GEHT'S WEITER */}
+        <section style={{
+          background: "#fff", borderRadius: 16, padding: "32px 28px", marginBottom: 20,
+          boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+        }}>
+          <h2 style={{ fontSize: 22, fontWeight: 700, color: "#1d1d1f", marginBottom: 20 }}>
+            🚀 So geht es nach Ihrer Bewerbung weiter
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+            {[
+              { step: "1", title: "Bewerbung absenden", text: "Dauert ca. 60 Sekunden – kein Anschreiben, kein Lebenslauf nötig." },
+              { step: "2", title: "Wir melden uns innerhalb von 24 Stunden", text: "Kurzes Telefonat: Wir klären Ihre Wünsche zu Gehalt, Standort und Aufgaben." },
+              { step: "3", title: "Vorstellung beim Unternehmen", text: "Passt es für Sie, stellen wir den Kontakt her – Sie entscheiden in jedem Schritt selbst." },
+            ].map(s => (
+              <div key={s.step} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                <div style={{
+                  width: 36, height: 36, borderRadius: 999, flexShrink: 0,
+                  background: "#1e3a5f", color: "#fff", display: "flex",
+                  alignItems: "center", justifyContent: "center",
+                  fontSize: 16, fontWeight: 800,
+                }}>
+                  {s.step}
+                </div>
+                <div>
+                  <p style={{ fontSize: 16, fontWeight: 700, color: "#1d1d1f", marginBottom: 2 }}>{s.title}</p>
+                  <p style={{ fontSize: 14, color: "#6b7280", lineHeight: 1.6 }}>{s.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* BEWERBUNGSFORMULAR */}
         <section id="bewerben" style={{
           background: "#fff", borderRadius: 16, padding: "32px 28px", marginBottom: 20,
@@ -219,7 +267,8 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
             📬 In 60 Sekunden bewerben
           </h2>
           <p style={{ fontSize: 15, color: "#86868b", marginBottom: 24 }}>
-            Kein Anschreiben nötig. Wir melden uns innerhalb von 24 Stunden bei Ihnen.
+            Nur 2 Pflichtfelder – kein Anschreiben, kein Lebenslauf nötig.
+            Wir melden uns innerhalb von 24 Stunden bei Ihnen.
           </p>
           <ApplyForm jobTitle={job.title} jobCity={job.city} />
         </section>
