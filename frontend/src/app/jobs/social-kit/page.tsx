@@ -41,8 +41,9 @@ export default function SocialKitOverview() {
           border: "1px solid #fde68a", borderRadius: 12,
           padding: "12px 16px", marginBottom: 40, lineHeight: 1.6,
         }}>
-          💡 <strong>Workflow:</strong> Kit öffnen → Bild herunterladen → Caption kopieren →
-          bei Instagram/TikTok posten. Feed-Bilder eignen sich auch als Meta-Ad-Creatives.
+          💡 <strong>Welches Bild wofür?</strong> Story 9:16 → nur Instagram-Story & TikTok ·
+          Feed 1:1 → Instagram-/Facebook-Feed-Posts · Ad 4:5 → Meta-Anzeigen.
+          Das falsche Format wird von der Plattform abgeschnitten!
         </p>
 
         {byCategory.map(group => (
@@ -81,13 +82,19 @@ export default function SocialKitOverview() {
                       background: "#eef4fb", color: "#1e3a5f", borderRadius: 10,
                       padding: "10px 18px", fontSize: 14, fontWeight: 700, textDecoration: "none",
                     }}>
-                      ⬇ Story
+                      ⬇ Story 9:16
                     </a>
-                    <a href={`/jobs/${job.id}/feed-image`} download={`phe-job-${job.id}-feed.png`} style={{
+                    <a href={`/jobs/${job.id}/square-image`} download={`phe-job-${job.id}-quadrat.png`} style={{
                       background: "#eef4fb", color: "#1e3a5f", borderRadius: 10,
                       padding: "10px 18px", fontSize: 14, fontWeight: 700, textDecoration: "none",
                     }}>
-                      ⬇ Feed
+                      ⬇ Feed 1:1
+                    </a>
+                    <a href={`/jobs/${job.id}/feed-image`} download={`phe-job-${job.id}-hochformat.png`} style={{
+                      background: "#eef4fb", color: "#1e3a5f", borderRadius: 10,
+                      padding: "10px 18px", fontSize: 14, fontWeight: 700, textDecoration: "none",
+                    }}>
+                      ⬇ Ad 4:5
                     </a>
                   </div>
                 </div>

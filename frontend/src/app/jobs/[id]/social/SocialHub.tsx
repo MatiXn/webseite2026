@@ -40,16 +40,25 @@ export default function SocialHub({ caption, jobId }: { caption: string; jobId: 
             padding: "14px 24px", fontSize: 15, fontWeight: 700, textDecoration: "none",
           }}
         >
-          ⬇ Story-Bild (1080×1920)
+          ⬇ Story 9:16 — nur Instagram-Story & TikTok
         </a>
         <a
-          href={`/jobs/${jobId}/feed-image`} download={`phe-job-${jobId}-feed.png`}
+          href={`/jobs/${jobId}/square-image`} download={`phe-job-${jobId}-quadrat.png`}
           style={{
             background: "#f59e0b", color: "#1a1a1a", borderRadius: 12,
             padding: "14px 24px", fontSize: 15, fontWeight: 700, textDecoration: "none",
           }}
         >
-          ⬇ Feed-Bild (1080×1350)
+          ⬇ Quadrat 1:1 — Instagram-/Facebook-Feed
+        </a>
+        <a
+          href={`/jobs/${jobId}/feed-image`} download={`phe-job-${jobId}-hochformat.png`}
+          style={{
+            background: "#f59e0b", color: "#1a1a1a", borderRadius: 12,
+            padding: "14px 24px", fontSize: 15, fontWeight: 700, textDecoration: "none",
+          }}
+        >
+          ⬇ Hochformat 4:5 — Meta Ads
         </a>
       </div>
     </div>

@@ -53,23 +53,42 @@ export default async function SocialPage({ params }: { params: Promise<{ id: str
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 32, marginBottom: 48 }}>
           <div>
-            <h2 style={{ fontSize: 17, fontWeight: 700, color: "#1d1d1f", marginBottom: 12 }}>
-              Story / TikTok (9:16)
+            <h2 style={{ fontSize: 17, fontWeight: 700, color: "#1d1d1f", marginBottom: 4 }}>
+              Story (9:16)
             </h2>
+            <p style={{ fontSize: 13, color: "#86868b", marginBottom: 12 }}>
+              Nur für Instagram-Storys & TikTok — im Feed wird es abgeschnitten!
+            </p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`/jobs/${job.id}/story-image`} alt="Story-Vorschau"
-              style={{ width: "100%", maxWidth: 320, borderRadius: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.12)" }}
+              style={{ width: "100%", maxWidth: 300, borderRadius: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.12)" }}
             />
           </div>
           <div>
-            <h2 style={{ fontSize: 17, fontWeight: 700, color: "#1d1d1f", marginBottom: 12 }}>
-              Instagram-Feed / Meta-Ad (4:5)
+            <h2 style={{ fontSize: 17, fontWeight: 700, color: "#1d1d1f", marginBottom: 4 }}>
+              Quadrat (1:1)
             </h2>
+            <p style={{ fontSize: 13, color: "#86868b", marginBottom: 12 }}>
+              Für Instagram- & Facebook-Feed-Posts — wird nie abgeschnitten.
+            </p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`/jobs/${job.id}/feed-image`} alt="Feed-Vorschau"
-              style={{ width: "100%", maxWidth: 380, borderRadius: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.12)" }}
+              src={`/jobs/${job.id}/square-image`} alt="Quadrat-Vorschau"
+              style={{ width: "100%", maxWidth: 340, borderRadius: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.12)" }}
+            />
+          </div>
+          <div>
+            <h2 style={{ fontSize: 17, fontWeight: 700, color: "#1d1d1f", marginBottom: 4 }}>
+              Hochformat (4:5)
+            </h2>
+            <p style={{ fontSize: 13, color: "#86868b", marginBottom: 12 }}>
+              Für Meta Ads (Anzeigen) — maximale Fläche im Feed.
+            </p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`/jobs/${job.id}/feed-image`} alt="Hochformat-Vorschau"
+              style={{ width: "100%", maxWidth: 340, borderRadius: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.12)" }}
             />
           </div>
         </div>
