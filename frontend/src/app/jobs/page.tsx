@@ -1,5 +1,6 @@
 "use client";
 import { useState, useCallback, useEffect } from "react";
+import Link from "next/link";
 import Nav, { WA_LINK, MAIL_APPLY } from "../components/Nav";
 import FaqSection from "../components/FaqSection";
 import Footer from "../components/Footer";
@@ -61,6 +62,22 @@ ${jobUrl}
 
   return `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(jobUrl)}&title=${encodeURIComponent(job.title + " – PHE-Perm Engineering")}&summary=${encodeURIComponent(text)}&source=${encodeURIComponent("phe-perm.de")}`;
 }
+
+// Eine Quelle für sichtbares FAQ und FAQPage-Schema — Google verlangt,
+// dass Schema-FAQ-Inhalte auch sichtbar auf der Seite stehen.
+const JOBS_FAQ = [
+  { q: "Wie finde ich Jobs in meiner Nähe?", a: "Geben Sie Ihren Wohnort in das Suchfeld ein. Wenn keine Stelle direkt in Ihrer Stadt verfügbar ist, zeigen wir automatisch alle offenen Positionen im Umkreis von 50 km an, sortiert nach Entfernung." },
+  { q: "Was kostet die Jobvermittlung über PHE-Perm Engineering?", a: "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE-Perm Engineering wird ausschließlich vom einstellenden Unternehmen vergütet – Bewerber zahlen keinen Cent." },
+  { q: "Was verdiene ich als Elektroniker in Deutschland?", a: "Das Gehalt variiert je nach Spezialisierung und Region. Elektroniker für Betriebstechnik verdienen typischerweise 40.000–56.000 €/Jahr, SPS-Programmierer und Automatisierungstechniker 55.000–75.000 €/Jahr. Wir verhandeln für Sie das bestmögliche Gehalt." },
+  { q: "Wie kann ich mich auf eine Stelle bewerben?", a: "Sie haben zwei Möglichkeiten: Klicken Sie auf 'WhatsApp' für eine schnelle Bewerbung, oder wählen Sie 'E-Mail' und senden Sie Ihre Unterlagen (Lebenslauf, Zeugnisse) an bewerbung@phe-perm.de. Unser Team meldet sich innerhalb von 24 Stunden." },
+  { q: "Wie lange dauert es, bis ich einen neuen Job finde?", a: "Viele unserer Kandidaten finden über PHE-Perm Engineering innerhalb von 2 bis 6 Wochen eine neue Festanstellung. Die Dauer hängt von Qualifikation, Region und Gehaltsvorstellung ab." },
+  { q: "Ist PHE-Perm Engineering eine Zeitarbeitsfirma?", a: "Nein. PHE-Perm Engineering vermittelt ausschließlich Festanstellungen direkt beim Unternehmen – keine Zeitarbeit, keine Leiharbeit, kein befristeter Vertrag." },
+  { q: "Gibt es Stellen, die nicht online gelistet sind?", a: "Ja. Wir führen zahlreiche exklusive Positionen, die wir nicht öffentlich ausschreiben. Kontaktieren Sie uns per WhatsApp und beschreiben Sie, was Sie suchen, wir finden auch unveröffentlichte Stellen für Sie." },
+  { q: "Welche Qualifikationen brauche ich für Elektrotechnik-Jobs?", a: "Für die meisten Stellen wird eine abgeschlossene Berufsausbildung im jeweiligen Bereich vorausgesetzt. Berufserfahrung ist von Vorteil, aber keine Voraussetzung, wir haben auch Einstiegspositionen für Berufsanfänger." },
+  { q: "In welchen Bundesländern vermittelt PHE-Perm Engineering Jobs?", a: "PHE-Perm Engineering vermittelt deutschlandweit – mit Schwerpunkten in NRW (Düsseldorf, Köln, Dortmund), Bayern (München), Hessen (Frankfurt) und Baden-Württemberg (Stuttgart, Mannheim)." },
+  { q: "Welche Unterlagen brauche ich für die Bewerbung?", a: "Für die erste Kontaktaufnahme reichen Ihr Name, Ihre Telefonnummer und Ihre gewünschte Position. Für das Vorstellungsgespräch benötigen Sie Lebenslauf, Zeugnisse und Qualifikationsnachweise. Mit dem kostenlosen Lebenslauf-Generator von PHE-Perm können Sie Ihren CV direkt auf der Seite erstellen." },
+  { q: "Wie weit ist der Umkreis bei der Standortsuche?", a: "Wir suchen automatisch im Umkreis von 50 km um Ihren eingegebenen Ort. Falls Sie einen anderen Radius bevorzugen, kontaktieren Sie uns, wir suchen gezielt für Sie." },
+];
 
 type SearchResult =
   | { type: "exact"; jobs: Job[] }
@@ -505,34 +522,17 @@ export default function JobsPage() {
       </main>
 
       <div style={{ background: "var(--bg)", borderTop: "1px solid var(--border)" }}>
-        <FaqSection title="Häufige Fragen zu Stellenangeboten" items={[
-          { q: "Wie finde ich Jobs in meiner Nähe?", a: "Geben Sie Ihren Wohnort in das Suchfeld ein. Wenn keine Stelle direkt in Ihrer Stadt verfügbar ist, zeigen wir automatisch alle offenen Positionen im Umkreis von 50 km an, sortiert nach Entfernung." },
-          { q: "Was verdiene ich als Elektroniker in Deutschland?", a: "Das Gehalt variiert je nach Spezialisierung und Region. Elektroniker für Betriebstechnik verdienen typischerweise 40.000–56.000 €/Jahr, SPS-Programmierer und Automatisierungstechniker 55.000–75.000 €/Jahr. Wir verhandeln für Sie das bestmögliche Gehalt." },
-          { q: "Wie kann ich mich auf eine Stelle bewerben?", a: "Sie haben zwei Möglichkeiten: Klicken Sie auf 'WhatsApp' für eine schnelle Bewerbung, oder wählen Sie 'E-Mail' und senden Sie Ihre Unterlagen (Lebenslauf, Zeugnisse) an bewerbung@phe-perm.de. Unser Team meldet sich innerhalb von 24 Stunden." },
-          { q: "Gibt es Stellen, die nicht online gelistet sind?", a: "Ja. Wir führen zahlreiche exklusive Positionen, die wir nicht öffentlich ausschreiben. Kontaktieren Sie uns per WhatsApp und beschreiben Sie, was Sie suchen, wir finden auch unveröffentlichte Stellen für Sie." },
-          { q: "Welche Qualifikationen brauche ich für Elektrotechnik-Jobs?", a: "Für die meisten Stellen wird eine abgeschlossene Berufsausbildung oder ein Studium im jeweiligen Bereich vorausgesetzt. Berufserfahrung ist von Vorteil, aber keine Voraussetzung, wir haben auch Einstiegspositionen für Berufsanfänger." },
-          { q: "Wie weit ist der Umkreis bei der Standortsuche?", a: "Wir suchen automatisch im Umkreis von 50 km um Ihren eingegebenen Ort. Falls Sie einen anderen Radius bevorzugen, kontaktieren Sie uns, wir suchen gezielt für Sie." },
-        ]} />
+        <FaqSection title="Häufige Fragen zu Stellenangeboten" items={JOBS_FAQ} />
       </div>
 
       <JsonLd data={{
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": [
-          { "@type": "Question", "name": "Wie finde ich Jobs in meiner Nähe?", "acceptedAnswer": { "@type": "Answer", "text": "Geben Sie Ihren Wohnort oder Ihre Postleitzahl in das Suchfeld ein. PHE-Perm Engineering zeigt automatisch alle passenden Stellen im Umkreis von 50 km an." } },
-          { "@type": "Question", "name": "Was kostet die Jobvermittlung über PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE-Perm Engineering wird ausschließlich vom einstellenden Unternehmen vergütet – Bewerber zahlen keinen Cent." } },
-          { "@type": "Question", "name": "Was verdiene ich als Elektroniker in Deutschland?", "acceptedAnswer": { "@type": "Answer", "text": "Elektroniker für Betriebstechnik verdienen in Deutschland typischerweise 38.000–52.000 € brutto pro Jahr. Mit Berufserfahrung und Spezialisierung (z. B. SPS) sind 55.000–70.000 € möglich." } },
-          { "@type": "Question", "name": "Was verdient ein SPS-Programmierer in Deutschland?", "acceptedAnswer": { "@type": "Answer", "text": "SPS-Programmierer verdienen in Deutschland zwischen 45.000 und 75.000 € brutto jährlich, abhängig von Erfahrung und Region. In NRW und Bayern liegen die Gehälter überdurchschnittlich." } },
-          { "@type": "Question", "name": "Wie funktioniert die Bewerbung über PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "Klicken Sie bei der gewünschten Stelle auf 'Via WhatsApp bewerben' oder 'Per E-Mail bewerben'. Unser Team meldet sich innerhalb von 24 Stunden mit passenden Informationen zur Stelle und zum nächsten Schritt." } },
-          { "@type": "Question", "name": "Wie lange dauert es bis ich einen neuen Job finde?", "acceptedAnswer": { "@type": "Answer", "text": "Viele unserer Kandidaten finden über PHE-Perm Engineering innerhalb von 2 bis 6 Wochen eine neue Festanstellung. Die Dauer hängt von Qualifikation, Region und Gehaltsvorstellung ab." } },
-          { "@type": "Question", "name": "Ist PHE-Perm Engineering eine Zeitarbeitsfirma?", "acceptedAnswer": { "@type": "Answer", "text": "Nein. PHE-Perm Engineering vermittelt ausschließlich Festanstellungen direkt beim Unternehmen – keine Zeitarbeit, keine Leiharbeit, kein befristeter Vertrag." } },
-          { "@type": "Question", "name": "Welche Berufe vermittelt PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "PHE-Perm Engineering vermittelt Fachkräfte in den Bereichen Elektrotechnik (Elektroniker, Elektriker, Schaltanlagenbauer), Automatisierung (SPS-Programmierer, Steuerungstechniker), Mechatronik, IT (Netzwerktechniker, Software-Entwickler) sowie Bau (Bauleiter, Projektleiter TGA)." } },
-          { "@type": "Question", "name": "Gibt es Stellen die nicht online ausgeschrieben sind?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Viele unserer Stellen werden nicht öffentlich ausgeschrieben. Über unseren direkten Kontakt per WhatsApp erhalten Sie Zugang zu exklusiven Positionen, die nur über PHE-Perm Engineering besetzt werden." } },
-          { "@type": "Question", "name": "In welchen Bundesländern vermittelt PHE-Perm Engineering Jobs?", "acceptedAnswer": { "@type": "Answer", "text": "PHE-Perm Engineering vermittelt deutschlandweit – mit Schwerpunkten in NRW (Düsseldorf, Köln, Dortmund), Bayern (München), Hessen (Frankfurt) und Baden-Württemberg (Stuttgart, Mannheim)." } },
-          { "@type": "Question", "name": "Welche Unterlagen brauche ich für die Bewerbung?", "acceptedAnswer": { "@type": "Answer", "text": "Für die erste Kontaktaufnahme reicht Ihr Name, Ihre Telefonnummer und Ihre gewünschte Position. Für das Vorstellungsgespräch benötigen Sie Lebenslauf, Zeugnisse und Qualifikationsnachweise. Mit dem kostenlosen Lebenslauf-Generator von PHE-Perm können Sie Ihren CV direkt auf der Seite erstellen." } },
-          { "@type": "Question", "name": "Was ist der Unterschied zwischen Festanstellung und Zeitarbeit?", "acceptedAnswer": { "@type": "Answer", "text": "Bei einer Festanstellung werden Sie direkt vom Unternehmen eingestellt und haben volle Sozialleistungen, Kündigungsschutz und Urlaubsansprüche. Zeitarbeit bedeutet, dass Sie bei einer Zeitarbeitsfirma angestellt und an Betriebe verliehen werden – oft mit geringerer Planungssicherheit. PHE-Perm vermittelt ausschließlich Festanstellungen." } },
-          { "@type": "Question", "name": "Kann ich mich auch ohne vollständige Unterlagen bewerben?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. Nehmen Sie einfach Kontakt auf und schildern Sie kurz Ihre Erfahrungen und Wünsche. Unser Team hilft Ihnen, den nächsten Schritt zu planen – auch wenn der Lebenslauf noch nicht fertig ist." } },
-        ]
+        "mainEntity": JOBS_FAQ.map(f => ({
+          "@type": "Question",
+          "name": f.q,
+          "acceptedAnswer": { "@type": "Answer", "text": f.a },
+        })),
       }} />
       <JsonLd data={{
         "@context": "https://schema.org",
@@ -578,7 +578,10 @@ function JobDetailModal({ job, jobUrl, onClose, onApply }: { job: Job; jobUrl: s
         </div>
 
         {/* Title */}
-        <h2 style={{ fontSize: 22, fontWeight: 700, color: "var(--navy)", lineHeight: 1.2, marginBottom: 12 }}>{job.title}</h2>
+        <h2 style={{ fontSize: 22, fontWeight: 700, color: "var(--navy)", lineHeight: 1.2, marginBottom: 6 }}>{job.title}</h2>
+        <Link href={`/jobs/${job.id}`} style={{ display: "inline-block", fontSize: 13, fontWeight: 700, color: "var(--blue)", textDecoration: "none", marginBottom: 12 }}>
+          Vollständige Stellenanzeige mit Bewerbungsformular →
+        </Link>
 
         {/* Meta */}
         <div style={{ display: "flex", gap: 16, fontSize: 14, color: "var(--gray)", marginBottom: 20, flexWrap: "wrap" }}>
@@ -701,9 +704,20 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
           )}
         </div>
 
-        {/* Title */}
-        <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--navy)", lineHeight: 1.3, marginBottom: 10, minHeight: 44 }}>
-          {job.title}
+        {/* Title — echter <a href> zur Detailseite für Crawler & Cmd/Mittelklick; normaler Klick öffnet das Modal */}
+        <h3 style={{ fontSize: 16, fontWeight: 700, lineHeight: 1.3, marginBottom: 10, minHeight: 44 }}>
+          <Link
+            href={`/jobs/${job.id}`}
+            onClick={e => {
+              e.stopPropagation();
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+              e.preventDefault();
+              openDetail();
+            }}
+            style={{ color: "var(--navy)", textDecoration: "none" }}
+          >
+            {job.title}
+          </Link>
         </h3>
 
         {/* Meta */}

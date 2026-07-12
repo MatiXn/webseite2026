@@ -381,6 +381,21 @@ function YaftoForm() {
   );
 }
 
+// Eine Quelle für sichtbares FAQ und FAQPage-Schema — Google verlangt,
+// dass Schema-FAQ-Inhalte auch sichtbar auf der Seite stehen.
+const HOME_FAQ = [
+  { q: "Was ist PHE-Perm Engineering?", a: "PHE-Perm Engineering Ingenieure & Techniker GmbH ist eine spezialisierte Personalvermittlung mit Sitz in Düsseldorf. Das Unternehmen vermittelt Techniker und Fachkräfte aus Elektrotechnik, Mechatronik, IT und Bau in Festanstellungen bei deutschen Unternehmen – bundesweit und kostenlos für Bewerber." },
+  { q: "Was kostet die Vermittlung durch PHE-Perm Engineering?", a: "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE-Perm Engineering wird ausschließlich vom einstellenden Unternehmen vergütet. Bewerber zahlen weder für die Vermittlung noch für Beratungsgespräche." },
+  { q: "Wie funktioniert die Bewerbung bei PHE?", a: "Die Bewerbung läuft in drei Schritten: Kontakt aufnehmen per WhatsApp oder E-Mail, unser Team meldet sich innerhalb von 24 Stunden und bespricht passende Stellen, danach begleiten wir Sie durch den gesamten Bewerbungsprozess bis zur Vertragsunterzeichnung." },
+  { q: "Wie lange dauert es, bis ich einen neuen Job finde?", a: "Viele unserer Bewerber finden innerhalb von 2–6 Wochen eine neue Festanstellung. Die genaue Dauer hängt von Beruf, Region und Ihren Gehaltsvorstellungen ab – bei gefragten Profilen wie SPS-Programmierern geht es oft schneller." },
+  { q: "Ist PHE-Perm Engineering eine Zeitarbeitsfirma?", a: "Nein. PHE-Perm Engineering vermittelt ausschließlich Festanstellungen direkt beim Unternehmen. Es gibt keine Zeitarbeit, keine Leiharbeit und keine befristeten Verträge über PHE." },
+  { q: "Welche Berufe vermittelt PHE-Perm Engineering?", a: "Wir vermitteln Techniker und Fachkräfte in: Elektrotechnik (Elektroniker, Elektriker, Servicetechniker), Automatisierung (SPS-Programmierer, Steuerungstechniker), Mechatronik und Kältetechnik (Mechatroniker, Anlagenmechaniker, Kältetechniker), IT (Netzwerktechniker, IT-Systemelektroniker) sowie Bau und TGA (Bauleiter, Projektleiter)." },
+  { q: "Was ist der Unterschied zwischen Personalvermittlung und Zeitarbeit?", a: "Bei der Personalvermittlung wird der Kandidat direkt und dauerhaft beim Unternehmen angestellt – mit vollen Sozialleistungen, Kündigungsschutz und Urlaubsansprüchen. Bei Zeitarbeit ist man bei einer Zeitarbeitsfirma angestellt und wird an Betriebe verliehen. PHE-Perm Engineering praktiziert ausschließlich die direkte Festanstellungsvermittlung." },
+  { q: "Wer zahlt den Personalvermittler bei PHE-Perm Engineering?", a: "Das einstellende Unternehmen zahlt die Vermittlungsprovision an PHE-Perm Engineering – und nur im Erfolgsfall. Für Bewerber entstehen keinerlei Kosten. Dieses Modell ist bei seriösen Personalvermittlern Standard." },
+  { q: "Kann ich mich bewerben, wenn ich keine aktuelle Stelle suche?", a: "Ja. Sie können sich jederzeit vormerken lassen, auch bei bestehender Beschäftigung. Wir informieren Sie diskret, sobald eine passende Position verfügbar ist." },
+  { q: "Was ist YAFTO?", a: "YAFTO ist unsere neue Plattform, auf der Sie Ihr Profil anonym veröffentlichen und Unternehmen sich bei Ihnen bewerben. Sie entscheiden, wen Sie kennenlernen möchten, ohne Druck und ohne Spam. Bald verfügbar." },
+];
+
 export default function Home() {
   const [modalJob, setModalJob] = useState<Job | null>(null);
   return (
@@ -389,32 +404,13 @@ export default function Home() {
       <JsonLd data={{
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": [
-          { "@type": "Question", "name": "Was ist PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "PHE-Perm Engineering Ingenieure & Techniker GmbH ist eine spezialisierte Personalvermittlung mit Sitz in Düsseldorf. Das Unternehmen vermittelt Fachkräfte aus Elektrotechnik, IT, Mechatronik und Bau in Festanstellungen bei deutschen Unternehmen – bundesweit und kostenlos für Bewerber." } },
-          { "@type": "Question", "name": "Was kostet die Vermittlung durch PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE-Perm Engineering wird ausschließlich vom einstellenden Unternehmen vergütet. Bewerber zahlen weder für die Vermittlung noch für Beratungsgespräche." } },
-          { "@type": "Question", "name": "Wie funktioniert die Bewerbung bei PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "Die Bewerbung läuft in drei Schritten: (1) Kontakt aufnehmen per WhatsApp oder E-Mail, (2) Unser Team meldet sich innerhalb von 24 Stunden und bespricht passende Stellen, (3) Wir begleiten Sie durch den gesamten Bewerbungsprozess bis zur Vertragsunterzeichnung." } },
-          { "@type": "Question", "name": "Wie lange dauert es bis ich über PHE einen neuen Job finde?", "acceptedAnswer": { "@type": "Answer", "text": "Die meisten Kandidaten finden über PHE-Perm Engineering innerhalb von 2 bis 6 Wochen eine neue Festanstellung. Bei gefragten Profilen (z. B. SPS-Programmierer, IT-Spezialisten) geht es oft schneller." } },
-          { "@type": "Question", "name": "Ist PHE-Perm Engineering eine Zeitarbeitsfirma?", "acceptedAnswer": { "@type": "Answer", "text": "Nein. PHE-Perm Engineering vermittelt ausschließlich Direktanstellungen und Festanstellungen beim Unternehmen. Es gibt keine Zeitarbeit, keine Leiharbeit und keine befristeten Verträge über PHE." } },
-          { "@type": "Question", "name": "Welche Berufe und Branchen vermittelt PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "PHE-Perm Engineering vermittelt in: Elektrotechnik (Elektroniker, Schaltanlagenbauer, Servicetechniker), Automatisierung (SPS-Programmierer, Steuerungstechniker, Inbetriebnehmer), Mechatronik (Mechatroniker, Anlagenmechaniker), IT (Netzwerktechniker, IT-Systemelektroniker, Software-Entwickler) und Bau (Bauleiter, Projektleiter TGA, Oberbauleiter)." } },
-          { "@type": "Question", "name": "Wo ist PHE-Perm Engineering tätig?", "acceptedAnswer": { "@type": "Answer", "text": "PHE-Perm Engineering vermittelt deutschlandweit. Der Hauptsitz ist in Düsseldorf (NRW). Stellen werden bundesweit angeboten – von München und Frankfurt bis Hamburg und Berlin." } },
-          { "@type": "Question", "name": "Wer zahlt den Personalvermittler bei PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "Das einstellende Unternehmen zahlt die Vermittlungsprovision an PHE-Perm Engineering. Für Bewerber entstehen keinerlei Kosten. Dieses Modell ist bei seriösen Personalvermittlern Standard." } },
-          { "@type": "Question", "name": "Was ist der Unterschied zwischen Personalvermittlung und Zeitarbeit?", "acceptedAnswer": { "@type": "Answer", "text": "Bei der Personalvermittlung (wie durch PHE-Perm Engineering) wird der Kandidat direkt und dauerhaft beim Unternehmen angestellt. Bei Zeitarbeit wird man bei einer Zeitarbeitsfirma angestellt und an Betriebe 'verliehen'. PHE-Perm Engineering praktiziert ausschließlich die direkte Festanstellungsvermittlung." } },
-          { "@type": "Question", "name": "Ist PHE-Perm Engineering seriös?", "acceptedAnswer": { "@type": "Answer", "text": "Ja. PHE-Perm Engineering Ingenieure & Techniker GmbH ist ein eingetragenes Unternehmen mit Sitz in Düsseldorf, Hüttenstraße 30. Die Vermittlung ist kostenfrei für Bewerber, und das Unternehmen wird nur im Erfolgsfall vom Arbeitgeber vergütet – ein transparentes und seriöses Modell." } },
-          { "@type": "Question", "name": "Wie bewerbe ich mich über WhatsApp bei PHE-Perm Engineering?", "acceptedAnswer": { "@type": "Answer", "text": "Klicken Sie auf den 'Via WhatsApp bewerben' Button. WhatsApp öffnet sich mit einer vorausgefüllten Nachricht an +49 173 9980100. Schreiben Sie kurz Ihren Namen und Ihre gewünschte Position – unser Team antwortet in der Regel innerhalb weniger Stunden." } },
-        ]
+        "mainEntity": HOME_FAQ.map(f => ({
+          "@type": "Question",
+          "name": f.q,
+          "acceptedAnswer": { "@type": "Answer", "text": f.a },
+        })),
       }} />
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "HowTo",
-        "name": "Wie bewerbe ich mich über PHE-Perm Engineering?",
-        "description": "In 3 Schritten zur Festanstellung über PHE-Perm Engineering – kostenlos und bundesweit.",
-        "totalTime": "PT10M",
-        "step": [
-          { "@type": "HowToStep", "position": 1, "name": "Kontakt aufnehmen", "text": "Klicken Sie auf 'Via WhatsApp bewerben' oder schreiben Sie an bewerbung@phe-perm.de. Teilen Sie kurz Ihre gewünschte Stelle und Ihren Namen mit." },
-          { "@type": "HowToStep", "position": 2, "name": "Beratungsgespräch", "text": "Unser Team meldet sich innerhalb von 24 Stunden. Wir besprechen Ihre Qualifikationen, Gehaltsvorstellungen und passende Stellen – vertraulich und kostenlos." },
-          { "@type": "HowToStep", "position": 3, "name": "Stellenvermittlung & Vertrag", "text": "Wir stellen Sie dem Unternehmen vor und begleiten den gesamten Prozess bis zum Vertragsabschluss. Sie werden direkt beim Unternehmen fest angestellt." },
-        ]
-      }} />
+      {/* HowTo-Schema entfernt: liefert seit Sept. 2023 kein Rich Result mehr (deprecated) */}
       {/* ── NAV ── */}
       <Nav />
 
@@ -461,6 +457,14 @@ export default function Home() {
               <span style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)" }}>5.0</span>
               <span style={{ fontSize: 13, color: "var(--gray)" }}>· 32 Google-Bewertungen</span>
             </div>
+
+            {/* B2B-Teaser: Arbeitgeber-Einstieg above the fold */}
+            <p style={{ fontSize: 14, color: "var(--gray)", marginTop: 20 }}>
+              Sie sind Arbeitgeber und suchen Elektroniker, Mechatroniker oder andere Technik-Fachkräfte?{" "}
+              <Link href="/talente-finden" style={{ color: "var(--blue)", fontWeight: 700, textDecoration: "none", whiteSpace: "nowrap" }}>
+                Fachkräfte finden →
+              </Link>
+            </p>
           </div>
 
           {/* RIGHT: Job Cards Fan, hidden on mobile */}
@@ -632,7 +636,8 @@ export default function Home() {
           <div className="reviews-marquee">
             <div className="reviews-marquee-track">
               {[...REVIEWS, ...REVIEWS].map((r, idx) => (
-                <div key={idx} className="reviews-marquee-card">
+                // Zweite Marquee-Spur ist reine Animations-Kopie → für Screenreader/Crawler ausblenden
+                <div key={idx} className="reviews-marquee-card" aria-hidden={idx >= REVIEWS.length ? "true" : undefined}>
                   <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
                     <div style={{
                       width: 40, height: 40, borderRadius: "50%",

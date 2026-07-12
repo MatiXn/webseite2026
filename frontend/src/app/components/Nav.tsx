@@ -59,8 +59,8 @@ export default function Nav() {
         height: 58,
         display: "flex", alignItems: "center", justifyContent: "space-between",
       }}>
-        {/* Logo */}
-        <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+        {/* Logo — Padding vergrößert die Tap-Fläche auf min. 44px */}
+        <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0, padding: "8px 8px 8px 0", minHeight: 44 }}>
           <Image src="/phe-logo.svg" alt="PHE-Perm Engineering" height={38} width={42}
             style={{ height: isMobile ? 28 : 34, width: "auto" }} priority />
         </Link>
@@ -115,10 +115,10 @@ export default function Nav() {
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <Link href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{
               background: "#22c55e", color: "#fff",
-              width: 36, height: 36, borderRadius: "50%",
+              width: 44, height: 44, borderRadius: "50%",
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>
-              <WhatsAppIcon size={18} />
+              <WhatsAppIcon size={20} />
             </Link>
             <button
               onClick={() => setOpen(o => !o)}
@@ -127,7 +127,7 @@ export default function Nav() {
                 background: "none", border: "none", cursor: "pointer",
                 padding: "6px", display: "flex", flexDirection: "column",
                 gap: 5, alignItems: "center", justifyContent: "center",
-                width: 36, height: 36,
+                width: 44, height: 44,
               }}
             >
               <span style={{
@@ -153,14 +153,14 @@ export default function Nav() {
       {/* Mobile dropdown menu */}
       {isMobile && (
         <div style={{
-          position: "fixed", top: 58, left: 0, right: 0, zIndex: 99,
-          background: "rgba(245,245,247,0.97)",
-          backdropFilter: "saturate(180%) blur(20px)",
-          WebkitBackdropFilter: "saturate(180%) blur(20px)",
+          position: "fixed", top: 58, left: 0, right: 0, bottom: 0, zIndex: 99,
+          // Vollflächig opak, damit Seiteninhalt hinter dem offenen Menü nicht durchscheint
+          background: "#f5f5f7",
           borderBottom: "1px solid rgba(0,0,0,0.12)",
-          overflow: "hidden",
-          maxHeight: open ? "100vh" : 0,
-          transition: "max-height 0.3s ease",
+          overflow: "hidden auto",
+          maxHeight: open ? "calc(100vh - 58px)" : 0,
+          opacity: open ? 1 : 0,
+          transition: "max-height 0.3s ease, opacity 0.2s ease",
           pointerEvents: open ? "auto" : "none",
         }}>
           <ul style={{ listStyle: "none", padding: "12px 0 20px", margin: 0 }}>

@@ -1149,12 +1149,21 @@ export default function LebenslaufPage() {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "PHE Lebenslauf-Generator",
-        "url": "https://phe-perm.de/lebenslauf-erstellen",
+        "url": "https://www.phe-perm.de/lebenslauf-erstellen",
         "description": "Kostenloser Lebenslauf-Generator mit 4 Vorlagen für IT-, Elektro- und Baufachkräfte.",
         "applicationCategory": "BusinessApplication",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
         "featureList": ["Kostenlos", "4 Vorlagen", "Live-Vorschau", "PDF-Export", "Foto-Upload"],
-        "inLanguage": "de"
+        "inLanguage": "de",
+        "publisher": { "@id": "https://www.phe-perm.de/#organization" },
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.phe-perm.de" },
+          { "@type": "ListItem", "position": 2, "name": "Lebenslauf erstellen", "item": "https://www.phe-perm.de/lebenslauf-erstellen" },
+        ],
       }} />
     </>
   );

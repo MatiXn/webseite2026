@@ -272,20 +272,22 @@ export default function KontaktPage() {
         ]} />
       </div>
 
+      {/* Referenziert die globale Organization aus layout.tsx per @id statt sie zu duplizieren */}
       <JsonLd data={{
         "@context": "https://schema.org",
         "@type": "ContactPage",
         "name": "Kontakt – PHE-Perm Engineering",
         "description": "Kontaktiere PHE-Perm Engineering per WhatsApp, Telefon oder E-Mail. Wir antworten innerhalb weniger Stunden.",
-        "url": "https://phe-perm.de/kontakt",
-        "mainEntity": {
-          "@type": "LocalBusiness",
-          "name": "PHE-Perm Engineering Ingenieure & Techniker GmbH",
-          "telephone": "+491739980100",
-          "email": "info@phe-perm.de",
-          "address": { "@type": "PostalAddress", "streetAddress": "Hüttenstraße 30", "addressLocality": "Düsseldorf", "postalCode": "40215", "addressCountry": "DE" },
-          "openingHoursSpecification": { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "18:00" }
-        }
+        "url": "https://www.phe-perm.de/kontakt",
+        "mainEntity": { "@id": "https://www.phe-perm.de/#organization" },
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.phe-perm.de" },
+          { "@type": "ListItem", "position": 2, "name": "Kontakt", "item": "https://www.phe-perm.de/kontakt" },
+        ],
       }} />
 
       <Footer />

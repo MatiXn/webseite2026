@@ -147,18 +147,21 @@ export default function UeberUnsPage() {
         ]} />
       </div>
 
+      {/* Referenziert die globale Organization aus layout.tsx per @id statt sie zu duplizieren */}
       <JsonLd data={{
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "PHE-Perm Engineering Ingenieure & Techniker GmbH",
-        "url": "https://phe-perm.de",
-        "telephone": "+491739980100",
-        "email": "info@phe-perm.de",
-        "foundingLocation": "Düsseldorf",
-        "address": { "@type": "PostalAddress", "streetAddress": "Hüttenstraße 30", "addressLocality": "Düsseldorf", "postalCode": "40215", "addressCountry": "DE" },
-        "description": "Spezialisierte Personalvermittlung für IT, Elektrotechnik und Bau, bundesweit, kostenlos für Bewerber, nur Festanstellungen.",
-        "areaServed": "DE",
-        "sameAs": ["https://www.instagram.com/phe_perm_engineering", "https://www.linkedin.com/company/phe-perm-engineering"]
+        "@type": "AboutPage",
+        "name": "Über PHE-Perm Engineering",
+        "url": "https://www.phe-perm.de/ueber-uns",
+        "about": { "@id": "https://www.phe-perm.de/#organization" },
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.phe-perm.de" },
+          { "@type": "ListItem", "position": 2, "name": "Über uns", "item": "https://www.phe-perm.de/ueber-uns" },
+        ],
       }} />
 
       <Footer />

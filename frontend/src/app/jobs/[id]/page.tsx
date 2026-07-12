@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { JOBS } from "../data";
+import { JOBS, parseSalaryRange, validThroughOf } from "../data";
 import type { Metadata } from "next";
 import JsonLd from "../../components/JsonLd";
 import Nav from "../../components/Nav";
@@ -21,8 +21,14 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   if (!job) return {};
 
   const title = `${job.title} in ${job.city} – Festanstellung | PHE-Perm Engineering`;
+  // Auf Wortgrenze kürzen, damit die Description nicht mitten im Wort abbricht
+  const truncateAtWord = (text: string, max: number) => {
+    if (text.length <= max) return text;
+    const cut = text.slice(0, max);
+    return `${cut.slice(0, cut.lastIndexOf(" "))} …`;
+  };
   const description = job.description
-    ? `${job.title} in ${job.city}: ${job.description.slice(0, 120)}… Festanstellung, ${job.salary}. Kostenlos bewerben.`
+    ? truncateAtWord(`${job.title} in ${job.city}: ${job.description} Festanstellung, ${job.salary}. Kostenlos bewerben.`, 158)
     : `Jetzt als ${job.title} in ${job.city} bewerben. ${job.salary}. Festanstellung, kostenlos – PHE-Perm Engineering.`;
 
   const ogImageUrl = `https://www.phe-perm.de/jobs/${id}/opengraph-image`;
@@ -51,19 +57,28 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
   const job = JOBS.find(j => j.id === id);
   if (!job) notFound();
 
-  const validThrough = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+  const salaryRange = parseSalaryRange(job.salary);
+
+  const schemaDescription = [
+    job.intro,
+    job.description,
+    job.aufgaben?.length ? `Ihre Aufgaben: ${job.aufgaben.join(" ")}` : null,
+    job.profil?.length ? `Ihr Profil: ${job.profil.join(" ")}` : null,
+  ].filter(Boolean).join(" ") || `${job.title} in ${job.city}. Festanstellung, kostenlos für Bewerber.`;
 
   const jobPostingSchema = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
     "title": job.title,
-    "description": job.description || `${job.title} in ${job.city}. Festanstellung, kostenlos für Bewerber.`,
-    "datePosted": "2026-01-01",
-    "validThrough": validThrough,
+    "description": schemaDescription,
+    "identifier": { "@type": "PropertyValue", "name": "PHE-Perm Engineering", "value": job.id },
+    "datePosted": job.datePosted,
+    "validThrough": validThroughOf(job),
     "employmentType": "FULL_TIME",
     "hiringOrganization": {
       "@type": "Organization",
       "name": "PHE-Perm Engineering Ingenieure & Techniker GmbH",
+      "url": "https://www.phe-perm.de",
       "sameAs": "https://www.phe-perm.de",
       "logo": "https://www.phe-perm.de/phe-logo.png",
     },
@@ -72,14 +87,22 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
       "address": {
         "@type": "PostalAddress",
         "addressLocality": job.city.split(",")[0].trim(),
+        ...(job.region && job.region !== "Bundesweit" ? { "addressRegion": job.region } : {}),
         "addressCountry": "DE",
       },
     },
-    "baseSalary": {
-      "@type": "MonetaryAmount",
-      "currency": "EUR",
-      "value": { "@type": "QuantitativeValue", "unitText": "YEAR", "description": job.salary },
-    },
+    ...(salaryRange ? {
+      "baseSalary": {
+        "@type": "MonetaryAmount",
+        "currency": "EUR",
+        "value": {
+          "@type": "QuantitativeValue",
+          "minValue": salaryRange.min,
+          "maxValue": salaryRange.max,
+          "unitText": "YEAR",
+        },
+      },
+    } : {}),
     "skills": job.tags.join(", "),
     "benefits": job.benefits?.join(", ") || "Festanstellung, Vollzeit",
     "url": `https://www.phe-perm.de/jobs/${job.id}`,
@@ -125,7 +148,7 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
               background: "rgba(34,197,94,0.15)", border: "1px solid rgba(134,239,172,0.35)",
               borderRadius: 999, padding: "4px 12px",
             }}>
-              ● Aktiv auf Bewerbersuche · {job.posted}
+              ● Aktiv auf Bewerbersuche
             </span>
           </div>
           <h1 style={{
@@ -178,7 +201,17 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
           <h2 style={{ fontSize: 22, fontWeight: 700, color: "#1d1d1f", marginBottom: 16 }}>
             📋 Ihre Aufgaben
           </h2>
+          {job.intro && (
+            <p style={{ fontSize: 16, color: "#3d3d3f", lineHeight: 1.75, marginBottom: 14 }}>{job.intro}</p>
+          )}
           <p style={{ fontSize: 16, color: "#3d3d3f", lineHeight: 1.75 }}>{job.description}</p>
+          {job.aufgaben && job.aufgaben.length > 0 && (
+            <ul style={{ margin: "16px 0 0", paddingLeft: 22, display: "flex", flexDirection: "column", gap: 8 }}>
+              {job.aufgaben.map(a => (
+                <li key={a} style={{ fontSize: 15, color: "#3d3d3f", lineHeight: 1.65 }}>{a}</li>
+              ))}
+            </ul>
+          )}
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 20 }}>
             {job.tags.map(tag => (
               <span key={tag} style={{
@@ -190,6 +223,23 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
             ))}
           </div>
         </section>
+
+        {/* PROFIL */}
+        {job.profil && job.profil.length > 0 && (
+          <section style={{
+            background: "#fff", borderRadius: 16, padding: "32px 28px", marginBottom: 20,
+            boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+          }}>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: "#1d1d1f", marginBottom: 16 }}>
+              🎯 Ihr Profil
+            </h2>
+            <ul style={{ margin: 0, paddingLeft: 22, display: "flex", flexDirection: "column", gap: 8 }}>
+              {job.profil.map(p => (
+                <li key={p} style={{ fontSize: 15, color: "#3d3d3f", lineHeight: 1.65 }}>{p}</li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {/* BENEFITS */}
         <section style={{

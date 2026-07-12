@@ -6,8 +6,41 @@ import Link from "next/link";
 import Nav from "@/app/components/Nav";
 import FaqSection from "@/app/components/FaqSection";
 import Footer from "@/app/components/Footer";
+import JsonLd from "@/app/components/JsonLd";
 
 const MAIL_EMPLOYER = "recruiting@phe-perm.de";
+
+// Eine Quelle für sichtbares FAQ und FAQPage-Schema
+const TALENTE_FAQ = [
+  { q: "Was kostet die Vermittlung für Unternehmen?", a: "Die Vergütung ist erfolgsbasiert – Sie zahlen nur bei erfolgreicher Besetzung. Es gibt keine Vorabkosten oder Bearbeitungsgebühren. Die Konditionen besprechen wir individuell in der kostenlosen Erstberatung." },
+  { q: "Wie schnell erhalten wir erste Kandidatenprofile?", a: "In der Regel erhalten Sie innerhalb von 3–5 Werktagen erste geprüfte Profile passend zu Ihren Anforderungen." },
+  { q: "Welche Fachkräfte vermittelt PHE?", a: "Wir sind spezialisiert auf Elektrotechnik und Instandhaltung (Elektroniker, Betriebselektriker, Elektromonteure), Automatisierung und SPS (SPS-Programmierer, Steuerungstechniker), Mechatronik und Kältetechnik (Mechatroniker, Kältetechniker, Servicetechniker) sowie Bau, Haustechnik und SHK (Anlagenmechaniker, Bauleiter, Projektleiter TGA) – ausschließlich in Festanstellung." },
+  { q: "Wie läuft der Prozess ab?", a: "Nach Ihrer Anfrage analysieren wir Ihren Bedarf, matchen passende Kandidaten aus unserem Pool, liefern Ihnen geprüfte Profile mit Qualifikation, Gehaltsrahmen und Verfügbarkeit und begleiten Interviews bis zum Vertragsabschluss." },
+  { q: "Wie werden die Kandidaten geprüft?", a: "Vor der Vorstellung führen wir mit jedem Kandidaten ein persönliches Gespräch: Wir prüfen Qualifikationen und Berufserfahrung, klären Wechselmotivation, Gehaltsvorstellung, Verfügbarkeit und regionale Flexibilität. Sie erhalten nur Profile, die zu Ihrer Anforderung passen." },
+  { q: "In welchen Regionen ist PHE tätig?", a: "Wir vermitteln deutschlandweit – mit Schwerpunkten in Nordrhein-Westfalen, Bayern, Hessen und Baden-Württemberg. Auch Positionen mit bundesweitem Einsatz oder in kleineren Städten besetzen wir regelmäßig." },
+  { q: "Können auch mehrere Stellen gleichzeitig besetzt werden?", a: "Ja. Ob eine einzelne Fachkraft oder ein größerer Bedarf von 25+ Positionen – wir skalieren die Kandidatensuche entsprechend und priorisieren gemeinsam mit Ihnen." },
+  { q: "Vermittelt PHE auch Zeitarbeitnehmer?", a: "Nein. PHE-Perm Engineering vermittelt ausschließlich Festanstellungen direkt bei Ihrem Unternehmen – keine Zeitarbeit, keine Leiharbeit, keine Arbeitnehmerüberlassung." },
+];
+
+// Sichtbare Fachbereichs-Beschreibungen (Content-Tiefe für die B2B-Servicepage)
+const FACHBEREICHE = [
+  {
+    t: "Elektrotechnik & Instandhaltung",
+    d: "Elektroniker für Betriebstechnik, Betriebselektriker und Elektromonteure für Produktion, Instandhaltung und Anlagenbau. Unsere Kandidaten bringen abgeschlossene Berufsausbildungen, Erfahrung mit Störungsanalyse und Wartung sowie Kenntnisse der einschlägigen Normen (u. a. DGUV V3-Prüfungen) mit.",
+  },
+  {
+    t: "Automatisierung, SPS & IT",
+    d: "SPS-Programmierer und Automatisierungstechniker mit Praxis in Siemens TIA Portal, Steuerungstechnik und Inbetriebnahme. Gefragte Profile für Maschinenbau, Produktionsautomatisierung und Prozessindustrie – vom Programmierer bis zum Inbetriebnehmer.",
+  },
+  {
+    t: "Mechatronik & Kältetechnik",
+    d: "Mechatroniker, Kältetechniker und Servicetechniker für Wartung, Instandhaltung und Kundendienst – von Industriekälte und Klimatechnik bis zu mechatronischen Produktionsanlagen. Auch Außendienst-Profile mit Reisebereitschaft und Führerschein.",
+  },
+  {
+    t: "Bau, Haustechnik & SHK",
+    d: "Anlagenmechaniker SHK, Fachkräfte für MSR-Technik und Gebäudeautomation sowie Bau- und Projektleiter TGA. Für Handwerksbetriebe, Gebäudetechnik-Dienstleister und Generalunternehmer, die langfristig einstellen wollen.",
+  },
+];
 
 const CATEGORIES = [
   "Elektrotechnik / Instandhaltung",
@@ -428,6 +461,11 @@ export default function TalenteFindPage() {
                 Technik-Fachkräfte in Festanstellung — schnell, persönlich, ohne Risiko.
               </p>
 
+              {/* Mobile: Sprung-CTA zum Formular (liegt mobil weit unter dem Fold) */}
+              <a href="#anfrage" className="talente-mobile-cta">
+                Jetzt Fachkräfte anfragen →
+              </a>
+
               {/* Feature pills */}
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 44 }}>
                 {[
@@ -465,7 +503,8 @@ export default function TalenteFindPage() {
             </div>
 
             {/* Right: form card */}
-            <div style={{
+            <div id="anfrage" style={{
+              scrollMarginTop: 80,
               background: "rgba(255,255,255,0.05)",
               backdropFilter: "blur(24px)",
               WebkitBackdropFilter: "blur(24px)",
@@ -555,6 +594,59 @@ export default function TalenteFindPage() {
           </div>
         </section>
 
+        {/* ── FACHBEREICHE — Content-Tiefe für Suchmaschinen & Entscheider ── */}
+        <section style={{ background: "#fff", padding: "80px 24px" }}>
+          <div style={{ maxWidth: 960, margin: "0 auto" }}>
+            <h2 style={{
+              fontSize: 38, fontWeight: 700, color: "#1d1d1f",
+              letterSpacing: "-0.015em", lineHeight: 1.1,
+              marginBottom: 12, textAlign: "center",
+            }}>
+              Diese Fachkräfte vermitteln wir
+            </h2>
+            <p style={{ color: "#707070", fontSize: 17, marginBottom: 48, textAlign: "center", maxWidth: 640, marginLeft: "auto", marginRight: "auto" }}>
+              Spezialisiert statt generalistisch: Wir besetzen ausschließlich technische
+              Positionen – und kennen die Anforderungen dieser Berufe im Detail.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16, marginBottom: 56 }}>
+              {FACHBEREICHE.map(f => (
+                <div key={f.t} style={{ background: "#f5f5f7", borderRadius: 20, padding: "28px 24px" }}>
+                  <h3 style={{ fontSize: 17, fontWeight: 700, color: "#1d1d1f", marginBottom: 10 }}>{f.t}</h3>
+                  <p style={{ fontSize: 15, color: "#707070", lineHeight: 1.7 }}>{f.d}</p>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ maxWidth: 760, margin: "0 auto" }}>
+              <h3 style={{ fontSize: 24, fontWeight: 700, color: "#1d1d1f", marginBottom: 14 }}>
+                Warum Personalvermittlung statt eigener Stellenanzeige?
+              </h3>
+              <p style={{ fontSize: 16, color: "#3d3d3f", lineHeight: 1.75, marginBottom: 16 }}>
+                Elektroniker, Mechatroniker und SPS-Programmierer gehören zu den am stärksten
+                umworbenen Fachkräften in Deutschland. Wer eine Stellenanzeige schaltet, konkurriert
+                mit hunderten Arbeitgebern um dieselben wenigen aktiven Bewerber – während die
+                Mehrheit der qualifizierten Fachkräfte gar nicht aktiv sucht, aber offen für einen
+                Wechsel ist. Genau diese Kandidaten erreichen wir: über unseren laufend gepflegten
+                Pool und aktive Direktansprache.
+              </p>
+              <p style={{ fontSize: 16, color: "#3d3d3f", lineHeight: 1.75, marginBottom: 16 }}>
+                Vor der Vorstellung prüfen wir jeden Kandidaten persönlich: Qualifikationen und
+                Berufserfahrung, Wechselmotivation, Gehaltsvorstellung und Verfügbarkeit. Sie
+                erhalten keine Bewerberflut, sondern eine kleine Auswahl passender Profile – und
+                sprechen nur mit Kandidaten, bei denen die Rahmenbedingungen bereits geklärt sind.
+              </p>
+              <p style={{ fontSize: 16, color: "#3d3d3f", lineHeight: 1.75 }}>
+                Das Risiko liegt dabei vollständig bei uns: Die Vergütung ist erfolgsbasiert und
+                wird erst bei tatsächlicher Einstellung fällig. Es gibt keine Vorabkosten, keine
+                Bearbeitungsgebühren und keine Mindestlaufzeiten – und da wir ausschließlich
+                unbefristete Festanstellungen vermitteln, bauen Sie mit jeder Besetzung
+                langfristiges Know-how im eigenen Haus auf, statt es über Leiharbeit wieder zu
+                verlieren.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* ── CTA — dark again ── */}
         <section style={{ background: "#0c1829", padding: "80px 24px", textAlign: "center" }}>
           <div style={{ maxWidth: 580, margin: "0 auto" }}>
@@ -593,13 +685,36 @@ export default function TalenteFindPage() {
       </main>
 
       {/* ── FAQ ── */}
-      <FaqSection title="Häufige Fragen für Unternehmen" items={[
-        { q: "Was kostet die Vermittlung für Unternehmen?", a: "Die Vergütung ist erfolgsbasiert – Sie zahlen nur bei erfolgreicher Besetzung. Es gibt keine Vorabkosten oder Bearbeitungsgebühren." },
-        { q: "Wie schnell erhalten wir erste Kandidatenprofile?", a: "In der Regel erhalten Sie innerhalb von 3–5 Werktagen erste geprüfte Profile passend zu Ihren Anforderungen." },
-        { q: "Welche Fachkräfte vermittelt PHE?", a: "Wir sind spezialisiert auf Elektrotechnik, IT & Automation, Mechatronik, Kältetechnik sowie Bau & TGA – ausschließlich in Festanstellung." },
-        { q: "Wie läuft der Prozess ab?", a: "Nach Ihrer Anfrage analysieren wir Ihren Bedarf, matchen passende Kandidaten aus unserem Pool, liefern Ihnen geprüfte Profile und begleiten bis zum Vertragsabschluss." },
-        { q: "Vermittelt PHE auch Zeitarbeitnehmer?", a: "Nein. PHE-Perm Engineering vermittelt ausschließlich Festanstellungen direkt beim Unternehmen – keine Zeitarbeit, keine Leiharbeit." },
-      ]} />
+      <FaqSection title="Häufige Fragen für Unternehmen" items={TALENTE_FAQ} />
+
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Personalvermittlung für Technik-Fachkräfte",
+        "serviceType": "Personalvermittlung",
+        "url": "https://www.phe-perm.de/talente-finden",
+        "description": "Erfolgsbasierte Vermittlung von Elektronikern, SPS-Programmierern, Mechatronikern, Kältetechnikern und Bau-/TGA-Fachkräften in unbefristete Festanstellungen – deutschlandweit.",
+        "provider": { "@id": "https://www.phe-perm.de/#organization" },
+        "areaServed": { "@type": "Country", "name": "Deutschland" },
+        "audience": { "@type": "BusinessAudience", "name": "Unternehmen mit Bedarf an Technik-Fachkräften" },
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": TALENTE_FAQ.map(f => ({
+          "@type": "Question",
+          "name": f.q,
+          "acceptedAnswer": { "@type": "Answer", "text": f.a },
+        })),
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.phe-perm.de" },
+          { "@type": "ListItem", "position": 2, "name": "Talente finden", "item": "https://www.phe-perm.de/talente-finden" },
+        ],
+      }} />
 
       {/* ── FOOTER ── */}
       <Footer />

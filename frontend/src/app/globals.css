@@ -493,3 +493,29 @@ body {
   from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* FAQ accordion (native <details>, server-gerendert) */
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::marker { content: ""; }
+.faq-item[open] .faq-icon { transform: rotate(45deg); }
+
+/* Kein horizontaler Overflow (z. B. durch das Reviews-Marquee) */
+body { overflow-x: clip; }
+
+/* Mobile-Sprung-CTA auf /talente-finden — Formular liegt mobil unter dem Fold */
+.talente-mobile-cta {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  background: #3b72b8;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 999px;
+  text-decoration: none;
+  margin-bottom: 28px;
+}
+@media (max-width: 899px) {
+  .talente-mobile-cta { display: inline-flex; }
+}

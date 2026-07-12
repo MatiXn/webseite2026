@@ -98,7 +98,12 @@ const orgSchema = {
   },
   "serviceType": "Personalvermittlung",
   "priceRange": "Kostenlos für Bewerber",
-  "openingHours": "Mo-Fr 09:00-18:00",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "opens": "09:00",
+    "closes": "18:00",
+  },
   "sameAs": [
     "https://www.instagram.com/phe_perm_engineering",
     "https://www.linkedin.com/company/phe-perm-engineering",

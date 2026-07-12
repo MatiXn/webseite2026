@@ -102,6 +102,7 @@ export async function GET() {
           benefits: (row[8] ?? "").split(",").map((b: string) => b.trim()).filter(Boolean),
           posted: "Aktuell",
           type: "Festanstellung",
+          datePosted: "2026-06-26",
           lat,
           lng,
         } as Job;
