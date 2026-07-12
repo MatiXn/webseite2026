@@ -14,7 +14,7 @@ const TEAM = [
 ];
 
 const STATS = [
-  { value: "3.500+", label: "geprüfte Fachkräfte" },
+  { value: "3.000+", label: "betreute Bewerber" },
   { value: "80+", label: "Städte bundesweit" },
   { value: "100%", label: "Festanstellung" },
   { value: "0 €", label: "Kosten für Bewerber" },
@@ -142,7 +142,7 @@ export default function UeberUnsPage() {
           { q: "Wo ist PHE-Perm Engineering ansässig?", a: "Unser Hauptsitz befindet sich in der Hüttenstraße 30, 40215 Düsseldorf. Wir sind jedoch bundesweit tätig und vermitteln Stellen in über 80 deutschen Städten." },
           { q: "Was unterscheidet PHE von anderen Personalvermittlungen?", a: "Wir sind ausschließlich auf IT, Elektro und Bau spezialisiert, keine Generalagentur. Das bedeutet: tiefes Branchenwissen, gezielte Kandidatenauswahl und echte Kontakte zu den richtigen Unternehmen. Dazu persönliche Betreuung statt anonymer Prozesse." },
           { q: "Ist PHE eine Zeitarbeitsfirma?", a: "Nein. PHE-Perm Engineering vermittelt ausschließlich Direktanstellungen, Sie werden direkt und unbefristet beim Unternehmen angestellt. Keine Zeitarbeit, keine Leiharbeit, keine befristeten Verträge." },
-          { q: "Wie viele Fachkräfte hat PHE bereits vermittelt?", a: "Wir haben Zugriff auf über 3.500 geprüfte Fachkräfte und haben bereits tausende erfolgreiche Matches in mehr als 80 deutschen Städten erzielt." },
+          { q: "Mit wie vielen Bewerbern hat PHE bereits gearbeitet?", a: "Wir haben bis heute mit rund 3.000 Bewerbern zusammengearbeitet und vermitteln laufend Fachkräfte aus Elektrotechnik, Mechatronik, IT und Bau in Festanstellungen – deutschlandweit." },
           { q: "Wer kann sich bei PHE bewerben?", a: "Alle Fachkräfte mit Qualifikationen in IT, Elektrotechnik oder Bau. Ob Berufseinsteiger oder erfahrene Führungskraft, wir finden die passende Stelle für Ihr Profil." },
         ]} />
       </div>

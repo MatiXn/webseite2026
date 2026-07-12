@@ -487,7 +487,7 @@ export default function TalenteFindPage() {
               {/* Stats */}
               <div style={{ display: "flex", gap: 40 }}>
                 {[
-                  { n: "5.000+", l: "Kandidaten" },
+                  { n: "3.000+", l: "betreute Bewerber" },
                   { n: "Ø 4 Wo.", l: "bis Einstellung" },
                   { n: "100%",   l: "Festanstellung" },
                 ].map(s => (

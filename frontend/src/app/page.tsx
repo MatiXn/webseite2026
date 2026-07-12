@@ -476,7 +476,7 @@ export default function Home() {
       <div style={{ background: "#fff", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "40px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }} className="stats-row">
           {[
-            { num: "3.500+", label: "Geprüfte Fachkräfte" },
+            { num: "3.000+", label: "Betreute Bewerber" },
             { num: "12 Std.", label: "Durchschnittliche Reaktionszeit" },
             { num: "100%", label: "Kostenlos für Bewerber" },
             { num: "5.0★", label: "Bewertung unserer Kandidaten" },
