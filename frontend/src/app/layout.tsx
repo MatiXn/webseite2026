@@ -107,6 +107,7 @@ const orgSchema = {
   "sameAs": [
     "https://www.instagram.com/phe_perm_engineering",
     "https://www.linkedin.com/company/phe-perm-engineering",
+    "https://www.wikidata.org/wiki/Q140572942",
   ],
   "knowsAbout": [
     "Elektrotechnik", "SPS-Programmierung", "Mechatronik",
