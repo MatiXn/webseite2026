@@ -7,11 +7,23 @@ import JsonLd from "./components/JsonLd";
 import Nav from "./components/Nav";
 import PathSwitch from "./components/PathSwitch";
 import { useEffect, useState } from "react";
+import { JOBS as ALL_JOBS, type Job } from "./jobs/data";
+import { jobPath } from "../lib/slug";
 
 const WA_LINK = "https://wa.me/491739980100";
 const MAIL_APPLY = "bewerbung@phe-perm.de";
 
-type Job = { title: string; category: string; location: string; salary: string; tags: string[]; color: string };
+// Anzeige-Label + Farbe je Kategorie — abgeleitet aus der zentralen Quelle jobs/data.ts
+const CATEGORY_DISPLAY: Record<Job["category"], { label: string; color: string }> = {
+  elektro: { label: "Elektrotechnik", color: "#f59e0b" },
+  it: { label: "IT / Automation", color: "#7c3aed" },
+  mechatronik: { label: "Mechatronik", color: "#3d7cc9" },
+  bau: { label: "Bau & TGA", color: "#0ea5e9" },
+};
+
+// Startseiten-Auswahl aus derselben zentralen Quelle wie /jobs (keine doppelten Job-Daten)
+const FEATURED_JOBS = ALL_JOBS.slice(0, 6);
+const FAN_JOBS = ALL_JOBS.slice(0, 4);
 
 function ApplyModal({ job, onClose }: { job: Job; onClose: () => void }) {
   const [form, setForm] = useState({ vorname: "", nachname: "", telefon: "", position: job.title });
@@ -145,23 +157,6 @@ const WhatsAppIcon = ({ size = 16 }: { size?: number }) => (
   </svg>
 );
 
-// Muss mit den echten Stellen in jobs/data.ts übereinstimmen
-const JOBS = [
-  { category: "Elektrotechnik", color: "#f59e0b", title: "Elektroniker für Betriebstechnik (m/w/d)", location: "Frankenthal", salary: "45.000 – 50.000 €/Jahr", tags: ["Festanstellung", "Instandhaltung", "Produktion"] },
-  { category: "IT / Automation", color: "#7c3aed", title: "SPS-Programmierer / Automatisierungstechniker (m/w/d)", location: "Langenfeld", salary: "50.000 – 65.000 €/Jahr", tags: ["Festanstellung", "Siemens TIA Portal", "SPS"] },
-  { category: "Mechatronik", color: "#3d7cc9", title: "Servicetechniker Kältetechnik (m/w/d)", location: "München", salary: "50.000 – 65.000 €/Jahr", tags: ["Festanstellung", "Kältetechnik", "Service"] },
-  { category: "Elektrotechnik", color: "#f59e0b", title: "Servicetechniker Photovoltaik (m/w/d)", location: "Düsseldorf", salary: "44.000 – 54.000 €/Jahr", tags: ["Festanstellung", "Photovoltaik", "Außendienst"] },
-  { category: "Mechatronik", color: "#3d7cc9", title: "Mechatroniker als Servicetechniker (m/w/d)", location: "Bremen", salary: "44.000 – 54.000 €/Jahr", tags: ["Festanstellung", "Wartung", "Instandhaltung"] },
-  { category: "Elektrotechnik", color: "#f59e0b", title: "Elektroniker MSR-Technik / Gebäudeautomation (m/w/d)", location: "Köln", salary: "48.000 – 58.000 €/Jahr", tags: ["Festanstellung", "MSR", "Gebäudeautomation"] },
-];
-
-const FAN_JOBS = [
-  { category: "Elektrotechnik", color: "#f59e0b", title: "Elektroniker für Betriebstechnik (m/w/d)", location: "Frankenthal", salary: "45.000 – 50.000 €/Jahr", tags: ["Instandhaltung", "Produktion"] },
-  { category: "IT / Automation", color: "#7c3aed", title: "SPS-Programmierer / Automatisierungstechniker (m/w/d)", location: "Langenfeld", salary: "50.000 – 65.000 €/Jahr", tags: ["Siemens TIA Portal", "SPS"] },
-  { category: "Mechatronik", color: "#3d7cc9", title: "Servicetechniker Kältetechnik (m/w/d)", location: "München", salary: "50.000 – 65.000 €/Jahr", tags: ["Kältetechnik", "Service"] },
-  { category: "Elektrotechnik", color: "#f59e0b", title: "Servicetechniker Photovoltaik (m/w/d)", location: "Düsseldorf", salary: "44.000 – 54.000 €/Jahr", tags: ["Photovoltaik", "Außendienst"] },
-];
-
 // Fan positions: offset 0 = active center, 1 = right, 2 = far-right, 3 = left
 const FAN_POS = [
   { ry:   0, tx:    0, tz:   0, scale: 1,    opacity: 1,    zIndex: 4 },
@@ -194,6 +189,7 @@ function JobFan({ onApply }: { onApply: (job: Job) => void }) {
             const offset = (i - active + total) % total;
             const pos = FAN_POS[offset] ?? FAN_POS[0];
             const isCenter = offset === 0;
+            const disp = CATEGORY_DISPLAY[job.category];
 
             return (
               <div
@@ -230,15 +226,15 @@ function JobFan({ onApply }: { onApply: (job: Job) => void }) {
                 }}>
                   {/* Category */}
                   <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
-                    <span style={{ width: 7, height: 7, borderRadius: "50%", background: job.color, flexShrink: 0 }} />
-                    <span style={{ fontSize: 10, fontWeight: 700, color: job.color, textTransform: "uppercase", letterSpacing: "0.08em" }}>{job.category}</span>
+                    <span style={{ width: 7, height: 7, borderRadius: "50%", background: disp.color, flexShrink: 0 }} />
+                    <span style={{ fontSize: 10, fontWeight: 700, color: disp.color, textTransform: "uppercase", letterSpacing: "0.08em" }}>{disp.label}</span>
                     <span style={{ marginLeft: "auto", fontSize: 10, fontWeight: 600, background: "#f0f7ff", color: "var(--blue)", padding: "2px 7px", borderRadius: 5 }}>Festanstellung</span>
                   </div>
                   {/* Title */}
                   <h3 style={{ fontSize: 14, fontWeight: 800, color: "var(--navy)", lineHeight: 1.35, marginBottom: 10, minHeight: 38 }}>{job.title}</h3>
                   {/* Location + Salary */}
                   <div style={{ fontSize: 12, color: "var(--gray)", marginBottom: 10 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 3 }}><LocationIcon /> {job.location}</div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 3 }}><LocationIcon /> {job.city}</div>
                     <div style={{ fontWeight: 700, color: "var(--navy)", fontSize: 13 }}>{job.salary}</div>
                   </div>
                   {/* Tags */}
@@ -506,19 +502,23 @@ export default function Home() {
           </div>
 
           <div className="grid-3col">
-            {JOBS.map((job) => (
-              <div key={job.title} style={{
+            {FEATURED_JOBS.map((job) => {
+              const disp = CATEGORY_DISPLAY[job.category];
+              return (
+              <article key={job.id} style={{
                 background: "#f5f5f7", borderRadius: 28, padding: 24,
-                transition: "border-color .2s", cursor: "pointer",
-                position: "relative", overflow: "hidden"
+                position: "relative", overflow: "hidden",
+                display: "flex", flexDirection: "column",
               }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: job.color, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: job.color, display: "inline-block" }} />
-                  {job.category}
+                <div style={{ fontSize: 11, fontWeight: 700, color: disp.color, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10, display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: disp.color, display: "inline-block" }} />
+                  {disp.label}
                 </div>
-                <h3 style={{ fontSize: 17, fontWeight: 700, color: "var(--navy)", marginBottom: 8, lineHeight: 1.3 }}>{job.title}</h3>
+                <h3 style={{ fontSize: 17, fontWeight: 700, marginBottom: 8, lineHeight: 1.3 }}>
+                  <Link href={jobPath(job)} style={{ color: "var(--navy)", textDecoration: "none" }}>{job.title}</Link>
+                </h3>
                 <div style={{ fontSize: 13, color: "var(--gray)", marginBottom: 16, display: "flex", gap: 12, flexWrap: "wrap" }}>
-                  <span>{job.location}</span>
+                  <span>{job.city}</span>
                   <span>{job.salary}</span>
                 </div>
                 <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 20 }}>
@@ -526,6 +526,16 @@ export default function Home() {
                     <span key={t} style={{ fontSize: 11, fontWeight: 600, background: "var(--bg)", color: "var(--gray)", padding: "4px 10px", borderRadius: 6 }}>{t}</span>
                   ))}
                 </div>
+                {/* Primäre Aktion: kanonische Detailseite */}
+                <Link href={jobPath(job)} style={{
+                  display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
+                  background: "var(--navy)", color: "#fff", fontSize: 13, fontWeight: 700,
+                  padding: "11px 14px", borderRadius: 10, textDecoration: "none",
+                  marginTop: "auto", marginBottom: 8,
+                }}>
+                  Zur Stelle ansehen →
+                </Link>
+                {/* Sekundäre Aktionen */}
                 <div style={{ display: "flex", gap: 8 }}>
                   <Link href={WA_LINK} target="_blank" rel="noopener noreferrer" style={{
                     flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6,
@@ -543,8 +553,9 @@ export default function Home() {
                     <MailIcon size={13} /> E-Mail
                   </button>
                 </div>
-              </div>
-            ))}
+              </article>
+              );
+            })}
           </div>
         </div>
       </section>
