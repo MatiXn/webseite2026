@@ -7,6 +7,7 @@ import Nav from "@/app/components/Nav";
 import FaqSection from "@/app/components/FaqSection";
 import Footer from "@/app/components/Footer";
 import JsonLd from "@/app/components/JsonLd";
+import Breadcrumbs from "@/app/components/Breadcrumbs";
 
 const MAIL_EMPLOYER = "recruiting@phe-perm.de";
 
@@ -384,6 +385,10 @@ export default function TalenteFindPage() {
   return (
     <div style={{ background: "#f5f5f7", minHeight: "100vh" }}>
       <Nav />
+      <Breadcrumbs items={[
+        { name: "Home", href: "/" },
+        { name: "Technische Personalvermittlung", href: "/technische-personalvermittlung" },
+      ]} />
       <Suspense fallback={null}>
         <ConfirmBanner />
       </Suspense>
@@ -706,14 +711,6 @@ export default function TalenteFindPage() {
           "name": f.q,
           "acceptedAnswer": { "@type": "Answer", "text": f.a },
         })),
-      }} />
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.phe-perm.de" },
-          { "@type": "ListItem", "position": 2, "name": "Technische Personalvermittlung", "item": "https://www.phe-perm.de/technische-personalvermittlung" },
-        ],
       }} />
 
       {/* ── FOOTER ── */}

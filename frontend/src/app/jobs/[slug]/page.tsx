@@ -4,6 +4,7 @@ import { JOBS, parseSalaryRange, validThroughOf } from "../data";
 import { jobSlug, jobPath, jobIdFromParam } from "../../../lib/slug";
 import type { Metadata } from "next";
 import JsonLd from "../../components/JsonLd";
+import Breadcrumbs from "../../components/Breadcrumbs";
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 import ApplyForm from "./ApplyForm";
@@ -116,16 +117,6 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
     "directApply": true,
   };
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.phe-perm.de" },
-      { "@type": "ListItem", "position": 2, "name": "Stellenangebote", "item": "https://www.phe-perm.de/jobs" },
-      { "@type": "ListItem", "position": 3, "name": job.title, "item": `https://www.phe-perm.de${jobPath(job)}` },
-    ],
-  };
-
   const similarJobs = JOBS
     .filter(j => j.id !== job.id && j.category === job.category)
     .slice(0, 3);
@@ -133,8 +124,12 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
   return (
     <div style={{ background: "#f5f5f7", minHeight: "100vh" }}>
       <JsonLd data={jobPostingSchema} />
-      <JsonLd data={breadcrumbSchema} />
       <Nav />
+      <Breadcrumbs items={[
+        { name: "Home", href: "/" },
+        { name: "Stellenangebote", href: "/jobs" },
+        { name: job.title, href: jobPath(job) },
+      ]} />
 
       {/* HERO */}
       <div style={{
