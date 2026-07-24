@@ -661,7 +661,7 @@ export default function TalenteFindPage() {
               kostenlos und unverbindlich.
             </p>
             <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-              <a href="tel:+492111586310" style={{
+              <a href="tel:+4921115863100" style={{
                 background: "#3b72b8", color: "#fff",
                 fontSize: 17, fontWeight: 600,
                 padding: "15px 32px", borderRadius: 999, textDecoration: "none",
@@ -692,7 +692,7 @@ export default function TalenteFindPage() {
         "@type": "Service",
         "name": "Personalvermittlung für Technik-Fachkräfte",
         "serviceType": "Personalvermittlung",
-        "url": "https://www.phe-perm.de/talente-finden",
+        "url": "https://www.phe-perm.de/technische-personalvermittlung",
         "description": "Erfolgsbasierte Vermittlung von Elektronikern, SPS-Programmierern, Mechatronikern, Kältetechnikern und Bau-/TGA-Fachkräften in unbefristete Festanstellungen – deutschlandweit.",
         "provider": { "@id": "https://www.phe-perm.de/#organization" },
         "areaServed": { "@type": "Country", "name": "Deutschland" },
@@ -712,7 +712,7 @@ export default function TalenteFindPage() {
         "@type": "BreadcrumbList",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.phe-perm.de" },
-          { "@type": "ListItem", "position": 2, "name": "Talente finden", "item": "https://www.phe-perm.de/talente-finden" },
+          { "@type": "ListItem", "position": 2, "name": "Technische Personalvermittlung", "item": "https://www.phe-perm.de/technische-personalvermittlung" },
         ],
       }} />
 

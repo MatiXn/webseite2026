@@ -461,7 +461,7 @@ export default function Home() {
             {/* B2B-Teaser: Arbeitgeber-Einstieg above the fold */}
             <p style={{ fontSize: 14, color: "var(--gray)", marginTop: 20 }}>
               Sie sind Arbeitgeber und suchen Elektroniker, Mechatroniker oder andere Technik-Fachkräfte?{" "}
-              <Link href="/talente-finden" style={{ color: "var(--blue)", fontWeight: 700, textDecoration: "none", whiteSpace: "nowrap" }}>
+              <Link href="/technische-personalvermittlung" style={{ color: "var(--blue)", fontWeight: 700, textDecoration: "none", whiteSpace: "nowrap" }}>
                 Fachkräfte finden →
               </Link>
             </p>

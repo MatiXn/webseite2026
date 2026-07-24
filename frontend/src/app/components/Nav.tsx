@@ -12,7 +12,7 @@ const NAV_LINKS: [string, string][] = [
   ["Startseite", "/"],
   ["Stellenangebote", "/jobs"],
   ["Lebenslauf erstellen", "/lebenslauf-erstellen"],
-  ["Talente finden", "/talente-finden"],
+  ["Talente finden", "/technische-personalvermittlung"],
   ["So funktioniert's", "/#how"],
   ["Über uns", "/ueber-uns"],
   ["Kontakt", "/kontakt"],

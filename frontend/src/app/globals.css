@@ -502,7 +502,7 @@ body {
 /* Kein horizontaler Overflow (z. B. durch das Reviews-Marquee) */
 body { overflow-x: clip; }
 
-/* Mobile-Sprung-CTA auf /talente-finden — Formular liegt mobil unter dem Fold */
+/* Mobile-Sprung-CTA auf /technische-personalvermittlung — Formular liegt mobil unter dem Fold */
 .talente-mobile-cta {
   display: none;
   align-items: center;
