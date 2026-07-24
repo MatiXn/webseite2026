@@ -38,6 +38,12 @@ const nextConfig: NextConfig = {
     return [{ source: "/(.*)", headers: SECURITY_HEADERS }];
   },
 
+  async redirects() {
+    return [
+      { source: "/talente-finden", destination: "/technische-personalvermittlung", permanent: true },
+    ];
+  },
+
   images: {
     remotePatterns: [
       {

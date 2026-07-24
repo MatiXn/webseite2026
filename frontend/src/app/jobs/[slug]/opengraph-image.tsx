@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { JOBS } from "../data";
+import { jobIdFromParam } from "../../../lib/slug";
 
 export const runtime = "edge";
 export const size = { width: 1200, height: 630 };
@@ -19,8 +20,10 @@ const CATEGORY_LABELS: Record<string, string> = {
   bau: "Bau",
 };
 
-export default function Image({ params }: { params: { id: string } }) {
-  const job = JOBS.find(j => j.id === params.id) ?? JOBS[0];
+export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const id = jobIdFromParam(slug);
+  const job = (id ? JOBS.find(j => j.id === id) : undefined) ?? JOBS[0];
   const accent = CATEGORY_COLORS[job.category] ?? "#3d7cc9";
 
   return new ImageResponse(

@@ -179,7 +179,7 @@ function TemplateA({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
       {/* Header — läuft oben bündig, kein Top-Padding auf äußerem Wrapper */}
       <div style={{ background: accent, color: "#fff", padding: "28px 0 22px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginLeft: "-2.5cm", marginRight: "-2.0cm", paddingLeft: "2.5cm", paddingRight: "2.8cm" }}>
         <div style={{ flex: 1 }}>
-          <h1 style={{ fontSize: "24pt", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 4 }}>{name}</h1>
+          <div style={{ fontSize: "24pt", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 4 }}>{name}</div>
           <p style={{ fontSize: "12pt", color: "#93c5fd", fontWeight: 600, marginBottom: 14 }}>{data.beruf || "Berufsbezeichnung"}</p>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 20px", fontSize: "10pt", color: "#cbd5e1" }}>
             {data.email && <span>✉ {data.email}</span>}
@@ -278,7 +278,7 @@ function TemplateB({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
         )}
         {/* Name */}
         <div style={{ textAlign: "center", borderBottom: "1px solid rgba(255,255,255,0.15)", paddingBottom: 20 }}>
-          <h1 style={{ fontSize: "14pt", fontWeight: 800, letterSpacing: "-0.01em", marginBottom: 4 }}>{name}</h1>
+          <div style={{ fontSize: "14pt", fontWeight: 800, letterSpacing: "-0.01em", marginBottom: 4 }}>{name}</div>
           <p style={{ fontSize: "11pt", color: accent, fontWeight: 600 }}>{data.beruf || "Berufsbezeichnung"}</p>
         </div>
         {/* Kontakt */}
@@ -378,7 +378,7 @@ function TemplateC({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
       <div style={{ borderBottom: `4px solid ${accent}`, padding: "2.0cm 2.0cm 22px 2.5cm" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
           <div>
-            <h1 style={{ fontSize: "22pt", fontWeight: 900, letterSpacing: "-0.03em", color: "#111827", marginBottom: 4 }}>{name}</h1>
+            <div style={{ fontSize: "22pt", fontWeight: 900, letterSpacing: "-0.03em", color: "#111827", marginBottom: 4 }}>{name}</div>
             <p style={{ fontSize: "12pt", color: accent, fontWeight: 700 }}>{data.beruf || "Berufsbezeichnung"}</p>
           </div>
           {data.foto && (
@@ -477,7 +477,7 @@ function TemplateD({ data, zoom = 1 }: { data: CVData; zoom?: number }) {
           </div>
         )}
         <div style={{ textAlign: "center", paddingBottom: 16, borderBottom: "1px solid rgba(255,255,255,0.12)" }}>
-          <h1 style={{ fontSize: "14pt", fontWeight: 800, marginBottom: 4 }}>{name}</h1>
+          <div style={{ fontSize: "14pt", fontWeight: 800, marginBottom: 4 }}>{name}</div>
           <p style={{ fontSize: "11pt", color: "#c4b5fd", fontWeight: 600 }}>{data.beruf || "Berufsbezeichnung"}</p>
         </div>
         <div>

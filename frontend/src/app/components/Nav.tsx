@@ -9,11 +9,9 @@ export const WA_LINK = `https://wa.me/${WA_NUMBER}`;
 export const MAIL_APPLY = "bewerbung@phe-perm.de";
 
 const NAV_LINKS: [string, string][] = [
-  ["Startseite", "/"],
-  ["Stellenangebote", "/jobs"],
+  ["Für Unternehmen", "/technische-personalvermittlung"],
+  ["Jobs", "/jobs"],
   ["Lebenslauf erstellen", "/lebenslauf-erstellen"],
-  ["Talente finden", "/talente-finden"],
-  ["So funktioniert's", "/#how"],
   ["Über uns", "/ueber-uns"],
   ["Kontakt", "/kontakt"],
 ];
@@ -123,6 +121,8 @@ export default function Nav() {
             <button
               onClick={() => setOpen(o => !o)}
               aria-label="Menü"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
               style={{
                 background: "none", border: "none", cursor: "pointer",
                 padding: "6px", display: "flex", flexDirection: "column",
@@ -152,7 +152,9 @@ export default function Nav() {
 
       {/* Mobile dropdown menu */}
       {isMobile && (
-        <div style={{
+        <div
+          id="mobile-menu"
+          style={{
           position: "fixed", top: 58, left: 0, right: 0, bottom: 0, zIndex: 99,
           // Vollflächig opak, damit Seiteninhalt hinter dem offenen Menü nicht durchscheint
           background: "#f5f5f7",

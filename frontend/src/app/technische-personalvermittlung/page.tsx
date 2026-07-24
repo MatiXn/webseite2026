@@ -7,6 +7,7 @@ import Nav from "@/app/components/Nav";
 import FaqSection from "@/app/components/FaqSection";
 import Footer from "@/app/components/Footer";
 import JsonLd from "@/app/components/JsonLd";
+import Breadcrumbs from "@/app/components/Breadcrumbs";
 
 const MAIL_EMPLOYER = "recruiting@phe-perm.de";
 
@@ -384,6 +385,10 @@ export default function TalenteFindPage() {
   return (
     <div style={{ background: "#f5f5f7", minHeight: "100vh" }}>
       <Nav />
+      <Breadcrumbs items={[
+        { name: "Home", href: "/" },
+        { name: "Technische Personalvermittlung", href: "/technische-personalvermittlung" },
+      ]} />
       <Suspense fallback={null}>
         <ConfirmBanner />
       </Suspense>
@@ -472,7 +477,7 @@ export default function TalenteFindPage() {
                   "Kostenlose Erstberatung",
                   "Nur Festanstellung",
                   "Deutschlandweit",
-                  "12 Std. Reaktionszeit",
+                  "24 Std. Reaktionszeit",
                 ].map(t => (
                   <span key={t} style={{
                     fontSize: 13, fontWeight: 500,
@@ -661,7 +666,7 @@ export default function TalenteFindPage() {
               kostenlos und unverbindlich.
             </p>
             <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-              <a href="tel:+492111586310" style={{
+              <a href="tel:+4921115863100" style={{
                 background: "#3b72b8", color: "#fff",
                 fontSize: 17, fontWeight: 600,
                 padding: "15px 32px", borderRadius: 999, textDecoration: "none",
@@ -692,7 +697,7 @@ export default function TalenteFindPage() {
         "@type": "Service",
         "name": "Personalvermittlung für Technik-Fachkräfte",
         "serviceType": "Personalvermittlung",
-        "url": "https://www.phe-perm.de/talente-finden",
+        "url": "https://www.phe-perm.de/technische-personalvermittlung",
         "description": "Erfolgsbasierte Vermittlung von Elektronikern, SPS-Programmierern, Mechatronikern, Kältetechnikern und Bau-/TGA-Fachkräften in unbefristete Festanstellungen – deutschlandweit.",
         "provider": { "@id": "https://www.phe-perm.de/#organization" },
         "areaServed": { "@type": "Country", "name": "Deutschland" },
@@ -706,14 +711,6 @@ export default function TalenteFindPage() {
           "name": f.q,
           "acceptedAnswer": { "@type": "Answer", "text": f.a },
         })),
-      }} />
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.phe-perm.de" },
-          { "@type": "ListItem", "position": 2, "name": "Talente finden", "item": "https://www.phe-perm.de/talente-finden" },
-        ],
       }} />
 
       {/* ── FOOTER ── */}

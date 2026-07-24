@@ -11,11 +11,11 @@ export async function GET(req: NextRequest) {
   const payload = verifyToken(token);
 
   // Rücksprungseite je nach Anfrage-Typ
-  const page = payload?.type === "contact" ? "/kontakt" : "/talente-finden";
+  const page = payload?.type === "contact" ? "/kontakt" : "/technische-personalvermittlung";
 
   if (!payload) {
     return NextResponse.redirect(
-      new URL("/talente-finden?confirm=invalid", req.url)
+      new URL("/technische-personalvermittlung?confirm=invalid", req.url)
     );
   }
 
