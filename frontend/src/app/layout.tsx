@@ -83,7 +83,7 @@ const orgSchema = {
   "telephone": "+4921115863100",
   "contactPoint": [
     { "@type": "ContactPoint", "telephone": "+4921115863100", "contactType": "customer service", "areaServed": "DE", "availableLanguage": "German" },
-    { "@type": "ContactPoint", "telephone": "+491739980100", "contactType": "recruiting", "contactOption": "TollFree", "areaServed": "DE", "availableLanguage": "German" },
+    { "@type": "ContactPoint", "telephone": "+491739980100", "contactType": "recruiting", "areaServed": "DE", "availableLanguage": "German" },
   ],
   "email": "info@phe-perm.de",
   "address": {
