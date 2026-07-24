@@ -477,7 +477,7 @@ export default function TalenteFindPage() {
                   "Kostenlose Erstberatung",
                   "Nur Festanstellung",
                   "Deutschlandweit",
-                  "12 Std. Reaktionszeit",
+                  "24 Std. Reaktionszeit",
                 ].map(t => (
                   <span key={t} style={{
                     fontSize: 13, fontWeight: 500,

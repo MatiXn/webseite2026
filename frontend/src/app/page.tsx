@@ -388,7 +388,7 @@ const HOME_FAQ = [
   { q: "Was ist PHE-Perm Engineering?", a: "PHE-Perm Engineering Ingenieure & Techniker GmbH ist eine spezialisierte Personalvermittlung mit Sitz in Düsseldorf. Das Unternehmen vermittelt Techniker und Fachkräfte aus Elektrotechnik, Mechatronik, IT und Bau in Festanstellungen bei deutschen Unternehmen – bundesweit und kostenlos für Bewerber." },
   { q: "Was kostet die Vermittlung durch PHE-Perm Engineering?", a: "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE-Perm Engineering wird ausschließlich vom einstellenden Unternehmen vergütet. Bewerber zahlen weder für die Vermittlung noch für Beratungsgespräche." },
   { q: "Wie funktioniert die Bewerbung bei PHE?", a: "Die Bewerbung läuft in drei Schritten: Kontakt aufnehmen per WhatsApp oder E-Mail, unser Team meldet sich innerhalb von 24 Stunden und bespricht passende Stellen, danach begleiten wir Sie durch den gesamten Bewerbungsprozess bis zur Vertragsunterzeichnung." },
-  { q: "Wie lange dauert es, bis ich einen neuen Job finde?", a: "Viele unserer Bewerber finden innerhalb von 2–6 Wochen eine neue Festanstellung. Die genaue Dauer hängt von Beruf, Region und Ihren Gehaltsvorstellungen ab – bei gefragten Profilen wie SPS-Programmierern geht es oft schneller." },
+  { q: "Wie lange dauert es, bis ich einen neuen Job finde?", a: "Viele unserer Bewerber finden innerhalb von 3–6 Wochen eine neue Festanstellung. Die genaue Dauer hängt von Beruf, Region und Ihren Gehaltsvorstellungen ab – bei gefragten Profilen wie SPS-Programmierern geht es oft schneller." },
   { q: "Ist PHE-Perm Engineering eine Zeitarbeitsfirma?", a: "Nein. PHE-Perm Engineering vermittelt ausschließlich Festanstellungen direkt beim Unternehmen. Es gibt keine Zeitarbeit, keine Leiharbeit und keine befristeten Verträge über PHE." },
   { q: "Welche Berufe vermittelt PHE-Perm Engineering?", a: "Wir vermitteln Techniker und Fachkräfte in: Elektrotechnik (Elektroniker, Elektriker, Servicetechniker), Automatisierung (SPS-Programmierer, Steuerungstechniker), Mechatronik und Kältetechnik (Mechatroniker, Anlagenmechaniker, Kältetechniker), IT (Netzwerktechniker, IT-Systemelektroniker) sowie Bau und TGA (Bauleiter, Projektleiter)." },
   { q: "Was ist der Unterschied zwischen Personalvermittlung und Zeitarbeit?", a: "Bei der Personalvermittlung wird der Kandidat direkt und dauerhaft beim Unternehmen angestellt – mit vollen Sozialleistungen, Kündigungsschutz und Urlaubsansprüchen. Bei Zeitarbeit ist man bei einer Zeitarbeitsfirma angestellt und wird an Betriebe verliehen. PHE-Perm Engineering praktiziert ausschließlich die direkte Festanstellungsvermittlung." },
@@ -478,7 +478,7 @@ export default function Home() {
         <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }} className="stats-row">
           {[
             { num: "3.000+", label: "Betreute Bewerber" },
-            { num: "12 Std.", label: "Durchschnittliche Reaktionszeit" },
+            { num: "24 Std.", label: "Durchschnittliche Reaktionszeit" },
             { num: "100%", label: "Kostenlos für Bewerber" },
             { num: "5.0★", label: "Bewertung unserer Kandidaten" },
           ].map((s) => (
@@ -712,7 +712,7 @@ export default function Home() {
       <FaqSection title="Häufige Fragen zur Jobvermittlung" items={[
         { q: "Was kostet die Vermittlung durch PHE-Perm Engineering?", a: "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE-Perm Engineering wird ausschließlich vom Unternehmen vergütet, Ihnen entstehen keinerlei Kosten, weder für die Beratung noch für die Vermittlung." },
         { q: "Wie funktioniert die Bewerbung bei PHE?", a: "Nehmen Sie per WhatsApp oder E-Mail Kontakt auf. Unser Team meldet sich innerhalb von 24 Stunden, bespricht Ihre Wünsche und Qualifikationen und unterbreitet passende Stellenangebote." },
-        { q: "Wie lange dauert es, bis ich einen neuen Job finde?", a: "Viele unserer Bewerber finden innerhalb von 2–6 Wochen eine neue Stelle. Die genaue Dauer hängt von Beruf, Region und Ihren Gehaltsvorstellungen ab." },
+        { q: "Wie lange dauert es, bis ich einen neuen Job finde?", a: "Viele unserer Bewerber finden innerhalb von 3–6 Wochen eine neue Stelle. Die genaue Dauer hängt von Beruf, Region und Ihren Gehaltsvorstellungen ab." },
         { q: "Welche Jobs vermittelt PHE-Perm Engineering?", a: "Wir sind spezialisiert auf Festanstellungen in drei Bereichen: Elektrotechnik (Elektroniker, Elektriker, Elektroplaner), IT & Automation (SPS-Programmierer, Netzwerktechniker) sowie Bau & TGA (Bauleiter, Projektleiter, Oberbauleiter)." },
         { q: "Kann ich mich bewerben, wenn ich keine aktuelle Stelle suche?", a: "Ja. Sie können sich jederzeit vormerken lassen, auch bei bestehender Beschäftigung. Wir informieren Sie diskret, sobald eine passende Position verfügbar ist." },
         { q: "Ist PHE-Perm Engineering eine Zeitarbeitsfirma?", a: "Nein. Wir vermitteln ausschließlich Festanstellungen direkt beim Unternehmen. Es gibt keine Zeitarbeit, keine Leiharbeit, Sie werden von Anfang an unbefristet angestellt." },
