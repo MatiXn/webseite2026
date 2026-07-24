@@ -5,6 +5,7 @@ import FaqSection from "./components/FaqSection";
 import Footer from "./components/Footer";
 import JsonLd from "./components/JsonLd";
 import Nav from "./components/Nav";
+import PathSwitch from "./components/PathSwitch";
 import { useEffect, useState } from "react";
 
 const WA_LINK = "https://wa.me/491739980100";
@@ -488,6 +489,8 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      <PathSwitch />
 
       {/* ── JOBS ── */}
       <section style={{ padding: "80px 24px", background: "#fff" }}>
