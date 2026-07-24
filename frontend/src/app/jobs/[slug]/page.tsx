@@ -1,6 +1,7 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
 import { JOBS, parseSalaryRange, validThroughOf } from "../data";
+import { jobSlug, jobPath, jobIdFromParam } from "../../../lib/slug";
 import type { Metadata } from "next";
 import JsonLd from "../../components/JsonLd";
 import Nav from "../../components/Nav";
@@ -15,9 +16,10 @@ const CATEGORY_LABELS: Record<string, string> = {
   bau: "Bau & Infrastruktur",
 };
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-  const { id } = await params;
-  const job = JOBS.find(j => j.id === id);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const id = jobIdFromParam(slug);
+  const job = id ? JOBS.find(j => j.id === id) : undefined;
   if (!job) return {};
 
   const title = `${job.title} in ${job.city} – Festanstellung | PHE-Perm Engineering`;
@@ -40,22 +42,26 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     openGraph: {
       title,
       description,
-      url: `https://www.phe-perm.de/jobs/${id}`,
+      url: `https://www.phe-perm.de${jobPath(job)}`,
       images: [{ url: ogImageUrl, width: 1200, height: 630, alt: `${job.title} – ${job.city}` }],
     },
     twitter: { card: "summary_large_image", title, description, images: [ogImageUrl] },
-    alternates: { canonical: `/jobs/${id}` },
+    alternates: { canonical: jobPath(job) },
   };
 }
 
 export function generateStaticParams() {
-  return JOBS.map(j => ({ id: j.id }));
+  return JOBS.map(j => ({ slug: `${jobSlug(j)}-${j.id}` }));
 }
 
-export default async function JobPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const job = JOBS.find(j => j.id === id);
+export default async function JobPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const id = jobIdFromParam(slug);
+  const job = id ? JOBS.find(j => j.id === id) : undefined;
   if (!job) notFound();
+
+  const canonicalSlug = `${jobSlug(job)}-${job.id}`;
+  if (slug !== canonicalSlug) permanentRedirect(jobPath(job));
 
   const salaryRange = parseSalaryRange(job.salary);
 
@@ -105,7 +111,7 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
     } : {}),
     "skills": job.tags.join(", "),
     "benefits": job.benefits?.join(", ") || "Festanstellung, Vollzeit",
-    "url": `https://www.phe-perm.de/jobs/${job.id}`,
+    "url": `https://www.phe-perm.de${jobPath(job)}`,
     "applicantLocationRequirements": { "@type": "Country", "name": "Deutschland" },
     "directApply": true,
   };
@@ -116,7 +122,7 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.phe-perm.de" },
       { "@type": "ListItem", "position": 2, "name": "Stellenangebote", "item": "https://www.phe-perm.de/jobs" },
-      { "@type": "ListItem", "position": 3, "name": job.title, "item": `https://www.phe-perm.de/jobs/${job.id}` },
+      { "@type": "ListItem", "position": 3, "name": job.title, "item": `https://www.phe-perm.de${jobPath(job)}` },
     ],
   };
 
@@ -335,7 +341,7 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
             </h2>
             <div style={{ display: "grid", gap: 12 }}>
               {similarJobs.map(sj => (
-                <Link key={sj.id} href={`/jobs/${sj.id}`} style={{
+                <Link key={sj.id} href={jobPath(sj)} style={{
                   display: "block", background: "#fff", borderRadius: 14,
                   padding: "20px 24px", textDecoration: "none",
                   boxShadow: "0 1px 4px rgba(0,0,0,0.06)",

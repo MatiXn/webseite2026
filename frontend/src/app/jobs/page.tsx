@@ -6,6 +6,7 @@ import FaqSection from "../components/FaqSection";
 import Footer from "../components/Footer";
 import JsonLd from "../components/JsonLd";
 import { JOBS as FALLBACK_JOBS, CATEGORIES, CATEGORY_COLORS, CATEGORY_LABELS, distanceKm, type Job } from "./data";
+import { jobPath } from "../../lib/slug";
 
 const WhatsAppIcon = ({ size = 14 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -579,7 +580,7 @@ function JobDetailModal({ job, jobUrl, onClose, onApply }: { job: Job; jobUrl: s
 
         {/* Title */}
         <h2 style={{ fontSize: 22, fontWeight: 700, color: "var(--navy)", lineHeight: 1.2, marginBottom: 6 }}>{job.title}</h2>
-        <Link href={`/jobs/${job.id}`} style={{ display: "inline-block", fontSize: 13, fontWeight: 700, color: "var(--blue)", textDecoration: "none", marginBottom: 12 }}>
+        <Link href={jobPath(job)} style={{ display: "inline-block", fontSize: 13, fontWeight: 700, color: "var(--blue)", textDecoration: "none", marginBottom: 12 }}>
           Vollständige Stellenanzeige mit Bewerbungsformular →
         </Link>
 
@@ -673,7 +674,7 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
     setShowDetail(false);
   };
 
-  const jobUrl = `${SITE_BASE}/jobs/${job.id}`;
+  const jobUrl = `${SITE_BASE}${jobPath(job)}`;
   return (
     <>
       {showDetail && (
@@ -707,7 +708,7 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
         {/* Title — echter <a href> zur Detailseite für Crawler & Cmd/Mittelklick; normaler Klick öffnet das Modal */}
         <h3 style={{ fontSize: 16, fontWeight: 700, lineHeight: 1.3, marginBottom: 10, minHeight: 44 }}>
           <Link
-            href={`/jobs/${job.id}`}
+            href={jobPath(job)}
             onClick={e => {
               e.stopPropagation();
               if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;

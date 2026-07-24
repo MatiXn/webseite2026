@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { JOBS } from "./jobs/data";
+import { jobPath } from "../lib/slug";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.phe-perm.de";
@@ -17,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const jobPages: MetadataRoute.Sitemap = JOBS.map(job => ({
-    url: `${base}/jobs/${job.id}`,
+    url: `${base}${jobPath(job)}`,
     lastModified: new Date(job.datePosted),
     changeFrequency: "weekly" as const,
     priority: 0.85,

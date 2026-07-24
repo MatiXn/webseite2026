@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { JOBS } from "../../data";
+import { jobSlug, jobPath, jobIdFromParam } from "../../../../lib/slug";
 import SocialHub from "./SocialHub";
 
 export const metadata: Metadata = {
@@ -22,18 +23,19 @@ ${benefits}
 Bewerbung dauert 60 Sekunden – ohne Anschreiben, ohne Lebenslauf.
 100 % kostenlos & unverbindlich. Wir melden uns innerhalb von 24 h. 👇
 
-🔗 Link in Bio oder direkt: phe-perm.de/jobs/${job.id}
+🔗 Link in Bio oder direkt: phe-perm.de${jobPath(job)}
 
 #job #jobs #karriere #stellenangebot #${job.category} #${job.city.split(",")[0].replace(/[^a-zA-ZäöüÄÖÜß]/g, "").toLowerCase()} #handwerk #techniker #festanstellung #jobsuche #neuerjob #phePerm`;
 }
 
 export function generateStaticParams() {
-  return JOBS.map(j => ({ id: j.id }));
+  return JOBS.map(j => ({ slug: `${jobSlug(j)}-${j.id}` }));
 }
 
-export default async function SocialPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const job = JOBS.find(j => j.id === id);
+export default async function SocialPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const id = jobIdFromParam(slug);
+  const job = id ? JOBS.find(j => j.id === id) : undefined;
   if (!job) notFound();
 
   const caption = buildCaption(job);
@@ -41,7 +43,7 @@ export default async function SocialPage({ params }: { params: Promise<{ id: str
   return (
     <div style={{ background: "#f5f5f7", minHeight: "100vh", padding: "48px 24px" }}>
       <div style={{ maxWidth: 1000, margin: "0 auto" }}>
-        <Link href={`/jobs/${job.id}`} style={{ fontSize: 14, fontWeight: 600, color: "#2d6a9f", textDecoration: "none" }}>
+        <Link href={jobPath(job)} style={{ fontSize: 14, fontWeight: 600, color: "#2d6a9f", textDecoration: "none" }}>
           ← Zur Stellenanzeige
         </Link>
         <h1 style={{ fontSize: "clamp(26px,4vw,38px)", fontWeight: 800, color: "#1d1d1f", margin: "16px 0 8px" }}>
@@ -61,7 +63,7 @@ export default async function SocialPage({ params }: { params: Promise<{ id: str
             </p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`/jobs/${job.id}/story-image`} alt="Story-Vorschau"
+              src={`${jobPath(job)}/story-image`} alt="Story-Vorschau"
               style={{ width: "100%", maxWidth: 300, borderRadius: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.12)" }}
             />
           </div>
@@ -74,7 +76,7 @@ export default async function SocialPage({ params }: { params: Promise<{ id: str
             </p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`/jobs/${job.id}/square-image`} alt="Quadrat-Vorschau"
+              src={`${jobPath(job)}/square-image`} alt="Quadrat-Vorschau"
               style={{ width: "100%", maxWidth: 340, borderRadius: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.12)" }}
             />
           </div>
@@ -87,7 +89,7 @@ export default async function SocialPage({ params }: { params: Promise<{ id: str
             </p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`/jobs/${job.id}/feed-image`} alt="Hochformat-Vorschau"
+              src={`${jobPath(job)}/feed-image`} alt="Hochformat-Vorschau"
               style={{ width: "100%", maxWidth: 340, borderRadius: 16, boxShadow: "0 2px 12px rgba(0,0,0,0.12)" }}
             />
           </div>
