@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { JOBS } from "../data";
+import { jobPath } from "../../../lib/slug";
 
 export const metadata: Metadata = {
   title: "Social-Media-Kits – Übersicht",
@@ -72,25 +73,25 @@ export default function SocialKitOverview() {
                     </p>
                   </div>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                    <Link href={`/jobs/${job.id}/social`} style={{
+                    <Link href={`${jobPath(job)}/social`} style={{
                       background: "#1e3a5f", color: "#fff", borderRadius: 10,
                       padding: "10px 18px", fontSize: 14, fontWeight: 700, textDecoration: "none",
                     }}>
                       Kit öffnen →
                     </Link>
-                    <a href={`/jobs/${job.id}/story-image`} download={`phe-job-${job.id}-story.png`} style={{
+                    <a href={`${jobPath(job)}/story-image`} download={`phe-job-${job.id}-story.png`} style={{
                       background: "#eef4fb", color: "#1e3a5f", borderRadius: 10,
                       padding: "10px 18px", fontSize: 14, fontWeight: 700, textDecoration: "none",
                     }}>
                       ⬇ Story 9:16
                     </a>
-                    <a href={`/jobs/${job.id}/square-image`} download={`phe-job-${job.id}-quadrat.png`} style={{
+                    <a href={`${jobPath(job)}/square-image`} download={`phe-job-${job.id}-quadrat.png`} style={{
                       background: "#eef4fb", color: "#1e3a5f", borderRadius: 10,
                       padding: "10px 18px", fontSize: 14, fontWeight: 700, textDecoration: "none",
                     }}>
                       ⬇ Feed 1:1
                     </a>
-                    <a href={`/jobs/${job.id}/feed-image`} download={`phe-job-${job.id}-hochformat.png`} style={{
+                    <a href={`${jobPath(job)}/feed-image`} download={`phe-job-${job.id}-hochformat.png`} style={{
                       background: "#eef4fb", color: "#1e3a5f", borderRadius: 10,
                       padding: "10px 18px", fontSize: 14, fontWeight: 700, textDecoration: "none",
                     }}>

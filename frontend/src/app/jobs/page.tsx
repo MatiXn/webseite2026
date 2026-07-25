@@ -312,9 +312,15 @@ export default function JobsPage() {
           <p style={{ fontSize: 12, fontWeight: 700, color: "var(--blue)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
             {jobsLoading ? "..." : jobs.length} offene Stellen
           </p>
-          <h1 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 700, color: "#1d1d1f", letterSpacing: "-0.015em", lineHeight: 1.1, marginBottom: 32 }}>
+          <h1 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 700, color: "#1d1d1f", letterSpacing: "-0.015em", lineHeight: 1.1, marginBottom: 12 }}>
             Stellenangebote
           </h1>
+          <p style={{ fontSize: 14, color: "var(--gray)", marginBottom: 28 }}>
+            Sie möchten eine technische Position besetzen?{" "}
+            <Link href="/technische-personalvermittlung" style={{ color: "var(--blue)", fontWeight: 600, textDecoration: "none" }}>
+              Zur technischen Personalvermittlung
+            </Link>
+          </p>
 
           {/* SEARCH BAR */}
           <div className="jobs-search" style={{ marginBottom: 24 }}>

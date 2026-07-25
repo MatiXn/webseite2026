@@ -116,6 +116,12 @@ export default function KontaktPage() {
           <p style={{ fontSize: 17, color: "var(--gray)", lineHeight: 1.7, maxWidth: 520 }}>
             Ob Sie als Bewerber eine neue Stelle suchen oder als Unternehmen Fachkräfte benötigen, sprechen Sie uns an. Schnell, direkt, persönlich.
           </p>
+          <p style={{ fontSize: 15, color: "var(--gray)", lineHeight: 1.7, marginTop: 14 }}>
+            Sie suchen technische Fachkräfte?{" "}
+            <Link href="/technische-personalvermittlung" style={{ color: "var(--blue)", fontWeight: 700, textDecoration: "none" }}>
+              Mehr über unsere Direktvermittlung
+            </Link>
+          </p>
         </div>
 
         <div className="kontakt-grid" style={{ alignItems: "start" }}>
