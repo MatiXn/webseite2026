@@ -11,7 +11,8 @@ import { jobPath } from "../../../lib/slug";
 const BASE = "https://www.phe-perm.de";
 
 export const metadata: Metadata = {
-  title: "Elektroniker Jobs in Festanstellung",
+  // absolute umgeht das globale Template "%s | PHE-Perm Engineering"
+  title: { absolute: "Elektroniker Jobs in Festanstellung | PHE-Perm" },
   description:
     "Finde passende Elektroniker Jobs in Betriebstechnik, Automatisierung, Instandhaltung, Service und Industrie – persönlich begleitet und direkt in Festanstellung.",
   alternates: { canonical: "/berufe/elektroniker" },
