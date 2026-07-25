@@ -41,6 +41,14 @@ const FACHBEREICHE = [
     t: "Bau, Haustechnik & SHK",
     d: "Anlagenmechaniker SHK, Fachkräfte für MSR-Technik und Gebäudeautomation sowie Bau- und Projektleiter TGA. Für Handwerksbetriebe, Gebäudetechnik-Dienstleister und Generalunternehmer, die langfristig einstellen wollen.",
   },
+  {
+    t: "Maschinenbau & Engineering",
+    d: "Konstrukteure, Techniker und technische Projektleiter für Maschinen- und Anlagenbau – von der Konstruktion über die Fertigung bis zur Inbetriebnahme beim Kunden.",
+  },
+  {
+    t: "Technische Softwareentwicklung",
+    d: "Als ergänzender Bereich vermitteln wir Entwicklerprofile mit technischem Bezug, etwa für Embedded- und Steuerungssoftware im industriellen Umfeld – die Verbindung von Elektrotechnik, Automatisierung und Software.",
+  },
 ];
 
 const CATEGORIES = [
@@ -525,6 +533,36 @@ export default function TalenteFindPage() {
                 Ein Berater meldet sich innerhalb von 24 Stunden.
               </p>
               <ContactForm />
+            </div>
+          </div>
+        </section>
+
+        {/* ── KERNBOTSCHAFT & ARBEITSWEISE — light (Kontrastbruch nach dem dunklen Hero) ── */}
+        <section style={{ background: "#fff", padding: "80px 24px" }}>
+          <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
+            <p style={{ fontSize: 13, fontWeight: 700, color: "#3b72b8", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 14 }}>
+              Unser Anspruch
+            </p>
+            <h2 style={{ fontSize: "clamp(26px,3.4vw,38px)", fontWeight: 700, color: "#1d1d1f", lineHeight: 1.2, letterSpacing: "-0.015em", marginBottom: 20, textWrap: "balance" }}>
+              Wir finden technische Fachkräfte, die fachlich und menschlich zu Ihrem Unternehmen passen.
+            </h2>
+            <p style={{ fontSize: 17, color: "#586170", lineHeight: 1.7, maxWidth: 680, margin: "0 auto 44px" }}>
+              Statt ungeprüfter Profilmasse setzen wir auf persönliche Auswahl: Wir analysieren Ihren
+              Bedarf, qualifizieren Kandidaten vor und vermitteln ausschließlich in unbefristete Festanstellung.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, textAlign: "left" }}>
+              {[
+                { t: "Ausschließlich Direktvermittlung", d: "Vermittlung in unbefristete Festanstellung direkt bei Ihrem Unternehmen." },
+                { t: "Keine Zeitarbeit, keine Arbeitnehmerüberlassung", d: "Keine Leiharbeit – die Fachkraft wird von Ihnen fest eingestellt." },
+                { t: "Persönliche Bedarfsanalyse", d: "Wir verstehen Ihre Vakanz, Ihr Team und Ihr Anforderungsprofil im Detail." },
+                { t: "Persönliche Vorqualifizierung", d: "Jede Kandidatin und jeder Kandidat wird vor der Vorstellung persönlich geprüft." },
+                { t: "Qualität statt Profilmasse", d: "Sie erhalten wenige, wirklich passende Profile statt ungeprüfter Listen." },
+              ].map(item => (
+                <div key={item.t} style={{ background: "#f5f7fa", border: "1px solid #e2e6ee", borderRadius: 16, padding: "22px 22px" }}>
+                  <h3 style={{ fontSize: 16, fontWeight: 700, color: "#1e3a5f", marginBottom: 6, lineHeight: 1.3 }}>{item.t}</h3>
+                  <p style={{ fontSize: 14, color: "#586170", lineHeight: 1.6 }}>{item.d}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
