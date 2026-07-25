@@ -77,10 +77,8 @@ export default function PersonalvermittlungDuesseldorfPage() {
     "@type": "LocalBusiness",
     "@id": `${BASE}/#organization`,
     "name": "PHE-Perm Engineering Ingenieure & Techniker GmbH",
-    "url": `${BASE}/personalvermittlung/duesseldorf`,
     "telephone": "+4921115863100",
     "email": "info@phe-perm.de",
-    "image": `${BASE}/phe-logo.png`,
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Hüttenstraße 30",
@@ -88,7 +86,10 @@ export default function PersonalvermittlungDuesseldorfPage() {
       "postalCode": "40215",
       "addressCountry": "DE",
     },
-    "geo": { "@type": "GeoCoordinates", "latitude": 51.2217, "longitude": 6.7762 },
+    // geo bewusst entfernt: die projektweit vorhandenen Koordinaten weichen
+    // voneinander ab (Org-Schema 51.2217/6.7762 vs. verifizierter GBP-Place-Link
+    // 51.216938/6.7835745). Ohne eindeutig verifizierten Wert wird geo hier
+    // nicht ausgegeben; die Adresse genügt Google zur Geokodierung.
     "areaServed": { "@type": "City", "name": "Düsseldorf" },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
@@ -96,7 +97,6 @@ export default function PersonalvermittlungDuesseldorfPage() {
       "opens": "09:00",
       "closes": "18:00",
     },
-    "description": "Persönliche Direktvermittlung technischer Fachkräfte für Unternehmen in Düsseldorf.",
   };
 
   const serviceSchema = {
@@ -234,6 +234,22 @@ export default function PersonalvermittlungDuesseldorfPage() {
           <p style={{ ...body, fontWeight: 700, color: "#1d1d1f" }}>
             Denn eine ehrliche Absage ist besser als falsche Versprechen.
           </p>
+        </div>
+      </section>
+
+      {/* STANDORT / LOKALE KONTAKTDATEN (sichtbar = maschinenlesbar) */}
+      <section style={{ maxWidth: 900, margin: "0 auto", padding: "8px 24px 24px" }}>
+        <div style={{ background: "#f5f7fa", border: "1px solid #e2e6ee", borderRadius: 16, padding: "24px 24px", display: "flex", flexWrap: "wrap", gap: 20, justifyContent: "space-between", alignItems: "center" }}>
+          <div>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#3b72b8", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Standort Düsseldorf</p>
+            <p style={{ fontSize: 16, fontWeight: 700, color: "#1d1d1f", marginBottom: 2 }}>PHE-Perm Engineering</p>
+            <p style={{ fontSize: 15, color: "#586170", lineHeight: 1.6 }}>Hüttenstraße 30 · 40215 Düsseldorf</p>
+            <p style={{ fontSize: 15, color: "#586170" }}>Mo–Fr 09:00–18:00 Uhr</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "flex-start" }}>
+            <a href="tel:+4921115863100" style={{ fontSize: 17, fontWeight: 700, color: "#1e3a5f", textDecoration: "none" }}>0211 158 63 100</a>
+            <Link href="/kontakt" className="pathswitch-cta pathswitch-cta--secondary">Kontakt aufnehmen</Link>
+          </div>
         </div>
       </section>
 
