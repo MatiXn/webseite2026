@@ -501,7 +501,7 @@ export default function TalenteFindPage() {
               <div style={{ display: "flex", gap: 40 }}>
                 {[
                   { n: "3.000+", l: "betreute Bewerber" },
-                  { n: "Ø 4 Wo.", l: "bis Einstellung" },
+                  { n: "3–6 Wo.", l: "bis Einstellung" },
                   { n: "100%",   l: "Festanstellung" },
                 ].map(s => (
                   <div key={s.n}>
