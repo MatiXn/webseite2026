@@ -326,6 +326,12 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
             Wir melden uns innerhalb von 24 Stunden bei Ihnen.
           </p>
           <ApplyForm jobTitle={job.title} jobCity={job.city} />
+          <p style={{ fontSize: 13, color: "#86868b", marginTop: 16, textAlign: "center" }}>
+            Noch kein Lebenslauf zur Hand?{" "}
+            <Link href="/lebenslauf-erstellen" style={{ color: "#2d6a9f", fontWeight: 600, textDecoration: "none" }}>
+              Lebenslauf kostenlos erstellen
+            </Link>
+          </p>
         </section>
 
         {/* ÄHNLICHE JOBS */}

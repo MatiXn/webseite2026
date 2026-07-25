@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import Nav, { MAIL_APPLY, WA_LINK } from "../components/Nav";
 import FaqSection from "../components/FaqSection";
 import JsonLd from "../components/JsonLd";
@@ -753,6 +754,12 @@ export default function LebenslaufPage() {
               <MailIcon /> Bei PHE bewerben
             </button>
           </div>
+          <p style={{ fontSize: 14, color: "#707070", marginTop: 20 }}>
+            Lebenslauf fertig?{" "}
+            <Link href="/jobs" style={{ color: "#0071e3", fontWeight: 600, textDecoration: "none" }}>
+              Jetzt passende technische Jobs ansehen
+            </Link>
+          </p>
         </div>
       </section>
 

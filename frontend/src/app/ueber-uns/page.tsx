@@ -133,6 +133,12 @@ export default function UeberUnsPage() {
               Kontakt aufnehmen
             </Link>
           </div>
+          <p style={{ fontSize: 15, color: "#707070", lineHeight: 1.7, marginTop: 24 }}>
+            Sie suchen eine Stelle?{" "}
+            <Link href="/jobs" style={{ color: "#0071e3", fontWeight: 700, textDecoration: "none" }}>Offene technische Stellen ansehen</Link>.{" "}
+            Sie suchen Fachkräfte?{" "}
+            <Link href="/technische-personalvermittlung" style={{ color: "#0071e3", fontWeight: 700, textDecoration: "none" }}>Unsere technische Personalvermittlung</Link>.
+          </p>
         </div>
       </section>
 

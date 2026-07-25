@@ -722,6 +722,13 @@ export default function TalenteFindPage() {
                 WhatsApp anfragen
               </a>
             </div>
+            <p style={{ marginTop: 28, fontSize: 14, color: "rgba(255,255,255,0.45)", lineHeight: 1.9 }}>
+              <Link href="/kontakt" style={{ color: "rgba(255,255,255,0.78)", textDecoration: "underline" }}>Offene Position besprechen</Link>
+              {"  ·  "}
+              <Link href="/jobs" style={{ color: "rgba(255,255,255,0.78)", textDecoration: "underline" }}>Aktuelle technische Stellen ansehen</Link>
+              {"  ·  "}
+              <Link href="/ueber-uns" style={{ color: "rgba(255,255,255,0.78)", textDecoration: "underline" }}>PHE-Perm kennenlernen</Link>
+            </p>
           </div>
         </section>
 
