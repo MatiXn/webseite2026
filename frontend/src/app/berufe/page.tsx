@@ -31,6 +31,7 @@ type Berufsfeld = {
   aufgaben: string;
   stellen: string;
   match: string[];
+  detailHref?: string; // gesetzt, sobald eine Berufsdetailseite existiert
 };
 
 const BERUFSFELDER: Berufsfeld[] = [
@@ -40,6 +41,7 @@ const BERUFSFELDER: Berufsfeld[] = [
     aufgaben: "Schaltschrankbau und Verdrahtung, Störungsanalyse, Wartung und Prüfung elektrischer Betriebsmittel.",
     stellen: "Elektroniker für Betriebstechnik, Betriebselektriker, Elektromonteur",
     match: ["elektroniker", "elektromonteur", "betriebselektriker", "elektro"],
+    detailHref: "/berufe/elektroniker",
   },
   {
     name: "Servicetechniker",
@@ -195,14 +197,18 @@ export default function BerufePage() {
                   <p style={{ fontSize: 13.5, color: "#3d3d3f", lineHeight: 1.6, marginBottom: 10 }}>
                     <strong style={{ color: "#1d1d1f" }}>Typische Aufgaben:</strong> {feld.aufgaben}
                   </p>
-                  <p style={{ fontSize: 13.5, color: "#3d3d3f", lineHeight: 1.6, marginBottom: jobsExist ? 16 : 0 }}>
+                  <p style={{ fontSize: 13.5, color: "#3d3d3f", lineHeight: 1.6, marginBottom: (jobsExist || feld.detailHref) ? 16 : 0 }}>
                     <strong style={{ color: "#1d1d1f" }}>Typische Positionen:</strong> {feld.stellen}
                   </p>
-                  {jobsExist && (
+                  {feld.detailHref ? (
+                    <Link href={feld.detailHref} style={{ ...linkStyle, marginTop: "auto", fontSize: 14 }}>
+                      Zum Berufsbild {feld.name} →
+                    </Link>
+                  ) : jobsExist ? (
                     <Link href="/jobs" style={{ ...linkStyle, marginTop: "auto", fontSize: 14 }}>
                       Offene Stellen ansehen →
                     </Link>
-                  )}
+                  ) : null}
                 </article>
               );
             })}
