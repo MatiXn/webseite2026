@@ -362,6 +362,14 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
             }}>
               Alle Stellenangebote ansehen →
             </Link>
+            {job.category === "elektro" && (
+              <Link href="/berufe/elektroniker" style={{
+                display: "inline-block", marginTop: 20, marginLeft: 20, fontSize: 15, fontWeight: 700,
+                color: "#2d6a9f", textDecoration: "none",
+              }}>
+                Mehr zum Berufsbild Elektroniker →
+              </Link>
+            )}
           </section>
         )}
       </div>
