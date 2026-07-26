@@ -13,6 +13,7 @@ export type Social = readonly SocialLink[];
 export const social = [
   { platform: "LinkedIn", url: "https://www.linkedin.com/company/phe-perm-engineering" },
   { platform: "Instagram", url: "https://www.instagram.com/phe_perm_engineering" },
-  { platform: "Google", url: "https://www.google.com/maps/place/PHE-Perm+Engineering+Ingenieure+%26+Techniker+GmbH/@51.216938,6.7835745,17z" },
+  // koordinatenfreie Place-URL: keine Duplizierung von company.geo
+  { platform: "Google", url: "https://www.google.com/maps/place/PHE-Perm+Engineering+Ingenieure+%26+Techniker+GmbH" },
   { platform: "Wikidata", url: "https://www.wikidata.org/wiki/Q140572942" },
 ] as const satisfies Social;

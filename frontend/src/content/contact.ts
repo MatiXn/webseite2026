@@ -14,13 +14,13 @@ export type ContactChannels = {
 };
 
 export const contact = {
-  phone: "+4921115863100",
-  email: "info@phe-perm.de",
+  phone: company.phone, // Haupttelefon nur in company.ts gepflegt
+  email: company.email, // Haupt-E-Mail nur in company.ts gepflegt
   whatsappNumber: "491739980100",
   whatsappLink: "https://wa.me/491739980100",
   recruiting: "recruiting@phe-perm.de",
   applications: "bewerbung@phe-perm.de",
-  sales: "info@phe-perm.de",
-  support: "info@phe-perm.de",
+  sales: company.email, // kein eigenes Postfach – Sammeladresse (company)
+  support: company.email, // kein eigenes Postfach – Sammeladresse (company)
   openingHours: company.openingHours,
 } as const satisfies ContactChannels;

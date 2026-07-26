@@ -1,5 +1,6 @@
 // Navigationsdaten – nur Daten, keine React-Komponenten.
 // Spiegelt die aktuell verwendete Haupt- und Footer-Navigation wider.
+import { contact } from "./contact";
 
 export type NavItem = {
   readonly label: string;
@@ -33,7 +34,7 @@ export const navigation = {
         { label: "Stellenangebote", href: "/jobs" },
         { label: "Technische Berufe", href: "/berufe" },
         { label: "Lebenslauf erstellen", href: "/lebenslauf-erstellen" },
-        { label: "Jetzt bewerben", href: "https://wa.me/491739980100", external: true },
+        { label: "Jetzt bewerben", href: contact.whatsappLink, external: true },
       ],
     },
     {
