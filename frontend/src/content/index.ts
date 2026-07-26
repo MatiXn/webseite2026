@@ -8,3 +8,4 @@ export * from "./contact";
 export * from "./navigation";
 export * from "./social";
 export * from "./faq";
+export * from "./professions";
