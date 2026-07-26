@@ -93,7 +93,7 @@ const orgSchema = {
     "postalCode": "40215",
     "addressCountry": "DE",
   },
-  "geo": { "@type": "GeoCoordinates", "latitude": 51.2217, "longitude": 6.7762 },
+  "geo": { "@type": "GeoCoordinates", "latitude": 51.216938, "longitude": 6.7835745 },
   "description":
     "PHE-Perm Engineering ist eine spezialisierte Personalvermittlung für Festanstellungen in den Bereichen IT, Elektrotechnik, Mechatronik und Bau. Kostenlos für Bewerber, bundesweit.",
   "areaServed": {
