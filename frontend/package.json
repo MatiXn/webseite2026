@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "validate:content": "vitest run src/content-engine/validation/__tests__/validate-profession-registry.test.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.0",
