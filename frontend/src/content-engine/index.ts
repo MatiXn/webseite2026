@@ -2,3 +2,4 @@
 // Weitere Builder (Metadata, Schema, Internal Links) folgen später.
 export * from "./validation";
 export * from "./job-matching";
+export * from "./metadata";

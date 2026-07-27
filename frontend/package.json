@@ -10,7 +10,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "validate:content": "vitest run src/content-engine/validation/__tests__/validate-profession-registry.test.ts",
-    "analyze:job-matching": "vitest run src/content-engine/job-matching"
+    "analyze:job-matching": "vitest run src/content-engine/job-matching",
+    "analyze:metadata": "vitest run src/content-engine/metadata/__tests__/analyze-metadata.test.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.0",
