@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "validate:content": "vitest run src/content-engine/validation/__tests__/validate-profession-registry.test.ts"
+    "validate:content": "vitest run src/content-engine/validation/__tests__/validate-profession-registry.test.ts",
+    "analyze:job-matching": "vitest run src/content-engine/job-matching"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.0",
