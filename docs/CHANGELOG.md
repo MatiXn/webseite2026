@@ -1,5 +1,16 @@
 # Changelog
 
+## EPIC 006C.5 – Internal-Link-Builder
+
+- **Added:** Profession-Internal-Link-Builder (`src/content-engine/internal-links/**`) — reine, deterministische Funktionen, erzeugen sichere interne Links (Breadcrumbs, Core, Related, Jobs) gruppiert nach Zielgruppe.
+- **Added:** Breadcrumb-, Related-Profession- und Job-Link-Builder; Core-Link-Builder mit kuratierten Labels.
+- **Added:** Link-Validierung (`validateInternalLink`, typisiertes Ergebnis) und href-basierte Deduplikation (`deduplicateInternalLinks`).
+- **Added:** typisierter Fehler `ContentInternalLinkError`; Draft standardmäßig abgelehnt, `allowDraft` nur für Tests/Analyse.
+- **Added:** 57 Unit-Tests, optionales Skript `npm run analyze:internal-links`.
+- **Note:** nur veröffentlichte Ziele werden verlinkt; keine toten/numerischen Job-URLs, keine `/talente-finden`-Links, keine Draft-Ziele.
+- **Changed:** keine Produktivseiten, Komponenten, Routen, Job-Daten oder Profession-Configs; keine Live-Integration.
+- **Fixed:** keine.
+
 ## EPIC 006C.4 – Schema Builder
 
 - **Added:** Schema Builder für Professionen (`src/content-engine/schema/**`) — reine, deterministische Funktionen, erzeugen einen deduplizierten Schema.org-`@graph`.

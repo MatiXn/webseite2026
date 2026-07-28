@@ -4,3 +4,4 @@ export * from "./validation";
 export * from "./job-matching";
 export * from "./metadata";
 export * from "./schema";
+export * from "./internal-links";

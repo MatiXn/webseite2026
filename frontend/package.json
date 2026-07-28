@@ -12,7 +12,8 @@
     "validate:content": "vitest run src/content-engine/validation/__tests__/validate-profession-registry.test.ts",
     "analyze:job-matching": "vitest run src/content-engine/job-matching",
     "analyze:metadata": "vitest run src/content-engine/metadata/__tests__/analyze-metadata.test.ts",
-    "analyze:schema": "vitest run src/content-engine/schema/__tests__/analyze-schema.test.ts"
+    "analyze:schema": "vitest run src/content-engine/schema/__tests__/analyze-schema.test.ts",
+    "analyze:internal-links": "vitest run src/content-engine/internal-links/__tests__/analyze-internal-links.test.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.0",
