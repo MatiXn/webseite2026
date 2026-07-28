@@ -43,7 +43,7 @@ export function ProfessionPageTemplate({ profession }: { profession: ProfessionC
   const headings = {
     specializations: `Welche ${p.shortName}-Fachrichtungen sind besonders gefragt?`,
     industries: `Wo arbeiten ${p.name}?`,
-    requirements: `Was Arbeitgeber bei ${p.name} häufig suchen`,
+    requirements: "Was Arbeitgeber häufig suchen",
     requirementsIntro: "Nicht alle Punkte sind für jede Stelle zwingend – je nach Position wird das eine oder andere erwartet:",
     jobs: `Aktuelle ${p.name} Jobs`,
     process: `So läuft die Vermittlung für ${p.name} ab`,
