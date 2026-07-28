@@ -1,5 +1,14 @@
 # Changelog
 
+## EPIC 006D – Migration Elektroniker-Seite auf die Content Engine
+
+- **Changed:** `/berufe/elektroniker` bezieht Metadata, Schema, Job-Matching und interne Links jetzt zentral aus der Content Engine (`buildProfessionMetadata`, `matchJobsForProfession`, `buildProfessionSchema`, `buildProfessionInternalLinks`); alle Profession-Inhalte kommen aus der Registry (`elektroniker`), keine lokalen Datenkopien mehr.
+- **Removed:** lokale Konstanten (Fachrichtungen, Einsatzbereiche, Anforderungen, Prozess, FAQ), lokale `category`-Filterlogik, lokale Metadata- und Schema-Blöcke.
+- **Added:** schemafreie `BreadcrumbsView`-Präsentationskomponente (das BreadcrumbList-Schema liefert die Engine → genau eine Breadcrumb-Quelle, keine doppelten @ids).
+- **Added:** Migrations-Tests (Metadata, Jobs, Schema, interne Links, Content-Parität).
+- **Note:** sichtbare Jobauswahl ändert sich durch das zentrale Scoring (dokumentiert im PR); Breadcrumb-Label „Home" → „Startseite"; OG-Title/Description folgen jetzt der Registry. URL, Redirects, Sitemap-Eintrag und Job-Backlinks unverändert.
+- **Fixed:** keine.
+
 ## EPIC 006C.5 – Internal-Link-Builder
 
 - **Added:** Profession-Internal-Link-Builder (`src/content-engine/internal-links/**`) — reine, deterministische Funktionen, erzeugen sichere interne Links (Breadcrumbs, Core, Related, Jobs) gruppiert nach Zielgruppe.
