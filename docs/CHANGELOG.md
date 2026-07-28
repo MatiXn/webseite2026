@@ -1,5 +1,13 @@
 # Changelog
 
+## EPIC 007B – Mechatroniker-Seite mit Profession Template
+
+- **Added:** veröffentlichte Profession `mechatroniker` (`src/content/professions/mechatroniker.ts`) — sachliche Berufsbild-Inhalte, geerdet an den 8 realen Mechatronik-Stellen (Montage/Inbetriebnahme, Kälte-/Klimatechnik, Service, Instandhaltung); 10 FAQ mit etablierten PHE-Service-Fakten, keine erfundenen Claims. In die Registry aufgenommen (`publishedProfessions`, `professionBySlug`).
+- **Added:** neue Route `/berufe/mechatroniker` — dünn, komplett über `ProfessionPageTemplate` (Metadata + `<ProfessionPageTemplate profession={mechatroniker} />`).
+- **Changed:** Berufe-Hub verlinkt die Mechatroniker-Karte auf `/berufe/mechatroniker`; Sitemap-Eintrag ergänzt; konditionaler Job-Backlink „Mehr zum Berufsbild Mechatroniker →" auf Mechatronik-Jobseiten (Kategorie-Match, Elektroniker-Backlink unberührt).
+- **Note:** `ProfessionPageTemplate` **unverändert** (keine berufsspezifische Sonderlogik nötig). jobMatch = `category:["mechatronik"]`, sichtbar 6 von 8 Treffern; Related-Link auf Elektroniker.
+- **Fixed:** keine.
+
 ## EPIC 007A – Profession Page Template
 
 - **Added:** berufsneutrales `ProfessionPageTemplate` (`src/content-engine/templates/`) — Server Component, rendert eine vollständige Profession-Seite aus einer Config + der Content Engine (Job-Matching, Schema, interne Links, Breadcrumbs, alle Abschnitte, Related-Sektion nur bei vorhandenen Links).

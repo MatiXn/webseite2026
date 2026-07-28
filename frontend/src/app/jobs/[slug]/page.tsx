@@ -370,6 +370,14 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
                 Mehr zum Berufsbild Elektroniker →
               </Link>
             )}
+            {job.category === "mechatronik" && (
+              <Link href="/berufe/mechatroniker" style={{
+                display: "inline-block", marginTop: 20, marginLeft: 20, fontSize: 15, fontWeight: 700,
+                color: "#2d6a9f", textDecoration: "none",
+              }}>
+                Mehr zum Berufsbild Mechatroniker →
+              </Link>
+            )}
           </section>
         )}
       </div>

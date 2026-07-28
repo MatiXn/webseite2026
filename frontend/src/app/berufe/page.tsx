@@ -63,6 +63,7 @@ const BERUFSFELDER: Berufsfeld[] = [
     aufgaben: "Montage, Wartung und Instandhaltung mechatronischer Systeme und Produktionsanlagen.",
     stellen: "Mechatroniker, Industriemechaniker, Instandhalter",
     match: ["mechatroniker", "industriemechaniker"],
+    detailHref: "/berufe/mechatroniker",
   },
   {
     name: "Kälte- & Klimatechniker",
