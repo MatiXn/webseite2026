@@ -1,5 +1,14 @@
 # Changelog
 
+## EPIC 007A – Profession Page Template
+
+- **Added:** berufsneutrales `ProfessionPageTemplate` (`src/content-engine/templates/`) — Server Component, rendert eine vollständige Profession-Seite aus einer Config + der Content Engine (Job-Matching, Schema, interne Links, Breadcrumbs, alle Abschnitte, Related-Sektion nur bei vorhandenen Links).
+- **Changed:** `src/app/berufe/elektroniker/page.tsx` auf 12 Zeilen reduziert (nur Imports, Metadata, `<ProfessionPageTemplate profession={elektroniker} />`).
+- **Note:** Template importiert die zentrale `JOBS`-Quelle + `professionBySlug` selbst (dünnste Route-API `{ profession }`); Builder laufen genau einmal. Keine berufsspezifische Prosa im Template — Begriffe kommen aus `profession.name`/`shortName`.
+- **Note:** einzige sichtbare Textabweichung: Anforderungs-Überschrift „bei Elektroniker**n**" → „bei Elektroniker" (Dativ-Plural, Folge der Berufsneutralität ohne Config-Änderung). Metadata, Schema, Jobauswahl, Breadcrumbs unverändert.
+- **Added:** Route-/Template-Paritätstests. `templates` bleibt bewusst aus dem `content-engine`-Barrel heraus (reine Engine ohne React importierbar).
+- **Fixed:** keine.
+
 ## EPIC 006D – Migration Elektroniker-Seite auf die Content Engine
 
 - **Changed:** `/berufe/elektroniker` bezieht Metadata, Schema, Job-Matching und interne Links jetzt zentral aus der Content Engine (`buildProfessionMetadata`, `matchJobsForProfession`, `buildProfessionSchema`, `buildProfessionInternalLinks`); alle Profession-Inhalte kommen aus der Registry (`elektroniker`), keine lokalen Datenkopien mehr.

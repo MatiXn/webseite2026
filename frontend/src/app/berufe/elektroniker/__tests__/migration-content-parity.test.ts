@@ -2,54 +2,64 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { elektroniker } from "../../../../content/professions/elektroniker";
 
-const src = readFileSync(new URL("../page.tsx", import.meta.url), "utf8");
-const count = (re: RegExp) => (src.match(re) ?? []).length;
+const route = readFileSync(new URL("../page.tsx", import.meta.url), "utf8");
+const template = readFileSync(new URL("../../../../content-engine/templates/ProfessionPageTemplate.tsx", import.meta.url), "utf8");
+const count = (src: string, re: RegExp) => (src.match(re) ?? []).length;
 
-describe("Elektroniker-Migration – Content-Parität (Quellinspektion)", () => {
-  it("1 – genau eine H1", () => {
-    expect(count(/<h1/g)).toBe(1);
+describe("EPIC 007A – Route- und Template-Parität (Quellinspektion)", () => {
+  // --- Route ist dünn ---
+  it("1 – Route nutzt das ProfessionPageTemplate", () => {
+    expect(route).toContain("ProfessionPageTemplate profession={elektroniker}");
+    expect(route).toContain("buildProfessionMetadata(elektroniker)");
   });
 
-  it("2 – H1 kommt aus der Registry und ist unverändert", () => {
-    expect(elektroniker.hero.headline).toBe("Elektroniker Jobs in Festanstellung");
-    expect(src).toContain("{p.hero.headline}");
+  it("2 – Route enthält keine lokale Job-Matching-Logik", () => {
+    expect(route.includes("matchJobsForProfession")).toBe(false);
+    expect(route.includes('category === "elektro"')).toBe(false);
   });
 
-  it("3 – alle bisherigen Hauptabschnitte vorhanden", () => {
+  it("3 – Route enthält keine lokale Schema-Erzeugung", () => {
+    expect(route.includes("buildProfessionSchema")).toBe(false);
+    expect(count(route, /<JsonLd/g)).toBe(0);
+  });
+
+  it("4 – Route enthält keine lokalen Profession-Inhalte", () => {
+    for (const local of ["const SECTION", "const COMMITMENT", "FACHRICHTUNGEN", "ELEKTRONIKER_FAQ", "<h1"]) {
+      expect(route.includes(local)).toBe(false);
+    }
+  });
+
+  // --- Template ist berufsneutral ---
+  it("5 – Template enthält keine hartcodierte berufsspezifische Prosa", () => {
+    for (const term of ["Elektroniker", "Elektrotechnik", "Betriebstechnik"]) {
+      expect(template.includes(term)).toBe(false);
+    }
+  });
+
+  // --- Template rendert die vollständige Struktur ---
+  it("12 – genau eine H1, aus der Registry", () => {
+    expect(count(template, /<h1/g)).toBe(1);
+    expect(template).toContain("{p.hero.headline}");
+  });
+
+  it("13 – alle Hauptabschnitte im Template vorhanden", () => {
     for (const marker of [
-      "{p.hero.headline}", "{p.overview.title}", "{SECTION.specializations}", "{SECTION.industries}",
-      "{SECTION.requirements}", 'id="stellen"', "{COMMITMENT.title}", "{SECTION.process}",
-      "{p.applicantCta.title}", "{p.employerCta.title}", "FaqSection", "hubLink",
+      "<Nav", "BreadcrumbsView", "{p.hero.headline}", "{p.overview.title}", "{headings.specializations}",
+      "{headings.industries}", "{headings.requirements}", 'id="stellen"', "{COMMITMENT.title}",
+      "{headings.process}", "{p.applicantCta.title}", "{p.employerCta.title}", "FaqSection", "hubLink", "<Footer",
     ]) {
-      expect(src.includes(marker)).toBe(true);
+      expect(template.includes(marker)).toBe(true);
     }
   });
 
-  it("4 – zehn FAQ-Fragen, gerendert aus der Registry", () => {
+  it("14 – FAQ aus der Registry (10 Fragen), Related-Sektion nur bedingt", () => {
     expect(elektroniker.faq.length).toBe(10);
-    expect(src).toContain("items={[...p.faq]}");
+    expect(template).toContain("items={[...p.faq]}");
+    expect(template).toContain("links.relatedProfessionLinks.length > 0 &&");
   });
 
-  it("5 – keine lokalen Kopien zentraler Profession-Texte", () => {
-    for (const local of ["const FACHRICHTUNGEN", "const EINSATZBEREICHE", "const ANFORDERUNGEN", "const PROZESS", "const ELEKTRONIKER_FAQ"]) {
-      expect(src.includes(local)).toBe(false);
-    }
-  });
-
-  it("6 – keine lokale Job-Filterlogik", () => {
-    expect(src.includes('category === "elektro"')).toBe(false);
-    expect(src).toContain("matchJobsForProfession(JOBS, p)");
-  });
-
-  it("7 – keine lokale Metadata-Definition", () => {
-    expect(src).toContain("buildProfessionMetadata(elektroniker)");
-    expect(src.includes("alternates: { canonical")).toBe(false);
-  });
-
-  it("8 – keine lokale Schema-Zusammenstellung, genau ein JSON-LD-Graph", () => {
-    expect(src).toContain("buildProfessionSchema(p, visibleJobs)");
-    expect(src.includes('"@type": "CollectionPage"')).toBe(false);
-    expect(src.includes('"@type": "FAQPage"')).toBe(false);
-    expect(count(/<JsonLd/g)).toBe(1);
+  it("8 – genau ein JSON-LD-Graph im Template", () => {
+    expect(count(template, /<JsonLd/g)).toBe(1);
+    expect(template).toContain("buildProfessionSchema(p, visibleJobs)");
   });
 });
