@@ -4,6 +4,7 @@ import type { ValidationCode, ValidationResult } from "../types";
 import { professions, publishedProfessions, draftProfessions, professionBySlug } from "../../../content/professions";
 import { elektroniker } from "../../../content/professions/elektroniker";
 import { servicetechniker } from "../../../content/professions/servicetechniker";
+import { spsAutomatisierung } from "../../../content/professions/sps-automatisierung";
 import type { ProfessionContent } from "../../../content/professions/types";
 
 const hasError = (r: ValidationResult, code: ValidationCode) => r.errors.some(e => e.code === code);
@@ -39,10 +40,10 @@ describe("validateProfessionRegistry", () => {
 
   it("4 – Published-Array enthält Draft", () => {
     const r = validateProfessionRegistry({
-      professions: [elektroniker, servicetechniker],
-      publishedProfessions: [elektroniker, servicetechniker], // servicetechniker ist draft
+      professions: [elektroniker, spsAutomatisierung],
+      publishedProfessions: [elektroniker, spsAutomatisierung], // spsAutomatisierung ist draft
       draftProfessions: [],
-      professionBySlug: { elektroniker, servicetechniker },
+      professionBySlug: { elektroniker, "sps-automatisierung": spsAutomatisierung },
     });
     expect(hasError(r, "REGISTRY_PUBLISHED_ARRAY_MISMATCH")).toBe(true);
   });
@@ -69,12 +70,12 @@ describe("validateProfessionRegistry", () => {
   });
 
   it("7 – Published Profession verweist auf Draft", () => {
-    const pubWithDraftRel: ProfessionContent = { ...elektroniker, internalLinks: { ...elektroniker.internalLinks, relatedProfessions: ["servicetechniker"] } };
+    const pubWithDraftRel: ProfessionContent = { ...elektroniker, internalLinks: { ...elektroniker.internalLinks, relatedProfessions: ["sps-automatisierung"] } };
     const r = validateProfessionRegistry({
-      professions: [pubWithDraftRel, servicetechniker],
+      professions: [pubWithDraftRel, spsAutomatisierung],
       publishedProfessions: [pubWithDraftRel],
-      draftProfessions: [servicetechniker],
-      professionBySlug: { elektroniker: pubWithDraftRel, servicetechniker },
+      draftProfessions: [spsAutomatisierung],
+      professionBySlug: { elektroniker: pubWithDraftRel, "sps-automatisierung": spsAutomatisierung },
     });
     expect(hasError(r, "REGISTRY_RELATED_NOT_PUBLISHED")).toBe(true);
   });

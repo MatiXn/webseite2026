@@ -19,9 +19,9 @@ describe("buildProfessionMetadata", () => {
     expect(m.robots).toEqual({ index: true, follow: true, googleBot: { index: true, follow: true } });
   });
 
-  it("3 – Draft Servicetechniker ist noindex", () => {
+  it("3 – Published Servicetechniker ist index/follow (seit EPIC 007C)", () => {
     const m = buildProfessionMetadata(servicetechniker);
-    expect(m.robots).toEqual({ index: false, follow: false, googleBot: { index: false, follow: false } });
+    expect(m.robots).toEqual({ index: true, follow: true, googleBot: { index: true, follow: true } });
   });
 
   it("4 – Draft SPS/Automatisierung ist noindex", () => {

@@ -6,7 +6,7 @@ import { JOBS } from "../../../app/jobs/data";
 import { matchJobsForProfession } from "../../job-matching";
 import { professionBySlug } from "../../../content/professions";
 import { elektroniker } from "../../../content/professions/elektroniker";
-import { servicetechniker } from "../../../content/professions/servicetechniker";
+import { spsAutomatisierung } from "../../../content/professions/sps-automatisierung";
 import type { ProfessionContent } from "../../../content/professions/types";
 
 const registry: InternalLinkRegistry = { professionBySlug };
@@ -55,12 +55,12 @@ describe("buildProfessionInternalLinks", () => {
 
   it("6 – Draft ohne allowDraft wird abgelehnt", () => {
     expect(() =>
-      buildProfessionInternalLinks({ profession: servicetechniker, professionRegistry: registry, jobMatches: [] }),
+      buildProfessionInternalLinks({ profession: spsAutomatisierung, professionRegistry: registry, jobMatches: [] }),
     ).toThrow(ContentInternalLinkError);
   });
 
   it("7 – Draft mit allowDraft ist technisch verarbeitbar", () => {
-    const r = buildProfessionInternalLinks({ profession: servicetechniker, professionRegistry: registry, jobMatches: [], allowDraft: true });
+    const r = buildProfessionInternalLinks({ profession: spsAutomatisierung, professionRegistry: registry, jobMatches: [], allowDraft: true });
     expect(r.breadcrumbs.length).toBe(3);
     expect(r.coreLinks.length).toBe(5);
   });
