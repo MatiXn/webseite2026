@@ -4,11 +4,22 @@ import type { ValidationCode, ValidationResult } from "../types";
 import { professions, publishedProfessions, draftProfessions, professionBySlug } from "../../../content/professions";
 import { elektroniker } from "../../../content/professions/elektroniker";
 import { servicetechniker } from "../../../content/professions/servicetechniker";
-import { spsAutomatisierung } from "../../../content/professions/sps-automatisierung";
 import type { ProfessionContent } from "../../../content/professions/types";
 
 const hasError = (r: ValidationResult, code: ValidationCode) => r.errors.some(e => e.code === code);
 const liveRegistry = { professions, publishedProfessions, draftProfessions, professionBySlug };
+
+// Synthetisches Draft-Fixture (seit EPIC 007D gibt es keine echte Draft-Profession mehr).
+const draftProf: ProfessionContent = {
+  ...elektroniker,
+  slug: "draft-ziel",
+  canonicalPath: "/berufe/draft-ziel",
+  metadataTitle: "Draft Ziel Jobs | PHE-Perm",
+  primaryKeyword: "Draft Ziel Jobs",
+  status: "draft",
+  internalLinks: { ...elektroniker.internalLinks, relatedProfessions: [] },
+  publication: { published: false, indexable: false, includeInSitemap: false, showInProfessionHub: false, showRelatedLinks: false },
+};
 
 describe("validateProfessionRegistry", () => {
   it("1 – aktuelle Live-Registry ist gültig", () => {
@@ -40,10 +51,10 @@ describe("validateProfessionRegistry", () => {
 
   it("4 – Published-Array enthält Draft", () => {
     const r = validateProfessionRegistry({
-      professions: [elektroniker, spsAutomatisierung],
-      publishedProfessions: [elektroniker, spsAutomatisierung], // spsAutomatisierung ist draft
+      professions: [elektroniker, draftProf],
+      publishedProfessions: [elektroniker, draftProf], // draftProf ist draft
       draftProfessions: [],
-      professionBySlug: { elektroniker, "sps-automatisierung": spsAutomatisierung },
+      professionBySlug: { elektroniker, "draft-ziel": draftProf },
     });
     expect(hasError(r, "REGISTRY_PUBLISHED_ARRAY_MISMATCH")).toBe(true);
   });
@@ -70,12 +81,12 @@ describe("validateProfessionRegistry", () => {
   });
 
   it("7 – Published Profession verweist auf Draft", () => {
-    const pubWithDraftRel: ProfessionContent = { ...elektroniker, internalLinks: { ...elektroniker.internalLinks, relatedProfessions: ["sps-automatisierung"] } };
+    const pubWithDraftRel: ProfessionContent = { ...elektroniker, internalLinks: { ...elektroniker.internalLinks, relatedProfessions: ["draft-ziel"] } };
     const r = validateProfessionRegistry({
-      professions: [pubWithDraftRel, spsAutomatisierung],
+      professions: [pubWithDraftRel, draftProf],
       publishedProfessions: [pubWithDraftRel],
-      draftProfessions: [spsAutomatisierung],
-      professionBySlug: { elektroniker: pubWithDraftRel, "sps-automatisierung": spsAutomatisierung },
+      draftProfessions: [draftProf],
+      professionBySlug: { elektroniker: pubWithDraftRel, "draft-ziel": draftProf },
     });
     expect(hasError(r, "REGISTRY_RELATED_NOT_PUBLISHED")).toBe(true);
   });

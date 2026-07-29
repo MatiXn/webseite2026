@@ -3,6 +3,14 @@ import { buildProfessionBreadcrumbLinks } from "../build-profession-breadcrumb-l
 import { ContentInternalLinkError } from "../content-internal-link-error";
 import { elektroniker } from "../../../content/professions/elektroniker";
 import { spsAutomatisierung } from "../../../content/professions/sps-automatisierung";
+import type { ProfessionContent } from "../../../content/professions/types";
+
+// Synthetisches Draft-Fixture (seit EPIC 007D sind alle realen Professionen published).
+const draftSps: ProfessionContent = {
+  ...spsAutomatisierung,
+  status: "draft",
+  publication: { published: false, indexable: false, includeInSitemap: false, showInProfessionHub: false, showRelatedLinks: false },
+};
 
 describe("buildProfessionBreadcrumbLinks", () => {
   it("1 – genau drei Links", () => {
@@ -24,7 +32,7 @@ describe("buildProfessionBreadcrumbLinks", () => {
   });
 
   it("5 – Draft standardmäßig abgelehnt", () => {
-    expect(() => buildProfessionBreadcrumbLinks(spsAutomatisierung)).toThrow(ContentInternalLinkError);
+    expect(() => buildProfessionBreadcrumbLinks(draftSps)).toThrow(ContentInternalLinkError);
   });
 
   it("6 – keine doppelten URLs", () => {
@@ -33,8 +41,8 @@ describe("buildProfessionBreadcrumbLinks", () => {
   });
 
   it("7 – mutiert die Profession nicht (auch mit allowDraft)", () => {
-    const snapshot = JSON.parse(JSON.stringify(spsAutomatisierung));
-    buildProfessionBreadcrumbLinks(spsAutomatisierung, { allowDraft: true });
-    expect(JSON.parse(JSON.stringify(spsAutomatisierung))).toEqual(snapshot);
+    const snapshot = JSON.parse(JSON.stringify(draftSps));
+    buildProfessionBreadcrumbLinks(draftSps, { allowDraft: true });
+    expect(JSON.parse(JSON.stringify(draftSps))).toEqual(snapshot);
   });
 });

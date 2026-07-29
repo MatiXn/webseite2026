@@ -10,6 +10,12 @@ import { spsAutomatisierung } from "../../../content/professions/sps-automatisie
 import type { ProfessionContent } from "../../../content/professions/types";
 
 const registry: InternalLinkRegistry = { professionBySlug };
+// Synthetisches Draft-Fixture (seit EPIC 007D sind alle realen Professionen published).
+const draftSps: ProfessionContent = {
+  ...spsAutomatisierung,
+  status: "draft",
+  publication: { published: false, indexable: false, includeInSitemap: false, showInProfessionHub: false, showRelatedLinks: false },
+};
 const elektroMatches = matchJobsForProfession(JOBS, elektroniker).matches;
 const matchedCount = elektroMatches.filter((m) => m.matched && !m.excluded).length;
 
@@ -55,12 +61,12 @@ describe("buildProfessionInternalLinks", () => {
 
   it("6 – Draft ohne allowDraft wird abgelehnt", () => {
     expect(() =>
-      buildProfessionInternalLinks({ profession: spsAutomatisierung, professionRegistry: registry, jobMatches: [] }),
+      buildProfessionInternalLinks({ profession: draftSps, professionRegistry: registry, jobMatches: [] }),
     ).toThrow(ContentInternalLinkError);
   });
 
   it("7 – Draft mit allowDraft ist technisch verarbeitbar", () => {
-    const r = buildProfessionInternalLinks({ profession: spsAutomatisierung, professionRegistry: registry, jobMatches: [], allowDraft: true });
+    const r = buildProfessionInternalLinks({ profession: draftSps, professionRegistry: registry, jobMatches: [], allowDraft: true });
     expect(r.breadcrumbs.length).toBe(3);
     expect(r.coreLinks.length).toBe(5);
   });

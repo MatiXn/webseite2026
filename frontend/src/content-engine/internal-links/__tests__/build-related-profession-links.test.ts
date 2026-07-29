@@ -11,7 +11,16 @@ function withRelated(base: ProfessionContent, related: readonly string[]): Profe
 }
 // Zweite veröffentlichte Profession (Klon) für Reihenfolge-/Mehrfach-Tests.
 const zweitberuf: ProfessionContent = { ...elektroniker, slug: "zweitberuf", name: "Zweitberuf", shortName: "Zweitberuf", canonicalPath: "/berufe/zweitberuf" };
-const registry: InternalLinkRegistry = { professionBySlug: { elektroniker, servicetechniker, zweitberuf, "sps-automatisierung": spsAutomatisierung } };
+// Synthetisches Draft-Ziel (seit EPIC 007D sind alle realen Professionen published).
+const draftZiel: ProfessionContent = {
+  ...spsAutomatisierung,
+  slug: "draft-ziel",
+  canonicalPath: "/berufe/draft-ziel",
+  status: "draft",
+  internalLinks: { ...spsAutomatisierung.internalLinks, relatedProfessions: [] },
+  publication: { published: false, indexable: false, includeInSitemap: false, showInProfessionHub: false, showRelatedLinks: false },
+};
+const registry: InternalLinkRegistry = { professionBySlug: { elektroniker, servicetechniker, zweitberuf, "draft-ziel": draftZiel } };
 
 describe("buildRelatedProfessionLinks", () => {
   it("1 – veröffentlichtes Ziel wird ausgegeben", () => {
@@ -22,7 +31,7 @@ describe("buildRelatedProfessionLinks", () => {
   });
 
   it("2 – Draft-Ziel wird entfernt", () => {
-    const links = buildRelatedProfessionLinks(withRelated(elektroniker, ["sps-automatisierung"]), registry);
+    const links = buildRelatedProfessionLinks(withRelated(elektroniker, ["draft-ziel"]), registry);
     expect(links).toHaveLength(0);
   });
 

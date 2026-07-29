@@ -1,12 +1,15 @@
-// SPS-Programmierer & Automatisierungstechniker – DRAFT (keine Route, kein Hub).
+// SPS-Programmierer & Automatisierungstechniker – published (EPIC 007D).
 // Werkzeuge (TIA Portal, S7, Codesys …) sachlich und NICHT als pauschal zwingend.
+// jobMatch: strukturiert über Kategorie "it" + Tags (SPS, Siemens TIA Portal) –
+// bewusst KEINE freien keywords, da SPS/Automatisierung häufig nur Nebenkompetenz
+// in Elektro-/Mechatronikstellen ist (Variante B der Vorab-Analyse, EPIC 007D).
 import { DEFAULT_PROCESS, type ProfessionContent } from "./types";
 
 export const spsAutomatisierung = {
   slug: "sps-automatisierung",
   name: "SPS-Programmierer und Automatisierungstechniker",
   shortName: "SPS & Automatisierung",
-  status: "draft",
+  status: "published",
   parentSlug: "berufe",
   jobCategory: "it", // in der Job-Datenquelle liegt die SPS-Stelle in Kategorie "it"
 
@@ -104,7 +107,7 @@ export const spsAutomatisierung = {
     lebenslauf: "/lebenslauf-erstellen",
     personalvermittlung: "/technische-personalvermittlung",
     kontakt: "/kontakt",
-    relatedProfessions: ["elektroniker"], // nur published Slugs
+    relatedProfessions: ["elektroniker", "mechatroniker"], // nur published Ziele
   },
 
   // Matching-Begründung: In der Job-Datenquelle liegt die SPS-Stelle strukturiert
@@ -115,17 +118,16 @@ export const spsAutomatisierung = {
   jobMatch: {
     category: ["it"],
     tags: ["SPS", "Siemens TIA Portal"],
-    keywords: ["SPS", "Automatisierung", "Steuerungstechnik", "Inbetriebnahme"],
     excludeKeywords: ["Softwareentwickler", "Applikationsentwickler", "Embedded"],
     maxJobs: 6,
     fallback: "hint-and-joblist",
   },
 
   publication: {
-    published: false,
-    indexable: false,
-    includeInSitemap: false,
-    showInProfessionHub: false,
-    showRelatedLinks: false,
+    published: true,
+    indexable: true,
+    includeInSitemap: true,
+    showInProfessionHub: true,
+    showRelatedLinks: true,
   },
 } as const satisfies ProfessionContent;
