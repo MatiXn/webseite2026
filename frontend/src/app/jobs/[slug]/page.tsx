@@ -4,6 +4,7 @@ import { JOBS, parseSalaryRange, validThroughOf } from "../data";
 import { jobSlug, jobPath, jobIdFromParam } from "../../../lib/slug";
 import { matchJobToProfession } from "../../../content-engine/job-matching";
 import { servicetechniker } from "../../../content/professions/servicetechniker";
+import { spsAutomatisierung } from "../../../content/professions/sps-automatisierung";
 import type { Metadata } from "next";
 import JsonLd from "../../components/JsonLd";
 import Breadcrumbs from "../../components/Breadcrumbs";
@@ -387,6 +388,15 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
                 color: "#2d6a9f", textDecoration: "none",
               }}>
                 Mehr zum Berufsbild Servicetechniker →
+              </Link>
+            )}
+            {/* SPS/Automatisierung strukturiert über Kategorie+Tags -> zentraler Matcher */}
+            {matchJobToProfession(job, spsAutomatisierung).matched && (
+              <Link href="/berufe/sps-automatisierung" style={{
+                display: "inline-block", marginTop: 20, marginLeft: 20, fontSize: 15, fontWeight: 700,
+                color: "#2d6a9f", textDecoration: "none",
+              }}>
+                Mehr zum Berufsbild SPS-/Automatisierung →
               </Link>
             )}
           </section>

@@ -57,6 +57,7 @@ const BERUFSFELDER: Berufsfeld[] = [
     aufgaben: "Programmierung und Inbetriebnahme von SPS-Steuerungen, Anpassung von Steuerungsprogrammen, Anlagenoptimierung.",
     stellen: "SPS-Programmierer, Automatisierungstechniker, Steuerungstechniker, Inbetriebnehmer",
     match: ["sps", "automatisierung", "steuerung"],
+    detailHref: "/berufe/sps-automatisierung",
   },
   {
     name: "Mechatroniker",

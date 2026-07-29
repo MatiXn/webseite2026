@@ -1,5 +1,15 @@
 # Changelog
 
+## EPIC 007D – Veröffentlichung SPS/Automatisierung
+
+- **Changed:** Profession `sps-automatisierung` von Draft auf **published** (Flags + Registry `publishedProfessions`; `draftProfessions` jetzt leer).
+- **Changed (Variante B):** freie `keywords` aus der `jobMatch`-Config entfernt — Matching nur noch über `category:["it"]` + Tags `["SPS","Siemens TIA Portal"]` (+ excludeKeywords). Grund: die Keyword-Suche erzeugte 3 fachlich fragliche Treffer (Elektro-/Mechatronikstellen mit SPS nur als Nebenkompetenz). Ergebnis: **genau 1 Treffer** (der echte SPS-Programmierer/Automatisierungstechniker), 0 False Positives.
+- **Added:** neue Route `/berufe/sps-automatisierung` — dünn, über `ProfessionPageTemplate`. Hub-Karte verlinkt; Sitemap-Eintrag ergänzt.
+- **Added:** matcher-basierter Job-Backlink „Mehr zum Berufsbild SPS-/Automatisierung →". Related-Ziele: Elektroniker + Mechatroniker (published).
+- **Note:** `ProfessionPageTemplate` **unverändert**. Alle vier Professionen (Elektroniker, Mechatroniker, Servicetechniker, SPS) sind jetzt published.
+- **Changed:** Draft-Fixture-Tests auf synthetische Draft-/Keyword-Fixtures umgestellt (keine echte Draft-Profession mehr vorhanden).
+- **Fixed:** keine.
+
 ## EPIC 007C – Veröffentlichung Servicetechniker
 
 - **Changed:** Profession `servicetechniker` von Draft auf **published** (Flags + Registry `publishedProfessions`); `jobMatch` bewusst **unverändert** (Variante A). Related-Ziele auf die jetzt veröffentlichten `elektroniker` + `mechatroniker` erweitert.
