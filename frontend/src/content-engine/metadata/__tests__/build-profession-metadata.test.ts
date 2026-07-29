@@ -7,6 +7,13 @@ import { elektroniker } from "../../../content/professions/elektroniker";
 import { servicetechniker } from "../../../content/professions/servicetechniker";
 import { spsAutomatisierung } from "../../../content/professions/sps-automatisierung";
 
+// Synthetisches Draft-Fixture (seit EPIC 007D sind alle realen Professionen published).
+const draftSps: ProfessionContent = {
+  ...spsAutomatisierung,
+  status: "draft",
+  publication: { published: false, indexable: false, includeInSitemap: false, showInProfessionHub: false, showRelatedLinks: false },
+};
+
 describe("buildProfessionMetadata", () => {
   it("1 – Elektroniker erzeugt exakten Title und Canonical", () => {
     const m = buildProfessionMetadata(elektroniker);
@@ -24,8 +31,8 @@ describe("buildProfessionMetadata", () => {
     expect(m.robots).toEqual({ index: true, follow: true, googleBot: { index: true, follow: true } });
   });
 
-  it("4 – Draft SPS/Automatisierung ist noindex", () => {
-    const m = buildProfessionMetadata(spsAutomatisierung);
+  it("4 – Draft-Profession (synthetisch) ist noindex", () => {
+    const m = buildProfessionMetadata(draftSps);
     expect(m.robots).toEqual({ index: false, follow: false, googleBot: { index: false, follow: false } });
   });
 

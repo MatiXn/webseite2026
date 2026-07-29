@@ -4,6 +4,22 @@ import { JOBS, type Job } from "../../../app/jobs/data";
 import { elektroniker } from "../../../content/professions/elektroniker";
 import { servicetechniker } from "../../../content/professions/servicetechniker";
 import { spsAutomatisierung } from "../../../content/professions/sps-automatisierung";
+import type { ProfessionContent } from "../../../content/professions/types";
+
+// Keyword-tragendes Test-Fixture: prüft die Keyword-/Synonym-/Dedup-Fähigkeit des
+// Matchers unabhängig von der Produktions-Config (die seit EPIC 007D bewusst
+// KEINE freien keywords mehr hat, Variante B). Entspricht der früheren SPS-jobMatch.
+const spsLike: ProfessionContent = {
+  ...spsAutomatisierung,
+  jobMatch: {
+    category: ["it"],
+    tags: ["SPS", "Siemens TIA Portal"],
+    keywords: ["SPS", "Automatisierung", "Steuerungstechnik", "Inbetriebnahme"],
+    excludeKeywords: ["Softwareentwickler", "Applikationsentwickler", "Embedded"],
+    maxJobs: 6,
+    fallback: "hint-and-joblist",
+  },
+};
 
 function getJob(predicate: (j: Job) => boolean): Job {
   const job = JOBS.find(predicate);
@@ -51,7 +67,7 @@ describe("matchJobToProfession", () => {
 
   it("3 – SPS-Job (id 7) trifft SPS-Profession stark (high, mehrere Signale)", () => {
     const job = getJob((j) => j.id === "7");
-    const r = matchJobToProfession(job, spsAutomatisierung);
+    const r = matchJobToProfession(job, spsLike);
     expect(r.confidence).toBe("high");
     expect(r.matched).toBe(true);
     expect(r.score).toBeGreaterThanOrEqual(100);
@@ -60,7 +76,7 @@ describe("matchJobToProfession", () => {
 
   it("4 – Ausschluss-Keyword im Titel schließt aus (none, nicht matched)", () => {
     const job = makeJob({ category: "it", title: "Softwareentwickler C++ (m/w/d)" });
-    const r = matchJobToProfession(job, spsAutomatisierung);
+    const r = matchJobToProfession(job, spsLike);
     expect(r.excluded).toBe(true);
     expect(r.matched).toBe(false);
     expect(r.confidence).toBe("none");
@@ -73,7 +89,7 @@ describe("matchJobToProfession", () => {
       title: "SPS-Softwareentwickler (m/w/d)",
       tags: ["SPS", "Siemens TIA Portal"],
     });
-    const r = matchJobToProfession(job, spsAutomatisierung);
+    const r = matchJobToProfession(job, spsLike);
     expect(r.reasons.length).toBeGreaterThan(0); // positive Signale existieren
     expect(r.excluded).toBe(true);
     expect(r.matched).toBe(false);
@@ -82,7 +98,7 @@ describe("matchJobToProfession", () => {
 
   it("6 – Tag allein ergibt medium und matched", () => {
     const job = makeJob({ category: "bau", tags: ["SPS"], title: "Allrounder", description: "" });
-    const r = matchJobToProfession(job, spsAutomatisierung);
+    const r = matchJobToProfession(job, spsLike);
     expect(r.confidence).toBe("medium");
     expect(r.matched).toBe(true);
     expect(r.matchedSignals).toEqual(["tag"]);
@@ -90,7 +106,7 @@ describe("matchJobToProfession", () => {
 
   it("7 – ein Titel-Keyword allein ergibt low und NICHT matched", () => {
     const job = makeJob({ category: "bau", tags: [], title: "Inbetriebnahme Spezialist", description: "" });
-    const r = matchJobToProfession(job, spsAutomatisierung);
+    const r = matchJobToProfession(job, spsLike);
     expect(r.confidence).toBe("low");
     expect(r.matched).toBe(false);
   });
@@ -102,7 +118,7 @@ describe("matchJobToProfession", () => {
       title: "SPS SPS Anlage",
       description: "sps und sps und sps im Einsatz",
     });
-    const r = matchJobToProfession(job, spsAutomatisierung);
+    const r = matchJobToProfession(job, spsLike);
     const spsTitle = r.reasons.filter((x) => x.value === "SPS" && x.source === "title");
     const spsDesc = r.reasons.filter((x) => x.value === "SPS" && x.source === "description");
     expect(spsTitle).toHaveLength(1);
@@ -116,7 +132,7 @@ describe("matchJobToProfession", () => {
       title: "SPS Anlage",
       description: "sps im Einsatz",
     });
-    const r = matchJobToProfession(job, spsAutomatisierung);
+    const r = matchJobToProfession(job, spsLike);
     const sps = r.reasons.filter((x) => x.value === "SPS");
     expect(sps.map((x) => x.source).sort()).toEqual(["description", "title"]);
     expect(r.score).toBe(45 + 20);
@@ -124,7 +140,7 @@ describe("matchJobToProfession", () => {
 
   it("10 – ungültiger Job (leerer Titel) ergibt kein Match", () => {
     const job = makeJob({ title: "   " });
-    const r = matchJobToProfession(job, spsAutomatisierung);
+    const r = matchJobToProfession(job, spsLike);
     expect(r.matched).toBe(false);
     expect(r.confidence).toBe("none");
     expect(r.reasons).toHaveLength(0);
@@ -137,7 +153,7 @@ describe("matchJobToProfession", () => {
       title: "Fachkraft",
       description: "Wir programmieren eine speicherprogrammierbare Steuerung für die Anlage.",
     });
-    const r = matchJobToProfession(job, spsAutomatisierung);
+    const r = matchJobToProfession(job, spsLike);
     expect(r.reasons.some((x) => x.value === "SPS" && x.source === "description")).toBe(true);
   });
 
@@ -151,7 +167,7 @@ describe("matchJobToProfession", () => {
 
   it("13 – matchedSignals sind dedupliziert und stabil sortiert", () => {
     const job = getJob((j) => j.id === "7");
-    const r = matchJobToProfession(job, spsAutomatisierung);
+    const r = matchJobToProfession(job, spsLike);
     expect(r.matchedSignals[0]).toBe("category");
     expect(r.matchedSignals).toEqual(expect.arrayContaining(["tag", "title"]));
     expect(new Set(r.matchedSignals).size).toBe(r.matchedSignals.length);
