@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { buildProfessionBreadcrumbLinks } from "../build-profession-breadcrumb-links";
 import { ContentInternalLinkError } from "../content-internal-link-error";
 import { elektroniker } from "../../../content/professions/elektroniker";
-import { servicetechniker } from "../../../content/professions/servicetechniker";
+import { spsAutomatisierung } from "../../../content/professions/sps-automatisierung";
 
 describe("buildProfessionBreadcrumbLinks", () => {
   it("1 – genau drei Links", () => {
@@ -24,7 +24,7 @@ describe("buildProfessionBreadcrumbLinks", () => {
   });
 
   it("5 – Draft standardmäßig abgelehnt", () => {
-    expect(() => buildProfessionBreadcrumbLinks(servicetechniker)).toThrow(ContentInternalLinkError);
+    expect(() => buildProfessionBreadcrumbLinks(spsAutomatisierung)).toThrow(ContentInternalLinkError);
   });
 
   it("6 – keine doppelten URLs", () => {
@@ -33,8 +33,8 @@ describe("buildProfessionBreadcrumbLinks", () => {
   });
 
   it("7 – mutiert die Profession nicht (auch mit allowDraft)", () => {
-    const snapshot = JSON.parse(JSON.stringify(servicetechniker));
-    buildProfessionBreadcrumbLinks(servicetechniker, { allowDraft: true });
-    expect(JSON.parse(JSON.stringify(servicetechniker))).toEqual(snapshot);
+    const snapshot = JSON.parse(JSON.stringify(spsAutomatisierung));
+    buildProfessionBreadcrumbLinks(spsAutomatisierung, { allowDraft: true });
+    expect(JSON.parse(JSON.stringify(spsAutomatisierung))).toEqual(snapshot);
   });
 });

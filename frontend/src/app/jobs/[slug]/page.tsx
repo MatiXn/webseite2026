@@ -2,6 +2,8 @@ import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
 import { JOBS, parseSalaryRange, validThroughOf } from "../data";
 import { jobSlug, jobPath, jobIdFromParam } from "../../../lib/slug";
+import { matchJobToProfession } from "../../../content-engine/job-matching";
+import { servicetechniker } from "../../../content/professions/servicetechniker";
 import type { Metadata } from "next";
 import JsonLd from "../../components/JsonLd";
 import Breadcrumbs from "../../components/Breadcrumbs";
@@ -376,6 +378,15 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
                 color: "#2d6a9f", textDecoration: "none",
               }}>
                 Mehr zum Berufsbild Mechatroniker →
+              </Link>
+            )}
+            {/* Servicetechniker spannt mehrere Kategorien -> zentraler Matcher statt Kategorie-Check */}
+            {matchJobToProfession(job, servicetechniker).matched && (
+              <Link href="/berufe/servicetechniker" style={{
+                display: "inline-block", marginTop: 20, marginLeft: 20, fontSize: 15, fontWeight: 700,
+                color: "#2d6a9f", textDecoration: "none",
+              }}>
+                Mehr zum Berufsbild Servicetechniker →
               </Link>
             )}
           </section>

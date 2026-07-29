@@ -1,5 +1,14 @@
 # Changelog
 
+## EPIC 007C – Veröffentlichung Servicetechniker
+
+- **Changed:** Profession `servicetechniker` von Draft auf **published** (Flags + Registry `publishedProfessions`); `jobMatch` bewusst **unverändert** (Variante A). Related-Ziele auf die jetzt veröffentlichten `elektroniker` + `mechatroniker` erweitert.
+- **Added:** neue Route `/berufe/servicetechniker` — dünn, über `ProfessionPageTemplate`. Hub-Karte verlinkt die Detailseite; Sitemap-Eintrag ergänzt.
+- **Added:** konditionaler Job-Backlink „Mehr zum Berufsbild Servicetechniker →" — **matcher-basiert** (`matchJobToProfession(job, servicetechniker).matched`), da Servicestellen mehrere Kategorien spannen. Elektroniker-/Mechatroniker-Backlinks unberührt.
+- **Note:** `ProfessionPageTemplate` **unverändert**. Matching-Analyse: 7 Treffer (alle echte Servicetechniker-Rollen), 6 sichtbar, 0 ausgeschlossen; Grenzfall id 19 (Anlagenmechaniker SHK, Score 55) bleibt konservativ unter der Match-Schwelle.
+- **Changed:** bestehende Draft-Fixture-Tests auf `spsAutomatisierung` umgestellt (Servicetechniker ist keine Draft mehr).
+- **Fixed:** keine.
+
 ## EPIC 007B – Mechatroniker-Seite mit Profession Template
 
 - **Added:** veröffentlichte Profession `mechatroniker` (`src/content/professions/mechatroniker.ts`) — sachliche Berufsbild-Inhalte, geerdet an den 8 realen Mechatronik-Stellen (Montage/Inbetriebnahme, Kälte-/Klimatechnik, Service, Instandhaltung); 10 FAQ mit etablierten PHE-Service-Fakten, keine erfundenen Claims. In die Registry aufgenommen (`publishedProfessions`, `professionBySlug`).

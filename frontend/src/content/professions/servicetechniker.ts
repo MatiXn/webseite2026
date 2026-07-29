@@ -1,12 +1,13 @@
-// Servicetechniker – DRAFT (noch nicht veröffentlicht, keine Route, kein Hub).
-// Sachliche, kuratierte Inhalte; keine erfundenen Zahlen/Garantien.
+// Servicetechniker – published (EPIC 007C). Sachliche, kuratierte Inhalte;
+// keine erfundenen Zahlen/Garantien. jobMatch bewusst tag-/keyword-basiert
+// (Servicestellen spannen elektro + mechatronik) – siehe Matching-Begründung unten.
 import { DEFAULT_PROCESS, type ProfessionContent } from "./types";
 
 export const servicetechniker = {
   slug: "servicetechniker",
   name: "Servicetechniker",
   shortName: "Servicetechniker",
-  status: "draft",
+  status: "published",
   parentSlug: "berufe",
   jobCategory: null, // Servicestellen spannen mehrere Kategorien (elektro, mechatronik)
 
@@ -110,7 +111,7 @@ export const servicetechniker = {
     lebenslauf: "/lebenslauf-erstellen",
     personalvermittlung: "/technische-personalvermittlung",
     kontakt: "/kontakt",
-    relatedProfessions: ["elektroniker"], // nur published Slugs
+    relatedProfessions: ["elektroniker", "mechatroniker"], // nur published Ziele
   },
 
   // Matching-Begründung: Es gibt KEIN dediziertes "service"-category-Feld – die
@@ -126,10 +127,10 @@ export const servicetechniker = {
   },
 
   publication: {
-    published: false,
-    indexable: false,
-    includeInSitemap: false,
-    showInProfessionHub: false,
-    showRelatedLinks: false,
+    published: true,
+    indexable: true,
+    includeInSitemap: true,
+    showInProfessionHub: true,
+    showRelatedLinks: true,
   },
 } as const satisfies ProfessionContent;

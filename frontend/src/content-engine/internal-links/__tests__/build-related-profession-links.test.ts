@@ -4,13 +4,14 @@ import type { InternalLinkRegistry } from "../types";
 import type { ProfessionContent } from "../../../content/professions/types";
 import { elektroniker } from "../../../content/professions/elektroniker";
 import { servicetechniker } from "../../../content/professions/servicetechniker";
+import { spsAutomatisierung } from "../../../content/professions/sps-automatisierung";
 
 function withRelated(base: ProfessionContent, related: readonly string[]): ProfessionContent {
   return { ...base, internalLinks: { ...base.internalLinks, relatedProfessions: related } };
 }
 // Zweite veröffentlichte Profession (Klon) für Reihenfolge-/Mehrfach-Tests.
 const zweitberuf: ProfessionContent = { ...elektroniker, slug: "zweitberuf", name: "Zweitberuf", shortName: "Zweitberuf", canonicalPath: "/berufe/zweitberuf" };
-const registry: InternalLinkRegistry = { professionBySlug: { elektroniker, servicetechniker, zweitberuf } };
+const registry: InternalLinkRegistry = { professionBySlug: { elektroniker, servicetechniker, zweitberuf, "sps-automatisierung": spsAutomatisierung } };
 
 describe("buildRelatedProfessionLinks", () => {
   it("1 – veröffentlichtes Ziel wird ausgegeben", () => {
@@ -21,7 +22,7 @@ describe("buildRelatedProfessionLinks", () => {
   });
 
   it("2 – Draft-Ziel wird entfernt", () => {
-    const links = buildRelatedProfessionLinks(withRelated(elektroniker, ["servicetechniker"]), registry);
+    const links = buildRelatedProfessionLinks(withRelated(elektroniker, ["sps-automatisierung"]), registry);
     expect(links).toHaveLength(0);
   });
 

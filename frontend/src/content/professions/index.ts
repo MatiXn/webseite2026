@@ -12,8 +12,8 @@ export const professions = [elektroniker, mechatroniker, servicetechniker, spsAu
 
 // Nach Veröffentlichungsstatus getrennt (manuell gepflegt; Konsistenz-Validator
 // gegen die status/publication-Flags folgt in EPIC 006C).
-export const publishedProfessions = [elektroniker, mechatroniker] as const;
-export const draftProfessions = [servicetechniker, spsAutomatisierung] as const;
+export const publishedProfessions = [elektroniker, mechatroniker, servicetechniker] as const;
+export const draftProfessions = [spsAutomatisierung] as const;
 
 // Statische Slug→Profession-Zuordnung (ohne Funktion).
 export const professionBySlug = {
