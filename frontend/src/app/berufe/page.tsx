@@ -49,6 +49,7 @@ const BERUFSFELDER: Berufsfeld[] = [
     aufgaben: "Fehlerdiagnose, Reparatur, Wartung und Inbetriebnahme; Dokumentation und Einweisung vor Ort.",
     stellen: "Servicetechniker, Kundendiensttechniker, Inbetriebnahmetechniker",
     match: ["servicetechniker"],
+    detailHref: "/berufe/servicetechniker",
   },
   {
     name: "SPS-Programmierer & Automatisierungstechniker",
