@@ -15,6 +15,7 @@ export const SCHEMA_FRAGMENTS = {
 // Startseite -> Berufe -> Profession. Der Hub-Pfad kommt aus profession.internalLinks.parent.
 export const BREADCRUMB_HOME = { name: "Startseite", path: "/" } as const;
 export const PROFESSION_HUB_NAME = "Berufe";
+export const INDUSTRY_HUB_NAME = "Branchen";
 
 // Schema-Typen, die dieser Builder bewusst NIE erzeugt (Prüfgrundlage für Analyse/Tests).
 export const FORBIDDEN_SCHEMA_TYPES: readonly string[] = [

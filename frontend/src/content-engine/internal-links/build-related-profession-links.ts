@@ -4,15 +4,19 @@
 import type { ProfessionContent } from "../../content/professions/types";
 import type { InternalLink, InternalLinkRegistry } from "./types";
 
-export function buildRelatedProfessionLinks(
-  profession: ProfessionContent,
+// Generischer Kern: löst eine Liste von Profession-Slugs gegen die Registry auf.
+// Nutzbar für Professionen UND Branchen (relevante Professionen). Nur veröffentlichte,
+// freigegebene Ziele; Self-Link, Drafts, Duplikate und unbekannte Slugs werden entfernt.
+export function buildRelatedProfessionLinksFromSlugs(
+  relatedSlugs: readonly string[],
+  selfSlug: string,
   registry: InternalLinkRegistry,
 ): readonly InternalLink[] {
   const out: InternalLink[] = [];
   const seen = new Set<string>();
 
-  for (const slug of profession.internalLinks.relatedProfessions) {
-    if (slug === profession.slug) continue; // kein Self-Link
+  for (const slug of relatedSlugs) {
+    if (slug === selfSlug) continue; // kein Self-Link
     if (seen.has(slug)) continue; // Duplikat
     const target = registry.professionBySlug[slug];
     if (!target) continue; // existiert nicht in der Registry
@@ -32,4 +36,12 @@ export function buildRelatedProfessionLinks(
   }
 
   return out;
+}
+
+// Profession-Wrapper: unveränderte öffentliche API, delegiert an den generischen Kern.
+export function buildRelatedProfessionLinks(
+  profession: ProfessionContent,
+  registry: InternalLinkRegistry,
+): readonly InternalLink[] {
+  return buildRelatedProfessionLinksFromSlugs(profession.internalLinks.relatedProfessions, profession.slug, registry);
 }
