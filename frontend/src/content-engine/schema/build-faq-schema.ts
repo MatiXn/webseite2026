@@ -1,15 +1,15 @@
-// Baut ein FAQPage-Schema ausschließlich aus profession.faq (sichtbare Inhalte).
+// Baut ein FAQPage-Schema aus sichtbaren FAQ-Einträgen (domänenneutral: Profession ODER Industry).
 // Keine Ergänzung, keine Umformulierung. Leeres FAQ -> kein Knoten (null).
-import type { ProfessionContent } from "../../content/professions/types";
+import type { FaqEntry } from "../../content/faq";
 import type { SchemaNode } from "./types";
 
-export function buildFaqSchema(profession: ProfessionContent, id: string): SchemaNode | null {
-  if (profession.faq.length === 0) return null;
+export function buildFaqSchema(faq: readonly FaqEntry[], id: string): SchemaNode | null {
+  if (faq.length === 0) return null;
 
   return {
     "@type": "FAQPage",
     "@id": id,
-    mainEntity: profession.faq.map((entry) => ({
+    mainEntity: faq.map((entry) => ({
       "@type": "Question",
       name: entry.q,
       acceptedAnswer: { "@type": "Answer", text: entry.a },

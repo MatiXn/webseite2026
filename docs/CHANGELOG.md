@@ -1,5 +1,16 @@
 # Changelog
 
+## EPIC 008A – Branchen-Content-Engine: Basis + Datenmodell
+
+- **Added:** eigenständiges Branchen-Datenmodell `IndustryContent` (`content/industries/types.ts`) — separate Domäne, kein Shared-Type-Layer; generische Primitive (`Cta`, `JobMatchConfig`, `SearchIntent`, `FaqEntry`) werden importiert statt kopiert.
+- **Added:** Branchen-Registry-Gerüst (`content/industries/index.ts`) — `industries`/`publishedIndustries`/`draftIndustries`/`industryBySlug`, zunächst leer, valide typisiert.
+- **Added:** `validateIndustry` + `validateIndustryRegistry` (eigene `IndustryValidation*`-Typen/Codes) — prüfen Slug, Status, Publication-Konsistenz, Canonical, Metadata, FAQ, interne Links, Job-Match-Config und Registry-Konsistenz.
+- **Changed (rückwärtskompatibel):** Job-Matcher um generischen Kern erweitert — `matchJobToConfig(job, jobMatch, contextSlug)` / `matchJobsForConfig(jobs, jobMatch, contextSlug)`; `matchJobToProfession`/`matchJobsForProfession` delegieren daran (identisches Verhalten).
+- **Changed (rückwärtskompatibel):** `buildFaqSchema(faq[], id)` statt `(profession, id)` — Ausgabe unverändert; Profession-Composer + Test angepasst.
+- **Added:** Unit-Tests für Industry-Validator, Industry-Registry und generischen Matcher-Kern.
+- **Note:** keine Route/Hub/Template/Branchen-Inhalte/Composer/Sitemap — reine Basis. Kein Shared-Type-Layer. Keine sichtbare Website-Änderung. Vier Professionen ohne Matching-/Metadata-/Schema-Regression.
+- **Fixed:** keine.
+
 ## EPIC 007D – Veröffentlichung SPS/Automatisierung
 
 - **Changed:** Profession `sps-automatisierung` von Draft auf **published** (Flags + Registry `publishedProfessions`; `draftProfessions` jetzt leer).

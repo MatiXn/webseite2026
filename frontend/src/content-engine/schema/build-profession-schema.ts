@@ -36,7 +36,7 @@ export function buildProfessionSchema(
   const faqId = `${canonical}${SCHEMA_FRAGMENTS.faq}`;
   const itemListId = `${canonical}${SCHEMA_FRAGMENTS.itemList}`;
 
-  const faq = buildFaqSchema(profession, faqId);
+  const faq = buildFaqSchema(profession.faq, faqId);
   const itemList = buildItemListSchema(matchedJobs, itemListId);
 
   const collectionPage = buildCollectionPageSchema({
