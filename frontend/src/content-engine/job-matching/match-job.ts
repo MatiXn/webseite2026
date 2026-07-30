@@ -3,7 +3,7 @@
 // (siehe content-engine/validation, EPIC 006C.1) und validiert die Config NICHT erneut —
 // geprüft wird nur die minimale Job-Integrität (id + title vorhanden).
 import type { Job } from "../../app/jobs/data";
-import type { ProfessionContent } from "../../content/professions/types";
+import type { ProfessionContent, JobMatchConfig } from "../../content/professions/types";
 import type { Confidence, JobMatchResult, MatchSource } from "./types";
 import { CONFIDENCE_THRESHOLDS } from "./types";
 import { scoreJob } from "./score-job";
@@ -38,13 +38,13 @@ function uniqueSignals(sources: readonly MatchSource[]): readonly MatchSource[] 
   return out;
 }
 
-export function matchJobToProfession(job: Job, profession: ProfessionContent): JobMatchResult {
-  const professionSlug = profession.slug;
-
+// Generischer Kern: bewertet einen Job gegen eine JobMatchConfig + stabile Context-ID.
+// Domänenneutral (Profession ODER Industry); die Context-ID landet in JobMatchResult.professionSlug.
+export function matchJobToConfig(job: Job, jobMatch: JobMatchConfig, contextSlug: string): JobMatchResult {
   if (!isValidJob(job)) {
     return {
       job,
-      professionSlug,
+      professionSlug: contextSlug,
       score: 0,
       confidence: "none",
       matched: false,
@@ -55,13 +55,13 @@ export function matchJobToProfession(job: Job, profession: ProfessionContent): J
     };
   }
 
-  const scored = scoreJob(job, profession.jobMatch);
+  const scored = scoreJob(job, jobMatch);
   const confidence = confidenceFromScore(scored.score, scored.excluded);
   const matched = !scored.excluded && (confidence === "high" || confidence === "medium");
 
   return {
     job,
-    professionSlug,
+    professionSlug: contextSlug,
     score: scored.score,
     confidence,
     matched,
@@ -70,4 +70,9 @@ export function matchJobToProfession(job: Job, profession: ProfessionContent): J
     exclusionReasons: scored.exclusionReasons,
     matchedSignals: uniqueSignals(scored.reasons.map((r) => r.source)),
   };
+}
+
+// Profession-Wrapper: unveränderte öffentliche API, delegiert an den generischen Kern.
+export function matchJobToProfession(job: Job, profession: ProfessionContent): JobMatchResult {
+  return matchJobToConfig(job, profession.jobMatch, profession.slug);
 }
