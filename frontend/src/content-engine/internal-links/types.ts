@@ -19,6 +19,7 @@ export type InternalLinkPriority = "primary" | "secondary" | "contextual";
 export type InternalLinkSource =
   | "profession-config"
   | "profession-registry"
+  | "industry-config"
   | "job-matcher"
   | "system";
 
@@ -71,6 +72,17 @@ export type ProfessionInternalLinksResult = {
   readonly breadcrumbs: readonly InternalLink[];
   readonly coreLinks: readonly InternalLink[];
   readonly relatedProfessionLinks: readonly InternalLink[];
+  readonly jobLinks: readonly InternalLink[];
+  readonly candidateLinks: readonly InternalLink[];
+  readonly companyLinks: readonly InternalLink[];
+  readonly allLinks: readonly InternalLink[];
+  readonly warnings: readonly InternalLinkWarning[];
+};
+
+export type IndustryInternalLinksResult = {
+  readonly breadcrumbs: readonly InternalLink[];
+  readonly coreLinks: readonly InternalLink[];
+  readonly relevantProfessionLinks: readonly InternalLink[];
   readonly jobLinks: readonly InternalLink[];
   readonly candidateLinks: readonly InternalLink[];
   readonly companyLinks: readonly InternalLink[];

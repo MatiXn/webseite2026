@@ -5,3 +5,4 @@ export * from "./content-metadata-error";
 export * from "./build-canonical-url";
 export * from "./build-page-metadata";
 export * from "./build-profession-metadata";
+export * from "./build-industry-metadata";

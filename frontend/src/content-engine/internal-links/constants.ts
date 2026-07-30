@@ -16,6 +16,17 @@ export const BREADCRUMB_LABELS = {
   hub: "Berufe",
 } as const;
 
+// Branchen-Kernziel-Labels (Industry hat keinen Lebenslauf-Kernlink; Parent ist der Branchen-Hub).
+export const INDUSTRY_CORE_LINK_LABELS = {
+  parent: "Alle Branchen",
+  jobs: "Aktuelle Jobs ansehen",
+  personalvermittlung: "Technische Fachkräfte anfragen",
+  kontakt: "Kontakt aufnehmen",
+} as const;
+
+// Branchen-Breadcrumb-Hub-Label (Startseite kommt aus BREADCRUMB_LABELS.home).
+export const INDUSTRY_HUB_LABEL = "Branchen";
+
 export const HOME_PATH = "/";
 
 // Zusätzlich zur strukturellen Prüfung verbotene Zielpräfixe.

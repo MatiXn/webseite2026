@@ -1,5 +1,14 @@
 # Changelog
 
+## EPIC 008B – Branchen-Content-Engine: Composer
+
+- **Added:** `buildIndustryMetadata(industry)`, `buildIndustrySchema(industry, matchedJobs)`, `buildIndustryInternalLinks(input)` — dünne Wrapper über die vorhandenen generischen Primitive (buildPageMetadata, Schema-Sub-Builder + Dedupe, validateInternalLink/deduplicateInternalLinks/buildJobLinks). Keine kopierte Engine, keine Branchen-Sonderlogik.
+- **Changed (rückwärtskompatibel):** `buildRelatedProfessionLinks` um slug-basierten Kern `buildRelatedProfessionLinksFromSlugs` erweitert (Profession-Wrapper delegiert, Ausgabe identisch); `ContentMetadataError.validationCodes` auf `string[]` geweitet (domänenneutral); `InternalLinkSource` um `"industry-config"` ergänzt.
+- **Added:** `IndustryInternalLinksResult`-Typ, Industry-Core-Link-/Hub-Konstanten.
+- **Added:** Unit-Tests für alle drei Composer (inkl. 0-Job-Verhalten, Draft-Handling, Dedup, keine Organization-Duplikation/kein JobPosting) + Regressionschecks der Profession-Composer.
+- **Note:** keine Route/Template/Hub/Sitemap/echte Branche; Registry weiterhin leer; keine sichtbare Website-Änderung. Vier Professionen ohne Metadata-/Schema-/Link-/Matching-Regression.
+- **Fixed:** keine.
+
 ## EPIC 008A – Branchen-Content-Engine: Basis + Datenmodell
 
 - **Added:** eigenständiges Branchen-Datenmodell `IndustryContent` (`content/industries/types.ts`) — separate Domäne, kein Shared-Type-Layer; generische Primitive (`Cta`, `JobMatchConfig`, `SearchIntent`, `FaqEntry`) werden importiert statt kopiert.

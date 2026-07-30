@@ -9,3 +9,4 @@ export * from "./build-related-profession-links";
 export * from "./build-job-links";
 export * from "./deduplicate-internal-links";
 export * from "./build-profession-internal-links";
+export * from "./build-industry-internal-links";
