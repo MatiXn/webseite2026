@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Turnstile from "@/components/Turnstile";
 
 export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; jobCity: string }) {
   const [sent, setSent] = useState(false);
@@ -7,6 +8,7 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
   const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [honeypot, setHoneypot] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,6 +24,7 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
           email: form.email,
           phone: form.phone,
           website: honeypot,
+          turnstileToken,
           message: `[Bewerbung: ${jobTitle} – ${jobCity}]\n\n${form.message || "Keine Nachricht angegeben."}`,
         }),
       });
@@ -93,6 +96,7 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
         maxLength={5000}
         value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
       />
+      <Turnstile onVerify={setTurnstileToken} />
       {error && (
         <p style={{ fontSize: 14, color: "#dc2626", fontWeight: 600 }}>{error}</p>
       )}

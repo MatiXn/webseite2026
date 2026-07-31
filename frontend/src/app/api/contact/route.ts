@@ -5,6 +5,24 @@ import {
   escapeHtml, isValidEmail, isBusinessEmail, isGermanPhone,
   looksLikeRealName, sanitizeFields, rateLimit,
 } from "@/lib/contact-validation";
+import {
+  isDisposableEmail, hasMxRecords, passesEmailValidationApi, passesTurnstile,
+} from "@/lib/email-checks";
+
+// Vertiefte E-Mail-Prüfung für beide Anfrage-Typen:
+// Wegwerf-Domain → MX-Records → optionale Validierungs-API
+async function deepEmailCheck(email: string): Promise<string | null> {
+  if (isDisposableEmail(email)) {
+    return "Wegwerf-E-Mail-Adressen werden nicht akzeptiert. Bitte verwenden Sie Ihre reguläre E-Mail-Adresse.";
+  }
+  if (!(await hasMxRecords(email))) {
+    return "Diese E-Mail-Domain kann keine E-Mails empfangen. Bitte prüfen Sie Ihre Eingabe auf Tippfehler.";
+  }
+  if (!(await passesEmailValidationApi(email))) {
+    return "Diese E-Mail-Adresse konnte nicht verifiziert werden. Bitte prüfen Sie Ihre Eingabe.";
+  }
+  return null;
+}
 
 const FROM = "PHE-Perm Engineering <noreply@phe-perm.de>";
 const TO = "info@phe-perm.de";
@@ -25,6 +43,14 @@ export async function POST(req: NextRequest) {
     // Erfolg ohne Versand, damit das Skript nichts von der Abwehr merkt
     if (typeof body?.website === "string" && body.website.trim() !== "") {
       return NextResponse.json({ ok: true, pending: true });
+    }
+
+    // Cloudflare Turnstile (aktiv sobald TURNSTILE_SECRET_KEY gesetzt ist)
+    if (!(await passesTurnstile(String(body?.turnstileToken ?? ""), ip))) {
+      return NextResponse.json(
+        { ok: false, error: "Bot-Prüfung fehlgeschlagen. Bitte laden Sie die Seite neu und versuchen Sie es erneut." },
+        { status: 400 }
+      );
     }
 
     if (type === "talent") {
@@ -48,6 +74,10 @@ export async function POST(req: NextRequest) {
       }
       if (!looksLikeRealName(f.contact)) {
         return NextResponse.json({ ok: false, error: "Bitte geben Sie den vollständigen Namen des Ansprechpartners an." }, { status: 400 });
+      }
+      const emailIssue = await deepEmailCheck(f.email);
+      if (emailIssue) {
+        return NextResponse.json({ ok: false, error: emailIssue }, { status: 400 });
       }
 
       const token = signToken({ ...f, type, exp: Date.now() + 24 * 60 * 60 * 1000 });
@@ -100,6 +130,10 @@ export async function POST(req: NextRequest) {
     }
     if (!looksLikeRealName(f.contact)) {
       return NextResponse.json({ ok: false, error: "Bitte geben Sie Ihren vollständigen Namen an." }, { status: 400 });
+    }
+    const emailIssue = await deepEmailCheck(f.email);
+    if (emailIssue) {
+      return NextResponse.json({ ok: false, error: emailIssue }, { status: 400 });
     }
 
     const token = signToken({ ...f, type, exp: Date.now() + 24 * 60 * 60 * 1000 });
