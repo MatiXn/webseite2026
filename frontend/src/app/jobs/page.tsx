@@ -648,7 +648,7 @@ function JobDetailModal({ job, jobUrl, onClose, onApply }: { job: Job; jobUrl: s
           </button>
           {process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID && (
             <a
-              href={`/api/auth/linkedin?return=${encodeURIComponent(jobPath(job))}`}
+              href={`/api/auth/linkedin?return=${encodeURIComponent(jobPath(job))}&jobTitle=${encodeURIComponent(job.title)}&jobCity=${encodeURIComponent(job.city)}`}
               title={`Mit LinkedIn bewerben: ${job.title}`}
               style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: "#0a66c2", color: "#fff", fontSize: 14, fontWeight: 700, padding: "13px 16px", borderRadius: 999, textDecoration: "none", whiteSpace: "nowrap" }}
             >

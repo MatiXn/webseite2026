@@ -45,8 +45,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true, pending: true });
     }
 
+    // LinkedIn-verifizierte Anfragen brauchen kein Turnstile — der
+    // LinkedIn-Login ist bereits der Bot-Beweis
+    const liEarly = verifyToken(String(body?.linkedinToken ?? ""));
+
     // Cloudflare Turnstile (aktiv sobald TURNSTILE_SECRET_KEY gesetzt ist)
-    if (!(await passesTurnstile(String(body?.turnstileToken ?? ""), ip))) {
+    if (!liEarly && !(await passesTurnstile(String(body?.turnstileToken ?? ""), ip))) {
       return NextResponse.json(
         { ok: false, error: "Bot-Prüfung fehlgeschlagen. Bitte laden Sie die Seite neu und versuchen Sie es erneut." },
         { status: 400 }

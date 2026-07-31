@@ -15,9 +15,14 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect(new URL(`${safeReturn}?linkedin=unavailable`, req.url));
   }
 
+  // Job-Infos wandern signiert in den State: der Callback verschickt die
+  // Bewerbung damit automatisch (Ein-Klick-Bewerbung)
+  const jobTitle = (req.nextUrl.searchParams.get("jobTitle") ?? "").slice(0, 200);
+  const jobCity = (req.nextUrl.searchParams.get("jobCity") ?? "").slice(0, 100);
+
   // Nonce bindet den Flow an diesen Browser (CSRF-Schutz), State ist signiert
   const nonce = randomBytes(16).toString("hex");
-  const state = signToken({ nonce, ret: safeReturn, exp: Date.now() + 10 * 60 * 1000 });
+  const state = signToken({ nonce, ret: safeReturn, jobTitle, jobCity, exp: Date.now() + 10 * 60 * 1000 });
 
   const url = new URL("https://www.linkedin.com/oauth/v2/authorization");
   url.searchParams.set("response_type", "code");

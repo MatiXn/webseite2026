@@ -28,13 +28,47 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
   const pathname = usePathname();
   const linkedinEnabled = !!process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID;
 
+  const [autoApplied, setAutoApplied] = useState(false);
+  const [phoneAfter, setPhoneAfter] = useState("");
+  const [phoneSent, setPhoneSent] = useState(false);
+  const [phoneError, setPhoneError] = useState("");
+
   useEffect(() => {
     const profile = readLinkedInProfile();
     if (profile) {
       setLinkedin(profile);
       setForm(f => ({ ...f, name: f.name || profile.name, email: profile.email }));
     }
+    // Callback hat die Bewerbung bereits automatisch verschickt
+    if (new URLSearchParams(window.location.search).get("linkedin") === "applied") {
+      setAutoApplied(true);
+    }
   }, []);
+
+  // Optionales Nachreichen der Telefonnummer nach der Ein-Klick-Bewerbung
+  const submitPhone = async () => {
+    if (!linkedin) return;
+    setPhoneError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "contact",
+          contact: linkedin.name,
+          email: linkedin.email,
+          phone: phoneAfter,
+          linkedinToken: linkedin.token,
+          message: `[Bewerbung: ${jobTitle} – ${jobCity}]\n\nTelefonnummer nachgereicht zur LinkedIn-Bewerbung.`,
+        }),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.error);
+      setPhoneSent(true);
+    } catch (err) {
+      setPhoneError((err instanceof Error && err.message) || "Senden fehlgeschlagen.");
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,6 +105,51 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
     }
   };
 
+  if (autoApplied) {
+    return (
+      <div style={{
+        background: "#f0fdf4", border: "1.5px solid #86efac", borderRadius: 16,
+        padding: "32px 24px", textAlign: "center",
+      }}>
+        <div style={{ fontSize: 40, marginBottom: 12 }}>✅</div>
+        <h3 style={{ fontSize: 20, fontWeight: 700, color: "#166534", marginBottom: 8 }}>
+          Bewerbung eingegangen!
+        </h3>
+        <p style={{ fontSize: 15, color: "#15803d", lineHeight: 1.6, marginBottom: 16 }}>
+          Ihre Bewerbung{linkedin ? ` als ${linkedin.name}` : ""} wurde über LinkedIn
+          verifiziert und ist direkt bei uns eingegangen. Wir melden uns innerhalb
+          von 24 Stunden bei Ihnen.
+        </p>
+        {linkedin && !phoneSent && (
+          <div style={{ maxWidth: 360, margin: "0 auto" }}>
+            <p style={{ fontSize: 13, color: "#166534", marginBottom: 8 }}>
+              Optional: Telefonnummer für eine schnellere Rückmeldung
+            </p>
+            <div style={{ display: "flex", gap: 8 }}>
+              <input
+                type="tel" placeholder="+49 …" maxLength={40} value={phoneAfter}
+                onChange={e => setPhoneAfter(e.target.value)}
+                style={{ flex: 1, padding: "11px 14px", borderRadius: 10, border: "1.5px solid #86efac", fontSize: 14, outline: "none" }}
+              />
+              <button
+                type="button" onClick={submitPhone} disabled={!phoneAfter}
+                style={{ background: "#166534", color: "#fff", border: "none", borderRadius: 10, padding: "11px 18px", fontSize: 14, fontWeight: 700, cursor: phoneAfter ? "pointer" : "not-allowed" }}
+              >
+                Senden
+              </button>
+            </div>
+            {phoneError && <p style={{ fontSize: 12, color: "#dc2626", marginTop: 6 }}>{phoneError}</p>}
+          </div>
+        )}
+        {phoneSent && (
+          <p style={{ fontSize: 13, color: "#166534", fontWeight: 600 }}>
+            ✓ Telefonnummer übermittelt — vielen Dank!
+          </p>
+        )}
+      </div>
+    );
+  }
+
   if (sent) {
     return (
       <div style={{
@@ -104,7 +183,7 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
       {linkedinEnabled && !linkedin && (
         <>
           <a
-            href={`/api/auth/linkedin?return=${encodeURIComponent(pathname ?? "/jobs")}`}
+            href={`/api/auth/linkedin?return=${encodeURIComponent(pathname ?? "/jobs")}&jobTitle=${encodeURIComponent(jobTitle)}&jobCity=${encodeURIComponent(jobCity)}`}
             style={{
               display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
               background: "#0a66c2", color: "#fff", borderRadius: 12,

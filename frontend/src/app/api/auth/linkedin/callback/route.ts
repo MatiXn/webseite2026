@@ -1,5 +1,7 @@
+import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 import { signToken, verifyToken } from "@/lib/confirm-token";
+import { escapeHtml } from "@/lib/contact-validation";
 
 // OAuth-Rückweg von LinkedIn: Code gegen Token tauschen, Profil abrufen und
 // die verifizierten Daten (Name, E-Mail) signiert ans Formular übergeben.
@@ -55,7 +57,32 @@ export async function GET(req: NextRequest) {
       exp: Date.now() + 30 * 60 * 1000,
     });
 
-    const res = NextResponse.redirect(new URL(`${ret}?linkedin=success`, req.url));
+    // Ein-Klick-Bewerbung: Job-Infos im State → Bewerbung sofort verschicken.
+    // Identität ist durch den LinkedIn-Login bereits verifiziert.
+    let resultParam = "success";
+    if (typeof state.jobTitle === "string" && state.jobTitle) {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      await resend.emails.send({
+        from: "PHE-Perm Engineering <noreply@phe-perm.de>",
+        to: "bewerbung@phe-perm.de",
+        replyTo: user.email,
+        subject: `Bewerbung – ${user.name}`,
+        html: `
+          <h2>Neue Bewerbung über phe-perm.de (LinkedIn-Ein-Klick)</h2>
+          <p style="color:#0a66c2;font-weight:700">&#10003; Identität via LinkedIn bestätigt</p>
+          <table cellpadding="8" style="border-collapse:collapse;width:100%">
+            <tr><td><strong>Stelle</strong></td><td>${escapeHtml(state.jobTitle)}${state.jobCity ? ` – ${escapeHtml(state.jobCity)}` : ""}</td></tr>
+            <tr><td><strong>Name</strong></td><td>${escapeHtml(user.name)}</td></tr>
+            <tr><td><strong>E-Mail</strong></td><td>${escapeHtml(user.email)}</td></tr>
+            ${typeof user.picture === "string" && user.picture.startsWith("https://") ? `<tr><td><strong>Profilfoto</strong></td><td><a href="${escapeHtml(user.picture)}">Foto ansehen</a></td></tr>` : ""}
+            <tr><td><strong>Telefon</strong></td><td>– (kann vom Bewerber nachgereicht werden)</td></tr>
+          </table>
+        `,
+      });
+      resultParam = "applied";
+    }
+
+    const res = NextResponse.redirect(new URL(`${ret}?linkedin=${resultParam}`, req.url));
     // JS-lesbar fürs Formular-Prefill; die Signatur im Token verhindert Manipulation
     res.cookies.set(
       "li_profile",
