@@ -120,6 +120,16 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
 
   if (autoApplied) {
     return (
+      <>
+      {/* Fixiertes Banner: sofort sichtbar, unabhängig von der Scroll-Position */}
+      <div style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 9999,
+        background: "#16a34a", color: "#fff", textAlign: "center",
+        padding: "14px 20px", fontSize: 15, fontWeight: 700,
+        boxShadow: "0 2px 12px rgba(0,0,0,0.2)",
+      }}>
+        ✅ Ihre Bewerbung ist erfolgreich eingegangen — wir melden uns innerhalb von 24 Stunden!
+      </div>
       <div ref={successRef} style={{
         background: "#f0fdf4", border: "2px solid #22c55e", borderRadius: 16,
         padding: "32px 24px", textAlign: "center",
@@ -162,6 +172,7 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
           </p>
         )}
       </div>
+      </>
     );
   }
 
