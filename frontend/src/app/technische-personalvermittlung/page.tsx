@@ -204,7 +204,6 @@ function ContactForm() {
   };
 
   const isGermanPhone = (phone: string) => {
-    if (!phone) return true; // optional field
     const cleaned = phone.replace(/[\s\-()]/g, "");
     return /^(\+49|0049|0)[1-9]\d{6,14}$/.test(cleaned);
   };
@@ -220,13 +219,14 @@ function ContactForm() {
     const errors: { email?: string; phone?: string } = {};
     if (form.email && !isBusinessEmail(form.email))
       errors.email = "Bitte geben Sie Ihre geschäftliche E-Mail-Adresse an (keine privaten Anbieter wie Gmail, GMX etc.).";
-    if (form.phone && !isGermanPhone(form.phone))
+    if (!form.phone || !isGermanPhone(form.phone))
       errors.phone = "Bitte geben Sie eine gültige deutsche Telefonnummer ein (z. B. +49 211 …).";
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
-  const canSubmit = !!(form.company && form.contact && form.email && form.category && isBusinessEmail(form.email)) && !loading;
+  const canSubmit = !!(form.company && form.contact && form.email && form.phone && form.category && isBusinessEmail(form.email)) && !loading;
+  const [honeypot, setHoneypot] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -243,6 +243,7 @@ function ContactForm() {
           contact: form.contact,
           email: form.email,
           phone: form.phone,
+          website: honeypot,
           category: form.category,
           count: form.volume,
           message: form.message,
@@ -318,10 +319,10 @@ function ContactForm() {
           {fieldErrors.email && <p style={{ fontSize: 12, color: "#ff6b6b", marginTop: 4 }}>{fieldErrors.email}</p>}
         </div>
         <div>
-          <label style={lbl}>Telefon <span style={{ fontWeight: 400, opacity: 0.6 }}>(DE)</span></label>
+          <label style={lbl}>Telefon <span style={{ fontWeight: 400, opacity: 0.6 }}>(DE)</span> *</label>
           <input
             style={{ ...inp, borderColor: fieldErrors.phone ? "#ff6b6b" : undefined }}
-            type="tel" placeholder="+49 211 ..." value={form.phone} onChange={set("phone")}
+            type="tel" required placeholder="+49 211 ..." value={form.phone} onChange={set("phone")}
           />
           {fieldErrors.phone && <p style={{ fontSize: 12, color: "#ff6b6b", marginTop: 4 }}>{fieldErrors.phone}</p>}
         </div>
@@ -346,6 +347,12 @@ function ContactForm() {
           placeholder="Kurz beschreiben: Anforderungen, Qualifikationen, Einsatzort …"
           value={form.message} onChange={set("message")} />
       </div>
+      {/* Honeypot — für Menschen unsichtbar, Bots füllen es aus */}
+      <input
+        type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true"
+        value={honeypot} onChange={e => setHoneypot(e.target.value)}
+        style={{ position: "absolute", left: "-9999px", height: 0, width: 0, opacity: 0 }}
+      />
       {error && <p style={{ fontSize: 13, color: "#ff6b6b", marginBottom: -4 }}>{error}</p>}
       <button type="submit" disabled={!canSubmit} style={{
         background: canSubmit ? "#3b72b8" : "rgba(255,255,255,0.1)",

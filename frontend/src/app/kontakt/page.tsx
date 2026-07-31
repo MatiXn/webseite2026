@@ -71,6 +71,7 @@ export default function KontaktPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "", type: "bewerber" });
+  const [honeypot, setHoneypot] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,13 +86,20 @@ export default function KontaktPage() {
           contact: form.name,
           email: form.email,
           phone: form.phone,
+          website: honeypot,
           message: `[${form.type === "bewerber" ? "Bewerber" : "Unternehmen"}]\n\n${form.message}`,
         }),
       });
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error);
+      }
       setSent(true);
-    } catch {
-      setError("Versand fehlgeschlagen. Bitte schreiben Sie uns direkt an info@phe-perm.de.");
+    } catch (err) {
+      setError(
+        (err instanceof Error && err.message) ||
+        "Versand fehlgeschlagen. Bitte schreiben Sie uns direkt an info@phe-perm.de."
+      );
     } finally {
       setLoading(false);
     }
@@ -231,8 +239,8 @@ export default function KontaktPage() {
                         className="form-input" style={{ background: "#fff", border: "1.5px solid var(--border)" }} />
                     </div>
                     <div>
-                      <label className="form-label">Telefon</label>
-                      <input value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} placeholder="+49 ..."
+                      <label className="form-label">Telefon *</label>
+                      <input required type="tel" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} placeholder="+49 ..."
                         className="form-input" style={{ background: "#fff", border: "1.5px solid var(--border)" }} />
                     </div>
                   </div>
@@ -248,6 +256,12 @@ export default function KontaktPage() {
                       rows={5}
                       className="form-input" style={{ resize: "vertical", background: "#fff", border: "1.5px solid var(--border)" }} />
                   </div>
+                  {/* Honeypot — für Menschen unsichtbar, Bots füllen es aus */}
+                  <input
+                    type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true"
+                    value={honeypot} onChange={e => setHoneypot(e.target.value)}
+                    style={{ position: "absolute", left: "-9999px", height: 0, width: 0, opacity: 0 }}
+                  />
                   {error && <p style={{ fontSize: 13, color: "#e53e3e" }}>{error}</p>}
                   <button type="submit" disabled={loading} style={{
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 8,

@@ -34,6 +34,21 @@ export function isGermanPhone(phone: string): boolean {
   return /^(\+49|0049|0)[1-9]\d{6,14}$/.test(cleaned);
 }
 
+// Heuristik gegen Zufalls-Strings wie "bQBZoiUlpVNWFzGBEL":
+// echte Namen enthalten Vokale, keine Ziffern und höchstens einen
+// Klein-nach-Groß-Wechsel pro Wort (z. B. "McDonald").
+export function looksLikeRealName(name: string): boolean {
+  const trimmed = name.trim();
+  if (trimmed.length < 2 || trimmed.length > 200) return false;
+  if (/\d/.test(trimmed)) return false;
+  if (!/[aeiouyäöüáéèê]/i.test(trimmed)) return false;
+  for (const word of trimmed.split(/\s+/)) {
+    const transitions = (word.match(/[a-zäöüß][A-ZÄÖÜ]/g) ?? []).length;
+    if (transitions > 1) return false;
+  }
+  return true;
+}
+
 type FieldSpec = { key: string; required?: boolean; max: number };
 
 // Gibt getrimmte, längenbegrenzte Strings zurück oder einen Fehlertext

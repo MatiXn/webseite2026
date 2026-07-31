@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { signToken } from "@/lib/confirm-token";
 import {
   escapeHtml, isValidEmail, isBusinessEmail, isGermanPhone,
-  sanitizeFields, rateLimit,
+  looksLikeRealName, sanitizeFields, rateLimit,
 } from "@/lib/contact-validation";
 
 const FROM = "PHE-Perm Engineering <noreply@phe-perm.de>";
@@ -21,12 +21,18 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const type = body?.type === "talent" ? "talent" : "contact";
 
+    // Honeypot: unsichtbares Feld, das nur Bots ausfüllen → vorgetäuschter
+    // Erfolg ohne Versand, damit das Skript nichts von der Abwehr merkt
+    if (typeof body?.website === "string" && body.website.trim() !== "") {
+      return NextResponse.json({ ok: true, pending: true });
+    }
+
     if (type === "talent") {
       const parsed = sanitizeFields(body, [
         { key: "company", required: true, max: 200 },
         { key: "contact", required: true, max: 200 },
         { key: "email", required: true, max: 254 },
-        { key: "phone", max: 40 },
+        { key: "phone", required: true, max: 40 },
         { key: "category", max: 100 },
         { key: "count", max: 20 },
         { key: "message", max: 5000 },
@@ -37,8 +43,11 @@ export async function POST(req: NextRequest) {
       if (!isBusinessEmail(f.email)) {
         return NextResponse.json({ ok: false, error: "Bitte eine geschäftliche E-Mail-Adresse verwenden." }, { status: 400 });
       }
-      if (f.phone && !isGermanPhone(f.phone)) {
+      if (!isGermanPhone(f.phone)) {
         return NextResponse.json({ ok: false, error: "Bitte eine gültige deutsche Telefonnummer angeben." }, { status: 400 });
+      }
+      if (!looksLikeRealName(f.contact)) {
+        return NextResponse.json({ ok: false, error: "Bitte geben Sie den vollständigen Namen des Ansprechpartners an." }, { status: 400 });
       }
 
       const token = signToken({ ...f, type, exp: Date.now() + 24 * 60 * 60 * 1000 });
@@ -75,9 +84,9 @@ export async function POST(req: NextRequest) {
     // Kontaktformular — ebenfalls Double-Opt-In: erst nach E-Mail-Bestätigung
     // geht die Anfrage bei uns ein (blockt Bots und Fake-Adressen)
     const parsed = sanitizeFields(body, [
-      { key: "contact", max: 200 },
+      { key: "contact", required: true, max: 200 },
       { key: "email", required: true, max: 254 },
-      { key: "phone", max: 40 },
+      { key: "phone", required: true, max: 40 },
       { key: "message", max: 5000 },
     ]);
     if (!parsed.ok) return NextResponse.json({ ok: false, error: parsed.error }, { status: 400 });
@@ -85,6 +94,12 @@ export async function POST(req: NextRequest) {
 
     if (!isValidEmail(f.email)) {
       return NextResponse.json({ ok: false, error: "Bitte eine gültige E-Mail-Adresse angeben." }, { status: 400 });
+    }
+    if (!isGermanPhone(f.phone)) {
+      return NextResponse.json({ ok: false, error: "Bitte eine gültige deutsche Telefonnummer angeben." }, { status: 400 });
+    }
+    if (!looksLikeRealName(f.contact)) {
+      return NextResponse.json({ ok: false, error: "Bitte geben Sie Ihren vollständigen Namen an." }, { status: 400 });
     }
 
     const token = signToken({ ...f, type, exp: Date.now() + 24 * 60 * 60 * 1000 });

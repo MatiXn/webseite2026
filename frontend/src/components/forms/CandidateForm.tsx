@@ -71,7 +71,9 @@ function validate(values: FormValues): FormErrors {
     errors.email = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
   }
 
-  if (values.phone && !/^\+?[\d\s\-().]{7,20}$/.test(values.phone)) {
+  if (!values.phone.trim()) {
+    errors.phone = "Telefonnummer ist erforderlich.";
+  } else if (!/^\+?[\d\s\-().]{7,20}$/.test(values.phone)) {
     errors.phone = "Bitte geben Sie eine gültige Telefonnummer ein.";
   }
 
@@ -327,7 +329,7 @@ export function CandidateForm({ onSuccess }: CandidateFormProps) {
       </div>
 
       <Field name="email" label="E-Mail" type="email" required placeholder="max@beispiel.de" />
-      <Field name="phone" label="Telefon" type="tel" placeholder="+49 211 123456" />
+      <Field name="phone" label="Telefon" type="tel" placeholder="+49 211 123456" required />
       <Field name="jobTitle" label="Berufsbezeichnung" required placeholder="Senior Maschinenbauingenieur" />
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 1rem" }}>
