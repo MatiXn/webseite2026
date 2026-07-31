@@ -6,6 +6,7 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [honeypot, setHoneypot] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,13 +21,20 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
           contact: form.name,
           email: form.email,
           phone: form.phone,
+          website: honeypot,
           message: `[Bewerbung: ${jobTitle} – ${jobCity}]\n\n${form.message || "Keine Nachricht angegeben."}`,
         }),
       });
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error);
+      }
       setSent(true);
-    } catch {
-      setError("Versand fehlgeschlagen. Bitte schreiben Sie uns direkt an info@phe-perm.de.");
+    } catch (err) {
+      setError(
+        (err instanceof Error && err.message) ||
+        "Versand fehlgeschlagen. Bitte schreiben Sie uns direkt an info@phe-perm.de."
+      );
     } finally {
       setLoading(false);
     }
@@ -70,8 +78,14 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
         value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
       />
       <input
-        style={inputStyle} placeholder="Telefonnummer" type="tel" maxLength={40}
+        style={inputStyle} placeholder="Telefonnummer *" type="tel" required maxLength={40}
         value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
+      />
+      {/* Honeypot — für Menschen unsichtbar, Bots füllen es aus */}
+      <input
+        type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true"
+        value={honeypot} onChange={e => setHoneypot(e.target.value)}
+        style={{ position: "absolute", left: "-9999px", height: 0, width: 0, opacity: 0 }}
       />
       <textarea
         style={{ ...inputStyle, minHeight: 100, resize: "vertical" }}
