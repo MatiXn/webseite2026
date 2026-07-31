@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
-import { signToken } from "@/lib/confirm-token";
+import { signToken, verifyToken } from "@/lib/confirm-token";
 import {
   escapeHtml, isValidEmail, isBusinessEmail, isGermanPhone,
   looksLikeRealName, sanitizeFields, rateLimit,
@@ -134,6 +134,32 @@ export async function POST(req: NextRequest) {
     const emailIssue = await deepEmailCheck(f.email);
     if (emailIssue) {
       return NextResponse.json({ ok: false, error: emailIssue }, { status: 400 });
+    }
+
+    // LinkedIn-verifizierte Bewerber: Identität ist bereits bestätigt →
+    // Anfrage geht direkt ein, kein Double-Opt-In nötig
+    const li = verifyToken(String(body?.linkedinToken ?? ""));
+    if (li && typeof li.liEmail === "string" && li.liEmail.toLowerCase() === f.email.toLowerCase()) {
+      const isBewerbung = f.message.startsWith("[Bewerbung:");
+      await resend.emails.send({
+        from: FROM,
+        to: isBewerbung ? "bewerbung@phe-perm.de" : TO,
+        replyTo: f.email,
+        subject: isBewerbung
+          ? `Bewerbung – ${f.contact || f.email}`
+          : `Kontaktanfrage – ${f.contact || f.email}`,
+        html: `
+          <h2>${isBewerbung ? "Neue Bewerbung" : "Neue Kontaktanfrage"} über phe-perm.de</h2>
+          <p style="color:#0a66c2;font-weight:700">&#10003; Identität via LinkedIn bestätigt (${escapeHtml(String(li.liName ?? ""))})</p>
+          <table cellpadding="8" style="border-collapse:collapse;width:100%">
+            <tr><td><strong>Name</strong></td><td>${escapeHtml(f.contact) || "–"}</td></tr>
+            <tr><td><strong>E-Mail</strong></td><td>${escapeHtml(f.email)}</td></tr>
+            <tr><td><strong>Telefon</strong></td><td>${escapeHtml(f.phone) || "–"}</td></tr>
+            <tr><td><strong>Nachricht</strong></td><td style="white-space:pre-wrap">${escapeHtml(f.message) || "–"}</td></tr>
+          </table>
+        `,
+      });
+      return NextResponse.json({ ok: true, confirmed: true });
     }
 
     const token = signToken({ ...f, type, exp: Date.now() + 24 * 60 * 60 * 1000 });
