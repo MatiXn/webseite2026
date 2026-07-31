@@ -50,8 +50,11 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
   const successRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (autoApplied) {
-      const t = setTimeout(() => successRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 150);
-      return () => clearTimeout(t);
+      // Zweimal scrollen: sofort grob, nach Layout-Beruhigung exakt
+      const scroll = () => successRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const t1 = setTimeout(scroll, 150);
+      const t2 = setTimeout(scroll, 900);
+      return () => { clearTimeout(t1); clearTimeout(t2); };
     }
   }, [autoApplied]);
 
@@ -121,6 +124,7 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
         background: "#f0fdf4", border: "2px solid #22c55e", borderRadius: 16,
         padding: "32px 24px", textAlign: "center",
         boxShadow: "0 8px 32px rgba(34,197,94,0.25)",
+        scrollMarginTop: 96,
       }}>
         <div style={{ fontSize: 48, marginBottom: 12 }}>✅</div>
         <h3 style={{ fontSize: 22, fontWeight: 800, color: "#166534", marginBottom: 8 }}>
