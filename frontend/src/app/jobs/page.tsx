@@ -646,13 +646,22 @@ function JobDetailModal({ job, jobUrl, onClose, onApply }: { job: Job; jobUrl: s
           >
             <MailIcon size={15} /> Per E-Mail bewerben
           </button>
+          {process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID && (
+            <a
+              href={`/api/auth/linkedin?return=${encodeURIComponent(jobPath(job))}`}
+              title={`Mit LinkedIn bewerben: ${job.title}`}
+              style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: "#0a66c2", color: "#fff", fontSize: 14, fontWeight: 700, padding: "13px 16px", borderRadius: 999, textDecoration: "none", whiteSpace: "nowrap" }}
+            >
+              <LinkedInIcon size={16} /> Mit LinkedIn bewerben
+            </a>
+          )}
           <a
             href={linkedInShareUrl(job, jobUrl)}
             target="_blank" rel="noopener noreferrer"
             title={`Stelle auf LinkedIn teilen: ${job.title}`}
-            style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: "#0077B5", color: "#fff", fontSize: 14, fontWeight: 700, padding: "13px 16px", borderRadius: 999, textDecoration: "none", whiteSpace: "nowrap" }}
+            style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: "#fff", color: "#0077B5", border: "1.5px solid #0077B5", fontSize: 14, fontWeight: 700, padding: "13px 16px", borderRadius: 999, textDecoration: "none", whiteSpace: "nowrap" }}
           >
-            <LinkedInIcon size={16} /> Auf LinkedIn teilen
+            <LinkedInIcon size={16} /> Teilen
           </a>
         </div>
       </div>
