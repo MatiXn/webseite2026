@@ -37,10 +37,10 @@ function makeIndustry(overrides: Partial<IndustryContent> = {}): IndustryContent
 const has = (r: IndustryValidationResult, c: IndustryValidationCode) => r.errors.some((e) => e.code === c);
 
 describe("validateIndustryRegistry", () => {
-  it("1 – leere Live-Registry ist gültig", () => {
+  it("1 – Live-Registry ist gültig (seit EPIC 008C mit der Referenz-Branche)", () => {
     const r = validateIndustryRegistry({ industries, publishedIndustries, draftIndustries, industryBySlug });
-    expect(r.valid).toBe(true);
-    expect(industries.length).toBe(0);
+    expect(r.valid, r.errors.map((e) => e.code).join(", ")).toBe(true);
+    expect(industries.length).toBe(publishedIndustries.length + draftIndustries.length);
   });
 
   it("2 – einzelne gültige Branche", () => {

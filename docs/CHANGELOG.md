@@ -1,5 +1,15 @@
 # Changelog
 
+## EPIC 008C – Referenz-Branche „Automatisierungstechnik"
+
+- **Added:** produktive `IndustryContent`-Config `automatisierungstechnik` (`content/industries/automatisierungstechnik.ts`) — sachliches Branchen-/Marktumfeld (Personalvermittlung), klar abgegrenzt von der Profession „SPS/Automatisierung" (Berufsprofil); keine erfundenen Zahlen/Garantien.
+- **Added:** Aufnahme in die Industry-Registry (`industries`/`publishedIndustries`/`industryBySlug`); `draftIndustries` bleibt leer. Validator grün (0 Errors/Warnings).
+- **Note (Matching konservativ):** `jobMatch = category:["it"] + tags:["SPS","Siemens TIA Portal"] (+ excludeKeywords)` → **genau 1 Treffer (id 7)**, 0 False Positives. Breitere Signale (Tag/Keyword „Automatisierung") hätten allgemeine Elektro-Stellen (id 12/24) falsch eingezogen — bewusst ausgeschlossen. Präzision vor Reichweite.
+- **Note:** relatedProfessions = `sps-automatisierung`, `elektroniker`, `mechatroniker` (published, fachlich Automatisierungsbezug); `servicetechniker` bewusst nicht (zu allgemein).
+- **Added:** Config-/Registry-/Matching-/Composer-Integrationstests.
+- **Note:** **keine** Route/Template/Hub/Sitemap/Navigation/Backlink — Config liegt produktiv in der Registry, bleibt aber bis 008D inert (kein Auto-Mechanismus zieht Registry-Einträge in Sitemap/Nav/Routen). Keine sichtbare Website-Änderung; vier Professionen ohne Regression.
+- **Fixed:** keine.
+
 ## EPIC 008B – Branchen-Content-Engine: Composer
 
 - **Added:** `buildIndustryMetadata(industry)`, `buildIndustrySchema(industry, matchedJobs)`, `buildIndustryInternalLinks(input)` — dünne Wrapper über die vorhandenen generischen Primitive (buildPageMetadata, Schema-Sub-Builder + Dedupe, validateInternalLink/deduplicateInternalLinks/buildJobLinks). Keine kopierte Engine, keine Branchen-Sonderlogik.
