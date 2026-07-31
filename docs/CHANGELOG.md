@@ -1,5 +1,15 @@
 # Changelog
 
+## EPIC 008D – Branchen-Seiten sichtbar machen
+
+- **Added:** `IndustryPageTemplate` (`content-engine/templates/`) — eigenständiges Branchen-Template (Markt-/Unternehmensumfeld, nicht Berufsprofil); nutzt dieselben UI-Primitive wie die Profession-Seite (Nav/Footer/JsonLd/BreadcrumbsView/FaqSection, Design-Tokens) + die Industry-Composer. `ProfessionPageTemplate` **unverändert**.
+- **Added:** Branchen-Hub `/branchen` (statisch) — Karten aus `publishedIndustries`, Metadata über `buildPageMetadata`, Schema (CollectionPage + BreadcrumbList) über die generischen Sub-Builder.
+- **Added:** dynamische Detailroute `/branchen/[slug]` — `generateStaticParams` nur aus `publishedIndustries` (Drafts nie generiert), unbekannter Slug → `notFound()`, Metadata via `buildIndustryMetadata`, dünn (kein Match/Schema in der Route). Erzeugt genau `/branchen/automatisierungstechnik`.
+- **Changed:** Sitemap um `/branchen` + iterierte `publishedIndustries` erweitert; Footer-Spalte „Unternehmen" um Link `/branchen` (kleinste sinnvolle sichtbare Integration). Bestehende Sitemap-/Footer-Einträge unverändert.
+- **Note:** Jobbereich = exakt der eine Matcher-Treffer (Job 7), Ein-Job-Formulierung im Singular („Aktuell passende Stelle"); 0-Job-Fallback ohne leere Karten. Genau eine H1 je Seite, kein JobPosting, keine Draft-/numerischen Links.
+- **Note:** keine neue Branche, keine Matchstrategie-Änderung, keine Profession-/Jobdaten-Änderung, fremde Security-/LinkedIn-Features + fremde `.gitignore` unangetastet.
+- **Fixed:** keine.
+
 ## EPIC 008C – Referenz-Branche „Automatisierungstechnik"
 
 - **Added:** produktive `IndustryContent`-Config `automatisierungstechnik` (`content/industries/automatisierungstechnik.ts`) — sachliches Branchen-/Marktumfeld (Personalvermittlung), klar abgegrenzt von der Profession „SPS/Automatisierung" (Berufsprofil); keine erfundenen Zahlen/Garantien.

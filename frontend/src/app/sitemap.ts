@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import { JOBS } from "./jobs/data";
 import { jobPath } from "../lib/slug";
+import { publishedIndustries } from "../content/industries";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.phe-perm.de";
@@ -21,7 +22,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/ueber-uns`,            changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/kontakt`,              changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/lebenslauf-erstellen`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/branchen`,             changeFrequency: "monthly", priority: 0.7 },
   ];
+
+  // Branchen-Detailseiten ausschließlich aus veröffentlichten Branchen (keine Drafts).
+  const industryPages: MetadataRoute.Sitemap = publishedIndustries.map(ind => ({
+    url: `${base}${ind.canonicalPath}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.65,
+  }));
 
   const jobPages: MetadataRoute.Sitemap = JOBS.map(job => ({
     url: `${base}${jobPath(job)}`,
@@ -30,5 +39,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  return [...staticPages, ...jobPages];
+  return [...staticPages, ...industryPages, ...jobPages];
 }
