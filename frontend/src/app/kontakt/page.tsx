@@ -6,6 +6,7 @@ import Nav, { WA_LINK } from "../components/Nav";
 import FaqSection from "../components/FaqSection";
 import Footer from "../components/Footer";
 import JsonLd from "../components/JsonLd";
+import Turnstile from "@/components/Turnstile";
 
 const WhatsAppIcon = ({ size = 16 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -72,6 +73,7 @@ export default function KontaktPage() {
   const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "", type: "bewerber" });
   const [honeypot, setHoneypot] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,6 +89,7 @@ export default function KontaktPage() {
           email: form.email,
           phone: form.phone,
           website: honeypot,
+          turnstileToken,
           message: `[${form.type === "bewerber" ? "Bewerber" : "Unternehmen"}]\n\n${form.message}`,
         }),
       });
@@ -262,6 +265,7 @@ export default function KontaktPage() {
                     value={honeypot} onChange={e => setHoneypot(e.target.value)}
                     style={{ position: "absolute", left: "-9999px", height: 0, width: 0, opacity: 0 }}
                   />
+                  <Turnstile onVerify={setTurnstileToken} />
                   {error && <p style={{ fontSize: 13, color: "#e53e3e" }}>{error}</p>}
                   <button type="submit" disabled={loading} style={{
                     display: "flex", alignItems: "center", justifyContent: "center", gap: 8,

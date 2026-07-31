@@ -4,8 +4,9 @@ import type { NextConfig } from "next";
 // Alle externen Quellen explizit erlaubt — kein Wildcard.
 const CSP = [
   "default-src 'self'",
-  // Next.js App Router benötigt 'unsafe-inline' für Hydration-Inline-Scripts
-  "script-src 'self' 'unsafe-inline'",
+  // Next.js App Router benötigt 'unsafe-inline' für Hydration-Inline-Scripts;
+  // challenges.cloudflare.com für das Turnstile-Bot-Schutz-Widget
+  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
   // Next.js CSS-in-JS + Styles braucht unsafe-inline
   "style-src 'self' 'unsafe-inline'",
   // data: für Base64-Previews, blob: für File-Viewer
@@ -14,6 +15,8 @@ const CSP = [
   // API-Calls: eigene Domain + Supabase + Backend + Nominatim (Standortsuche)
   `connect-src 'self' https://nominatim.openstreetmap.org ${process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://*.supabase.co"} ${process.env.NEXT_PUBLIC_API_URL ?? ""}`,
   "worker-src 'self' blob:",
+  // Turnstile rendert sein Widget in einem iframe
+  "frame-src https://challenges.cloudflare.com",
   "frame-ancestors 'none'",
   "form-action 'self'",
   "base-uri 'self'",

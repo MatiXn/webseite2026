@@ -8,6 +8,7 @@ import FaqSection from "@/app/components/FaqSection";
 import Footer from "@/app/components/Footer";
 import JsonLd from "@/app/components/JsonLd";
 import Breadcrumbs from "@/app/components/Breadcrumbs";
+import Turnstile from "@/components/Turnstile";
 
 const MAIL_EMPLOYER = "recruiting@phe-perm.de";
 
@@ -227,6 +228,7 @@ function ContactForm() {
 
   const canSubmit = !!(form.company && form.contact && form.email && form.phone && form.category && isBusinessEmail(form.email)) && !loading;
   const [honeypot, setHoneypot] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -244,6 +246,7 @@ function ContactForm() {
           email: form.email,
           phone: form.phone,
           website: honeypot,
+          turnstileToken,
           category: form.category,
           count: form.volume,
           message: form.message,
@@ -353,6 +356,7 @@ function ContactForm() {
         value={honeypot} onChange={e => setHoneypot(e.target.value)}
         style={{ position: "absolute", left: "-9999px", height: 0, width: 0, opacity: 0 }}
       />
+      <Turnstile onVerify={setTurnstileToken} />
       {error && <p style={{ fontSize: 13, color: "#ff6b6b", marginBottom: -4 }}>{error}</p>}
       <button type="submit" disabled={!canSubmit} style={{
         background: canSubmit ? "#3b72b8" : "rgba(255,255,255,0.1)",
