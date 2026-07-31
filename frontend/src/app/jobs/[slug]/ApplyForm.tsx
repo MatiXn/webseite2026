@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Turnstile from "@/components/Turnstile";
 
@@ -44,6 +44,16 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
       setAutoApplied(true);
     }
   }, []);
+
+  // Erfolgsmeldung sofort in den Blick rücken — der Bewerber muss ohne
+  // Scrollen erkennen, dass die Bewerbung eingegangen ist
+  const successRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (autoApplied) {
+      const t = setTimeout(() => successRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 150);
+      return () => clearTimeout(t);
+    }
+  }, [autoApplied]);
 
   // Optionales Nachreichen der Telefonnummer nach der Ein-Klick-Bewerbung
   const submitPhone = async () => {
@@ -107,13 +117,14 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
 
   if (autoApplied) {
     return (
-      <div style={{
-        background: "#f0fdf4", border: "1.5px solid #86efac", borderRadius: 16,
+      <div ref={successRef} style={{
+        background: "#f0fdf4", border: "2px solid #22c55e", borderRadius: 16,
         padding: "32px 24px", textAlign: "center",
+        boxShadow: "0 8px 32px rgba(34,197,94,0.25)",
       }}>
-        <div style={{ fontSize: 40, marginBottom: 12 }}>✅</div>
-        <h3 style={{ fontSize: 20, fontWeight: 700, color: "#166534", marginBottom: 8 }}>
-          Bewerbung eingegangen!
+        <div style={{ fontSize: 48, marginBottom: 12 }}>✅</div>
+        <h3 style={{ fontSize: 22, fontWeight: 800, color: "#166534", marginBottom: 8 }}>
+          Ihre Bewerbung ist eingegangen!
         </h3>
         <p style={{ fontSize: 15, color: "#15803d", lineHeight: 1.6, marginBottom: 16 }}>
           Ihre Bewerbung{linkedin ? ` als ${linkedin.name}` : ""} wurde über LinkedIn
