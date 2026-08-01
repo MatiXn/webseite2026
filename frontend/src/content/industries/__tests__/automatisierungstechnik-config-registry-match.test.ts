@@ -41,10 +41,11 @@ describe("Automatisierungstechnik – Config", () => {
 });
 
 describe("Automatisierungstechnik – Registry", () => {
-  it("1 – genau eine Industry, eine published, keine draft", () => {
-    expect(industries.length).toBe(1);
+  it("1 – Registry ab EPIC 009A: 2 Branchen, genau 1 published (automatisierungstechnik), 1 draft (elektrotechnik)", () => {
+    expect(industries.length).toBe(2);
     expect(publishedIndustries.length).toBe(1);
-    expect(draftIndustries.length).toBe(0);
+    expect(publishedIndustries.map((i) => i.slug)).toEqual(["automatisierungstechnik"]);
+    expect(draftIndustries.length).toBe(1);
   });
   it("2 – Registry valide", () => {
     const r = validateIndustryRegistry({ industries, publishedIndustries, draftIndustries, industryBySlug });
