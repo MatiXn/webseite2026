@@ -1,5 +1,12 @@
 # Changelog
 
+## EPIC 009A – Referenz-Branche Elektrotechnik (Draft)
+
+- **Added:** zweite `IndustryContent`-Config `elektrotechnik` (`content/industries/`) — sachlich, ohne erfundene Zahlen/Gehälter/Garantien/Referenzen. Branche Elektrotechnik = Unternehmens-/Einsatzumfeld (klar abgegrenzt von der Profession „Elektroniker").
+- **Added:** konservative `jobMatch`-Strategie über das strukturierte Kategorie-Signal `category:["elektro"]` — trifft exakt die 15 real als Elektrotechnik erfassten Stellen (IDs 1, 3, 4, 5, 6, 8, 9, 11, 12, 13, 16, 17, 22, 23, 24), **0 False Positives**. Kälte-/Mechatronik-Stellen (`mechatronik`), die reine SPS-Stelle (Job 7, `it`) und SHK (Job 19, `bau`) fallen strukturell heraus; Job 7 bleibt exklusiv der Automatisierungstechnik.
+- **Changed:** Branchen-Registry um `elektrotechnik` erweitert — als **Draft** (`status:"draft"`, in `draftIndustries`, **nicht** in `publishedIndustries`). Da die 008D-Engine datengetrieben aus `publishedIndustries` liest, bleibt `/branchen/elektrotechnik` unsichtbar: keine Route, kein Sitemap-Eintrag, keine Hub-Karte. Sichtbarschaltung folgt in einem späteren EPIC.
+- **Note:** keine neue Matcher-Logik, keine Industry-Sonderlogik, keine Jobdaten-/Profession-Änderung; kein Route-/Sitemap-/Hub-/Template-/Nav-/Footer-Code angefasst. `automatisierungstechnik` (Match [7]) und die vier Professionen unverändert.
+
 ## EPIC 008D – Branchen-Seiten sichtbar machen
 
 - **Added:** `IndustryPageTemplate` (`content-engine/templates/`) — eigenständiges Branchen-Template (Markt-/Unternehmensumfeld, nicht Berufsprofil); nutzt dieselben UI-Primitive wie die Profession-Seite (Nav/Footer/JsonLd/BreadcrumbsView/FaqSection, Design-Tokens) + die Industry-Composer. `ProfessionPageTemplate` **unverändert**.
