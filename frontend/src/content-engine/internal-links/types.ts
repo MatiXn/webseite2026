@@ -1,11 +1,17 @@
 // Typen des Internal-Link-Builders. Kein any, alle Felder readonly.
 import type { ProfessionContent } from "../../content/professions/types";
+import type { IndustryContent } from "../../content/industries/types";
+import type { CityContent } from "../../content/cities/types";
 
+// EPIC 010A: "industry"/"city" additiv ergänzt (analog zur bestehenden "profession").
+// Rein additiv — kein Verhaltenswechsel für Profession-/Industry-Links.
 export type InternalLinkType =
   | "parent"
   | "jobs"
   | "job-detail"
   | "profession"
+  | "industry"
+  | "city"
   | "resume"
   | "contact"
   | "service"
@@ -16,10 +22,15 @@ export type InternalLinkAudience = "candidate" | "company" | "both";
 
 export type InternalLinkPriority = "primary" | "secondary" | "contextual";
 
+// EPIC 010A: City-Quellen additiv ergänzt (analog "industry-config"); plus
+// "industry-registry" für aus einer Registry aufgelöste Branchen-Links.
 export type InternalLinkSource =
   | "profession-config"
   | "profession-registry"
   | "industry-config"
+  | "industry-registry"
+  | "city-config"
+  | "city-registry"
   | "job-matcher"
   | "system";
 
@@ -84,6 +95,27 @@ export type IndustryInternalLinksResult = {
   readonly coreLinks: readonly InternalLink[];
   readonly relevantProfessionLinks: readonly InternalLink[];
   readonly jobLinks: readonly InternalLink[];
+  readonly candidateLinks: readonly InternalLink[];
+  readonly companyLinks: readonly InternalLink[];
+  readonly allLinks: readonly InternalLink[];
+  readonly warnings: readonly InternalLinkWarning[];
+};
+
+// Registry-Ausschnitte für die City-Composer-Auflösung (O(1)-Lookups).
+// Getrennte Domänen-Registries, kein Shared-Registry-Layer.
+export type CityLinkRegistries = {
+  readonly professionBySlug: Readonly<Record<string, ProfessionContent | undefined>>;
+  readonly industryBySlug: Readonly<Record<string, IndustryContent | undefined>>;
+  readonly cityBySlug: Readonly<Record<string, CityContent | undefined>>;
+};
+
+export type CityInternalLinksResult = {
+  readonly breadcrumbs: readonly InternalLink[];
+  readonly coreLinks: readonly InternalLink[];
+  readonly relevantProfessionLinks: readonly InternalLink[];
+  readonly relevantIndustryLinks: readonly InternalLink[];
+  readonly jobLinks: readonly InternalLink[];
+  readonly relatedCityLinks: readonly InternalLink[];
   readonly candidateLinks: readonly InternalLink[];
   readonly companyLinks: readonly InternalLink[];
   readonly allLinks: readonly InternalLink[];

@@ -10,3 +10,4 @@ export * from "./build-job-links";
 export * from "./deduplicate-internal-links";
 export * from "./build-profession-internal-links";
 export * from "./build-industry-internal-links";
+export * from "./build-city-internal-links";

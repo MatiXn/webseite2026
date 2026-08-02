@@ -1,5 +1,13 @@
 # Changelog
 
+## EPIC 010A – City Content Engine: Fundament
+
+- **Added:** eigenständige City-Domäne (lokaler Vermittlungsmarkt, `/personalvermittlung/<stadt>`) – Datenmodell `content/cities/types.ts`, **leere** Registry `content/cities/index.ts`, Validator + Registry-Validator (`validate-city.ts` / `validate-city-registry.ts`), Composer `build-city-metadata.ts` / `build-city-schema.ts` / `build-city-internal-links.ts`. Siehe [CITY-CONTENT-ENGINE.md](CITY-CONTENT-ENGINE.md).
+- **Schema:** `buildCitySchema` = `CollectionPage + BreadcrumbList + Service (+ FAQPage) (+ ItemList)`. Organization nur als `@id`-Referenz, **kein LocalBusiness / keine zweite Organization / keine erfundene Adresse** für Städte ohne Büro. `Service.areaServed` aus der Config. Kein JobPosting.
+- **Validator:** `verifiedExperience`-Gate (verbietet unbelegte lokale Vermittlungsaussagen bei `false`), verbietet erfundene Aktivitätszahlen und Marktführer-/Garantie-/Erfolgsquoten-Claims; strenge Identitäts-/Publication-/Link-/Registry-Regeln.
+- **Changed (additiv, kein Verhaltenswechsel):** `InternalLinkType` (+`industry`,`city`), `InternalLinkSource` (+`industry-registry`,`city-config`,`city-registry`), neue City-Link-Konstanten; Composer/Validator in die jeweiligen Engine-Index-Exports aufgenommen.
+- **Note:** keine sichtbare Änderung – keine Route, keine Sitemap-URL, kein Template, keine Nav/Footer-Änderung, keine produktive Stadt. Düsseldorf-Seite byte-identisch; Profession-/Industry-Engine unverändert; Jobdaten unverändert. Düsseldorf bleibt Referenz (Migrationsanalyse dokumentiert), wird aber NICHT migriert.
+
 ## EPIC 009B – Elektrotechnik kontrolliert veröffentlichen
 
 - **Changed:** `elektrotechnik` von Draft auf **published** geschaltet — `status:"published"`, alle `publication`-Flags true. Registry: `publishedIndustries = [automatisierungstechnik, elektrotechnik]`, `draftIndustries = []`.
