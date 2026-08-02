@@ -10,3 +10,4 @@ export * from "./build-collection-page-schema";
 export * from "./deduplicate-schema-graph";
 export * from "./build-profession-schema";
 export * from "./build-industry-schema";
+export * from "./build-city-schema";

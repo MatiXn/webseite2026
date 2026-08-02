@@ -27,6 +27,19 @@ export const INDUSTRY_CORE_LINK_LABELS = {
 // Branchen-Breadcrumb-Hub-Label (Startseite kommt aus BREADCRUMB_LABELS.home).
 export const INDUSTRY_HUB_LABEL = "Branchen";
 
+// City-Kernziel-Labels (EPIC 010A). Parent-Breadcrumb ist der bestehende Pillar,
+// KEINE erfundene /personalvermittlung-Hub-Route.
+export const CITY_CORE_LINK_LABELS = {
+  personalvermittlung: "Technische Personalvermittlung",
+  jobs: "Aktuelle Jobs ansehen",
+  professions: "Technische Berufe",
+  industries: "Branchen",
+  contact: "Kontakt aufnehmen",
+} as const;
+
+// City-Breadcrumb-Hub-Label (Startseite → Personalvermittlung → Stadt).
+export const CITY_BREADCRUMB_HUB_LABEL = "Personalvermittlung";
+
 export const HOME_PATH = "/";
 
 // Zusätzlich zur strukturellen Prüfung verbotene Zielpräfixe.

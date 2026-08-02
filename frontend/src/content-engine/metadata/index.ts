@@ -6,3 +6,4 @@ export * from "./build-canonical-url";
 export * from "./build-page-metadata";
 export * from "./build-profession-metadata";
 export * from "./build-industry-metadata";
+export * from "./build-city-metadata";
