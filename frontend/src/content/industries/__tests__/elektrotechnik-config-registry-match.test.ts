@@ -10,34 +10,40 @@ import { industries, publishedIndustries, draftIndustries, industryBySlug } from
 import { professionBySlug } from "../../professions";
 import { company } from "../../company";
 import sitemap from "../../../app/sitemap";
+import { generateStaticParams } from "../../../app/branchen/[slug]/page";
 import { JOBS } from "../../../app/jobs/data";
 
 // Erwartete Elektrotechnik-Treffer = exakt die 15 Jobs der Kategorie "elektro".
 const EXPECTED_ELEKTRO_IDS = ["1", "3", "4", "5", "6", "8", "9", "11", "12", "13", "16", "17", "22", "23", "24"];
 // Bewusst NICHT Elektrotechnik (Kälte/Mechatronik, reine SPS-Stelle, SHK).
 const EXPECTED_NON_MATCH_IDS = ["2", "7", "10", "14", "15", "18", "19", "20", "21", "25"];
+// Deterministische sichtbare Reihenfolge bei maxJobs=8 (dokumentiert, EPIC 009B).
+const EXPECTED_VISIBLE_IDS = ["1", "11", "12", "13", "16", "17", "22", "23"];
 
-describe("Elektrotechnik – Config", () => {
+const capped = matchJobsForConfig(JOBS, elektrotechnik.jobMatch, elektrotechnik.slug);
+const visibleJobs = capped.matches.map((m) => m.job);
+
+describe("Elektrotechnik – Config (published, EPIC 009B)", () => {
   it("1 – validiert ohne Errors/Warnings", () => {
     const r = validateIndustry(elektrotechnik);
     expect(r.valid, r.errors.map((e) => e.code).join(", ")).toBe(true);
     expect(r.warnings.map((w) => w.code).join(", ")).toBe("");
   });
-  it("2 – slug + eindeutiger canonicalPath korrekt", () => {
+  it("2 – status published + alle publication-Flags true", () => {
+    expect(elektrotechnik.status).toBe("published");
+    expect(elektrotechnik.publication).toEqual({
+      published: true,
+      indexable: true,
+      includeInSitemap: true,
+      showInIndustryHub: true,
+      showRelatedLinks: true,
+    });
+  });
+  it("3 – slug + eindeutiger canonicalPath korrekt", () => {
     expect(elektrotechnik.slug).toBe("elektrotechnik");
     expect(elektrotechnik.canonicalPath).toBe("/branchen/elektrotechnik");
-    // eindeutig gegenüber der anderen Branche
     expect(elektrotechnik.canonicalPath).not.toBe(automatisierungstechnik.canonicalPath);
     expect(elektrotechnik.slug).not.toBe(automatisierungstechnik.slug);
-  });
-  it("3 – Draft-Staging: status=draft, alle Sichtbarkeits-Flags aus", () => {
-    expect(elektrotechnik.status).toBe("draft");
-    expect(elektrotechnik.publication).toMatchObject({
-      published: false,
-      indexable: false,
-      includeInSitemap: false,
-      showInIndustryHub: false,
-    });
   });
   it("4 – Pflichtinhalte gefüllt (Hero, Überblick, Fokusbereiche, FAQ)", () => {
     expect(elektrotechnik.hero.headline.length).toBeGreaterThan(0);
@@ -45,7 +51,8 @@ describe("Elektrotechnik – Config", () => {
     expect(elektrotechnik.focusAreas.length).toBeGreaterThanOrEqual(4);
     expect(elektrotechnik.faq.length).toBeGreaterThanOrEqual(5);
   });
-  it("5 – relatedProfessions ausschließlich bekannte published Professionen", () => {
+  it("5 – relatedProfessions exakt [elektroniker, servicetechniker, sps-automatisierung], alle published", () => {
+    expect(elektrotechnik.internalLinks.relatedProfessions).toEqual(["elektroniker", "servicetechniker", "sps-automatisierung"]);
     for (const slug of elektrotechnik.internalLinks.relatedProfessions) {
       expect(professionBySlug[slug]?.publication.published, slug).toBe(true);
     }
@@ -62,18 +69,21 @@ describe("Elektrotechnik – Config", () => {
   });
 });
 
-describe("Elektrotechnik – Registry (Draft-Staging)", () => {
-  it("1 – industries + industryBySlug enthalten beide Branchen", () => {
-    expect(industries.map((i) => i.slug).sort()).toEqual(["automatisierungstechnik", "elektrotechnik"]);
+describe("Elektrotechnik – Registry (beide published)", () => {
+  it("1 – industries = 2, publishedIndustries = 2, draftIndustries = 0", () => {
+    expect(industries.length).toBe(2);
+    expect(publishedIndustries.length).toBe(2);
+    expect(draftIndustries.length).toBe(0);
+  });
+  it("2 – Reihenfolge in publishedIndustries = [automatisierungstechnik, elektrotechnik]", () => {
+    expect(publishedIndustries.map((i) => i.slug)).toEqual(["automatisierungstechnik", "elektrotechnik"]);
+  });
+  it("3 – Lookups korrekt, unbekannter Slug undefined", () => {
     expect(industryBySlug["elektrotechnik"]).toBe(elektrotechnik);
     expect(industryBySlug["automatisierungstechnik"]).toBe(automatisierungstechnik);
+    expect(industryBySlug["gibtsnicht"]).toBeUndefined();
   });
-  it("2 – elektrotechnik ist DRAFT, NICHT published (bleibt unsichtbar)", () => {
-    expect(draftIndustries.map((i) => i.slug)).toEqual(["elektrotechnik"]);
-    expect(publishedIndustries.map((i) => i.slug)).toEqual(["automatisierungstechnik"]);
-    expect(publishedIndustries).not.toContain(elektrotechnik);
-  });
-  it("3 – Registry valide, eindeutige Slugs + Canonicals", () => {
+  it("4 – Registry valide, eindeutige Slugs + Canonicals", () => {
     const r = validateIndustryRegistry({ industries, publishedIndustries, draftIndustries, industryBySlug });
     expect(r.valid, r.errors.map((e) => e.code).join(", ")).toBe(true);
     expect(new Set(industries.map((i) => i.slug)).size).toBe(industries.length);
@@ -81,70 +91,102 @@ describe("Elektrotechnik – Registry (Draft-Staging)", () => {
   });
 });
 
-describe("Elektrotechnik – Unsichtbarkeit (kein Live-Effekt)", () => {
-  it("1 – nicht in der Sitemap", () => {
-    const urls = sitemap().map((e) => String(e.url));
-    expect(urls).not.toContain("https://www.phe-perm.de/branchen/elektrotechnik");
-    // die bestehende, published Branche bleibt in der Sitemap
-    expect(urls).toContain("https://www.phe-perm.de/branchen/automatisierungstechnik");
+describe("Elektrotechnik – Route (datengetrieben, keine Hardcodes)", () => {
+  const params = generateStaticParams();
+  it("1 – generateStaticParams enthält beide published Slugs (aus publishedIndustries)", () => {
+    expect(params.map((p) => p.slug).sort()).toEqual(["automatisierungstechnik", "elektrotechnik"]);
+  });
+  it("2 – kein Draft-Slug (draftIndustries leer)", () => {
+    expect(params.length).toBe(publishedIndustries.length);
+    expect(draftIndustries.length).toBe(0);
   });
 });
 
-describe("Elektrotechnik – Matching (konservativ, category=elektro)", () => {
-  // Cap angehoben, um die vollständige Treffermenge unabhängig vom Anzeige-Limit zu prüfen.
+describe("Elektrotechnik – Sitemap + Hub (automatisch, published)", () => {
+  const urls = sitemap().map((e) => String(e.url));
+  it("1 – Sitemap enthält /branchen, beide Branchen-Detailseiten, keine Duplikate", () => {
+    expect(urls).toContain("https://www.phe-perm.de/branchen");
+    expect(urls).toContain("https://www.phe-perm.de/branchen/automatisierungstechnik");
+    expect(urls).toContain("https://www.phe-perm.de/branchen/elektrotechnik");
+    expect(new Set(urls).size).toBe(urls.length);
+  });
+  it("2 – Hub-Quelle: zwei Karten aus publishedIndustries in Registry-Reihenfolge, keine Drafts", () => {
+    // Der Hub rendert publishedIndustries.map(...) (siehe branchen/page.tsx). Damit sind
+    // genau die zwei published Branchen als Karten sichtbar, in Registry-Reihenfolge.
+    expect(publishedIndustries.map((i) => i.name)).toEqual(["Automatisierungstechnik", "Elektrotechnik"]);
+    for (const i of publishedIndustries) expect(i.status).toBe("published");
+  });
+});
+
+describe("Elektrotechnik – Matching (konservativ, category=elektro, unverändert)", () => {
   const full = matchJobsForConfig(JOBS, { ...elektrotechnik.jobMatch, maxJobs: 99 }, elektrotechnik.slug);
-  it("1 – exakt die 15 elektro-Jobs, 0 ausgeschlossen, 0 False Positives", () => {
-    expect(full.matches.map((m) => m.job.id).sort((a, b) => Number(a) - Number(b))).toEqual(EXPECTED_ELEKTRO_IDS.slice().sort((a, b) => Number(a) - Number(b)));
+  it("1 – jobMatch-Config unverändert gegenüber 009A", () => {
+    expect(elektrotechnik.jobMatch).toEqual({ category: ["elektro"], maxJobs: 8, fallback: "hint-and-joblist" });
+  });
+  it("2 – exakt die 15 elektro-Jobs, 0 ausgeschlossen, 0 False Positives", () => {
+    expect(full.matches.map((m) => m.job.id).sort((a, b) => Number(a) - Number(b))).toEqual(
+      EXPECTED_ELEKTRO_IDS.slice().sort((a, b) => Number(a) - Number(b)),
+    );
     expect(full.totalMatched).toBe(15);
     expect(full.excludedCount).toBe(0);
   });
-  it("2 – jeder Treffer ist Kategorie 'elektro' (strukturelles Signal, kein Textzufall)", () => {
+  it("3 – jeder Treffer Kategorie 'elektro', Konfidenz high", () => {
     for (const m of full.matches) {
       expect(m.job.category).toBe("elektro");
       expect(m.matchedSignals).toContain("category");
       expect(m.confidence).toBe("high");
     }
   });
-  it("3 – Nicht-Elektrotechnik-Stellen matchen nicht (Kälte/Mechatronik, SPS-Job 7, SHK)", () => {
+  it("4 – Nicht-Elektrotechnik-Stellen matchen nicht (Kälte/Mechatronik, SPS-Job 7, SHK)", () => {
     for (const id of EXPECTED_NON_MATCH_IDS) {
       const j = JOBS.find((x) => x.id === id);
       if (j) expect(matchJobsForConfig([j], elektrotechnik.jobMatch, "x").totalMatched, `Job ${id}`).toBe(0);
     }
   });
-  it("4 – Anzeige-Cap (maxJobs=8) begrenzt die sichtbare Liste, ohne Ausschlüsse", () => {
-    const capped = matchJobsForConfig(JOBS, elektrotechnik.jobMatch, elektrotechnik.slug);
+  it("5 – sichtbare 8 Jobs in dokumentierter, deterministischer Reihenfolge", () => {
     expect(capped.matches.length).toBe(8);
     expect(capped.totalMatched).toBe(15);
-    for (const m of capped.matches) expect(m.job.category).toBe("elektro");
-  });
-  it("5 – deterministisch + robust bei leerem Input", () => {
-    const again = matchJobsForConfig(JOBS, { ...elektrotechnik.jobMatch, maxJobs: 99 }, elektrotechnik.slug);
-    expect(again.matches.map((m) => m.job.id)).toEqual(full.matches.map((m) => m.job.id));
-    expect(matchJobsForConfig([], elektrotechnik.jobMatch, "x").totalMatched).toBe(0);
+    expect(visibleJobs.map((j) => j.id)).toEqual(EXPECTED_VISIBLE_IDS);
+    // deterministisch reproduzierbar
+    const again = matchJobsForConfig(JOBS, elektrotechnik.jobMatch, elektrotechnik.slug);
+    expect(again.matches.map((m) => m.job.id)).toEqual(EXPECTED_VISIBLE_IDS);
   });
 });
 
-describe("Elektrotechnik – Composer grün", () => {
-  const cap = matchJobsForConfig(JOBS, elektrotechnik.jobMatch, elektrotechnik.slug);
-  const jobs = cap.matches.map((m) => m.job);
-  it("1 – Metadata-Composer: eindeutiger Canonical, index/follow-Objekt vorhanden", () => {
+describe("Elektrotechnik – Composer grün (published)", () => {
+  it("1 – Metadata: Canonical + OG-URL exakt, index/follow, kein Doppel-Branding", () => {
     const m = buildIndustryMetadata(elektrotechnik);
     expect(m.alternates?.canonical).toBe("https://www.phe-perm.de/branchen/elektrotechnik");
     expect(m.openGraph?.url).toBe(m.alternates?.canonical);
+    expect(m.robots).toEqual({ index: true, follow: true, googleBot: { index: true, follow: true } });
+    expect(((m.title as { absolute: string }).absolute.match(/PHE-Perm/g) ?? []).length).toBe(1);
   });
-  it("2 – Schema-Composer: nicht-leerer Graph, kein JobPosting", () => {
-    const g = buildIndustrySchema(elektrotechnik, jobs);
-    const nodes = g["@graph"] as unknown[];
-    expect(nodes.length).toBeGreaterThan(0);
-    expect(JSON.stringify(g)).not.toContain("JobPosting");
+  it("2 – Schema: Graph-Typen, ItemList = exakt die 8 sichtbaren Jobs, kein JobPosting, eindeutige @ids", () => {
+    const g = buildIndustrySchema(elektrotechnik, visibleJobs);
+    const nodes = g["@graph"] as ReadonlyArray<Record<string, unknown>>;
+    expect(nodes.map((n) => n["@type"])).toEqual(["CollectionPage", "BreadcrumbList", "FAQPage", "ItemList"]);
+    const list = nodes.find((n) => n["@type"] === "ItemList") as { numberOfItems: number; itemListElement: { name: string }[] };
+    expect(list.numberOfItems).toBe(8);
+    expect(list.itemListElement.map((e) => e.name)).toEqual(visibleJobs.map((j) => j.title));
+    const json = JSON.stringify(g);
+    expect(json).not.toContain("JobPosting");
+    expect(json).not.toContain('"@type":"Organization"');
+    const ids = nodes.map((n) => String(n["@id"]));
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(json).toContain("https://www.phe-perm.de/branchen/elektrotechnik");
   });
-  it("3 – Internal-Link-Composer verweigert Draft ohne allowDraft (Draft-Schutz)", () => {
-    expect(() => buildIndustryInternalLinks({ industry: elektrotechnik, professionRegistry: { professionBySlug }, jobMatches: cap.matches })).toThrow();
-  });
-  it("4 – Internal-Link-Composer mit allowDraft: Breadcrumb korrekt, related published, 0 Warnings", () => {
-    const links = buildIndustryInternalLinks({ industry: elektrotechnik, professionRegistry: { professionBySlug }, jobMatches: cap.matches, allowDraft: true });
+  it("3 – Internal Links: Breadcrumb, related published, keine Draft-/numerischen/doppelten Links, kein Self-Link, 0 Warnings", () => {
+    // published → kein allowDraft nötig
+    const links = buildIndustryInternalLinks({ industry: elektrotechnik, professionRegistry: { professionBySlug }, jobMatches: capped.matches });
     expect(links.breadcrumbs.map((b) => b.label)).toEqual(["Startseite", "Branchen", "Elektrotechnik"]);
+    expect(links.relevantProfessionLinks.map((l) => l.professionSlug)).toEqual(["elektroniker", "servicetechniker", "sps-automatisierung"]);
     for (const l of links.relevantProfessionLinks) expect(professionBySlug[l.professionSlug ?? ""]?.publication.published).toBe(true);
+    for (const l of links.allLinks) {
+      expect(/^\/jobs\/\d+$/.test(l.href), l.href).toBe(false); // keine numerischen Job-URLs
+      expect(l.href).not.toBe(elektrotechnik.canonicalPath); // kein Self-Link
+    }
+    const hrefs = links.allLinks.map((l) => l.href);
+    expect(new Set(hrefs).size).toBe(hrefs.length); // keine Duplikate
     expect(links.warnings).toHaveLength(0);
   });
 });
