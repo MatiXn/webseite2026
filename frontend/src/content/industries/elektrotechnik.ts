@@ -1,10 +1,9 @@
-// Branche Elektrotechnik – draft-staging (EPIC 009A).
-// Config und Job-Match-Strategie sind vollständig vorbereitet und analysiert,
-// die Branche wird aber bewusst NICHT veröffentlicht: status="draft", nicht in
-// publishedIndustries. Da die 008D-Engine (Route/Sitemap/Hub) datengetrieben aus
-// publishedIndustries liest, bleibt /branchen/elektrotechnik damit unsichtbar –
-// keine Route, kein Sitemap-Eintrag, keine Hub-Karte. Die Sichtbarschaltung
-// erfolgt in einem eigenen späteren EPIC (analog 008C → 008D).
+// Branche Elektrotechnik – published (EPIC 009A vorbereitet, EPIC 009B veröffentlicht).
+// Die Config wurde in 009A als Draft vorbereitet und analysiert; 009B schaltet sie
+// kontrolliert live: status="published", in publishedIndustries. Da die 008D-Engine
+// (Route/Sitemap/Hub) datengetrieben aus publishedIndustries liest, entstehen dadurch
+// automatisch /branchen/elektrotechnik, der Sitemap-Eintrag und die Hub-Karte –
+// ohne manuell hartcodierte Route/Karte/URL.
 //
 // Branchen-/Marktumfeld (Unternehmen, gesuchte Profile), NICHT das Berufsprofil
 // (das liegt in der Profession "elektroniker"). Sachlich, ohne erfundene Zahlen,
@@ -23,7 +22,7 @@ export const elektrotechnik = {
   slug: "elektrotechnik",
   name: "Elektrotechnik",
   shortName: "Elektrotechnik",
-  status: "draft",
+  status: "published",
   parentSlug: "branchen",
 
   metadataTitle: "Personalvermittlung Elektrotechnik | PHE-Perm",
@@ -107,12 +106,13 @@ export const elektrotechnik = {
   },
 
   publication: {
-    // Draft-Staging: alle Sichtbarkeits-Flags aus. Muss zu status="draft" passen
-    // (Validator erzwingt für Drafts: indexable/includeInSitemap/showInIndustryHub = false).
-    published: false,
-    indexable: false,
-    includeInSitemap: false,
-    showInIndustryHub: false,
-    showRelatedLinks: false,
+    // Veröffentlicht (EPIC 009B): alle Sichtbarkeits-Flags an. Muss zu
+    // status="published" passen (Validator erzwingt: indexable/includeInSitemap/
+    // showInIndustryHub = true).
+    published: true,
+    indexable: true,
+    includeInSitemap: true,
+    showInIndustryHub: true,
+    showRelatedLinks: true,
   },
 } as const satisfies IndustryContent;

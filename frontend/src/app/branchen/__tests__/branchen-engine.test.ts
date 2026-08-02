@@ -51,9 +51,10 @@ describe("Branchen – Sitemap", () => {
   it("1 – /branchen enthalten", () => {
     expect(urls).toContain("https://www.phe-perm.de/branchen");
   });
-  it("2 – /branchen/automatisierungstechnik enthalten (aus publishedIndustries)", () => {
+  it("2 – beide published Branchen enthalten (aus publishedIndustries)", () => {
     expect(urls).toContain("https://www.phe-perm.de/branchen/automatisierungstechnik");
-    expect(publishedIndustries.length).toBe(1);
+    expect(urls).toContain("https://www.phe-perm.de/branchen/elektrotechnik");
+    expect(publishedIndustries.length).toBe(2);
   });
   it("3 – keine Duplikate", () => {
     expect(new Set(urls).size).toBe(urls.length);

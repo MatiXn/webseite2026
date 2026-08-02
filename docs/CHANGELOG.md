@@ -1,5 +1,12 @@
 # Changelog
 
+## EPIC 009B – Elektrotechnik kontrolliert veröffentlichen
+
+- **Changed:** `elektrotechnik` von Draft auf **published** geschaltet — `status:"published"`, alle `publication`-Flags true. Registry: `publishedIndustries = [automatisierungstechnik, elektrotechnik]`, `draftIndustries = []`.
+- **Automatisch (datengetrieben, kein neuer Code):** die 008D-Engine erzeugt daraus `/branchen/elektrotechnik` (SSG), die Hub-Karte auf `/branchen` und den Sitemap-Eintrag — keine hartcodierte Route/Karte/URL. `IndustryPageTemplate`, Route, Hub, `sitemap.ts` und Footer **unverändert**.
+- **Unverändert:** Matchstrategie `category:["elektro"]` (15 Treffer, 8 sichtbar, 0 Ausschlüsse, 0 False Positives); Jobdaten; Profession-Configs; Automatisierungstechnik (Match [7], published).
+- **Note:** sichtbare 8 Jobs (Reihenfolge): 1, 11, 12, 13, 16, 17, 22, 23. Jobs-Überschrift „Aktuell passende Stellen" (Plural). Genau eine H1 je Seite; Schema-ItemList = die 8 sichtbaren Jobs, kein JobPosting.
+
 ## EPIC 009A – Referenz-Branche Elektrotechnik (Draft)
 
 - **Added:** zweite `IndustryContent`-Config `elektrotechnik` (`content/industries/`) — sachlich, ohne erfundene Zahlen/Gehälter/Garantien/Referenzen. Branche Elektrotechnik = Unternehmens-/Einsatzumfeld (klar abgegrenzt von der Profession „Elektroniker").
