@@ -101,6 +101,10 @@ export type CityValidationCode =
   | "CITY_UNVERIFIED_LOCAL_CLAIM"
   | "CITY_FORBIDDEN_NUMBER"
   | "CITY_FORBIDDEN_CLAIM"
+  // Optionale Inhaltsblöcke (EPIC 010B)
+  | "CITY_BLOCK_EMPTY"
+  | "CITY_SPECIALIZATION_LINK_INVALID"
+  | "CITY_FINAL_CTA_INCOMPLETE"
   // CTA / Links
   | "CITY_CTA_INCOMPLETE"
   | "CITY_LINK_INVALID"
@@ -134,21 +138,25 @@ export type CityValidationResult = {
 };
 
 function collectText(c: CityContent): readonly string[] {
+  const audience = (v: CityContent["employerValue"]): string[] =>
+    v ? [v.title, v.text ?? "", ...v.bulletPoints] : [];
   return [
     c.metadataTitle,
     c.metadataDescription,
+    c.openGraphTitle ?? "",
+    c.openGraphDescription ?? "",
     c.hero.headline,
     c.hero.intro,
-    c.overview.title,
-    ...c.overview.paragraphs,
-    c.localExperience.title,
-    ...c.localExperience.paragraphs,
-    c.employerValue.title,
-    c.employerValue.text,
-    ...c.employerValue.bulletPoints,
-    c.candidateValue.title,
-    c.candidateValue.text,
-    ...c.candidateValue.bulletPoints,
+    ...(c.hero.supportingParagraphs ?? []),
+    ...(c.overview ? [c.overview.title, ...c.overview.paragraphs] : []),
+    ...(c.localExperience ? [c.localExperience.title, ...c.localExperience.paragraphs] : []),
+    ...(c.differentiators ? [c.differentiators.title, ...c.differentiators.items] : []),
+    ...(c.employerProcess ? [c.employerProcess.title, ...c.employerProcess.steps.flatMap((s) => [s.title, s.description])] : []),
+    ...(c.servedIndustryTags ? [c.servedIndustryTags.title, ...c.servedIndustryTags.tags] : []),
+    ...(c.boundaries ? [c.boundaries.title, ...c.boundaries.paragraphs] : []),
+    ...(c.finalCta ? [c.finalCta.title] : []),
+    ...audience(c.employerValue),
+    ...audience(c.candidateValue),
     ...c.faq.flatMap((f) => [f.q, f.a]),
   ];
 }
@@ -214,13 +222,28 @@ export function validateCity(c: CityContent): CityValidationResult {
     err("CITY_NEARBY_SELF_REFERENCE", "local.nearbyCities", "nearbyCities referenziert die Stadt selbst.");
   }
 
-  // 5. Inhalt
+  // 5. Inhalt (overview/localExperience/employerValue/candidateValue optional – nur prüfen, wenn vorhanden)
   if (isBlank(c.hero.headline)) err("CITY_HERO_HEADLINE_EMPTY", "hero.headline", "hero.headline ist leer.");
   if (isBlank(c.hero.intro)) err("CITY_HERO_INTRO_EMPTY", "hero.intro", "hero.intro ist leer.");
-  if (c.overview.paragraphs.length === 0 || c.overview.paragraphs.every(isBlank)) err("CITY_OVERVIEW_EMPTY", "overview.paragraphs", "overview ist leer.");
-  if (c.localExperience.paragraphs.length === 0 || c.localExperience.paragraphs.every(isBlank)) err("CITY_LOCAL_EXPERIENCE_EMPTY", "localExperience.paragraphs", "localExperience ist leer.");
-  if (isBlank(c.employerValue.title) || isBlank(c.employerValue.text) || c.employerValue.bulletPoints.length === 0) err("CITY_EMPLOYER_VALUE_EMPTY", "employerValue", "employerValue ist unvollständig.");
-  if (isBlank(c.candidateValue.title) || isBlank(c.candidateValue.text) || c.candidateValue.bulletPoints.length === 0) err("CITY_CANDIDATE_VALUE_EMPTY", "candidateValue", "candidateValue ist unvollständig.");
+  if (c.overview && (c.overview.paragraphs.length === 0 || c.overview.paragraphs.every(isBlank))) err("CITY_OVERVIEW_EMPTY", "overview.paragraphs", "overview ist vorhanden, aber leer.");
+  if (c.localExperience && (c.localExperience.paragraphs.length === 0 || c.localExperience.paragraphs.every(isBlank))) err("CITY_LOCAL_EXPERIENCE_EMPTY", "localExperience.paragraphs", "localExperience ist vorhanden, aber leer.");
+  if (c.employerValue && (isBlank(c.employerValue.title) || c.employerValue.bulletPoints.length === 0)) err("CITY_EMPLOYER_VALUE_EMPTY", "employerValue", "employerValue ist unvollständig (title/bulletPoints).");
+  if (c.candidateValue && (isBlank(c.candidateValue.title) || c.candidateValue.bulletPoints.length === 0)) err("CITY_CANDIDATE_VALUE_EMPTY", "candidateValue", "candidateValue ist unvollständig (title/bulletPoints).");
+
+  // Optionale generische Blöcke (nur prüfen, wenn vorhanden)
+  if (c.differentiators && (isBlank(c.differentiators.title) || c.differentiators.items.length === 0 || c.differentiators.items.some(isBlank))) err("CITY_BLOCK_EMPTY", "differentiators", "differentiators ist vorhanden, aber unvollständig.");
+  if (c.employerProcess && (isBlank(c.employerProcess.title) || c.employerProcess.steps.length === 0 || c.employerProcess.steps.some((s) => isBlank(s.title) || isBlank(s.description)))) err("CITY_BLOCK_EMPTY", "employerProcess", "employerProcess ist vorhanden, aber unvollständig.");
+  if (c.servedIndustryTags && (isBlank(c.servedIndustryTags.title) || c.servedIndustryTags.tags.length === 0 || c.servedIndustryTags.tags.some(isBlank))) err("CITY_BLOCK_EMPTY", "servedIndustryTags", "servedIndustryTags ist vorhanden, aber unvollständig.");
+  if (c.boundaries && (isBlank(c.boundaries.title) || c.boundaries.paragraphs.length === 0 || c.boundaries.paragraphs.every(isBlank))) err("CITY_BLOCK_EMPTY", "boundaries", "boundaries ist vorhanden, aber unvollständig.");
+  if (c.specializations) {
+    if (isBlank(c.specializations.title) || c.specializations.items.length === 0) err("CITY_BLOCK_EMPTY", "specializations", "specializations ist vorhanden, aber unvollständig.");
+    for (const [i, s] of c.specializations.items.entries()) {
+      if (isBlank(s.label)) err("CITY_BLOCK_EMPTY", `specializations.items[${i}]`, "Spezialisierung hat leeres label.");
+      if (isBlank(s.href) || !isValidHref(s.href)) err("CITY_SPECIALIZATION_LINK_INVALID", `specializations.items[${i}].href`, `Spezialisierungs-Link "${s.href}" ist ungültig.`);
+      else if (NUMERIC_JOB_URL.test(s.href)) err("CITY_SPECIALIZATION_LINK_INVALID", `specializations.items[${i}].href`, `Spezialisierungs-Link "${s.href}" ist eine numerische Job-URL.`);
+    }
+  }
+  if (c.finalCta && (isBlank(c.finalCta.title) || isBlank(c.finalCta.cta.label) || isBlank(c.finalCta.cta.href) || !isValidHref(c.finalCta.cta.href))) err("CITY_FINAL_CTA_INCOMPLETE", "finalCta", "finalCta ist unvollständig oder hat ungültigen href.");
 
   // FAQ
   if (c.faq.length === 0) err("CITY_FAQ_EMPTY", "faq", "faq ist leer.");
@@ -232,11 +255,13 @@ export function validateCity(c: CityContent): CityValidationResult {
 
   // 6. Erfahrung / verbotene Inhalte
   const allText = collectText(c);
-  if (!c.localExperience.verifiedExperience) {
+  // Ohne verifizierte Erfahrung dürfen (optionale) lokale Erfahrungstexte keine reale
+  // lokale Vermittlung/Betreuung behaupten.
+  if (!c.local.verifiedExperience && c.localExperience) {
     const expText = [c.localExperience.title, ...c.localExperience.paragraphs];
     for (const re of REALIZED_LOCAL_PATTERNS) {
       if (expText.some((t) => re.test(t))) {
-        err("CITY_UNVERIFIED_LOCAL_CLAIM", "localExperience", "verifiedExperience=false, aber der Text behauptet reale lokale Vermittlung/Betreuung.");
+        err("CITY_UNVERIFIED_LOCAL_CLAIM", "localExperience", "local.verifiedExperience=false, aber der Text behauptet reale lokale Vermittlung/Betreuung.");
         break;
       }
     }

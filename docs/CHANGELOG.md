@@ -1,5 +1,13 @@
 # Changelog
 
+## EPIC 010B – Düsseldorf auf die City Content Engine migriert
+
+- **Changed:** `/personalvermittlung/duesseldorf` läuft jetzt vollständig über `CityContent` + City-Composer + `CityPageTemplate`. Gleiche URL, gleiche sichtbare Inhalte (H1, alle 8 H2 in gleicher Reihenfolge, 6 FAQ, CTAs, NAP), gleicher Canonical. Route ist dünn (Metadata via `buildCityMetadata`, Schema via Composer, kein lokaler Content/FAQ/Job-Code).
+- **Added:** Config `content/cities/duesseldorf.ts` (published, `local.verifiedExperience: true`), eigenständiges `CityPageTemplate`, Düsseldorf-Sonderfall `buildDuesseldorfLocalBusinessSchema()` (LocalBusiness, `@id` = globale Organization, NAP/Öffnungszeiten aus `company`, **kein geo**, keine zweite Organisation). Registry: `publishedCities = [duesseldorf]`.
+- **Changed (Modell, additiv/abwärtskompatibel):** `CityContent` um optionale generische Blöcke erweitert (`hero.supportingParagraphs`, `differentiators`, `specializations`, `employerProcess`, `servedIndustryTags`, `boundaries`, `finalCta`, OG-Passthrough); `overview`/`localExperience`/`candidateValue`/`employerValue` optional; `verifiedExperience` als city-weites `local`-Flag. Validator + `buildCityMetadata` entsprechend erweitert.
+- **Schema:** City-Graph = `CollectionPage + BreadcrumbList + Service (+ FAQPage)` (genau **ein** Service); Profession-Graphen weiterhin **ohne** Service; Industry-Graph unverändert; globale Organization bleibt **eine** Entität.
+- **Note:** dokumentierte, nicht-negative Deltas: Breadcrumb-Labels „Startseite → Personalvermittlung → Düsseldorf" (spec-vorgegeben); Twitter-Card + OG-Image + Keywords werden ergänzt (Angleichung an alle anderen Engine-Seiten). Keine neue Stadt, keine dynamische Route, Sitemap-URL unverändert, Profession-/Industry-Engine + Jobdaten unverändert.
+
 ## EPIC 010A – City Content Engine: Fundament
 
 - **Added:** eigenständige City-Domäne (lokaler Vermittlungsmarkt, `/personalvermittlung/<stadt>`) – Datenmodell `content/cities/types.ts`, **leere** Registry `content/cities/index.ts`, Validator + Registry-Validator (`validate-city.ts` / `validate-city-registry.ts`), Composer `build-city-metadata.ts` / `build-city-schema.ts` / `build-city-internal-links.ts`. Siehe [CITY-CONTENT-ENGINE.md](CITY-CONTENT-ENGINE.md).
