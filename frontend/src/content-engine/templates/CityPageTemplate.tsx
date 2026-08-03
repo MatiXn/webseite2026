@@ -86,6 +86,16 @@ export function CityPageTemplate({ city, localBusinessSlot }: { city: CityConten
         </section>
       )}
 
+      {/* Optionale lokale Erfahrung */}
+      {c.localExperience && (
+        <section style={wrap}>
+          <h2 style={h2Style}>{c.localExperience.title}</h2>
+          {c.localExperience.paragraphs.map((para, i) => (
+            <p key={i} style={{ ...bodyStyle, marginBottom: i < c.localExperience!.paragraphs.length - 1 ? 14 : 0 }}>{para}</p>
+          ))}
+        </section>
+      )}
+
       {/* Unternehmensnutzen (Bullet-Liste) */}
       {c.employerValue && (
         <section style={wrap}>
@@ -98,6 +108,23 @@ export function CityPageTemplate({ city, localBusinessSlot }: { city: CityConten
               </li>
             ))}
           </ul>
+        </section>
+      )}
+
+      {/* Kandidatennutzen (Bullet-Liste, helle Sektion) */}
+      {c.candidateValue && (
+        <section style={{ background: "#f5f7fa", padding: "56px 24px" }}>
+          <div style={{ maxWidth: 900, margin: "0 auto" }}>
+            <h2 style={h2Style}>{c.candidateValue.title}</h2>
+            {c.candidateValue.text && <p style={{ ...bodyStyle, color: "#586170", marginBottom: 16 }}>{c.candidateValue.text}</p>}
+            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 12 }}>
+              {c.candidateValue.bulletPoints.map((t) => (
+                <li key={t} style={{ display: "flex", gap: 12, alignItems: "flex-start", ...bodyStyle }}>
+                  <span aria-hidden="true" style={{ color: "#3b72b8", fontWeight: 800, flexShrink: 0 }}>—</span>{t}
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
       )}
 

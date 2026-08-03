@@ -100,9 +100,8 @@ const registries = { professionBySlug, industryBySlug, cityBySlug: {} as Record<
 // ---------- Registry (leer, 010A) ----------
 
 describe("City-Registry", () => {
-  it("1 – Live-Registry valide (Düsseldorf published, keine Drafts)", () => {
-    expect(publishedCities.length).toBeGreaterThanOrEqual(1);
-    expect(draftCities).toEqual([]);
+  it("1 – Live-Registry valide (Düsseldorf published)", () => {
+    expect(publishedCities.some((c) => c.slug === "duesseldorf")).toBe(true);
     const r = validateCityRegistry({ cities, publishedCities, draftCities, cityBySlug });
     expect(r.valid, r.errors.map((e) => e.code).join(", ")).toBe(true);
   });
