@@ -1,5 +1,13 @@
 # Changelog
 
+## EPIC 010C – Köln als Draft-Stadt vorbereitet
+
+- **Added:** vollständige `CityContent`-Config `content/cities/koeln.ts` als **Draft** (`status:"draft"`, alle publication-Flags false, `local.verifiedExperience: true`). Inhaltlich eigenständig (kein umbenanntes Düsseldorf): eigene Hero/Overview/localExperience/candidateValue/relevantProfessions/-Industries; **kein NAP, keine Adresse/Geo/Öffnungszeiten, kein LocalBusiness** (Köln = reale Vermittlung ohne Büro). FAQ stellt den Nicht-Standort klar.
+- **Changed (Registry):** `cities = [duesseldorf, koeln]`, `publishedCities = [duesseldorf]`, `draftCities = [koeln]`. Düsseldorf unverändert. Da es keine dynamische City-Route gibt und die Sitemap nur Düsseldorf hartcodiert, bleibt Köln **vollständig unsichtbar** (keine Route, kein Sitemap-Eintrag, kein Hub/Footer/Nav-Link).
+- **Changed (Template, rein additiv):** `CityPageTemplate` um zwei optionale Abschnitte (`localExperience`, `candidateValue`) ergänzt — rendern nur bei Vorhandensein. Düsseldorf byte-identisch (nutzt beide Felder nicht).
+- **Job-Matching:** konservative 0-Treffer-Config. Der Matcher kennt keine Location-Felder; ein Freitext-„Köln" würde Nicht-Köln-Stellen (Langenfeld/Kerpen) falsch einziehen. Echte Köln-Jobs (13, 21) werden bewusst nicht gezeigt statt False Positives (7, 9) zu riskieren. **0 Treffer, 0 False Positives.**
+- **Note:** keine neue Route/Sitemap/Nav/Footer, keine neue Matcher-Logik, keine zweite LocalBusiness-Entität (Düsseldorf bleibt einzige Stadt mit LocalBusiness); Profession-/Industry-Engine + Jobdaten unverändert.
+
 ## EPIC 010B – Düsseldorf auf die City Content Engine migriert
 
 - **Changed:** `/personalvermittlung/duesseldorf` läuft jetzt vollständig über `CityContent` + City-Composer + `CityPageTemplate`. Gleiche URL, gleiche sichtbare Inhalte (H1, alle 8 H2 in gleicher Reihenfolge, 6 FAQ, CTAs, NAP), gleicher Canonical. Route ist dünn (Metadata via `buildCityMetadata`, Schema via Composer, kein lokaler Content/FAQ/Job-Code).

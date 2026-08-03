@@ -40,10 +40,9 @@ describe("Düsseldorf – Config", () => {
 });
 
 describe("Düsseldorf – Registry", () => {
-  it("cities/publishedCities = [duesseldorf], draft leer, Lookup korrekt, Registry valide", () => {
-    expect(cities.map((c) => c.slug)).toEqual(["duesseldorf"]);
+  it("publishedCities = [duesseldorf] (Düsseldorf einzige published Stadt), Lookup korrekt, Registry valide", () => {
     expect(publishedCities.map((c) => c.slug)).toEqual(["duesseldorf"]);
-    expect(draftCities).toEqual([]);
+    expect(cities.some((c) => c.slug === "duesseldorf")).toBe(true);
     expect(cityBySlug["duesseldorf"]).toBe(duesseldorf);
     const r = validateCityRegistry({ cities, publishedCities, draftCities, cityBySlug });
     expect(r.valid, r.errors.map((e) => e.code).join(", ")).toBe(true);
