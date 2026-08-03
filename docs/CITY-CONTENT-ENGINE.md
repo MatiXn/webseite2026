@@ -55,10 +55,19 @@ Vermittlung behaupten (`CITY_UNVERIFIED_LOCAL_CLAIM`). Erfundene Aktivitätszahl
 (Kunden/Kandidaten/Vermittlungen) sind immer verboten (`CITY_FORBIDDEN_NUMBER`), ebenso
 Marktführer-/Garantie-/Erfolgsquoten-Claims (`CITY_FORBIDDEN_CLAIM`).
 
-## Düsseldorf-Migrationsanalyse (Referenz, NICHT migriert in 010A)
+## Update EPIC 010B: Düsseldorf migriert
 
-Die bestehende Seite `src/app/personalvermittlung/duesseldorf/page.tsx` bleibt in 010A **byte-identisch**.
-Analyse für die spätere Migration (010B ff.):
+`/personalvermittlung/duesseldorf` läuft seit 010B vollständig über `CityContent` +
+`CityPageTemplate` (siehe CHANGELOG 010B). Für die verlustfreie Parität wurde das Modell
+additiv erweitert (optionale Blöcke `differentiators`/`specializations`/`employerProcess`/
+`servedIndustryTags`/`boundaries`/`finalCta`/`hero.supportingParagraphs`, OG-Passthrough;
+`overview`/`localExperience`/`candidateValue`/`employerValue` optional; `verifiedExperience`
+als `local`-Flag). Der Düsseldorf-`LocalBusiness`-Knoten bleibt Sonderfall in der Route
+(`buildDuesseldorfLocalBusinessSchema`), NICHT im generischen `buildCitySchema`.
+
+## Düsseldorf-Migrationsanalyse (Referenz — Grundlage der 010B-Migration)
+
+Analyse, die die 010B-Migration angeleitet hat:
 
 **Später nach `CityContent` überführbar (city-spezifisch):**
 - Metadata (Title/Description/Canonical/OG) → `metadataTitle`/`metadataDescription`/`canonicalPath`

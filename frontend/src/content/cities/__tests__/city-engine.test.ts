@@ -30,6 +30,7 @@ function makeValidCity(overrides: Partial<CityContent> = {}): CityContent {
       federalState: "Nordrhein-Westfalen",
       country: "DE",
       areaServed: "Musterstadt und Umgebung",
+      verifiedExperience: false,
       nearbyCities: ["Nachbarstadt"],
       nearbyRegions: ["Musterland"],
       serviceRadiusText: "im regionalen Umkreis",
@@ -52,9 +53,8 @@ function makeValidCity(overrides: Partial<CityContent> = {}): CityContent {
     },
     localExperience: {
       title: "Der Markt in Musterstadt",
-      // verifiedExperience=false → Text darf KEINE realisierte lokale Vermittlung behaupten.
+      // local.verifiedExperience=false → Text darf KEINE realisierte lokale Vermittlung behaupten.
       paragraphs: ["Der regionale Arbeitsmarkt fragt technische Qualifikationen nach; wir unterstützen Unternehmen bei der Besetzung."],
-      verifiedExperience: false,
     },
     relevantProfessions: ["elektroniker"],
     relevantIndustries: ["automatisierungstechnik", "elektrotechnik"],
@@ -90,7 +90,7 @@ function makeValidCity(overrides: Partial<CityContent> = {}): CityContent {
 const DRAFT_PUBLICATION = { published: false, indexable: false, includeInSitemap: false, showInCityHub: false, showRelatedLinks: false } as const;
 
 function makeValidDraftCity(overrides: Partial<CityContent> = {}): CityContent {
-  return makeValidCity({ slug: "entwurfstadt", name: "Entwurfstadt", shortName: "Entwurfstadt", canonicalPath: "/personalvermittlung/entwurfstadt", status: "draft", publication: { ...DRAFT_PUBLICATION }, local: { cityName: "Entwurfstadt", federalState: "Bayern", country: "DE", areaServed: "Entwurfstadt" }, ...overrides });
+  return makeValidCity({ slug: "entwurfstadt", name: "Entwurfstadt", shortName: "Entwurfstadt", canonicalPath: "/personalvermittlung/entwurfstadt", status: "draft", publication: { ...DRAFT_PUBLICATION }, local: { cityName: "Entwurfstadt", federalState: "Bayern", country: "DE", areaServed: "Entwurfstadt", verifiedExperience: false }, ...overrides });
 }
 
 const matches = matchJobsForConfig(JOBS, makeValidCity().jobMatch, "musterstadt").matches;
@@ -99,15 +99,15 @@ const registries = { professionBySlug, industryBySlug, cityBySlug: {} as Record<
 
 // ---------- Registry (leer, 010A) ----------
 
-describe("City-Registry (leer in 010A)", () => {
-  it("1 – Arrays leer, valide typisiert", () => {
-    expect(cities).toEqual([]);
-    expect(publishedCities).toEqual([]);
+describe("City-Registry", () => {
+  it("1 – Live-Registry valide (Düsseldorf published, keine Drafts)", () => {
+    expect(publishedCities.length).toBeGreaterThanOrEqual(1);
     expect(draftCities).toEqual([]);
-  });
-  it("2 – leere Registry validiert ohne Fehler", () => {
     const r = validateCityRegistry({ cities, publishedCities, draftCities, cityBySlug });
     expect(r.valid, r.errors.map((e) => e.code).join(", ")).toBe(true);
+  });
+  it("2 – synthetische leere Registry ist valide (Fundament-Fähigkeit)", () => {
+    expect(validateCityRegistry({ cities: [], publishedCities: [], draftCities: [], cityBySlug: {} }).valid).toBe(true);
   });
   it("3 – Lookup unbekannt ist undefined", () => {
     expect(cityBySlug["gibtsnicht"]).toBeUndefined();
@@ -139,7 +139,7 @@ describe("City-Validator (synthetische Fixtures)", () => {
     ["verbotener Claim", { overview: { title: "Wir sind Marktführer", paragraphs: ["Text"] } }, "CITY_FORBIDDEN_CLAIM"],
     ["erfundene Zahl", { overview: { title: "Überblick", paragraphs: ["Wir haben über 100 Kandidaten vermittelt."] } }, "CITY_FORBIDDEN_NUMBER"],
     ["numerische Job-URL im Link", { internalLinks: { parent: "/technische-personalvermittlung", jobs: "/jobs/7", professions: "/berufe", industries: "/branchen", personalvermittlung: "/technische-personalvermittlung", contact: "/kontakt", relatedCities: [] } }, "CITY_LINK_NUMERIC_JOB"],
-    ["unverifizierte lokale Behauptung", { localExperience: { title: "Erfahrung", paragraphs: ["In Musterstadt haben wir bereits erfolgreich vermittelt."], verifiedExperience: false } }, "CITY_UNVERIFIED_LOCAL_CLAIM"],
+    ["unverifizierte lokale Behauptung", { localExperience: { title: "Erfahrung", paragraphs: ["In Musterstadt haben wir bereits erfolgreich vermittelt."] } }, "CITY_UNVERIFIED_LOCAL_CLAIM"],
   ];
   for (const [label, override, expectedCode] of cases) {
     it(`erkennt: ${label} → ${expectedCode}`, () => {
@@ -148,8 +148,9 @@ describe("City-Validator (synthetische Fixtures)", () => {
       expect(r.errors.map((e) => e.code)).toContain(expectedCode);
     });
   }
-  it("verifiedExperience=true erlaubt lokale Vermittlungsaussage", () => {
-    const r = validateCity(makeValidCity({ localExperience: { title: "Erfahrung", paragraphs: ["In Musterstadt haben wir bereits erfolgreich vermittelt."], verifiedExperience: true } }));
+  it("local.verifiedExperience=true erlaubt lokale Vermittlungsaussage", () => {
+    const base = makeValidCity();
+    const r = validateCity(makeValidCity({ local: { ...base.local, verifiedExperience: true }, localExperience: { title: "Erfahrung", paragraphs: ["In Musterstadt haben wir bereits erfolgreich vermittelt."] } }));
     expect(r.valid, r.errors.map((e) => e.code).join(", ")).toBe(true);
   });
 });

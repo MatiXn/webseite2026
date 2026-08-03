@@ -28,6 +28,8 @@ export function buildCityMetadata(city: CityContent): Metadata {
     type: "website",
     robots: { index: indexable, follow: indexable },
     keywords: [city.primaryKeyword, ...city.secondaryKeywords],
+    ...(city.openGraphTitle ? { openGraphTitle: city.openGraphTitle } : {}),
+    ...(city.openGraphDescription ? { openGraphDescription: city.openGraphDescription } : {}),
   };
 
   return buildPageMetadata(input);
