@@ -41,9 +41,9 @@ describe("Servicetechniker – Config", () => {
       expect(text.includes(nap)).toBe(false);
     }
   });
-  it("7 – jobMatch unverändert (Variante A)", () => {
+  it("7 – jobMatch konservativ (Sprint 02: maxJobs 8, Strategie unverändert)", () => {
     expect(servicetechniker.jobMatch).toEqual({
-      tags: ["Service"], keywords: ["Servicetechniker", "Kundendienst"], maxJobs: 6, fallback: "hint-and-joblist",
+      tags: ["Service"], keywords: ["Servicetechniker", "Kundendienst"], maxJobs: 8, fallback: "hint-and-joblist",
     });
   });
 });
@@ -70,13 +70,13 @@ describe("Servicetechniker – Metadata", () => {
 });
 
 describe("Servicetechniker – Jobs (Matching-Analyse)", () => {
-  it("1 – 7 Treffer, 6 sichtbar, 0 ausgeschlossen", () => {
+  it("1 – 7 Treffer, alle 7 sichtbar (Sprint 02: maxJobs 8), 0 ausgeschlossen", () => {
     expect(result.totalMatched).toBe(7);
-    expect(result.matches.length).toBe(6);
+    expect(result.matches.length).toBe(7);
     expect(result.excludedCount).toBe(0);
   });
   it("2 – sichtbare Reihenfolge stabil (Score desc)", () => {
-    expect(result.matches.map(x => x.job.id)).toEqual(["14", "18", "2", "21", "16", "23"]);
+    expect(result.matches.map(x => x.job.id)).toEqual(["14", "18", "2", "21", "16", "23", "3"]);
   });
   it("3 – nur matched, alle high/medium, echte Servicetechniker-Rollen", () => {
     expect(result.matches.every(x => x.matched && !x.excluded)).toBe(true);

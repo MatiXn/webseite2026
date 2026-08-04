@@ -1,7 +1,12 @@
-// Servicetechniker – published (EPIC 007C). Sachliche, kuratierte Inhalte;
-// keine erfundenen Zahlen/Garantien. jobMatch bewusst tag-/keyword-basiert
-// (Servicestellen spannen elektro + mechatronik) – siehe Matching-Begründung unten.
+// Servicetechniker – published (EPIC 007C; Candidate Sprint 02: Conversion-Pass).
+// Sachliche, kuratierte Inhalte; keine erfundenen Zahlen/Garantien/Gehälter.
+// Sprint 02 verbessert NUR Inhalte (kandidatenorientierter Hero, WhatsApp-CTA über
+// die zentrale contact.whatsappLink, rein kandidatenseitige FAQ, maxJobs erhöht) –
+// keine Architektur-, Route- oder Template-Änderung. jobMatch unverändert konservativ
+// (tag "Service" + Titelbegriffe) – trifft exakt die echten Servicetechniker-Stellen,
+// 0 False Positives (siehe Matching-Begründung unten).
 import { DEFAULT_PROCESS, type ProfessionContent } from "./types";
+import { contact } from "../contact";
 
 export const servicetechniker = {
   slug: "servicetechniker",
@@ -25,12 +30,12 @@ export const servicetechniker = {
   searchIntent: "transactional",
 
   hero: {
-    eyebrow: "Berufsbild · Servicetechnik",
-    headline: "Servicetechniker Jobs in Festanstellung",
+    eyebrow: "Für Servicetechniker · Direktvermittlung",
+    headline: "Servicetechniker (m/w/d) gesucht – Zeit für einen Job, der wirklich passt",
     intro:
-      "Servicetechniker warten, reparieren und nehmen technische Anlagen beim Kunden vor Ort in Betrieb. PHE-Perm vermittelt passende Positionen direkt in Festanstellung und begleitet Bewerber persönlich.",
-    primaryCta: { label: "Aktuelle Servicetechniker Jobs ansehen", href: "#stellen" },
-    secondaryCta: { label: "Persönlich beraten lassen", href: "/kontakt" },
+      "Sie warten, reparieren und nehmen Anlagen beim Kunden in Betrieb – und suchen etwas Besseres? Wir vermitteln Servicetechniker direkt in Festanstellung, keine Zeitarbeit. Persönlich, vertraulich und nur bei Stellen, die wirklich zu Ihnen passen.",
+    primaryCta: { label: "Unverbindlich über WhatsApp anfragen", href: contact.whatsappLink },
+    secondaryCta: { label: "Aktuelle Servicetechniker-Stellen ansehen", href: "#stellen" },
   },
 
   overview: {
@@ -84,10 +89,10 @@ export const servicetechniker = {
   process: DEFAULT_PROCESS,
 
   applicantCta: {
-    title: "Du suchst eine neue Stelle als Servicetechniker?",
-    text: "Sieh dir die aktuellen Positionen an oder sprich direkt mit uns über deine Erfahrung, deinen gewünschten Einsatzbereich und deine beruflichen Ziele.",
-    primaryCta: { label: "Servicetechniker Jobs ansehen", href: "#stellen" },
-    secondaryCta: { label: "Lebenslauf kostenlos erstellen", href: "/lebenslauf-erstellen" },
+    title: "Sie suchen eine neue Stelle als Servicetechniker?",
+    text: "Melden Sie sich unverbindlich – gern per WhatsApp. Wir besprechen vertraulich Ihre Erfahrung, Ihr Wunsch-Einsatzgebiet und Ihre Ziele und stellen Sie nur bei passenden Stellen vor.",
+    primaryCta: { label: "Unverbindlich über WhatsApp anfragen", href: contact.whatsappLink },
+    secondaryCta: { label: "Lebenslauf senden", href: "/lebenslauf-erstellen" },
   },
   employerCta: {
     title: "Sie suchen Servicetechniker für Ihr Unternehmen?",
@@ -98,11 +103,12 @@ export const servicetechniker = {
 
   faq: [
     { q: "Welche Servicetechniker Jobs vermittelt PHE-Perm?", a: "Positionen in Wartung, Instandhaltung, Inbetriebnahme und technischem Kundendienst – unter anderem in Kälte- und Klimatechnik, Elektro- und Anlagentechnik sowie Mechatronik, ausschließlich in Festanstellung." },
-    { q: "Vermittelt PHE-Perm Servicetechniker direkt in Festanstellung?", a: "Ja. Die Vermittlung erfolgt direkt an das einstellende Unternehmen – keine Zeitarbeit und keine Arbeitnehmerüberlassung." },
-    { q: "Kostet die Vermittlung Bewerber etwas?", a: "Nein. Für Bewerber ist die Vermittlung kostenlos." },
-    { q: "Gibt es Servicestellen mit Außendienst?", a: "Ja. Viele Servicepositionen umfassen Kundeneinsätze vor Ort; Reisebereitschaft und Führerschein sind dann je nach Stelle relevant." },
-    { q: "Welche Ausbildung wird für Servicetechniker-Stellen benötigt?", a: "In der Regel eine abgeschlossene technische Ausbildung. Die konkreten Anforderungen hängen von der jeweiligen Stelle und dem Einsatzbereich ab." },
-    { q: "Können Unternehmen über PHE-Perm Servicetechniker suchen?", a: "Ja. Unternehmen können ihren Bedarf über unsere technische Personalvermittlung anfragen; wir übernehmen die Suche und die persönliche Vorauswahl." },
+    { q: "Vermittelt PHE-Perm Servicetechniker ausschließlich in Festanstellung?", a: "Ja. Die Vermittlung erfolgt direkt an das einstellende Unternehmen – keine Zeitarbeit und keine Arbeitnehmerüberlassung." },
+    { q: "Ist die Kontaktaufnahme vertraulich?", a: "Ja. Ihre Angaben behandeln wir vertraulich; wir stellen Sie erst nach Ihrer ausdrücklichen Zustimmung bei einem Unternehmen vor." },
+    { q: "Muss ich für jede Stelle bundesweit reisen?", a: "Nein, das hängt von der jeweiligen Stelle ab. Es gibt regionale Positionen ebenso wie Stellen mit Außendienst; den Reiseanteil klären wir vor einer Vorstellung." },
+    { q: "Kann ich mich melden, obwohl ich aktuell nicht aktiv suche?", a: "Ja. Sie können sich jederzeit initiativ melden; wir gleichen Ihr Profil mit passenden Positionen ab und melden uns persönlich." },
+    { q: "Entstehen mir als Kandidat Kosten?", a: "Nein. Für Bewerber ist die Vermittlung kostenlos." },
+    { q: "Werden meine Unterlagen ohne Zustimmung weitergegeben?", a: "Nein. Wir geben Ihre Unterlagen nur nach ausdrücklicher Absprache an ein Unternehmen weiter." },
   ],
 
   internalLinks: {
@@ -122,7 +128,7 @@ export const servicetechniker = {
   jobMatch: {
     tags: ["Service"],
     keywords: ["Servicetechniker", "Kundendienst"],
-    maxJobs: 6,
+    maxJobs: 8, // Sprint 02: alle echten Servicetechniker-Treffer (7) sichtbar, keine Beschränkung auf 6
     fallback: "hint-and-joblist",
   },
 
