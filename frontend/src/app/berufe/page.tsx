@@ -73,6 +73,7 @@ const BERUFSFELDER: Berufsfeld[] = [
     aufgaben: "Installation, Wartung und Instandhaltung von Kälte- und Klimaanlagen; Störungsbeseitigung im Kundendienst.",
     stellen: "Kältetechniker, Kältemechatroniker, Servicetechniker Kältetechnik",
     match: ["kälte", "klima"],
+    detailHref: "/berufe/kaeltetechniker",
   },
   {
     name: "TGA- & SHK-Fachkräfte",

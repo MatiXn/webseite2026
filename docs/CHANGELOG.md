@@ -1,5 +1,12 @@
 # Changelog
 
+## Candidate Sprint 01A – Kältetechniker-Landingpage
+
+- **Added:** kandidatenorientierte Profession-Seite `/berufe/kaeltetechniker` über die **bestehende** Profession Engine + `ProfessionPageTemplate` (keine neue Engine, kein Template-Sonderfall). Config `content/professions/kaeltetechniker.ts` (published), dünne Route, Registry + `/berufe`-Hub-Karte + Sitemap ergänzt.
+- **Job-Matching:** strukturierter Tag `Kältetechnik` — exklusiv auf den 4 echten Kälte-Stellen (Jobs **2, 15, 20, 25**), **0 False Positives** (kein category-Filter, keine breiten Keywords; allgemeine Mechatroniker 10/14/21, SHK 19, allg. Servicetechniker 3/18 matchen nicht).
+- **Kandidatenfokus:** Hero „Kältetechniker (m/w/d) gesucht – Jobs in Festanstellung", WhatsApp-CTA über die zentrale `contact.whatsappLink` (keine hartcodierte Nummer), „keine Zeitarbeit" prominent sichtbar, Jobs per `#stellen`-Anker direkt erreichbar. FAQ deckt die 7 Kandidatenfragen sachlich ab; Reise/Bereitschaft/Wochenende nur jobbezogen, keine Pauschalversprechen.
+- **Note:** keine erfundenen Gehälter/Benefits, keine neue dynamische Route, keine Städte-Kombinationen; bestehende Professionen/Branchen/Städte/Jobdaten unverändert.
+
 ## EPIC 010C – Köln als Draft-Stadt vorbereitet
 
 - **Added:** vollständige `CityContent`-Config `content/cities/koeln.ts` als **Draft** (`status:"draft"`, alle publication-Flags false, `local.verifiedExperience: true`). Inhaltlich eigenständig (kein umbenanntes Düsseldorf): eigene Hero/Overview/localExperience/candidateValue/relevantProfessions/-Industries; **kein NAP, keine Adresse/Geo/Öffnungszeiten, kein LocalBusiness** (Köln = reale Vermittlung ohne Büro). FAQ stellt den Nicht-Standort klar.
