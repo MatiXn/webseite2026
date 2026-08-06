@@ -44,6 +44,14 @@ const BERUFSFELDER: Berufsfeld[] = [
     detailHref: "/berufe/elektroniker",
   },
   {
+    name: "Elektroniker für Betriebstechnik",
+    einordnung: "Elektroniker für die Instandhaltung und den Betrieb industrieller Anlagen und Produktionsmaschinen.",
+    aufgaben: "Instandhaltung und Störungsbeseitigung, Schaltschrankbau, Energieversorgung und Wartung elektrischer Betriebsmittel.",
+    stellen: "Elektroniker für Betriebstechnik, Betriebselektroniker, Betriebselektriker",
+    match: ["betriebstechnik", "betriebselektroniker", "betriebselektriker"],
+    detailHref: "/berufe/elektroniker-betriebstechnik",
+  },
+  {
     name: "Servicetechniker",
     einordnung: "Techniker im Kundendienst für Wartung, Instandhaltung und Inbetriebnahme technischer Anlagen beim Kunden vor Ort.",
     aufgaben: "Fehlerdiagnose, Reparatur, Wartung und Inbetriebnahme; Dokumentation und Einweisung vor Ort.",

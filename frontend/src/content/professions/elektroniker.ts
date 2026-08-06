@@ -119,7 +119,7 @@ export const elektroniker = {
     lebenslauf: "/lebenslauf-erstellen",
     personalvermittlung: "/technische-personalvermittlung",
     kontakt: "/kontakt",
-    relatedProfessions: [], // aktuell nur Elektroniker published → keine toten Related-Links
+    relatedProfessions: ["elektroniker-betriebstechnik"], // Cross-Link zur spezialisierten Betriebstechnik-Seite (Sprint 04)
   },
 
   // Strukturiertes Matching über die Job-Kategorie "elektro" (16 echte Stellen),

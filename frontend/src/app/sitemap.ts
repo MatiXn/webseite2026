@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/jobs`,                 changeFrequency: "daily",   priority: 0.9 },
     { url: `${base}/berufe`,               changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/berufe/elektroniker`,  changeFrequency: "monthly", priority: 0.65 },
+    { url: `${base}/berufe/elektroniker-betriebstechnik`, changeFrequency: "monthly", priority: 0.65 },
     { url: `${base}/berufe/mechatroniker`, changeFrequency: "monthly", priority: 0.65 },
     { url: `${base}/berufe/servicetechniker`, changeFrequency: "monthly", priority: 0.65 },
     { url: `${base}/berufe/sps-automatisierung`, changeFrequency: "monthly", priority: 0.65 },

@@ -1,5 +1,13 @@
 # Changelog
 
+## Candidate Sprint 04 – Elektroniker für Betriebstechnik (spezialisierte Landingpage)
+
+- **Added:** neue Profession-Seite `/berufe/elektroniker-betriebstechnik` (published) über die **bestehende** Profession Engine + `ProfessionPageTemplate` — keine neue Engine, keine Architektur-/Template-Änderung, kein slug-Sonderfall. Config `content/professions/elektroniker-betriebstechnik.ts`, dünne Route, Registry + eigene Hub-Karte + Sitemap (genau einmal) ergänzt.
+- **Job-Matching (präzise, nicht category-breit):** `keywords:["Betriebstechnik","Betriebselektroniker","Betriebselektriker"] + tags:["Betriebstechnik"]` → trifft exakt die **7 echten** Betriebstechnik-Stellen (Jobs **1, 6, 8, 9, 11, 12, 24**), **0 False Positives**. Bewusst abgegrenzt: Energie-/Gebäudetechnik (22), MSR/Gebäudeautomation (13), Elektromonteur (4), Servicetechniker (3/23), Photovoltaik (16), SPS (7), Mechatroniker (10/14/20/21), allg. Anlagentechnik (17), reine Instandhaltung (5), SHK (19).
+- **Kandidatenfokus:** Hero „Elektroniker für Betriebstechnik (m/w/d) – passende Festanstellung finden", Direktvermittlung/Festanstellung/keine Zeitarbeit/kostenfrei/vertraulich sichtbar; WhatsApp-CTA über zentrale `contact.whatsappLink`, Jobs per `#stellen`. FAQ rein kandidatenseitig (8 Fragen inkl. Schicht/Vollkonti ehrlich beantwortet). Schicht-/Vollkonti nur jobbezogen, keine Pauschalversprechen/erfundenen Benefits.
+- **Abgrenzung zu `/berufe/elektroniker`:** eigener Longtail-Keyword/Content (Betriebstechnik/Instandhaltung/Energieversorgung/Produktionsanlagen) statt breitem Elektro-Mix; **Cross-Link** in beide Richtungen über `relatedProfessions` (einzige Änderung an der bestehenden Elektroniker-Seite). Kein Duplicate-Canonical.
+- **Note:** bestehende Elektroniker-Seite (bis auf Cross-Link) sowie andere Professionen, Branchen, Städte, Jobdaten und `ProfessionPageTemplate` unverändert.
+
 ## Candidate Sprint 02 – Servicetechniker-Seite conversion-optimiert
 
 - **Changed (nur Inhalte):** die bestehende Seite `/berufe/servicetechniker` kandidatenorientiert überarbeitet — **keine Architektur-, Route- oder Template-Änderung**, keine neue Profession/Datei (Route existierte bereits). Nur `content/professions/servicetechniker.ts` inhaltlich verbessert.
