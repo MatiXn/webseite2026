@@ -4,16 +4,17 @@ import { mechatroniker } from "./mechatroniker";
 import { servicetechniker } from "./servicetechniker";
 import { spsAutomatisierung } from "./sps-automatisierung";
 import { kaeltetechniker } from "./kaeltetechniker";
+import { elektronikerBetriebstechnik } from "./elektroniker-betriebstechnik";
 
 export * from "./types";
-export { elektroniker, mechatroniker, servicetechniker, spsAutomatisierung, kaeltetechniker };
+export { elektroniker, mechatroniker, servicetechniker, spsAutomatisierung, kaeltetechniker, elektronikerBetriebstechnik };
 
 // Alle Professionen (published + draft).
-export const professions = [elektroniker, mechatroniker, servicetechniker, spsAutomatisierung, kaeltetechniker] as const;
+export const professions = [elektroniker, mechatroniker, servicetechniker, spsAutomatisierung, kaeltetechniker, elektronikerBetriebstechnik] as const;
 
 // Nach Veröffentlichungsstatus getrennt (manuell gepflegt; Konsistenz-Validator
 // gegen die status/publication-Flags folgt in EPIC 006C).
-export const publishedProfessions = [elektroniker, mechatroniker, servicetechniker, spsAutomatisierung, kaeltetechniker] as const;
+export const publishedProfessions = [elektroniker, mechatroniker, servicetechniker, spsAutomatisierung, kaeltetechniker, elektronikerBetriebstechnik] as const;
 export const draftProfessions = [] as const;
 
 // Statische Slug→Profession-Zuordnung (ohne Funktion).
@@ -23,4 +24,5 @@ export const professionBySlug = {
   servicetechniker: servicetechniker,
   "sps-automatisierung": spsAutomatisierung,
   kaeltetechniker: kaeltetechniker,
+  "elektroniker-betriebstechnik": elektronikerBetriebstechnik,
 } as const;
