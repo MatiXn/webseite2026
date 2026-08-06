@@ -1,5 +1,13 @@
 # Changelog
 
+## Candidate Sprint 02 – Servicetechniker-Seite conversion-optimiert
+
+- **Changed (nur Inhalte):** die bestehende Seite `/berufe/servicetechniker` kandidatenorientiert überarbeitet — **keine Architektur-, Route- oder Template-Änderung**, keine neue Profession/Datei (Route existierte bereits). Nur `content/professions/servicetechniker.ts` inhaltlich verbessert.
+- **Hero:** emotionaler, kandidatenfokussierter H1 („Servicetechniker (m/w/d) gesucht – Zeit für einen Job, der wirklich passt"), „keine Zeitarbeit" im Intro; CTA1 = WhatsApp über die zentrale `contact.whatsappLink` (keine hartcodierte Nummer), CTA2 = „Aktuelle Servicetechniker-Stellen ansehen" (`#stellen`). Bewerber-CTA ebenfalls WhatsApp.
+- **FAQ:** rein kandidatenseitig (Unternehmens-/B2B-Frage entfernt), 7 Fragen (Festanstellung, Vertraulichkeit, Reise, initiativ, Kosten, Weitergabe nur mit Zustimmung).
+- **Matching:** Strategie unverändert konservativ (`tags:["Service"]` + Titelbegriffe) — trifft exakt die **7 echten** Servicetechniker-Stellen (Jobs 2, 3, 14, 16, 18, 21, 23), **0 False Positives**; `maxJobs` 6→8, damit alle 7 sichtbar sind (mehr passende Jobs → mehr Conversion). SHK-Job 19 bleibt unter der Schwelle.
+- **Note:** keine erfundenen Gehälter/Benefits/Pauschalversprechen; Reise/Bereitschaft nur jobbezogen. Andere Professionen, Branchen, Städte, Jobdaten und das `ProfessionPageTemplate` unverändert.
+
 ## Candidate Sprint 01A – Kältetechniker-Landingpage
 
 - **Added:** kandidatenorientierte Profession-Seite `/berufe/kaeltetechniker` über die **bestehende** Profession Engine + `ProfessionPageTemplate` (keine neue Engine, kein Template-Sonderfall). Config `content/professions/kaeltetechniker.ts` (published), dünne Route, Registry + `/berufe`-Hub-Karte + Sitemap ergänzt.
