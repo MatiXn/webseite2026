@@ -52,6 +52,14 @@ const BERUFSFELDER: Berufsfeld[] = [
     detailHref: "/berufe/elektroniker-betriebstechnik",
   },
   {
+    name: "Elektroniker Energie- und Gebäudetechnik",
+    einordnung: "Fachkräfte für die elektrische Gebäudetechnik: Gebäudeautomation, KNX/EIB, Energieverteilung und MSR im Gebäude.",
+    aufgaben: "Installation und Inbetriebnahme von KNX/EIB und Gebäudeautomation, Energieverteilung, MSR- und Regelungstechnik.",
+    stellen: "Elektroniker Energie- und Gebäudetechnik, Gebäudeautomation, MSR-Technik",
+    match: ["gebäudetechnik", "gebäudeautomation", "knx"],
+    detailHref: "/berufe/elektroniker-energie-gebaeudetechnik",
+  },
+  {
     name: "Servicetechniker",
     einordnung: "Techniker im Kundendienst für Wartung, Instandhaltung und Inbetriebnahme technischer Anlagen beim Kunden vor Ort.",
     aufgaben: "Fehlerdiagnose, Reparatur, Wartung und Inbetriebnahme; Dokumentation und Einweisung vor Ort.",

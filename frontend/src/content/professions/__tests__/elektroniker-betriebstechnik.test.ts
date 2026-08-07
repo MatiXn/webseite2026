@@ -126,9 +126,9 @@ describe("Elektroniker für Betriebstechnik – Internal Links + Cross-Link", ()
     expect(new Set(hrefs).size).toBe(hrefs.length);
     expect(links.warnings).toHaveLength(0);
   });
-  it("Cross-Link zurück: elektroniker verlinkt auf die Betriebstechnik-Seite", () => {
+  it("Cross-Link zurück: elektroniker verlinkt auf die Betriebstechnik-Seite (Sprint 05: zusätzlich Gebäudetechnik)", () => {
     const back = buildProfessionInternalLinks({ profession: elektroniker, professionRegistry: { professionBySlug }, jobMatches: [] });
-    expect(back.relatedProfessionLinks.map((l) => l.href)).toEqual(["/berufe/elektroniker-betriebstechnik"]);
+    expect(back.relatedProfessionLinks.map((l) => l.href)).toContain("/berufe/elektroniker-betriebstechnik");
   });
 });
 

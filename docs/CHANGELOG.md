@@ -1,5 +1,14 @@
 # Changelog
 
+## Candidate Sprint 05 – Elektroniker Energie- und Gebäudetechnik (spezialisierte Landingpage)
+
+- **Added:** neue Profession-Seite `/berufe/elektroniker-energie-gebaeudetechnik` (published) über die **bestehende** Profession Engine + `ProfessionPageTemplate` — keine neue Engine, keine Architektur-/Template-Änderung, kein slug-Sonderfall. Config, dünne Route, Registry + eigene Hub-Karte + Sitemap (genau einmal) ergänzt.
+- **Job-Matching (präzise über strukturierte Tags):** `tags:["Gebäudetechnik","Gebäudeautomation"]` → trifft exakt die **2 echten** Stellen (Jobs **13, 22**), **0 False Positives**. Kein `category`-Filter; abgegrenzt gegen Betriebstechnik, Betriebselektroniker, SPS, Servicetechnik, Photovoltaik ohne Gebäudebezug, Mechatronik, Kältetechnik, SHK (die „Energie-/Gebäudetechnik"-Nennungen in anderen Jobs sind nur alternative Ausbildungen im Profil).
+- **Kandidatenfokus:** Hero „Elektroniker Energie- und Gebäudetechnik (m/w/d) – passende Festanstellung finden"; Direktvermittlung/Festanstellung/keine Zeitarbeit/kostenfrei/vertraulich sichtbar; WhatsApp-CTA über `contact.whatsappLink`, Jobs per `#stellen`. FAQ rein kandidatenseitig. Fokus IN: Gebäudetechnik, Elektroinstallation im Gebäude, EIB/KNX, Smart Home, Gebäudeautomation, MSR im Gebäudekontext.
+- **Nur 2 echte Jobs:** keine künstliche Jobfülle, keine fachfremden Jobs, klare **Initiativ-Einladung** (Hero/Overview/FAQ), keine „viele offene Stellen"-Aussage; Jobanzahl grammatikalisch korrekt.
+- **Abgrenzung/Cross-Link:** eigener Longtail-Keyword/Content vs. breite `/berufe/elektroniker`-Seite; **Cross-Link** beidseitig via `relatedProfessions` (elektroniker verlinkt jetzt Betriebstechnik + Gebäudetechnik – einzige Änderung an der bestehenden Elektroniker-Seite). Eigener Canonical, kein Duplicate.
+- **Note:** andere Professionen (inkl. Betriebstechnik/Kältetechniker/Servicetechniker/SPS/Mechatroniker), Branchen, Städte, Jobdaten und `ProfessionPageTemplate` unverändert.
+
 ## Candidate Sprint 04 – Elektroniker für Betriebstechnik (spezialisierte Landingpage)
 
 - **Added:** neue Profession-Seite `/berufe/elektroniker-betriebstechnik` (published) über die **bestehende** Profession Engine + `ProfessionPageTemplate` — keine neue Engine, keine Architektur-/Template-Änderung, kein slug-Sonderfall. Config `content/professions/elektroniker-betriebstechnik.ts`, dünne Route, Registry + eigene Hub-Karte + Sitemap (genau einmal) ergänzt.
