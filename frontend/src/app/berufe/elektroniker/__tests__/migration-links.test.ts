@@ -36,7 +36,10 @@ describe("Elektroniker-Migration – interne Links", () => {
     for (const l of links.allLinks) expect(/^\/jobs\/\d+$/.test(l.href)).toBe(false);
   });
 
-  it("6 – Related-Sektion: Cross-Link zur Betriebstechnik-Seite (Sprint 04)", () => {
-    expect(links.relatedProfessionLinks.map(l => l.href)).toEqual(["/berufe/elektroniker-betriebstechnik"]);
+  it("6 – Related-Sektion: Cross-Links zu den spezialisierten Elektroniker-Seiten (Sprint 04/05)", () => {
+    expect(links.relatedProfessionLinks.map(l => l.href)).toEqual([
+      "/berufe/elektroniker-betriebstechnik",
+      "/berufe/elektroniker-energie-gebaeudetechnik",
+    ]);
   });
 });
