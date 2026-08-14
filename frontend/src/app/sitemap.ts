@@ -25,6 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/ueber-uns`,            changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/kontakt`,              changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/lebenslauf-erstellen`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/recruiting-tipps`,     changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/branchen`,             changeFrequency: "monthly", priority: 0.7 },
   ];
 

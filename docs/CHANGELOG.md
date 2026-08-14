@@ -1,5 +1,10 @@
 # Changelog
 
+## Fix – Recruiting-Tipps-Seite (behebt toten Google-Ads-Sitelink)
+
+- **Added:** neue statische Seite `/recruiting-tipps` (kandidatenorientierte Bewerbungstipps, sachlich, on-brand, FAQPage-Schema, eigener Canonical) + Sitemap-Eintrag. Behebt den Google-Ads-Sitelink „Recruiting-Tipps PHE", dessen Ziel bisher **404** lieferte („Nicht funktionierendes Ziel"). Seite ist ○ statisch (CDN-schnell → AdsBot-tauglich). Keine erfundenen Zahlen/Garantien.
+
+
 ## Candidate Sprint 05 – Elektroniker Energie- und Gebäudetechnik (spezialisierte Landingpage)
 
 - **Added:** neue Profession-Seite `/berufe/elektroniker-energie-gebaeudetechnik` (published) über die **bestehende** Profession Engine + `ProfessionPageTemplate` — keine neue Engine, keine Architektur-/Template-Änderung, kein slug-Sonderfall. Config, dünne Route, Registry + eigene Hub-Karte + Sitemap (genau einmal) ergänzt.
