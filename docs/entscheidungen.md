@@ -37,3 +37,68 @@ Jeder Abschnitt trennt, was im Code belegt ist, von der offenen Frage nach dem W
 **Belegt:** `backend/requirements.txt` listet `structlog` und `python-json-logger`; `backend/app/main.py` ruft `setup_logging(json_logs=settings.is_production)` auf — JSON-Logs nur in Production, Konsolen-Logs sonst.
 
 > **[OFFEN]** Warum JSON-Logging nur in Production aktiv ist und nicht durchgängig — aus dem Code nicht ableitbar (denkbar wäre Log-Aggregation in Cloud Run, aber nicht belegt).
+
+## Ortsseiten unter /jobs/in/<stadt> nur für Städte mit belegter Suchnachfrage
+
+**Belegt:** `frontend/src/content/job-cities.ts` führt sieben Städte, jede mit einem
+Feld `searchDemand` aus dem Search-Console-Export vom 20.08.2026 (Mosbach 202,
+Frankenthal 181, Offenbach 132, Düsseldorf 43, Bad Oeynhausen 17, Dortmund 17,
+Langenfeld 16 Impressionen). Anfragen dieser Form ("jobs mosbach",
+"stellenangebote frankenthal") erzeugten zusammen über 500 Impressionen bei einem
+einzigen Klick — Google lieferte dafür einzelne Stellenanzeigen aus, gesucht wird
+aber eine Ortsübersicht.
+
+Bewusst **nicht** für jede Stadt im Jobbestand eine Seite: Ohne belegte Nachfrage
+und ohne genügend Stellen im Umkreis entstünde dünner Inhalt. Der Radius je Stadt
+steht in `radiusKm`; Bad Oeynhausen liegt bei 120 km statt 100 km, weil das
+Stellenangebot in Ostwestfalen weiter gestreut ist.
+
+Abgrenzung zur City Content Engine (`content/cities`): Die dortigen Seiten unter
+`/personalvermittlung/<stadt>` sprechen Arbeitgeber an. Die Jobs-Ortsseiten
+sprechen Bewerber an und brauchen Geo-Umkreis und Stellenliste — deshalb ein
+eigener, schlanker Seitentyp statt einer Erweiterung der B2B-Engine.
+
+## Google Sheet steuert Aktivität, data.ts hält Inhalt und ID
+
+**Belegt:** `frontend/src/app/jobs/job-source.ts` führt beide Quellen zusammen.
+Vorher vergab `api/jobs/route.ts` die Job-ID aus der Zeilennummer des Sheets
+(`String(i + 1)`), während Detailseiten, Sitemap und JobPosting-Schema aus
+`app/jobs/data.ts` kamen. Folge: Acht der 33 gelisteten Stellen hatten keine
+Detailseite und verlinkten auf einen 404; beim Umsortieren einer Sheet-Zeile
+hätten sich zudem alle nachfolgenden IDs verschoben und der kanonische
+`permanentRedirect` (301) hätte falsche Weiterleitungen festgeschrieben.
+
+Jetzt gilt: Der Abgleich läuft über Titel + Ort (`slugify`), abweichende
+Schreibweisen im Sheet werden über das Feld `sheetAliases` aufgelöst. Eine
+Sheet-Zeile ohne Gegenstück in `data.ts` wird nicht ausgeliefert, sondern
+protokolliert — sie braucht redaktionelle Pflege, bevor sie sichtbar wird.
+
+> **[OFFEN]** Eine ID-Spalte im Sheet wäre der robustere Weg als der Abgleich
+> über Titel + Ort. Sie erfordert Schreibzugriff auf das Sheet und wurde deshalb
+> nicht umgesetzt.
+
+## validThrough wandert mit dem heutigen Datum mit
+
+**Belegt:** `frontend/src/app/jobs/data.ts` berechnet `validThroughOf` als
+Maximum aus `datePosted + 90 Tage` und `heute + 45 Tage`; die Jobseiten
+revalidieren täglich (`export const revalidate = 86400`). Vorher trugen alle 25
+Anzeigen `datePosted: "2026-06-26"` und liefen damit am 24.09.2026 gleichzeitig
+ab — Google hätte sie am selben Tag geschlossen aus der Jobsuche entfernt.
+
+> **[OFFEN]** `datePosted` bleibt für die ursprünglichen 25 Stellen auf dem
+> gemeinsamen Sammeldatum. Ein echtes Veröffentlichungsdatum je Stelle würde eine
+> zusätzliche Spalte im Sheet erfordern.
+
+## Redirects gehören in vercel.json, nicht in next.config.ts
+
+**Belegt:** Der 301 von `/talente-finden` auf `/technische-personalvermittlung`
+steht seit Längerem in `frontend/next.config.ts`, live antwortete die URL
+trotzdem mit 404 — bei 114 Impressionen in der Search Console. Ursache ist die
+Legacy-Konfiguration der Root-`vercel.json` mit `builds` und `routes`: Sie
+übernimmt das Routing und umgeht die Framework-Redirects. Der Redirect steht
+deshalb jetzt als erste Regel in `vercel.json`.
+
+> **[OFFEN]** Sauberer wäre, die Legacy-`builds`/`routes`-Konfiguration
+> aufzulösen und im Vercel-Projekt stattdessen `frontend` als Root Directory zu
+> setzen. Das ändert das Deployment-Verhalten und wurde deshalb nicht im Rahmen
+> dieser Änderung angefasst.

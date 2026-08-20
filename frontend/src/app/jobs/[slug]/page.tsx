@@ -1,6 +1,6 @@
 import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
-import { JOBS, parseSalaryRange, validThroughOf } from "../data";
+import { JOBS, parseSalaryRange, validThroughOf, schemaLocationsOf } from "../data";
 import { jobSlug, jobPath, jobIdFromParam } from "../../../lib/slug";
 import { matchJobToProfession } from "../../../content-engine/job-matching";
 import { servicetechniker } from "../../../content/professions/servicetechniker";
@@ -20,13 +20,36 @@ const CATEGORY_LABELS: Record<string, string> = {
   bau: "Bau & Infrastruktur",
 };
 
+// Täglich neu generieren: `validThrough` im JobPosting-Schema wandert mit dem
+// heutigen Datum mit, damit Anzeigen nicht alle am selben Tag ablaufen.
+export const revalidate = 86400;
+
+// Google kürzt Titel ab etwa 60–65 Zeichen. Der Jobtitel plus Ort muss vorne
+// stehen, "Festanstellung" und Marke werden nur angehängt, solange Platz ist.
+const BRAND = " | PHE-Perm";
+
+// Trägt der Jobtitel den Ort schon selbst ("… – Deutschlandweit"), darf er
+// nicht ein zweites Mal angehängt werden.
+function titleCarriesCity(title: string, city: string): boolean {
+  return title.toLowerCase().includes(city.toLowerCase());
+}
+
+export function jobPageTitle(job: { title: string; city: string }): string {
+  const clean = job.title.replace(/\s*\((?:m\/w\/d|w\/m\/d|d\/m\/w|m\/w\/x)\)/gi, "").trim();
+  const base = titleCarriesCity(clean, job.city) ? clean : `${clean} Job ${job.city}`;
+  const withFest = `${base} – Festanstellung`;
+  if ((withFest + BRAND).length <= 65) return withFest + BRAND;
+  if ((base + BRAND).length <= 65) return base + BRAND;
+  return base;
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const id = jobIdFromParam(slug);
   const job = id ? JOBS.find(j => j.id === id) : undefined;
   if (!job) return {};
 
-  const title = `${job.title} in ${job.city} – Festanstellung | PHE-Perm Engineering`;
+  const title = jobPageTitle(job);
   // Auf Wortgrenze kürzen, damit die Description nicht mitten im Wort abbricht
   const truncateAtWord = (text: string, max: number) => {
     if (text.length <= max) return text;
@@ -92,15 +115,20 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
       "sameAs": "https://www.phe-perm.de",
       "logo": "https://www.phe-perm.de/phe-logo.png",
     },
-    "jobLocation": {
-      "@type": "Place",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": job.city.split(",")[0].trim(),
-        ...(job.region && job.region !== "Bundesweit" ? { "addressRegion": job.region } : {}),
-        "addressCountry": "DE",
-      },
-    },
+    "jobLocation": schemaLocationsOf(job).length
+      ? schemaLocationsOf(job).map(loc => ({
+          "@type": "Place",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": loc.locality,
+            ...(loc.region && loc.region !== "Bundesweit" ? { "addressRegion": loc.region } : {}),
+            "addressCountry": "DE",
+          },
+        }))
+      // Bundesweite Stelle ohne festen Einsatzort: nur das Land angeben.
+      // Ein Anzeigetext wie "Deutschlandweit" als addressLocality ist kein
+      // gültiger Ort und verhindert die geografische Zuordnung bei Google.
+      : { "@type": "Place", "address": { "@type": "PostalAddress", "addressCountry": "DE" } },
     ...(salaryRange ? {
       "baseSalary": {
         "@type": "MonetaryAmount",
@@ -159,7 +187,7 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
             fontSize: "clamp(30px,5vw,46px)", fontWeight: 800, color: "#fff",
             lineHeight: 1.15, letterSpacing: "-0.02em", marginBottom: 20,
           }}>
-            {job.title}
+            {titleCarriesCity(job.title, job.city) ? job.title : `${job.title} in ${job.city}`}
           </h1>
           <div style={{ display: "flex", gap: 24, flexWrap: "wrap", marginBottom: 28 }}>
             <div>

@@ -7,6 +7,13 @@
   ],
   "routes": [
     {
+      "src": "/talente-finden",
+      "status": 308,
+      "headers": {
+        "Location": "/technische-personalvermittlung"
+      }
+    },
+    {
       "src": "/(.*)",
       "dest": "frontend/$1"
     }

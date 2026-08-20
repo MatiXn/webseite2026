@@ -17,7 +17,7 @@ const hubSrc = read("../../../app/berufe/page.tsx");
 const sitemapMod = await import("../../../app/sitemap");
 const configSrc = read("../elektroniker-energie-gebaeudetechnik.ts");
 
-const EXPECTED = ["13", "22"];
+const EXPECTED = ["13", "22", "30"];
 // Bewusst abgegrenzt (dürfen NICHT matchen): Betriebstechnik/-elektroniker, SPS, Service,
 // Photovoltaik, Mechatronik, Kältetechnik, SHK, sowie Jobs mit nur alt. Ausbildung im Profil.
 const EXCLUDED = ["1", "4", "16", "6", "8", "9", "24", "7", "3", "18", "21", "23", "2", "15", "25", "10", "14", "20", "5", "11", "12", "17", "19"];
@@ -66,9 +66,9 @@ describe("Elektroniker Energie- und Gebäudetechnik – Config", () => {
 
 describe("Elektroniker Energie- und Gebäudetechnik – Matching", () => {
   const r = matchJobsForProfession(JOBS, elektronikerEnergieGebaeudetechnik);
-  it("1 – exakt Jobs 13, 22, 0 ausgeschlossen", () => {
+  it("1 – exakt Jobs 13, 22, 30, 0 ausgeschlossen", () => {
     expect(r.matches.map((m) => m.job.id).sort((a, b) => Number(a) - Number(b))).toEqual(EXPECTED);
-    expect(r.totalMatched).toBe(2);
+    expect(r.totalMatched).toBe(3);
     expect(r.excludedCount).toBe(0);
   });
   it("2 – keine abgegrenzten Berufe (0 False Positives)", () => {
@@ -99,10 +99,10 @@ describe("Elektroniker Energie- und Gebäudetechnik – Schema", () => {
   const jobs = matchJobsForProfession(JOBS, elektronikerEnergieGebaeudetechnik).matches.map((m) => m.job);
   const g = buildProfessionSchema(elektronikerEnergieGebaeudetechnik, jobs);
   const nodes = g["@graph"] as ReadonlyArray<Record<string, unknown>>;
-  it("CollectionPage/BreadcrumbList/FAQPage/ItemList(2); kein JobPosting/Organization; eindeutige @ids", () => {
+  it("CollectionPage/BreadcrumbList/FAQPage/ItemList(3); kein JobPosting/Organization; eindeutige @ids", () => {
     expect(nodes.map((n) => n["@type"])).toEqual(expect.arrayContaining(["CollectionPage", "BreadcrumbList", "FAQPage", "ItemList"]));
     const list = nodes.find((n) => n["@type"] === "ItemList") as { numberOfItems: number };
-    expect(list.numberOfItems).toBe(2);
+    expect(list.numberOfItems).toBe(3);
     const json = JSON.stringify(g);
     expect(json).not.toContain("JobPosting");
     expect(json).not.toContain('"@type":"Organization"');
@@ -114,10 +114,10 @@ describe("Elektroniker Energie- und Gebäudetechnik – Schema", () => {
 describe("Elektroniker Energie- und Gebäudetechnik – Internal Links + Cross-Link", () => {
   const matches = matchJobsForProfession(JOBS, elektronikerEnergieGebaeudetechnik).matches;
   const links = buildProfessionInternalLinks({ profession: elektronikerEnergieGebaeudetechnik, professionRegistry: { professionBySlug }, jobMatches: matches });
-  it("Breadcrumb + Cross-Link zu /berufe/elektroniker; kanonische Joblinks (2), keine numerischen/Doppel-Links", () => {
+  it("Breadcrumb + Cross-Link zu /berufe/elektroniker; kanonische Joblinks (3), keine numerischen/Doppel-Links", () => {
     expect(links.breadcrumbs.map((b) => b.label)).toEqual(["Startseite", "Berufe", "Elektroniker Energie- und Gebäudetechnik"]);
     expect(links.relatedProfessionLinks.map((l) => l.href)).toEqual(["/berufe/elektroniker"]);
-    expect(links.jobLinks.length).toBe(2);
+    expect(links.jobLinks.length).toBe(3);
     for (const l of links.allLinks) expect(/^\/jobs\/\d+$/.test(l.href)).toBe(false);
     expect(new Set(links.allLinks.map((l) => l.href)).size).toBe(links.allLinks.length);
     expect(links.warnings).toHaveLength(0);
