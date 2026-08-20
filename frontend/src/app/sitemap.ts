@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import { JOBS } from "./jobs/data";
 import { jobPath } from "../lib/slug";
 import { publishedIndustries } from "../content/industries";
+import { jobCities } from "../content/job-cities";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.phe-perm.de";
@@ -35,6 +36,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.65,
   }));
 
+  // Ortsseiten für die Bewerbersuche ("jobs <stadt>"). Höhere Priorität als
+  // Einzelanzeigen: Sie bleiben bestehen, auch wenn eine Stelle besetzt wird.
+  const cityJobPages: MetadataRoute.Sitemap = jobCities.map(city => ({
+    url: `${base}/jobs/in/${city.slug}`,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
   const jobPages: MetadataRoute.Sitemap = JOBS.map(job => ({
     url: `${base}${jobPath(job)}`,
     lastModified: new Date(job.datePosted),
@@ -42,5 +51,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  return [...staticPages, ...industryPages, ...jobPages];
+  return [...staticPages, ...industryPages, ...cityJobPages, ...jobPages];
 }

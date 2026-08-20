@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import JsonLd from "../components/JsonLd";
 import { JOBS as FALLBACK_JOBS, CATEGORIES, CATEGORY_COLORS, CATEGORY_LABELS, distanceKm, type Job } from "./data";
 import { jobPath } from "../../lib/slug";
+import { jobCities } from "../../content/job-cities";
 
 const WhatsAppIcon = ({ size = 14 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -527,6 +528,29 @@ export default function JobsPage() {
           </div>
         )}
       </main>
+
+      {/* Einstieg in die Ortsseiten. Ohne diese Verlinkung wären sie nur über
+          die Sitemap erreichbar — Google bewertet solche Seiten schwächer. */}
+      <section style={{ background: "var(--bg)", borderTop: "1px solid var(--border)", padding: "40px 24px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <h2 style={{ fontSize: 20, fontWeight: 700, color: "var(--fg)", marginBottom: 6 }}>
+            Stellenangebote nach Stadt
+          </h2>
+          <p style={{ fontSize: 15, color: "var(--fg-muted)", marginBottom: 18 }}>
+            Alle offenen Stellen im Umkreis einer Stadt auf einen Blick — inklusive Entfernungsangabe.
+          </p>
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            {jobCities.map(c => (
+              <Link key={c.slug} href={`/jobs/in/${c.slug}`} style={{
+                background: "var(--surface)", border: "1px solid var(--border)", color: "var(--fg)",
+                borderRadius: 20, padding: "8px 16px", fontSize: 14, fontWeight: 600, textDecoration: "none",
+              }}>
+                Jobs in {c.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <div style={{ background: "var(--bg)", borderTop: "1px solid var(--border)" }}>
         <FaqSection title="Häufige Fragen zu Stellenangeboten" items={JOBS_FAQ} />
