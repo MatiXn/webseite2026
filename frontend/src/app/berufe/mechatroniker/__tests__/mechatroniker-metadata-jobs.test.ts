@@ -29,7 +29,7 @@ describe("Mechatroniker – Metadata", () => {
 
 describe("Mechatroniker – Jobs", () => {
   it("1 – echte Treffer vorhanden", () => {
-    expect(result.totalMatched).toBe(8);
+    expect(result.totalMatched).toBe(13);
   });
   it("2 – maximal sechs sichtbar", () => {
     expect(matches.length).toBe(6);
@@ -53,7 +53,7 @@ describe("Mechatroniker – Jobs", () => {
   it("7 – stabile, reproduzierbare Reihenfolge + Scores", () => {
     const again = matchJobsForProfession(JOBS, mechatroniker).matches;
     expect(again.map(x => x.job.id)).toEqual(matches.map(x => x.job.id));
-    expect(matches.map(x => x.job.id)).toEqual(["10", "14", "15", "18", "2", "20"]);
+    expect(matches.map(x => x.job.id)).toEqual(["26", "27", "29", "31", "32", "10"]);
     expect(matches.every(x => x.score === 100 && x.confidence === "high")).toBe(true);
   });
 });

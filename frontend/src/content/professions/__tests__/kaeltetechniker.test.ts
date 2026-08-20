@@ -15,7 +15,7 @@ const routeSrc = read("../../../app/berufe/kaeltetechniker/page.tsx");
 const hubSrc = read("../../../app/berufe/page.tsx");
 const sitemapMod = await import("../../../app/sitemap");
 
-const EXPECTED_MATCH_IDS = ["2", "15", "20", "25"];
+const EXPECTED_MATCH_IDS = ["2", "15", "20", "25", "26", "29"];
 const MUST_NOT_MATCH = ["10", "14", "21", "19", "3", "18"]; // allg. Mechatroniker, SHK, allg. Servicetechniker
 
 describe("Kältetechniker – Config", () => {
@@ -56,9 +56,9 @@ describe("Kältetechniker – Config", () => {
 
 describe("Kältetechniker – Matching (nur echte Kälte-Stellen)", () => {
   const r = matchJobsForProfession(JOBS, kaeltetechniker);
-  it("1 – exakt Jobs 2, 15, 20, 25 (deterministisch), 0 Ausschlüsse", () => {
+  it("1 – exakt Jobs 2, 15, 20, 25, 26, 29 (deterministisch), 0 Ausschlüsse", () => {
     expect(r.matches.map((m) => m.job.id).sort((a, b) => Number(a) - Number(b))).toEqual(EXPECTED_MATCH_IDS);
-    expect(r.totalMatched).toBe(4);
+    expect(r.totalMatched).toBe(6);
     expect(r.excludedCount).toBe(0);
   });
   it("2 – jeder Treffer hat Tag Kältetechnik", () => {
@@ -91,10 +91,10 @@ describe("Kältetechniker – Schema", () => {
   const jobs = matchJobsForProfession(JOBS, kaeltetechniker).matches.map((m) => m.job);
   const g = buildProfessionSchema(kaeltetechniker, jobs);
   const nodes = g["@graph"] as ReadonlyArray<Record<string, unknown>>;
-  it("CollectionPage/BreadcrumbList/FAQPage/ItemList(4); kein JobPosting/Organization; eindeutige @ids", () => {
+  it("CollectionPage/BreadcrumbList/FAQPage/ItemList(6); kein JobPosting/Organization; eindeutige @ids", () => {
     expect(nodes.map((n) => n["@type"])).toEqual(expect.arrayContaining(["CollectionPage", "BreadcrumbList", "FAQPage", "ItemList"]));
     const list = nodes.find((n) => n["@type"] === "ItemList") as { numberOfItems: number };
-    expect(list.numberOfItems).toBe(4);
+    expect(list.numberOfItems).toBe(6);
     const json = JSON.stringify(g);
     expect(json).not.toContain("JobPosting");
     expect(json).not.toContain('"@type":"Organization"');
@@ -110,7 +110,7 @@ describe("Kältetechniker – Internal Links", () => {
     expect(links.breadcrumbs.map((b) => b.label)).toEqual(["Startseite", "Berufe", "Kältetechniker"]);
     for (const l of links.allLinks) expect(/^\/jobs\/\d+$/.test(l.href)).toBe(false);
     const jobLinks = links.jobLinks;
-    expect(jobLinks.length).toBe(4);
+    expect(jobLinks.length).toBe(6);
     for (const l of jobLinks) expect(l.href.startsWith("/jobs/")).toBe(true);
     const hrefs = links.allLinks.map((l) => l.href);
     expect(new Set(hrefs).size).toBe(hrefs.length);

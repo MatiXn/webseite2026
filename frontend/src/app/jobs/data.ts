@@ -16,13 +16,44 @@ export type Job = {
   intro?: string; // einzigartige Einleitung zur Stelle (2-3 Sätze)
   aufgaben?: string[]; // rollentypische Aufgaben-Bullets
   profil?: string[]; // Anforderungsprofil-Bullets
+  // Ortsangabe für das JobPosting-Schema, wenn `city` kein Ort im Sinne von
+  // schema.org ist ("Hamburger Süden", "Ost-Deutschland"). Google braucht dort
+  // eine echte Gemeinde, sonst wird die Anzeige geografisch nicht zugeordnet.
+  schemaLocations?: { locality: string; region?: string }[];
+  // Bundesweite Stelle ohne festen Einsatzort: jobLocation trägt nur das Land.
+  nationwide?: boolean;
+  // Abweichende Titel-Schreibweisen aus dem Google Sheet, die auf diesen Job
+  // zeigen. Nötig, weil das Sheet keine ID-Spalte hat und der Abgleich sonst
+  // an Tippfehlern scheitert.
+  sheetAliases?: string[];
 };
 
-// Gültigkeitsdauer einer Ausschreibung für das JobPosting-Schema
-export function validThroughOf(job: Job): string {
-  const d = new Date(job.datePosted);
-  d.setDate(d.getDate() + 90);
+// Gültigkeitsdauer einer Ausschreibung für das JobPosting-Schema.
+// Google entfernt Anzeigen aus der Jobsuche, sobald `validThrough` erreicht ist.
+// Wir setzen 90 Tage ab Veröffentlichung an, halten aber immer mindestens
+// MIN_VALID_DAYS Vorlauf ab heute — sonst fallen alle Anzeigen am selben Tag
+// gleichzeitig aus dem Index. Die Jobseiten revalidieren täglich (siehe
+// `revalidate` in jobs/[slug]/page.tsx), damit dieser Wert mitwandert.
+const MIN_VALID_DAYS = 45;
+
+export function validThroughOf(job: Job, now: Date = new Date()): string {
+  const fromPosting = new Date(job.datePosted);
+  fromPosting.setDate(fromPosting.getDate() + 90);
+
+  const floor = new Date(now);
+  floor.setDate(floor.getDate() + MIN_VALID_DAYS);
+
+  const d = fromPosting > floor ? fromPosting : floor;
   return d.toISOString().split("T")[0];
+}
+
+// Ortsangabe(n) für das JobPosting-Schema. `city` ist ein Anzeigetext und
+// manchmal keine Gemeinde ("Hamburger Süden") — Google braucht dort aber einen
+// echten Ort, sonst wird die Anzeige geografisch nicht zugeordnet.
+export function schemaLocationsOf(job: Job): { locality: string; region?: string }[] {
+  if (job.nationwide) return [];
+  if (job.schemaLocations?.length) return job.schemaLocations;
+  return [{ locality: job.city.split(",")[0].trim(), region: job.region }];
 }
 
 // "45.000 – 50.000 €/Jahr" → { min: 45000, max: 50000 }
@@ -745,6 +776,7 @@ export const JOBS: Job[] = [
     category: "elektro",
     city: "Deutschlandweit",
     region: "Bundesweit",
+    nationwide: true,
     lat: 51.165,
     lng: 10.451,
     salary: "48.000 – 60.000 €/Jahr",
@@ -834,6 +866,266 @@ export const JOBS: Job[] = [
     ],
     posted: "vor 6 Tagen",
     benefits: ["Kein Übernachten", "Firmenwagen (auch privat)", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
+  },
+  {
+    id: "26",
+    title: "Kältetechniker (m/w/d)",
+    category: "mechatronik",
+    city: "München",
+    region: "Bayern",
+    lat: 48.137,
+    lng: 11.576,
+    salary: "55.000 – 65.000 €/Jahr",
+    type: "Festanstellung",
+    datePosted: "2026-08-20",
+    tags: ["Kältetechnik", "Klimaanlagen", "Regional"],
+    description: "Wartung, Instandhaltung und Kundendienst an Kälte-, Lüftungs- und Klimaanlagen im Großraum München. Regionale Einsätze mit Firmenwagen.",
+    intro: "Für einen etablierten Kälte- und Klimaanlagenbauer im Großraum München suchen wir einen Kältetechniker. Sie betreuen Bestandskunden im regionalen Umkreis – die Einsätze sind planbar, Übernachtungen fallen im Normalfall nicht an.",
+    aufgaben: [
+      "Wartung und Instandhaltung von Kälte-, Lüftungs- und Klimaanlagen",
+      "Störungsdiagnose und Reparatur im Kundendienst",
+      "Dichtheitsprüfungen nach ChemKlimaschutzV und F-Gase-Verordnung",
+      "Inbetriebnahme neu installierter Anlagen",
+      "Kundenberatung zu Betrieb und Energieeffizienz der Anlagen",
+      "Dokumentation der Einsätze und Anlagenprotokolle",
+    ],
+    profil: [
+      "Abgeschlossene Ausbildung als Mechatroniker für Kältetechnik, Kälteanlagenbauer oder vergleichbar",
+      "Erfahrung im Service von Kälte- oder Klimaanlagen",
+      "Sachkundebescheinigung nach ChemKlimaschutzV wünschenswert",
+      "Führerschein Klasse B",
+      "Selbstständige Arbeitsweise und Freude am Kundenkontakt",
+    ],
+    posted: "Aktuell",
+    benefits: ["Firmenwagen", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Weiterbildungsbudget"],
+  },
+  {
+    id: "27",
+    title: "Servicetechniker Mechanik (m/w/d)",
+    category: "mechatronik",
+    city: "Ost-Deutschland",
+    region: "Sachsen",
+    schemaLocations: [{ locality: "Leipzig", region: "Sachsen" }],
+    lat: 51.34,
+    lng: 12.375,
+    salary: "45.000 – 55.000 €/Jahr",
+    type: "Festanstellung",
+    datePosted: "2026-08-20",
+    tags: ["Mechanik", "Mechatronik", "Industriemechanik"],
+    description: "Wartung, Reparatur und Kundendienst an Industrieanlagen im ostdeutschen Einsatzgebiet. Firmenwagen auch zur privaten Nutzung.",
+    intro: "Für einen Maschinenbauer mit Servicestützpunkt im Raum Leipzig suchen wir einen Servicetechniker Mechanik. Sie betreuen Industriekunden im ostdeutschen Raum – die Touren werden vorausgeplant, Spesen und Auslöse sind geregelt.",
+    aufgaben: [
+      "Wartung und Instandsetzung mechanischer Baugruppen an Produktionsanlagen",
+      "Fehlersuche und Reparatur im Kundendienst vor Ort",
+      "Austausch von Verschleißteilen, Lagern, Antrieben und Getrieben",
+      "Inbetriebnahme und Einweisung des Bedienpersonals beim Kunden",
+      "Erstellung von Serviceberichten und Anlagendokumentation",
+      "Abstimmung mit der Einsatzplanung und dem technischen Innendienst",
+    ],
+    profil: [
+      "Abgeschlossene Ausbildung als Industriemechaniker, Mechatroniker oder vergleichbar",
+      "Erfahrung im technischen Außendienst oder in der Instandhaltung",
+      "Sicheres Lesen technischer Zeichnungen",
+      "Führerschein Klasse B und Reisebereitschaft im Einsatzgebiet",
+      "Gute Deutschkenntnisse und selbstständige Arbeitsweise",
+    ],
+    posted: "Aktuell",
+    benefits: ["Firmenwagen (auch privat)", "Spesen & Auslöse", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
+  },
+  {
+    id: "28",
+    title: "Betriebselektriker 3-Schicht (m/w/d)",
+    category: "elektro",
+    city: "Wuppertal",
+    region: "Nordrhein-Westfalen",
+    lat: 51.264,
+    lng: 7.178,
+    salary: "44.000 – 52.000 €/Jahr",
+    type: "Festanstellung",
+    datePosted: "2026-08-20",
+    tags: ["Instandhaltung", "Schichtzulage", "Produktion"],
+    description: "Wartung und Instandhaltung von Betriebsmitteln und Anlagen mit elektrischen Antrieben im 3-Schicht-Betrieb. Keine Wochenendarbeit.",
+    intro: "Für einen Produktionsbetrieb in Wuppertal suchen wir einen Betriebselektriker für den 3-Schicht-Betrieb. Die Schichten sind fest geplant, Wochenendarbeit fällt nicht an – die Schichtzulage kommt zusätzlich zum Grundgehalt.",
+    aufgaben: [
+      "Wartung und Instandhaltung elektrischer Betriebsmittel und Produktionsanlagen",
+      "Störungsbeseitigung an Anlagen mit elektrischen Antrieben",
+      "Fehlersuche an Steuerungen, Sensorik und Antriebstechnik",
+      "Durchführung von Reparaturen während des laufenden Schichtbetriebs",
+      "Prüfungen ortsfester elektrischer Anlagen nach DGUV Vorschrift 3",
+      "Dokumentation der Instandhaltungsmaßnahmen",
+    ],
+    profil: [
+      "Abgeschlossene Ausbildung als Elektroniker für Betriebstechnik, Betriebselektriker oder vergleichbar",
+      "Erfahrung in der industriellen Instandhaltung von Vorteil",
+      "Kenntnisse in Antriebs- und Steuerungstechnik",
+      "Bereitschaft zur Arbeit im 3-Schicht-System",
+      "Gute Deutschkenntnisse in Wort und Schrift",
+    ],
+    posted: "Aktuell",
+    benefits: ["Schichtzulage", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Keine Wochenendarbeit"],
+  },
+  {
+    id: "29",
+    title: "Qualitätssicherer Kältetechnik (m/w/d)",
+    category: "mechatronik",
+    city: "Hamburg",
+    region: "Hamburg",
+    lat: 53.551,
+    lng: 10.0,
+    salary: "53.000 – 62.000 €/Jahr",
+    type: "Festanstellung",
+    datePosted: "2026-08-20",
+    tags: ["Kältetechnik", "Qualitätssicherung", "Innendienst"],
+    description: "Funktionsprüfung von Kältegeräten, elektrische Prüfungen und Erstellung der Gerätedokumentation. Reine Innendiensttätigkeit ohne Schicht.",
+    intro: "Für einen Hersteller kältetechnischer Geräte in Hamburg suchen wir einen Qualitätssicherer. Die Stelle ist eine reine Innendiensttätigkeit nach Tarifvertrag – ohne Schichtarbeit und ohne Reisetätigkeit.",
+    aufgaben: [
+      "Funktionsprüfung fertig montierter Kältegeräte vor der Auslieferung",
+      "Elektrische Sicherheitsprüfungen nach geltenden Normen",
+      "Erstellung und Pflege der Gerätedokumentation",
+      "Erfassung und Bewertung von Abweichungen und Fehlerbildern",
+      "Abstimmung mit Montage und Entwicklung zur Fehlerabstellung",
+      "Mitwirkung an der Weiterentwicklung der Prüfabläufe",
+    ],
+    profil: [
+      "Abgeschlossene Ausbildung als Mechatroniker für Kältetechnik, Elektroniker oder vergleichbar",
+      "Erfahrung in Qualitätssicherung oder Endprüfung von Vorteil",
+      "Sicherer Umgang mit Messtechnik und Prüfprotokollen",
+      "Sorgfältige, strukturierte Arbeitsweise",
+      "Gute Deutschkenntnisse in Wort und Schrift",
+    ],
+    posted: "Aktuell",
+    benefits: ["Tarifvertrag", "Keine Schichtarbeit", "30 Tage Urlaub", "Weiterbildungen", "Job-Rad"],
+  },
+  {
+    id: "30",
+    title: "Elektroniker (m/w/d)",
+    category: "elektro",
+    city: "Hamburger Süden",
+    region: "Hamburg",
+    schemaLocations: [{ locality: "Hamburg", region: "Hamburg" }],
+    lat: 53.46,
+    lng: 9.98,
+    salary: "44.000 – 50.000 €/Jahr",
+    type: "Festanstellung",
+    datePosted: "2026-08-20",
+    tags: ["Gebäudetechnik", "Instandhaltung", "Bereitschaftsdienst"],
+    description: "Instandhaltung von Gebäude-, Betriebs- und Infrastrukturtechnik: Reparaturen, Fehlersuche und Störungsbehebung an einem festen Standort.",
+    intro: "Für einen Betreiber technischer Infrastruktur im Hamburger Süden suchen wir einen Elektroniker. Sie arbeiten an einem festen Standort ohne Reisetätigkeit und betreuen die Gebäude-, Betriebs- und Infrastrukturtechnik im Bestand.",
+    aufgaben: [
+      "Instandhaltung von Gebäude-, Betriebs- und Infrastrukturtechnik",
+      "Fehlersuche und Störungsbehebung an elektrischen Anlagen",
+      "Durchführung von Reparaturen und Kleinmontagen",
+      "Wiederkehrende Prüfungen elektrischer Betriebsmittel",
+      "Teilnahme am geregelten Bereitschaftsdienst",
+      "Dokumentation der durchgeführten Arbeiten",
+    ],
+    profil: [
+      "Abgeschlossene Ausbildung als Elektroniker für Energie- und Gebäudetechnik, Betriebstechnik oder vergleichbar",
+      "Erfahrung in der Gebäude- oder Betriebstechnik von Vorteil",
+      "Bereitschaft zur Teilnahme am Bereitschaftsdienst",
+      "Sicheres Lesen von Schaltplänen",
+      "Gute Deutschkenntnisse in Wort und Schrift",
+    ],
+    posted: "Aktuell",
+    benefits: ["Sicheres Arbeitsumfeld", "30 Tage Urlaub", "Aufstiegsmöglichkeiten", "Betriebliche Altersvorsorge", "Vermögenswirksame Leistungen", "Job-Rad"],
+  },
+  {
+    id: "31",
+    title: "Mechaniker (m/w/d)",
+    category: "mechatronik",
+    city: "Hamburger Süden",
+    region: "Hamburg",
+    schemaLocations: [{ locality: "Hamburg", region: "Hamburg" }],
+    lat: 53.46,
+    lng: 9.98,
+    salary: "42.000 – 50.000 €/Jahr",
+    type: "Festanstellung",
+    datePosted: "2026-08-20",
+    tags: ["Mechanik", "Antriebstechnik", "Bereitschaftsdienst"],
+    description: "Instandhaltung und Reparatur von Antrieben, Motoren und pneumatischen Anlagen an einem festen Standort im Hamburger Süden.",
+    intro: "Für einen Betreiber technischer Infrastruktur im Hamburger Süden suchen wir einen Mechaniker. Sie halten Antriebe, Motoren und pneumatische Anlagen instand – an einem festen Standort, ohne Reisetätigkeit.",
+    aufgaben: [
+      "Instandhaltung und Reparatur von Antrieben und Elektromotoren",
+      "Wartung pneumatischer Anlagen und Komponenten",
+      "Fehlersuche an mechanischen Baugruppen",
+      "Austausch von Lagern, Dichtungen und Verschleißteilen",
+      "Teilnahme am geregelten Bereitschaftsdienst",
+      "Dokumentation der Instandhaltungsmaßnahmen",
+    ],
+    profil: [
+      "Abgeschlossene Ausbildung als Industriemechaniker, Mechatroniker oder vergleichbar",
+      "Erfahrung in der Instandhaltung von Antriebs- oder Pneumatiktechnik",
+      "Sicheres Lesen technischer Zeichnungen",
+      "Bereitschaft zur Teilnahme am Bereitschaftsdienst",
+      "Gute Deutschkenntnisse in Wort und Schrift",
+    ],
+    posted: "Aktuell",
+    benefits: ["Sicheres Arbeitsumfeld", "30 Tage Urlaub", "Aufstiegsmöglichkeiten", "Betriebliche Altersvorsorge", "Vermögenswirksame Leistungen", "Job-Rad"],
+  },
+  {
+    id: "32",
+    title: "Servicetechniker Laser- und Robotik (m/w/d)",
+    sheetAliases: ["Servicetechniker Laser- Robotik (m/w/d)"],
+    category: "mechatronik",
+    city: "Dresden",
+    region: "Sachsen",
+    lat: 51.05,
+    lng: 13.737,
+    salary: "43.000 – 48.000 €/Jahr",
+    type: "Festanstellung",
+    datePosted: "2026-08-20",
+    tags: ["Robotik", "Halbleitertechnik", "Dienstwagen"],
+    description: "Wartung und Reparatur an Kryopumpen und Halbleiteranlagen. Fehlersuche, Störungsbehebung und Kundenbetreuung im Raum Dresden.",
+    intro: "Für einen Technologiedienstleister im Raum Dresden suchen wir einen Servicetechniker für Laser- und Robotikanlagen. Sie betreuen Kunden aus der Halbleiterindustrie – ein Zukunftsfeld mit umfangreicher Einarbeitung und Firmenwagen zur Privatnutzung.",
+    aufgaben: [
+      "Wartung und Reparatur von Kryopumpen und Halbleiteranlagen",
+      "Fehlersuche und Störungsbehebung an Laser- und Robotiksystemen",
+      "Durchführung von Funktionsprüfungen nach dem Service",
+      "Technische Betreuung und Beratung der Kunden vor Ort",
+      "Austausch von Baugruppen und Verschleißteilen",
+      "Dokumentation der Serviceeinsätze",
+    ],
+    profil: [
+      "Abgeschlossene Ausbildung als Mechatroniker, Elektroniker oder vergleichbar",
+      "Interesse an Vakuum-, Laser- oder Halbleitertechnik",
+      "Erfahrung im technischen Service von Vorteil",
+      "Führerschein Klasse B",
+      "Gute Deutschkenntnisse und sicheres Auftreten beim Kunden",
+    ],
+    posted: "Aktuell",
+    benefits: ["Firmenwagen mit Privatnutzung", "13. Gehalt", "Bonuszahlung", "30 Tage Urlaub", "50 € Sachbezug monatlich"],
+  },
+  {
+    id: "33",
+    title: "Anlagenmechaniker SHK (m/w/d)",
+    category: "bau",
+    city: "Augsburg",
+    region: "Bayern",
+    lat: 48.371,
+    lng: 10.898,
+    salary: "48.000 – 55.000 €/Jahr",
+    type: "Festanstellung",
+    datePosted: "2026-08-20",
+    tags: ["SHK", "Sanitär", "Heizung"],
+    description: "Wartung, Instandhaltung und Reparatur im B2B-Kundendienst rund um Augsburg. Tagesreisen im Umkreis von etwa 200 km, keine Übernachtungen.",
+    intro: "Für einen Gebäudetechnik-Dienstleister im Raum Augsburg suchen wir einen Anlagenmechaniker SHK. Sie betreuen Geschäftskunden im Tagespendelbereich – Übernachtungen fallen nicht an, der Firmenwagen mit Tankkarte steht auch privat zur Verfügung.",
+    aufgaben: [
+      "Wartung und Instandhaltung von Sanitär-, Heizungs- und Klimaanlagen",
+      "Reparaturen und Störungsbehebung im B2B-Kundendienst",
+      "Inbetriebnahme und Einregulierung von Heizungsanlagen",
+      "Prüfung und Dokumentation nach geltenden Vorschriften",
+      "Beratung der Kunden zu Anlagenzustand und Instandsetzung",
+      "Tagesreisen im Umkreis von rund 200 km",
+    ],
+    profil: [
+      "Abgeschlossene Ausbildung als Anlagenmechaniker SHK, Gas-Wasser-Installateur oder vergleichbar",
+      "Erfahrung im Kundendienst oder in der Wartung von Vorteil",
+      "Selbstständige und kundenorientierte Arbeitsweise",
+      "Führerschein Klasse B",
+      "Gute Deutschkenntnisse in Wort und Schrift",
+    ],
+    posted: "Aktuell",
+    benefits: ["Unbefristeter Arbeitsvertrag", "Firmenwagen mit Tankkarte und Privatnutzung", "30 Tage Urlaub", "Strukturierte Einarbeitung"],
   },
 ];
 

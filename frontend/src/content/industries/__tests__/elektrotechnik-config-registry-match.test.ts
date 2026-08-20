@@ -14,11 +14,11 @@ import { generateStaticParams } from "../../../app/branchen/[slug]/page";
 import { JOBS } from "../../../app/jobs/data";
 
 // Erwartete Elektrotechnik-Treffer = exakt die 15 Jobs der Kategorie "elektro".
-const EXPECTED_ELEKTRO_IDS = ["1", "3", "4", "5", "6", "8", "9", "11", "12", "13", "16", "17", "22", "23", "24"];
+const EXPECTED_ELEKTRO_IDS = ["1", "3", "4", "5", "6", "8", "9", "11", "12", "13", "16", "17", "22", "23", "24", "28", "30"];
 // Bewusst NICHT Elektrotechnik (Kälte/Mechatronik, reine SPS-Stelle, SHK).
 const EXPECTED_NON_MATCH_IDS = ["2", "7", "10", "14", "15", "18", "19", "20", "21", "25"];
 // Deterministische sichtbare Reihenfolge bei maxJobs=8 (dokumentiert, EPIC 009B).
-const EXPECTED_VISIBLE_IDS = ["1", "11", "12", "13", "16", "17", "22", "23"];
+const EXPECTED_VISIBLE_IDS = ["28", "30", "1", "11", "12", "13", "16", "17"];
 
 const capped = matchJobsForConfig(JOBS, elektrotechnik.jobMatch, elektrotechnik.slug);
 const visibleJobs = capped.matches.map((m) => m.job);
@@ -123,11 +123,11 @@ describe("Elektrotechnik – Matching (konservativ, category=elektro, unverände
   it("1 – jobMatch-Config unverändert gegenüber 009A", () => {
     expect(elektrotechnik.jobMatch).toEqual({ category: ["elektro"], maxJobs: 8, fallback: "hint-and-joblist" });
   });
-  it("2 – exakt die 15 elektro-Jobs, 0 ausgeschlossen, 0 False Positives", () => {
+  it("2 – exakt die 17 elektro-Jobs, 0 ausgeschlossen, 0 False Positives", () => {
     expect(full.matches.map((m) => m.job.id).sort((a, b) => Number(a) - Number(b))).toEqual(
       EXPECTED_ELEKTRO_IDS.slice().sort((a, b) => Number(a) - Number(b)),
     );
-    expect(full.totalMatched).toBe(15);
+    expect(full.totalMatched).toBe(17);
     expect(full.excludedCount).toBe(0);
   });
   it("3 – jeder Treffer Kategorie 'elektro', Konfidenz high", () => {
@@ -145,7 +145,7 @@ describe("Elektrotechnik – Matching (konservativ, category=elektro, unverände
   });
   it("5 – sichtbare 8 Jobs in dokumentierter, deterministischer Reihenfolge", () => {
     expect(capped.matches.length).toBe(8);
-    expect(capped.totalMatched).toBe(15);
+    expect(capped.totalMatched).toBe(17);
     expect(visibleJobs.map((j) => j.id)).toEqual(EXPECTED_VISIBLE_IDS);
     // deterministisch reproduzierbar
     const again = matchJobsForConfig(JOBS, elektrotechnik.jobMatch, elektrotechnik.slug);
