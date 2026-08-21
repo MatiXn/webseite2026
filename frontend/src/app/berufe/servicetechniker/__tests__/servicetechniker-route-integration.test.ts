@@ -45,7 +45,9 @@ describe("Servicetechniker – Hub, Sitemap, Backlinks", () => {
     expect(hub).toContain('detailHref: "/berufe/servicetechniker"');
   });
   it("2 – Sitemap enthält die URL genau einmal", () => {
-    expect(count(sitemap, /\/berufe\/servicetechniker/g)).toBe(1);
+    // Wortgrenze nötig: /berufe/servicetechniker-elektrotechnik ist eine eigene
+    // Seite und darf hier nicht mitgezählt werden.
+    expect(count(sitemap, /\/berufe\/servicetechniker(?![\w-])/g)).toBe(1);
   });
   it("3 – Backlink matcher-basiert; Elektroniker/Mechatroniker-Backlinks intakt", () => {
     expect(jobDetail).toContain("matchJobToProfession(job, servicetechniker).matched");

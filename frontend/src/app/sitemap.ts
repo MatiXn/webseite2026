@@ -22,6 +22,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/berufe/servicetechniker`, changeFrequency: "monthly", priority: 0.65 },
     { url: `${base}/berufe/sps-automatisierung`, changeFrequency: "monthly", priority: 0.65 },
     { url: `${base}/berufe/kaeltetechniker`,  changeFrequency: "monthly", priority: 0.65 },
+    { url: `${base}/berufe/servicetechniker-elektrotechnik`, changeFrequency: "monthly", priority: 0.65 },
+    { url: `${base}/berufe/inbetriebnehmer`, changeFrequency: "monthly", priority: 0.65 },
     { url: `${base}/technische-personalvermittlung`,       changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/personalvermittlung/duesseldorf`,      changeFrequency: "monthly", priority: 0.75 },
     { url: `${base}/ueber-uns`,            changeFrequency: "monthly", priority: 0.7 },

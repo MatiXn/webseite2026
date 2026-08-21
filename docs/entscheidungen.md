@@ -146,3 +146,41 @@ Hub-zu-Spoke-Verlinkung wären sie nur über die Sitemap erreichbar.
 > weltweite Einsätze" sind Einsatzmodelle, keine Ortsberufe — eine Kombination
 > mit Städten wäre widersprüchlich. Sie gehören als eigenständige Seiten unter
 > `/berufe`, sind aber noch nicht angelegt.
+
+## Servicetechniker-Varianten: zwei neue Seiten statt fünf
+
+**Belegt:** Angefragt waren fünf Servicetechniker-Fachrichtungen (Kältetechnik,
+Elektrotechnik, Automatisierung/SPS, Inbetriebnehmer, Energie- und
+Gebäudetechnik). Gemessen wurde vor dem Bauen, welche Stellen eine solche Seite
+zeigen würde und wie stark sich das mit bestehenden Berufsseiten überschneidet:
+
+| Variante | Stellen | Überschneidung mit bestehender Seite |
+|---|---|---|
+| Elektrotechnik | 3 | keine kritische |
+| Inbetriebnehmer | 3 | keine — kein bestehendes Profil deckt Erstinbetriebnahme ab |
+| Kältetechnik | 5 | **83 %** mit `/berufe/kaeltetechniker` |
+| Energie-/Gebäudetechnik | 3 | **100 %** mit `/berufe/elektroniker-energie-gebaeudetechnik` |
+| Automatisierung/SPS | 1 | Bestand trägt keine eigene Seite |
+
+Gebaut sind deshalb `servicetechniker-elektrotechnik` und `inbetriebnehmer`.
+Beide liegen nach dem Bauen bei höchstens 41 % Textüberschneidung zu jeder
+bestehenden Berufsseite.
+
+Die Abgrenzung ist inhaltlich, nicht nur begrifflich: `/berufe/elektroniker`
+beschreibt das Berufsbild mit Schwerpunkt Instandhaltung im eigenen Werk,
+`/berufe/servicetechniker-elektrotechnik` den Außendienst mit Einsatzgebiet,
+Anfahrt, Dienstwagen und Bereitschaft. Entsprechend läuft das Matching über
+exakte Stellentitel statt über `category: "elektro"` — ein Kategoriefilter zöge
+alle 17 Elektro-Stellen und damit genau die Instandhalter herein, gegen die
+abgegrenzt wird.
+
+> **[OFFEN]** Servicetechniker Kältetechnik und Servicetechniker Energie- und
+> Gebäudetechnik sind fachlich sinnvoll, hätten aber fast dieselbe Stellenliste
+> wie die bestehenden Seiten gezeigt. Der wirksamere Weg wäre, den Service- und
+> Außendienstaspekt auf `/berufe/kaeltetechniker` und
+> `/berufe/elektroniker-energie-gebaeudetechnik` auszubauen, statt konkurrierende
+> Seiten anzulegen. Noch nicht umgesetzt.
+
+> **[OFFEN]** Eine eigene Seite für Servicetechniker Automatisierung/SPS trägt
+> der Bestand derzeit nicht (eine Stelle). `/berufe/sps-automatisierung` deckt
+> das Feld ab.
