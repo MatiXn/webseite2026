@@ -102,3 +102,47 @@ deshalb jetzt als erste Regel in `vercel.json`.
 > aufzulösen und im Vercel-Projekt stattdessen `frontend` als Root Directory zu
 > setzen. Das ändert das Deployment-Verhalten und wurde deshalb nicht im Rahmen
 > dieser Änderung angefasst.
+
+## Beruf-x-Ort-Seiten nur mit Stellendeckung, Entdopplung und eigenem Absatz
+
+**Belegt:** `frontend/src/content/role-city-pages.ts` erzeugt eine Seite unter
+`/berufe/<beruf>/<stadt>` nur, wenn drei Bedingungen zugleich erfüllt sind:
+mindestens `MIN_JOBS_IN_RADIUS` (3) passende Stellen im Umkreis, davon
+mindestens eine innerhalb von `LOCAL_RADIUS_KM` (30) — und ein redaktioneller
+Absatz zu genau dieser Kombination in `content/role-city-notes.ts`.
+
+Angefragt waren 16 Bundesländer x 5 Städte x 12 Positionen, also 960 Seiten.
+Bei 33 Stellen im Bestand hätten über 900 davon keine einzige passende Stelle
+gehabt — das Muster, das Google als Doorway Pages behandelt, mit Wirkung auf
+die gesamte Domain. Gemessen wurde stattdessen, was der Bestand trägt: Von den
+zwölf Positionen tragen vier ein Ortsraster (Elektroniker, Elektroniker für
+Betriebstechnik, Elektroniker für Energie- und Gebäudetechnik, Mechatroniker).
+
+Zwei weitere Filter kamen aus der Messung am gebauten Ergebnis:
+
+1. **Entdopplung nach Stellenmenge** (`MAX_JOB_SET_OVERLAP`, 0.8): Essen und
+   Bochum listeten denselben Bestand und kamen auf 85 % Textgleichheit. Zeigt
+   eine Stadt im Wesentlichen dieselben Stellen wie eine bereits aufgenommene,
+   entsteht keine zweite Seite. Das reduzierte 33 Kandidaten auf 14.
+2. **Eigener Absatz je Kombination**: Berufsbild und Stadttext allein sind über
+   Nachbarseiten hinweg zu ähnlich. Mit dem kombinationsspezifischen Absatz
+   sank die höchste gemessene Textähnlichkeit von 84 % auf 76 %.
+
+Was die Seiten zusätzlich unterscheidet, sind echte Daten statt Textbausteine:
+die Stellenliste, die Entfernungen und die aus diesen Stellen berechnete
+Gehaltsspanne (`salaryRangeOf`).
+
+Die Seiten sind Spokes zu den bundesweiten Berufsseiten und werden von dort
+verlinkt (`ProfessionPageTemplate`, Abschnitt "Jobs nach Stadt") — ohne diese
+Hub-zu-Spoke-Verlinkung wären sie nur über die Sitemap erreichbar.
+
+> **[OFFEN]** Für Kältetechniker, Servicetechniker, Anlagenmechaniker SHK,
+> Monteure und Applikations Engineer reicht der Stellenbestand für ein
+> Ortsraster nicht (0 bis 8 Stellen, zu weit gestreut). Monteure und
+> Applikations Engineer haben derzeit gar keine Stelle im Bestand. Sie bleiben
+> über die bundesweiten Berufsseiten abgedeckt.
+
+> **[OFFEN]** "Servicetechniker bundesweit", "für Tagesreisen" und "für
+> weltweite Einsätze" sind Einsatzmodelle, keine Ortsberufe — eine Kombination
+> mit Städten wäre widersprüchlich. Sie gehören als eigenständige Seiten unter
+> `/berufe`, sind aber noch nicht angelegt.

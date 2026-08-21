@@ -3,6 +3,7 @@ import { JOBS } from "./jobs/data";
 import { jobPath } from "../lib/slug";
 import { publishedIndustries } from "../content/industries";
 import { jobCities } from "../content/job-cities";
+import { viableRoleCityPages } from "../content/role-city-pages";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.phe-perm.de";
@@ -44,6 +45,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  // Beruf-x-Ort-Seiten. Sie entstehen nur oberhalb einer Stellenschwelle
+  // (siehe content/role-city-pages.ts) und verschwinden wieder, wenn der
+  // Bestand in einer Region unter die Schwelle fällt.
+  const roleCityPages: MetadataRoute.Sitemap = viableRoleCityPages().map(({ role, city }) => ({
+    url: `${base}/berufe/${role.slug}/${city.slug}`,
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
   const jobPages: MetadataRoute.Sitemap = JOBS.map(job => ({
     url: `${base}${jobPath(job)}`,
     lastModified: new Date(job.datePosted),
@@ -51,5 +61,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  return [...staticPages, ...industryPages, ...cityJobPages, ...jobPages];
+  return [...staticPages, ...industryPages, ...cityJobPages, ...roleCityPages, ...jobPages];
 }

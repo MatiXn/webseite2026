@@ -12,6 +12,7 @@ import type { Metadata } from "next";
 import { JOBS, distanceKm, CATEGORY_LABELS } from "../../data";
 import { jobPath } from "../../../../lib/slug";
 import { jobCities, jobCityBySlug, type JobCity } from "../../../../content/job-cities";
+import { viableRoleCityPages } from "../../../../content/role-city-pages";
 import JsonLd from "../../../components/JsonLd";
 import Breadcrumbs from "../../../components/Breadcrumbs";
 import Nav from "../../../components/Nav";
@@ -85,6 +86,7 @@ export default async function JobCityPage({ params }: { params: Promise<{ stadt:
 
   const nearby = jobsNear(city);
   const categories = [...new Set(nearby.map(n => n.job.category))];
+  const rolesHere = viableRoleCityPages().filter(p => p.city.slug === city.slug);
 
   // ItemList statt JobPosting: Die Einzelanzeigen tragen ihr eigenes
   // JobPosting-Schema. Es hier zu wiederholen würde dieselbe Stelle doppelt
@@ -204,6 +206,23 @@ export default async function JobCityPage({ params }: { params: Promise<{ stadt:
             <h2 style={{ fontSize: 22, fontWeight: 700, color: "#1d1d1f", marginBottom: 14 }}>
               Berufe, die wir in {city.name} vermitteln
             </h2>
+            {rolesHere.length > 0 && (
+              <>
+                <p style={{ fontSize: 15, color: "#86868b", marginBottom: 12 }}>
+                  Für diese Berufe gibt es aktuell mehrere Stellen rund um {city.name}:
+                </p>
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 20 }}>
+                  {rolesHere.map(p => (
+                    <Link key={p.role.slug} href={`/berufe/${p.role.slug}/${p.city.slug}`} style={{
+                      background: "#1e3a5f", color: "#fff", borderRadius: 20,
+                      padding: "8px 16px", fontSize: 14, fontWeight: 600, textDecoration: "none",
+                    }}>
+                      {p.role.shortName} in {city.name}
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               {[
                 { href: "/berufe/elektroniker", label: "Elektroniker" },
