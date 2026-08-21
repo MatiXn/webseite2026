@@ -81,6 +81,16 @@ export type ProfessionAudienceCta = {
   readonly secondaryCta?: Cta;
 };
 
+// Optionaler Vertiefungsabschnitt zu einem Teilaspekt des Berufs — eingeführt
+// für den Service-/Außendienstanteil auf Berufen, deren Stellenliste sich zu
+// stark mit einer eigenen Servicetechniker-Seite überschnitten hätte. Statt
+// einer konkurrierenden Seite bekommt die bestehende Seite mehr Substanz.
+export type ProfessionFocusSection = {
+  readonly title: string; // H2 — trägt den Suchbegriff
+  readonly paragraphs: readonly string[];
+  readonly aspects: readonly { readonly title: string; readonly text: string }[];
+};
+
 export type ProfessionPublication = {
   readonly published: boolean;
   readonly indexable: boolean;
@@ -110,6 +120,8 @@ export type ProfessionContent = {
   readonly overview: ProfessionOverview;
   // Fachrichtungen/Spezialisierungen
   readonly specializations: readonly ProfessionSpecialization[];
+  // Optionaler Vertiefungsabschnitt (z. B. Service-/Außendienstanteil)
+  readonly focusSection?: ProfessionFocusSection;
   // Aufgaben
   readonly tasks: readonly string[];
   // Einsatzbereiche

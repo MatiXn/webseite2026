@@ -184,3 +184,31 @@ abgegrenzt wird.
 > **[OFFEN]** Eine eigene Seite für Servicetechniker Automatisierung/SPS trägt
 > der Bestand derzeit nicht (eine Stelle). `/berufe/sps-automatisierung` deckt
 > das Feld ab.
+
+## Service-Aspekte als Abschnitt auf bestehenden Seiten statt eigener URL
+
+**Belegt:** `ProfessionContent` hat ein optionales Feld `focusSection`
+(`content/professions/types.ts`), das `ProfessionPageTemplate` nur rendert, wenn
+es gesetzt ist. Genutzt wird es auf drei Seiten:
+
+| Seite | Abschnitt | Zuwachs |
+|---|---|---|
+| `/berufe/kaeltetechniker` | Als Servicetechniker in der Kältetechnik arbeiten | +222 Wörter |
+| `/berufe/elektroniker-energie-gebaeudetechnik` | MSR-Technik und Gebäudeautomation im technischen Service | +204 Wörter |
+| `/berufe/sps-automatisierung` | Inbetriebnahme und Service an SPS-Anlagen | +213 Wörter |
+
+Hintergrund: Für diese drei Fachrichtungen waren eigene
+Servicetechniker-Seiten angefragt. Die Messung vorab ergab 83 % bzw. 100 %
+Überschneidung der Stellenlisten mit der jeweils bestehenden Seite — zwei URLs
+zum selben Thema hätten sich gegenseitig Ranking abgezogen. Für die
+SPS-Variante trug der Bestand ohnehin keine eigene Seite (eine Stelle).
+
+Der Abschnitt bedient dieselben Suchanfragen über eine H2 mit dem Suchbegriff,
+ohne eine konkurrierende URL anzulegen. Belegte Nachfrage aus dem
+Search-Console-Export: "msr technik jobs" (Position 1,5), "sps programmierer
+jobs" (27 Impressionen), "servicetechniker kältetechnik", "servicemonteur
+kältetechnik".
+
+Der Validator prüft die neuen Textfelder mit (`collectTextFields` in
+`validate-profession.ts`), damit auch dort keine unbelegten Werbeaussagen
+durchrutschen.

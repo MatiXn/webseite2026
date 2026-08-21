@@ -179,6 +179,14 @@ function collectTextFields(p: ProfessionContent): readonly { readonly text: stri
   push(p.overview.title, "overview.title");
   p.overview.paragraphs.forEach((t, i) => push(t, `overview.paragraphs[${i}]`));
   p.specializations.forEach((s, i) => { push(s.title, `specializations[${i}].title`); push(s.description, `specializations[${i}].description`); s.focus.forEach((x, j) => push(x, `specializations[${i}].focus[${j}]`)); });
+  if (p.focusSection) {
+    push(p.focusSection.title, "focusSection.title");
+    p.focusSection.paragraphs.forEach((t, i) => push(t, `focusSection.paragraphs[${i}]`));
+    p.focusSection.aspects.forEach((a, i) => {
+      push(a.title, `focusSection.aspects[${i}].title`);
+      push(a.text, `focusSection.aspects[${i}].text`);
+    });
+  }
   p.tasks.forEach((t, i) => push(t, `tasks[${i}]`));
   p.industries.forEach((x, i) => { push(x.name, `industries[${i}].name`); push(x.note, `industries[${i}].note`); });
   p.requirements.forEach((r, i) => { push(r.label, `requirements[${i}].label`); push(r.hint, `requirements[${i}].hint`); });

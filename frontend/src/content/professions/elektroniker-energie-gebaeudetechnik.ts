@@ -57,6 +57,24 @@ export const elektronikerEnergieGebaeudetechnik = {
     { title: "Energieverteilung & Elektroinstallation", focus: ["Installation von Energieverteilungen", "Zählerplätze und Unterverteilungen", "Prüfung nach DIN VDE 0100"] },
   ],
 
+  // Vertiefung MSR-/Service-Anteil statt einer eigenen Servicetechniker-Seite
+  // für Gebäudetechnik: Die hätte exakt dieselben Stellen gezeigt wie diese
+  // Seite. "msr technik jobs" steht laut Search Console bereits weit vorn —
+  // hier Substanz nachzulegen wirkt stärker als eine zweite URL.
+  focusSection: {
+    title: "MSR-Technik und Gebäudeautomation im technischen Service",
+    paragraphs: [
+      "Mess-, Steuer- und Regelungstechnik ist der Teil der Gebäudetechnik, der am wenigsten nach Elektroinstallation aussieht und am meisten Spezialwissen verlangt. Wer MSR beherrscht, arbeitet an Gebäudeleittechnik, Reglern und Sensorik — und findet Fehler, die andere nicht finden, weil sie sich zwischen Hydraulik, Regelung und Elektrik verstecken.",
+      "In Rechenzentren, Kliniken und großen Bürogebäuden ist dieser Bereich sicherheitsrelevant: Die Technik darf nicht ausfallen, entsprechend gibt es Bereitschaftsdienste und wiederkehrende Prüfungen. Dafür sind die Stellen stabil und das Gehaltsniveau liegt über dem der allgemeinen Elektroinstallation. Nachwuchs ist knapp, weil MSR selten in der Ausbildung vertieft wird — Quereinstieg aus der Gebäudetechnik ist deshalb üblich.",
+    ],
+    aspects: [
+      { title: "Gebäudeleittechnik", text: "Betrieb und Störungsbehebung an der GLT: Datenpunkte prüfen, Regelkreise nachstellen, Meldungen auswerten. Häufig herstellergebunden, die Einarbeitung übernimmt der Arbeitgeber." },
+      { title: "Regelungstechnik verstehen", text: "Ein großer Teil der Störungen sitzt nicht in der Elektrik, sondern in der Regelung. Wer Hydraulik und Regelkreis zusammendenken kann, ist im MSR-Service deutlich schneller." },
+      { title: "KNX, EIB und Bussysteme", text: "In Bestandsgebäuden sind Bussysteme Standard. Kenntnisse in KNX oder EIB sind bei vielen Stellen erwünscht, aber selten Bedingung — nachqualifiziert wird häufig im Betrieb." },
+      { title: "Bereitschaft und Prüfpflichten", text: "Kritische Infrastruktur bedeutet Rufbereitschaft im Wechsel und wiederkehrende Prüfungen nach Vorschrift. Turnus und Vergütung stehen in der jeweiligen Anzeige." },
+    ],
+  },
+
   tasks: [
     "Installation von Gebäudeautomation (KNX/EIB)",
     "Parametrierung und Inbetriebnahme",
