@@ -49,6 +49,24 @@ export const spsAutomatisierung = {
     { title: "Typische Umgebungen", description: "Kenntnisse sind je nach Stelle relevant, nicht pauschal zwingend.", focus: ["Siemens S7", "TIA Portal", "WinCC", "Beckhoff", "Codesys", "HMI"] },
   ],
 
+  // Vertiefung Inbetriebnahme/Service: Für eine eigene Servicetechniker-SPS-Seite
+  // trägt der Stellenbestand nicht (eine Stelle). Der Aspekt gehört stattdessen
+  // hierher — "sps programmierer jobs" ist laut Search Console die stärkste
+  // Anfrage dieses Felds.
+  focusSection: {
+    title: "Inbetriebnahme und Service an SPS-Anlagen",
+    paragraphs: [
+      "Programmieren ist die eine Hälfte des Berufs, die Anlage zum Laufen bringen die andere. Bei der Inbetriebnahme trifft das Programm zum ersten Mal auf echte Sensorik, echte Antriebe und echte Toleranzen — und genau dort zeigt sich, ob die Logik trägt. Wer diesen Schritt beherrscht, ist für Arbeitgeber deutlich wertvoller als jemand, der nur im Büro projektiert.",
+      "Der Serviceanteil bringt Reisetätigkeit mit sich: zur Inbetriebnahme beim Kunden, zur Störungsbehebung an ausgelieferten Anlagen, zur Optimierung im laufenden Betrieb. Wie viel das ist, unterscheidet sich stark — von der reinen Hausanlage über Tagesreisen bis zu längeren Auslandseinsätzen bei Sondermaschinenbauern. Das ist der Punkt, den wir vor jeder Vorstellung klären.",
+    ],
+    aspects: [
+      { title: "Siemens S7 und TIA Portal", text: "Der verbreitetste Stack im deutschen Maschinenbau. Erfahrung damit öffnet die meisten Türen; wer aus einer anderen Welt kommt, wird meist eingearbeitet." },
+      { title: "Von der Simulation zur Anlage", text: "Fehler, die in der Simulation nicht auftreten, zeigen sich erst an der realen Anlage: Timing, Sensorprellen, mechanische Toleranzen. Systematisches Vorgehen ist hier wichtiger als Programmiergeschwindigkeit." },
+      { title: "Störungsbehebung im laufenden Betrieb", text: "An einer produzierenden Anlage wird unter Zeitdruck gesucht. Wer Diagnosebausteine und Anlagendokumentation zu nutzen weiß, spart dem Kunden Stunden." },
+      { title: "Reiseanteil und Auslöse", text: "Von der festen Hausanlage bis zu Auslandsinbetriebnahmen ist alles vertreten. Umfang, Auslöse und Heimfahrtregelung stehen in der jeweiligen Stelle." },
+    ],
+  },
+
   tasks: [
     "SPS-Programmierung",
     "Inbetriebnahme",

@@ -28,6 +28,9 @@ export const kaeltetechniker = {
     "Kältetechniker Festanstellung",
     "Mechatroniker Kältetechnik Jobs",
     "Servicetechniker Kältetechnik Jobs",
+    "Servicemonteur Kältetechnik",
+    "Kundendienst Kältetechnik Jobs",
+    "Kälteanlagenbauer gesucht",
   ],
   searchIntent: "transactional",
 
@@ -53,6 +56,23 @@ export const kaeltetechniker = {
     { title: "Mechatroniker für Kältetechnik", focus: ["Gewerbe- und Industriekälte", "Inbetriebnahme", "Instandhaltung"] },
     { title: "Kälteanlagenbauer", focus: ["Aufbau und Montage von Kälteanlagen", "Kältemittel-Handling", "Rohrleitungsbau"] },
   ],
+
+  // Vertiefung Service statt eigener Servicetechniker-Kältetechnik-Seite: Die
+  // hätte 83 % dieselben Stellen gezeigt wie diese Seite und ihr damit Ranking
+  // abgezogen, statt zusätzliche Sichtbarkeit zu holen.
+  focusSection: {
+    title: "Als Servicetechniker in der Kältetechnik arbeiten",
+    paragraphs: [
+      "Ein großer Teil der Kältetechnik-Stellen ist Kundendienst: Der Arbeitstag beginnt mit einer Tour, nicht an einem festen Arbeitsplatz. Wartungstermine wechseln sich mit Störungseinsätzen ab, und die Diagnose muss vor Ort gelingen — meist allein, ohne Kollegen zum Rücksprechen und mit einem Kunden, dessen Kühlung stillsteht.",
+      "Genau das unterscheidet den Servicemonteur vom Kollegen in der Montage oder im Anlagenbau. Wer aus dem Neubau kommt, findet im Service mehr Abwechslung und mehr Eigenverantwortung, dafür Fahrzeit und wechselnde Anlagentypen. Wie weit das Einsatzgebiet reicht, ob Übernachtungen anfallen und wie der Bereitschaftsdienst geregelt ist, unterscheidet sich je Arbeitgeber deutlich — das klären wir vor einer Vorstellung.",
+    ],
+    aspects: [
+      { title: "Einsatzgebiet und Anfahrt", text: "Von regionalen Stellen mit täglicher Heimkehr bis zu bundesweiten Rollen mit Übernachtung ist alles vertreten. Der Radius steht in jeder Anzeige — wir gleichen ihn vorab mit Ihrem Wohnort ab." },
+      { title: "Bereitschaftsdienst", text: "Kälteanlagen fallen auch nachts und am Wochenende aus. Ob Rufbereitschaft anfällt, in welchem Turnus und wie sie vergütet wird, unterscheidet sich stark — wir sagen es vorher, statt es offenzulassen." },
+      { title: "Sachkunde und Kältemittel", text: "Für den Umgang mit Kältemitteln ist die Sachkundebescheinigung nach ChemKlimaschutzV maßgeblich. Fehlt sie, lassen viele Arbeitgeber sie im ersten Jahr nachholen." },
+      { title: "Firmenwagen und Ausrüstung", text: "Servicestellen sind fast durchgehend mit Fahrzeug ausgestattet, häufig auch zur privaten Nutzung. Ob das für eine Stelle gilt, steht in der jeweiligen Anzeige." },
+    ],
+  },
 
   tasks: [
     "Wartung von Kälte- und Klimaanlagen",

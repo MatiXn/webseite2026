@@ -126,6 +126,26 @@ export function ProfessionPageTemplate({ profession }: { profession: ProfessionC
         </div>
       </section>
 
+      {/* 4b. VERTIEFUNG – optionaler Abschnitt zu einem Teilaspekt des Berufs.
+          Gerendert nur, wenn die Config ihn führt; bestehende Seiten ohne
+          focusSection bleiben unverändert. */}
+      {p.focusSection && (
+        <section style={sectionWrap}>
+          <h2 style={h2Style}>{p.focusSection.title}</h2>
+          {p.focusSection.paragraphs.map(t => (
+            <p key={t} style={{ ...bodyStyle, marginTop: 14 }}>{t}</p>
+          ))}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16, marginTop: 26 }}>
+            {p.focusSection.aspects.map(a => (
+              <div key={a.title} style={{ background: "#f5f7fa", border: "1px solid #e2e6ee", borderRadius: 16, padding: "22px 20px" }}>
+                <h3 style={{ fontSize: 16, fontWeight: 700, color: "#1e3a5f", marginBottom: 8, lineHeight: 1.35 }}>{a.title}</h3>
+                <p style={{ fontSize: 14, color: "#586170", lineHeight: 1.6 }}>{a.text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* 5. EINSATZBEREICHE */}
       <section style={sectionWrap}>
         <h2 style={h2Style}>{headings.industries}</h2>
