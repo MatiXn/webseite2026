@@ -68,6 +68,22 @@ const BERUFSFELDER: Berufsfeld[] = [
     detailHref: "/berufe/servicetechniker",
   },
   {
+    name: "Servicetechniker Elektrotechnik",
+    einordnung: "Elektrofachkräfte im technischen Außendienst: Service an elektrischen Anlagen beim Kunden statt Instandhaltung im eigenen Werk.",
+    aufgaben: "Wartung und Störungsdiagnose vor Ort, Inbetriebnahme, Prüfungen nach DGUV Vorschrift 3, Einweisung des Kunden.",
+    stellen: "Servicetechniker Elektrotechnik, Elektroniker als Servicetechniker, Servicetechniker Photovoltaik",
+    match: ["servicetechniker elektro", "photovoltaik", "außendienst"],
+    detailHref: "/berufe/servicetechniker-elektrotechnik",
+  },
+  {
+    name: "Inbetriebnehmer & Montagetechniker",
+    einordnung: "Techniker, die neue Anlagen aufbauen, prüfen und an den Betreiber übergeben — Projektarbeit statt laufender Instandhaltung.",
+    aufgaben: "Montage und Verdrahtung nach Plan, Funktionsprüfung und Probelauf, Abnahme mit dem Kunden, Einweisung des Bedienpersonals.",
+    stellen: "Inbetriebnehmer, Inbetriebnahmetechniker, Montagetechniker",
+    match: ["inbetriebnahme", "montage"],
+    detailHref: "/berufe/inbetriebnehmer",
+  },
+  {
     name: "SPS-Programmierer & Automatisierungstechniker",
     einordnung: "Spezialisten für Steuerungs- und Automatisierungstechnik im Maschinenbau und in der Produktion.",
     aufgaben: "Programmierung und Inbetriebnahme von SPS-Steuerungen, Anpassung von Steuerungsprogrammen, Anlagenoptimierung.",
