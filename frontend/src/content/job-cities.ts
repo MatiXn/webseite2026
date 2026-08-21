@@ -9,26 +9,33 @@
 // Impressionen belegt sind. Keine Seite auf Verdacht: eine Ortsseite ohne
 // Nachfrage und ohne Stellen im Umkreis ist dünner Inhalt.
 
-export type JobCity = {
+// Stammdaten einer Stadt. Basis sowohl für die Ortsseiten (/jobs/in/<stadt>)
+// als auch für die Beruf-x-Ort-Seiten (/berufe/<beruf>/<stadt>).
+export type CityBase = {
   readonly slug: string;
   readonly name: string;
-  /** Ortsname im Genitiv/Dativ-Kontext, z. B. "in Bad Oeynhausen". */
   readonly federalState: string;
   readonly lat: number;
   readonly lng: number;
-  /** Radius in km, in dem Stellen dieser Seite zugeordnet werden. */
+  /** Radius in km, in dem Stellen dieser Stadt zugeordnet werden. */
   readonly radiusKm: number;
+  /** Absatz zum lokalen Arbeitsmarkt — pro Stadt eigenständig formuliert. */
+  readonly market: string;
+  /** Benachbarte Städte für die Querverlinkung. */
+  readonly nearby: readonly string[];
+};
+
+// Städte mit eigener Ortsseite. Aufgenommen wird eine Stadt hier nur, wenn
+// dafür in der Search Console echte Impressionen belegt sind — eine Ortsseite
+// ohne Nachfrage und ohne Stellen im Umkreis ist dünner Inhalt.
+export type JobCity = CityBase & {
   /** Belegte Impressionen in der Search Console (12-Monats-Export 20.08.2026). */
   readonly searchDemand: { impressions: number; avgPosition: number };
   /** Einleitung — pro Stadt eigenständig, kein Textbaustein mit Platzhalter. */
   readonly intro: string;
-  /** Absatz zum lokalen Arbeitsmarkt. */
-  readonly market: string;
   /** Absatz zu Pendelraum und Umland. */
   readonly commute: string;
   readonly faq: readonly { q: string; a: string }[];
-  /** Benachbarte Ortsseiten für die Querverlinkung. */
-  readonly nearby: readonly string[];
 };
 
 export const jobCities: readonly JobCity[] = [
@@ -247,3 +254,172 @@ export const jobCities: readonly JobCity[] = [
 export function jobCityBySlug(slug: string): JobCity | undefined {
   return jobCities.find(c => c.slug === slug);
 }
+
+// Städte ohne eigene Ortsseite, die aber im Beruf-x-Ort-Raster tragen
+// (mindestens drei passende Stellen im Umkreis, davon eine ortsnah).
+// Für sie ist keine Ortsnachfrage in der Search Console belegt — die
+// Nachfrage liegt auf der Kombination "Beruf + Stadt", nicht auf "jobs <stadt>".
+export const rasterCities: readonly CityBase[] = [
+  {
+    slug: "koeln",
+    name: "Köln",
+    federalState: "Nordrhein-Westfalen",
+    lat: 50.938,
+    lng: 6.96,
+    radiusKm: 100,
+    market:
+      "Köln ist der größte Arbeitsmarkt im Rheinland und verbindet Chemie- und Anlagenbau im Süden mit Gebäudetechnik, Energieversorgung und Medienlogistik in der Stadt selbst. Für Elektrofachkräfte ist besonders die Gebäudeautomation ein eigener Schwerpunkt: Rechenzentren, Kliniken und Bürokomplexe brauchen dauerhaft MSR- und Automatisierungspersonal.",
+    nearby: ["duesseldorf", "bonn", "langenfeld"],
+  },
+  {
+    slug: "essen",
+    name: "Essen",
+    federalState: "Nordrhein-Westfalen",
+    lat: 51.457,
+    lng: 7.012,
+    radiusKm: 100,
+    market:
+      "Essen liegt im Zentrum des Ruhrgebiets und ist heute vor allem Energie- und Dienstleistungsstandort. Rund um die Stadt bleibt die industrielle Substanz erhalten: Instandhaltung, Anlagenbau und technische Gebäudeausrüstung sind die Felder, in denen Elektroniker hier gesucht werden. Die kurzen Wege zu Bochum, Duisburg und Düsseldorf erweitern die Auswahl erheblich.",
+    nearby: ["bochum", "duisburg", "dortmund"],
+  },
+  {
+    slug: "duisburg",
+    name: "Duisburg",
+    federalState: "Nordrhein-Westfalen",
+    lat: 51.435,
+    lng: 6.762,
+    radiusKm: 100,
+    market:
+      "Duisburg ist geprägt von Stahlindustrie, Hafenlogistik und Schwerindustrie — Branchen mit großen technischen Anlagen und entsprechend hohem Bedarf an Instandhaltung. Für Elektroniker bedeutet das Arbeit an Antrieben, Fördertechnik und Prozessanlagen, meist in etablierten Betrieben mit fester Schichtplanung.",
+    nearby: ["essen", "duesseldorf", "bochum"],
+  },
+  {
+    slug: "bochum",
+    name: "Bochum",
+    federalState: "Nordrhein-Westfalen",
+    lat: 51.482,
+    lng: 7.216,
+    radiusKm: 100,
+    market:
+      "Bochum hat den Wandel von der Montanindustrie zum Technologie- und Gesundheitsstandort weitgehend vollzogen, ohne die produzierende Basis zu verlieren. Automobilzulieferer, Maschinenbau und technische Dienstleister prägen den Bedarf an Elektronikern und Instandhaltern. Dortmund, Essen und Wuppertal liegen jeweils in weniger als einer halben Stunde.",
+    nearby: ["dortmund", "essen", "wuppertal"],
+  },
+  {
+    slug: "wuppertal",
+    name: "Wuppertal",
+    federalState: "Nordrhein-Westfalen",
+    lat: 51.264,
+    lng: 7.178,
+    radiusKm: 100,
+    market:
+      "Wuppertal ist ein traditionsreicher Standort für Werkzeug-, Maschinen- und Anlagenbau im Bergischen Land. Die Betriebe sind überwiegend mittelständisch und unterhalten eigene Instandhaltungsmannschaften — Elektroniker arbeiten hier meist direkt an der Produktion statt im Projektgeschäft. Nach Düsseldorf, Köln und ins Ruhrgebiet ist es jeweils eine knappe Fahrstunde.",
+    nearby: ["duesseldorf", "bochum", "dortmund"],
+  },
+  {
+    slug: "bonn",
+    name: "Bonn",
+    federalState: "Nordrhein-Westfalen",
+    lat: 50.735,
+    lng: 7.099,
+    radiusKm: 100,
+    market:
+      "Bonn steht für Verwaltung, Telekommunikation und Forschung — und damit für viel technische Infrastruktur, die betrieben werden will: Rechenzentren, Verwaltungsgebäude und Institute brauchen Elektroniker für Energie- und Gebäudetechnik. Südlich schließt der Chemiestandort im Rhein-Sieg-Kreis an, nördlich Köln mit seinem gesamten Stellenangebot.",
+    nearby: ["koeln", "duesseldorf", "langenfeld"],
+  },
+  {
+    slug: "muenster",
+    name: "Münster",
+    federalState: "Nordrhein-Westfalen",
+    lat: 51.96,
+    lng: 7.626,
+    radiusKm: 110,
+    market:
+      "Münster und das Münsterland sind mittelständisch geprägt: Nahrungsmittelindustrie, Maschinenbau und Kunststoffverarbeitung bestimmen den Bedarf an Betriebselektronikern und Instandhaltern. Die Betriebe sind oft familiengeführt und stellen langfristig ein. Weil das Stellenangebot in der Region gestreut liegt, zeigen wir hier einen etwas größeren Umkreis.",
+    nearby: ["bielefeld", "dortmund", "bad-oeynhausen"],
+  },
+  {
+    slug: "bielefeld",
+    name: "Bielefeld",
+    federalState: "Nordrhein-Westfalen",
+    lat: 52.021,
+    lng: 8.534,
+    radiusKm: 110,
+    market:
+      "Bielefeld ist das wirtschaftliche Zentrum Ostwestfalen-Lippes — einer Region mit ausgeprägtem Maschinenbau, Hausgeräte- und Möbelindustrie. Diese Betriebe unterhalten eigene Instandhaltung und suchen Elektroniker für Betriebstechnik durchgehend. Herford, Gütersloh und Bad Oeynhausen liegen im direkten Pendelbereich.",
+    nearby: ["bad-oeynhausen", "muenster", "dortmund"],
+  },
+  {
+    slug: "mannheim",
+    name: "Mannheim",
+    federalState: "Baden-Württemberg",
+    lat: 49.487,
+    lng: 8.466,
+    radiusKm: 100,
+    market:
+      "Mannheim bildet mit Ludwigshafen den industriellen Kern der Metropolregion Rhein-Neckar: Chemie, Energietechnik und Maschinenbau auf engem Raum. Für Elektroniker ist das eine der dichtesten Stellenlagen Süddeutschlands — von der Instandhaltung im Chemiepark bis zum Schaltschrankbau beim Zulieferer.",
+    nearby: ["frankenthal", "karlsruhe", "mosbach"],
+  },
+  {
+    slug: "karlsruhe",
+    name: "Karlsruhe",
+    federalState: "Baden-Württemberg",
+    lat: 49.006,
+    lng: 8.404,
+    radiusKm: 100,
+    market:
+      "Karlsruhe verbindet Raffinerie- und Energietechnik mit einer starken IT- und Automatisierungsszene. Für Elektroniker und Automatisierungstechniker heißt das: Anlagen mit hohem Technisierungsgrad und Arbeitgeber, die Weiterbildung ernst nehmen. Die Rheinschiene nach Mannheim und der Raum Pforzheim liegen im Pendelbereich.",
+    nearby: ["mannheim", "mosbach", "frankenthal"],
+  },
+  {
+    slug: "stuttgart",
+    name: "Stuttgart",
+    federalState: "Baden-Württemberg",
+    lat: 48.783,
+    lng: 9.182,
+    radiusKm: 100,
+    market:
+      "Der Großraum Stuttgart ist das Zentrum des deutschen Maschinen- und Fahrzeugbaus. Die Dichte an Zulieferern, Sondermaschinenbauern und Automatisierern sorgt für ein durchgehend hohes Gehaltsniveau bei Elektronikern und Mechatronikern — und für Arbeitgeber, die auch Quereinsteiger mit solider Ausbildung nehmen.",
+    nearby: ["mosbach", "karlsruhe", "mannheim"],
+  },
+  {
+    slug: "frankfurt-am-main",
+    name: "Frankfurt am Main",
+    federalState: "Hessen",
+    lat: 50.111,
+    lng: 8.682,
+    radiusKm: 100,
+    market:
+      "Frankfurt hat die höchste Rechenzentrumsdichte Europas — dazu Flughafen, Messe und ein dichtes Netz an Verwaltungs- und Klinikgebäuden. Für Elektroniker der Energie- und Gebäudetechnik ist das ein eigener Arbeitsmarkt: unterbrechungsfreie Stromversorgung, Kälte- und Klimatechnik, Gebäudeleittechnik. Das Gehaltsniveau liegt spürbar über dem Bundesdurchschnitt.",
+    nearby: ["offenbach", "frankenthal", "mannheim"],
+  },
+  {
+    slug: "hamburg",
+    name: "Hamburg",
+    federalState: "Hamburg",
+    lat: 53.551,
+    lng: 10.0,
+    radiusKm: 110,
+    market:
+      "Hamburg verbindet Hafenlogistik, Luftfahrtindustrie und Lebensmittelproduktion mit einem großen Bestand an technischer Gebäudeinfrastruktur. Für Mechatroniker und Kältetechniker ist besonders die Lebensmittel- und Logistikkette interessant: Kühlhäuser, Klimaanlagen und Prozesskälte brauchen ganzjährig Service.",
+    nearby: ["bremen", "bad-oeynhausen", "dortmund"],
+  },
+  {
+    slug: "bremen",
+    name: "Bremen",
+    federalState: "Bremen",
+    lat: 53.079,
+    lng: 8.801,
+    radiusKm: 110,
+    market:
+      "Bremen ist Standort für Luft- und Raumfahrt, Fahrzeugbau, Stahl und Hafenwirtschaft. Die Anlagen sind groß, die Instandhaltung entsprechend anspruchsvoll — Mechatroniker und Servicetechniker finden hier Arbeitgeber mit tarifnahen Konditionen. Bremerhaven und der Raum Oldenburg liegen im erweiterten Pendelbereich.",
+    nearby: ["hamburg", "bad-oeynhausen", "muenster"],
+  },
+];
+
+/** Alle Städte, für die Stammdaten vorliegen — mit und ohne eigene Ortsseite. */
+export const allCities: readonly CityBase[] = [...jobCities, ...rasterCities];
+
+export function cityBySlug(slug: string): CityBase | undefined {
+  return allCities.find(c => c.slug === slug);
+}
+

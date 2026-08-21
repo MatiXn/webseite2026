@@ -16,6 +16,7 @@ import { jobPath } from "../../lib/slug";
 import type { ProfessionContent } from "../../content/professions/types";
 import { professionBySlug } from "../../content/professions";
 import { matchJobsForProfession } from "../job-matching";
+import { viableRoleCityPages } from "../../content/role-city-pages";
 import { buildProfessionSchema } from "../schema";
 import { buildProfessionInternalLinks } from "../internal-links";
 
@@ -49,6 +50,11 @@ export function ProfessionPageTemplate({ profession }: { profession: ProfessionC
     process: `So läuft die Vermittlung für ${p.name} ab`,
     faq: `Häufige Fragen zu ${p.name} Jobs`,
   };
+
+  // Beruf-x-Ort-Seiten dieses Berufs (leer, wenn der Beruf kein Ortsraster trägt).
+  const cityLinks = viableRoleCityPages()
+    .filter(rc => rc.role.hubPath === `/berufe/${p.slug}`)
+    .map(rc => ({ href: `/berufe/${rc.role.slug}/${rc.city.slug}`, label: rc.city.name }));
 
   // Zentrales, strukturiertes Job-Matching (Builder läuft genau einmal).
   const matchResult = matchJobsForProfession(JOBS, p);
@@ -258,6 +264,27 @@ export function ProfessionPageTemplate({ profession }: { profession: ProfessionC
       <div style={{ background: "#f5f5f7" }}>
         <FaqSection title={headings.faq} items={[...p.faq]} />
       </div>
+
+      {/* 13. Stellen nach Stadt – Hub-zu-Spoke-Verlinkung der Beruf-x-Ort-Seiten.
+          Ohne diesen Block wären die Spokes nur über die Sitemap erreichbar;
+          Google bewertet verwaiste Seiten deutlich schwächer. Gerendert wird
+          nur, wenn für diesen Beruf überhaupt Ortsseiten bestehen. */}
+      {cityLinks.length > 0 && (
+        <section style={sectionWrap}>
+          <h2 style={h2Style}>{p.name} Jobs nach Stadt</h2>
+          <p style={{ ...bodyStyle, marginBottom: 18 }}>
+            Alle offenen Stellen im Umkreis einer Stadt auf einen Blick – mit Entfernungsangabe
+            und der Gehaltsspanne der tatsächlich ausgeschriebenen Stellen.
+          </p>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexWrap: "wrap", gap: 12 }}>
+            {cityLinks.map(c => (
+              <li key={c.href}>
+                <Link href={c.href} style={linkStyle}>{p.shortName} Jobs {c.label} →</Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* Verwandte Berufe – nur wenn gültige Related-Links existieren (keine leere Sektion) */}
       {links.relatedProfessionLinks.length > 0 && (
