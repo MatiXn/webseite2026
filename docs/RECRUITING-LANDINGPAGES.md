@@ -142,6 +142,15 @@ und Preview gesetzt. `RECRUITING_NOTIFICATION_EMAIL` zeigt auf
 `bewerbung@phe-perm.de` — dieselbe Adresse, an die auch das Kontaktformular
 Bewerbungen schickt.
 
+`NEXT_PUBLIC_META_PIXEL_ID` ist auf `1721750638380257` gesetzt, **nur für
+Production**. Preview-Deployments bleiben bewusst ohne Pixel: Testläufe würden
+sonst als echte Leads in Meta gezählt und die Kampagnenoptimierung verfälschen.
+
+Anders als die übrigen Variablen ist sie als „Non-sensitive" angelegt. Vercel
+lässt für `NEXT_PUBLIC_`-Variablen nichts anderes zu — sie landen ohnehin im
+Browser-Bundle und sind für jeden Besucher lesbar. Das ist bei einer Pixel-ID
+unproblematisch und keine Nachlässigkeit.
+
 ### Supabase-Zugangsdaten holen
 
 Supabase-Dashboard → Projekt `lkmrsvvgisdthvlqjhdk` → Project Settings →
