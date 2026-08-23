@@ -1,6 +1,6 @@
 import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
-import { JOBS, parseSalaryRange, validThroughOf, schemaLocationsOf } from "../data";
+import { JOBS, parseSalaryRange, validThroughOf, schemaLocationsOf, distanceKm } from "../data";
 import { jobSlug, jobPath, jobIdFromParam } from "../../../lib/slug";
 import { matchJobToProfession } from "../../../content-engine/job-matching";
 import { servicetechniker } from "../../../content/professions/servicetechniker";
@@ -148,9 +148,28 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
     "directApply": true,
   };
 
+  // Ähnliche Stellen nach Verwandtschaft, nicht nach Array-Reihenfolge: Vorher
+  // wurden schlicht die ersten drei der gleichen Kategorie genommen — bei einer
+  // Kältetechnik-Stelle in Köln landeten so Mechatronik-Stellen aus Bremen und
+  // Freiburg in der Liste. Gewichtet wird jetzt fachliche Nähe (gemeinsame Tags)
+  // vor räumlicher Nähe.
   const similarJobs = JOBS
-    .filter(j => j.id !== job.id && j.category === job.category)
-    .slice(0, 3);
+    .filter(j => j.id !== job.id)
+    .map(j => {
+      const gemeinsameTags = j.tags.filter(t => job.tags.includes(t)).length;
+      const km = j.nationwide || job.nationwide
+        ? Number.POSITIVE_INFINITY
+        : distanceKm(job.lat, job.lng, j.lat, j.lng);
+      const score =
+        gemeinsameTags * 10 +
+        (j.category === job.category ? 4 : 0) +
+        (km <= 50 ? 3 : km <= 150 ? 1 : 0);
+      return { job: j, score, km };
+    })
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score || a.km - b.km || a.job.id.localeCompare(b.job.id))
+    .slice(0, 3)
+    .map(x => x.job);
 
   return (
     <div style={{ background: "#f5f5f7", minHeight: "100vh" }}>
