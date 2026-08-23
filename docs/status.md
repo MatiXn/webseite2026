@@ -10,12 +10,16 @@
 
 ### Recruiting-Landingpages (seit 23.08.2026)
 
-- [ ] **Blockierend für den Livegang:** `RECRUITING_SUPABASE_URL` und
-      `RECRUITING_SUPABASE_SERVICE_ROLE_KEY` sind in Vercel noch nicht gesetzt.
-      Ohne sie antwortet `/api/recruiting-lead` mit 503 und es entsteht kein Lead.
-- [ ] `RECRUITING_NOTIFICATION_EMAIL` setzen — sonst wird gespeichert, aber
-      niemand informiert.
-- [ ] `NEXT_PUBLIC_META_PIXEL_ID` setzen, sobald Conversion-Messung gewünscht ist.
+- [x] Umgebungsvariablen gesetzt (23.08.2026): `RECRUITING_SUPABASE_URL`,
+      `RECRUITING_SUPABASE_SERVICE_ROLE_KEY` und `RECRUITING_NOTIFICATION_EMAIL`
+      (→ `bewerbung@phe-perm.de`) für Production und Preview;
+      `NEXT_PUBLIC_META_PIXEL_ID` = `1721750638380257` nur für Production.
+- [x] End-to-End gegen die Preview-Umgebung geprüft (23.08.2026): Lead landet
+      vollständig in Supabase, Telefonnummer normalisiert, UTM-Parameter
+      übernommen, Benachrichtigung versendet (`notification_status: sent`),
+      Dublettenschutz greift. Testdaten wurden wieder gelöscht.
+- [ ] Erste echte Bewerbung abwarten und prüfen, ob Mail und Datensatz im
+      Alltag taugen.
 - [ ] Mobile Darstellung noch nicht mit echtem Viewport geprüft: In der
       Testumgebung ließ sich der Browser-Viewport nicht unter 1440 px bringen.
       Struktur ist mobile-first, Touchflächen ab 44 px, kein horizontaler
