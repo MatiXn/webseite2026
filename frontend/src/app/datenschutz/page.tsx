@@ -92,10 +92,29 @@ export default function DatenschutzPage() {
             <p>Diese Daten werden ausschließlich verarbeitet, um die Sicherheit, Stabilität und Funktionsfähigkeit unserer Website sicherzustellen. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.</p>
           </Block>
 
-          <Block title="7. Cookies">
-            <p>Unsere Website verwendet ausschließlich technisch notwendige Cookies sowie vergleichbare Technologien, die für den Betrieb der Website erforderlich sind. Hierzu gehört insbesondere die Speicherung Ihrer Cookie-Einstellungen.</p>
-            <p>Wir verwenden derzeit keine Analyse-, Marketing- oder Tracking-Cookies.</p>
-            <p>Rechtsgrundlagen: Art. 6 Abs. 1 lit. f DSGVO, § 25 Abs. 2 TDDDG.</p>
+          <Block title="7. Cookies und vergleichbare Technologien">
+            <p>Für den Betrieb unserer Website verwenden wir technisch notwendige Speicherung, insbesondere für Ihre Auswahl im Einwilligungsbanner. Diese ist ohne Ihre Einwilligung zulässig.</p>
+            <p>Darüber hinaus setzen wir auf unseren Stellen-Landingpages den Meta-Pixel ein (siehe Ziffer 7b). Dieser wird ausschließlich geladen, wenn Sie im Einwilligungsbanner ausdrücklich zugestimmt haben. Lehnen Sie ab oder treffen Sie keine Auswahl, findet keine Übertragung an Meta statt.</p>
+            <p>Sie können Ihre Entscheidung jederzeit ändern, indem Sie die in Ihrem Browser für diese Website gespeicherten Daten löschen. Beim nächsten Aufruf erscheint das Banner erneut.</p>
+            <p>Rechtsgrundlagen: Art. 6 Abs. 1 lit. f DSGVO und § 25 Abs. 2 TDDDG für die notwendige Speicherung; Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG für den Meta-Pixel.</p>
+          </Block>
+
+          <Block title="7b. Meta-Pixel auf unseren Stellen-Landingpages">
+            <p>Auf unseren Landingpages zu einzelnen Stellenangeboten (erreichbar unter /stellen/) setzen wir den Meta-Pixel der Meta Platforms Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Irland ein. Wir nutzen ihn, um zu messen, welche unserer Anzeigen auf Facebook und Instagram tatsächlich zu einer Anfrage führen.</p>
+            <p><strong>Nur mit Ihrer Einwilligung:</strong> Das Skript wird erst nach Ihrer ausdrücklichen Zustimmung im Einwilligungsbanner geladen. Ohne Zustimmung wird es nicht angefordert, und es werden keine Daten an Meta übermittelt. Die Landingpages sind ohne Einwilligung uneingeschränkt nutzbar.</p>
+            <p>Erfasst werden dabei der Aufruf der Seite sowie das Absenden des Formulars. Wir übermitteln dabei keine Namen, Telefonnummern oder E-Mail-Adressen an Meta, sondern ausschließlich die Bezeichnung der Kampagne und eine technische Ereigniskennung.</p>
+            <p>Meta kann diese Informationen Ihrem Nutzerkonto zuordnen, sofern Sie bei Facebook oder Instagram angemeldet sind, und für eigene Zwecke verarbeiten. Auf diese Verarbeitung haben wir keinen Einfluss. Wir und Meta sind insoweit gemeinsam Verantwortliche im Sinne des Art. 26 DSGVO.</p>
+            <p>Eine Übermittlung in die USA ist nicht ausgeschlossen. Meta stützt sich hierfür auf das EU-US Data Privacy Framework sowie auf Standardvertragsklauseln.</p>
+            <p>Weitere Informationen finden Sie in der Datenschutzrichtlinie von Meta unter <span style={{ wordBreak: "break-all" }}>https://www.facebook.com/privacy/policy</span>.</p>
+            <p>Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG. Ihre Einwilligung ist freiwillig und jederzeit mit Wirkung für die Zukunft widerrufbar.</p>
+          </Block>
+
+          <Block title="7c. Anfragen über unsere Stellen-Landingpages">
+            <p>Wenn Sie über eine unserer Stellen-Landingpages Interesse an einer Position bekunden, verarbeiten wir die von Ihnen angegebenen Daten: Vor- und Nachname, Telefonnummer, E-Mail-Adresse, Ihre Antworten zu Qualifikation, Berufserfahrung, Wohnort und Führerschein sowie freiwillige Angaben zu Postleitzahl, Erreichbarkeit und aktueller Tätigkeit.</p>
+            <p>Wir verarbeiten diese Daten ausschließlich, um mit Ihnen über die konkret ausgeschriebene Position zu sprechen. Eine Aufnahme in einen Talentpool, die Ansprache zu anderen Stellen oder die Zusendung von Werbung erfolgt auf dieser Grundlage nicht.</p>
+            <p>Zusätzlich speichern wir den Zeitpunkt Ihrer Einwilligung, die Fassung des Einwilligungstextes sowie die Kampagnenparameter der aufgerufenen Anzeige. Dies dient dem Nachweis der Einwilligung.</p>
+            <p>Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Ihre Einwilligung) sowie Art. 6 Abs. 1 lit. b DSGVO und § 26 Abs. 1 BDSG für die Anbahnung eines Beschäftigungsverhältnisses.</p>
+            <p>Die Daten werden auf Servern innerhalb der Europäischen Union gespeichert. Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen; schreiben Sie uns dazu an info@phe-perm.de.</p>
           </Block>
 
           <Block title="7a. Umkreissuche in der Jobbörse (OpenStreetMap / Nominatim)">

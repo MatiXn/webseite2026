@@ -1,4 +1,4 @@
-**Stand:** 2026-07-21
+**Stand:** 2026-08-23
 
 ## Versionskontrolle
 
@@ -7,6 +7,36 @@
 - **Unversionierte Änderungen:** `git status --short` zeigt ein untracked Verzeichnis: `.superpowers/brainstorm/96793-1783759471/` mit den Dateien `content/layout.html`, `content/landing-style.html`, `state/server.pid`, `state/server.log`, `state/server-stopped`. Das ist ein Arbeitsverzeichnis eines Tooling-Skills (Brainstorm-Session), kein Anwendungscode.
 
 ## Offene Punkte
+
+### Recruiting-Landingpages (seit 23.08.2026)
+
+- [ ] **Blockierend für den Livegang:** `RECRUITING_SUPABASE_URL` und
+      `RECRUITING_SUPABASE_SERVICE_ROLE_KEY` sind in Vercel noch nicht gesetzt.
+      Ohne sie antwortet `/api/recruiting-lead` mit 503 und es entsteht kein Lead.
+- [ ] `RECRUITING_NOTIFICATION_EMAIL` setzen — sonst wird gespeichert, aber
+      niemand informiert.
+- [ ] `NEXT_PUBLIC_META_PIXEL_ID` setzen, sobald Conversion-Messung gewünscht ist.
+- [ ] Mobile Darstellung noch nicht mit echtem Viewport geprüft: In der
+      Testumgebung ließ sich der Browser-Viewport nicht unter 1440 px bringen.
+      Struktur ist mobile-first, Touchflächen ab 44 px, kein horizontaler
+      Überlauf — eine Sichtprüfung auf einem echten Gerät steht aus.
+- [ ] Kein Löschkonzept für `recruiting_leads`. Üblich sind sechs Monate nach
+      Abschluss des Besetzungsverfahrens; derzeit keine automatische Löschung.
+- [ ] Salesforce-Feldzuordnung (`Recruiting_*__c` in
+      `frontend/src/landingpages/server/salesforce.ts`) ist nicht gegen die
+      echte PHE-Instanz verifiziert. Flag `SALESFORCE_SYNC_ENABLED` steht auf
+      `false`, bis das geschehen ist.
+- [ ] Meta Conversions API vorbereitet (`event_id` je Lead), aber nicht
+      angeschlossen.
+
+### Rechtlich prüfen zu lassen
+
+- [ ] Wortlaut der Einwilligung (`frontend/src/landingpages/einwilligung.ts`)
+- [ ] Ziffern 7, 7b und 7c der Datenschutzerklärung
+- [ ] Vereinbarung über gemeinsame Verantwortlichkeit mit Meta (Art. 26 DSGVO)
+
+### Bestand
+
 
 - [ ] Kein CI/CD-Workflow für das Backend-Deployment gefunden (nur `frontend/.github/workflows/security.yml`, ausschließlich Frontend-Scans).
 - [ ] `backend/app/api/routes/` und `backend/app/services/` sind angelegt, aber leer — alle Endpunkte liegen aktuell in `backend/app/main.py`.

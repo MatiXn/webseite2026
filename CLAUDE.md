@@ -50,6 +50,11 @@ phe-2026/
 └── frontend/                # Next.js-Website, getrennt vom Backend gestartet
     ├── src/app/             # App Router: jobs, kontakt, ueber-uns, talente-finden, lebenslauf-erstellen, impressum, agb, datenschutz
     │   └── api/             # Next.js Route Handler: contact, contact/confirm, jobs, geocode
+    ├── src/landingpages/     # Engine für Recruiting-Landingpages (/stellen/<slug>)
+    │   ├── kampagnen/        # je Landingpage eine Datendatei — hier wird gearbeitet
+    │   ├── komponenten/      # Abschnitte (Server), Funnel (Client), PixelLader
+    │   └── server/           # Supabase, E-Mail, Salesforce (server-only)
+    ├── supabase/migrations/  # Tabelle recruiting_leads (NICHT die ATS-Datenbank!)
     ├── src/components/forms/
     ├── src/hooks/           # useAuth.ts, useFileUpload.ts
     ├── src/lib/             # apiClient.ts, sanitize.ts, contact-validation.ts, confirm-token.ts
@@ -77,6 +82,32 @@ cd frontend && npm run dev                     # Frontend
 - **Service-Role-Key niemals ins Frontend:** `backend/.env.example` warnt explizit, dass `SUPABASE_SERVICE_ROLE_KEY` volle DB-Rechte hat; das Frontend darf laut `frontend/.env.example` nur `NEXT_PUBLIC_`-Variablen und den `ANON_KEY` verwenden.
 - **Rate-Limiting ist in-memory ohne `REDIS_URL`:** funktioniert laut Kommentar in `.env.example` nur für eine einzelne Instanz; für Multi-Instance-Betrieb wäre Redis nötig.
 - **`api/routes/` und `services/` sind leer:** neue Endpunkte aktuell alle direkt in `backend/app/main.py`, nicht in separate Router-Module ausgelagert.
+- **Zwei Supabase-Migrationsordner mit verschiedenen Zielen:**
+  `backend/supabase/migrations/` gehört zur ATS-Datenbank des FastAPI-Backends.
+  `frontend/supabase/migrations/` gehört zu den Recruiting-Landingpages und
+  wurde in der CRM-Datenbank (`lkmrsvvgisdthvlqjhdk`) ausgeführt. Die
+  Nummerierung läuft je Ordner getrennt bei 001 los — nicht verwechseln.
+- **Recruiting-Landingpages sind konfigurationsgetrieben:** Eine neue
+  Landingpage ist eine Datei in `frontend/src/landingpages/kampagnen/` plus ein
+  Eintrag in `registry.ts` — kein neuer Ordner unter `app/`. Die Route
+  `/stellen/[kampagne]` bedient alle. Details in
+  `docs/RECRUITING-LANDINGPAGES.md`, Ablauf im Skill
+  `phe-recruiting-landingpage`.
+- **Landingpages sind absichtlich `noindex` und tragen kein JobPosting-Schema.**
+  Sie sind Ziele bezahlter Anzeigen; die Stelle ist unter `/jobs/…` organisch
+  indexiert. Das ist kein Versehen und darf nicht „korrigiert" werden.
+- **Der Cookie-Banner ist seit 23.08.2026 ein echter Consent** (`lib/consent.ts`,
+  Schlüssel `phe_consent_v2`). Der Meta-Pixel wird ohne Marketing-Einwilligung
+  gar nicht erst angefordert. Wer daran etwas ändert, muss die Ziffern 7/7b der
+  Datenschutzerklärung mitziehen.
+- **Bestandsrauschen bei den Qualitätsprüfungen:** `npx tsc --noEmit` meldet
+  Fehler in 11 alten Testdateien, `npm run lint` 25 Befunde (überwiegend
+  `setState in effect`, ein projektweites Muster in `Nav.tsx`, `ApplyForm.tsx`,
+  `jobs/page.tsx`). Beides bestand vorher. Vor/Nachher vergleichen statt
+  aufräumen zu wollen.
+- **`unsafe-eval` fehlt in der CSP — bewusst.** Im Dev-Modus meldet das
+  Next.js-Overlay deshalb „eval() is not supported in this environment". Das ist
+  ein reines Entwicklungs-Artefakt; React nutzt `eval` in Produktion nicht.
 - **`jobs_import.csv` liegt im Root** und enthält Stellenanzeigen-Rohdaten (Titel, Ort, Gehalt, Kategorie, Beschreibung) — kein direkt ersichtlicher Bezug im Code geprüft, ob/wie sie importiert wird.
 
 > **[OFFEN]** Wie `jobs_import.csv` tatsächlich verarbeitet wird (Import-Skript, manueller Prozess, Supabase-Seed) ist aus dem vorhandenen Code nicht belegbar — es wurde kein Referenzierungscode dazu gefunden.

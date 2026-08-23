@@ -212,3 +212,93 @@ kältetechnik".
 Der Validator prüft die neuen Textfelder mit (`collectTextFields` in
 `validate-profession.ts`), damit auch dort keine unbelegten Werbeaussagen
 durchrutschen.
+
+## Recruiting-Landingpages als Engine statt als Einzelseiten (23.08.2026)
+
+**Aufgabe:** Landingpage für Meta-Recruiting-Anzeigen zur Stelle Kältetechniker
+Köln. Während der Umsetzung erweitert auf: „Vorlage bzw. Automation für alle
+weiteren Landingpages".
+
+Umgesetzt als konfigurationsgetriebene Engine unter
+`frontend/src/landingpages/`. Eine neue Landingpage ist eine Datendatei in
+`kampagnen/` plus eine Zeile in `registry.ts` — Route, Funnel, API,
+Speicherung, E-Mail, Salesforce, Consent, Pixel und SEO sind generisch.
+
+Der Test `kampagnen.test.ts` prüft mit `describe.each` **jede** eingetragene
+Kampagne gegen die Regeln. Damit ist die Vorlage nicht nur Dokumentation,
+sondern durchgesetzt: Wer eine Landingpage anlegt, die gegen die Konventionen
+verstößt, bekommt einen roten Test.
+
+Ergänzend der Skill `phe-recruiting-landingpage` in `~/.claude/skills/`, damit
+Claude in künftigen Sessions den Weg kennt, ohne das Repo neu zu erkunden.
+
+### URL-Schema `/stellen/<slug>` statt `/jobs/<slug>`
+
+Ursprünglich war `/jobs/kaeltetechniker-koeln` gewünscht. Dort liegt aber
+bereits die dynamische Route `[slug]` der organischen Stellenanzeigen. Ein
+statisches Segment daneben hätte je Kampagne einen zusätzlichen Ordner
+gebraucht — bei einer Vorlage ein Handgriff zu viel. `/stellen/[kampagne]`
+bedient alle Kampagnen mit einer Route und trennt Anzeigenziele sichtbar von
+organischen Seiten.
+
+### `noindex` und kein JobPosting-Schema auf den Landingpages
+
+Die Stelle Kältetechniker Köln ist als Job 34 bereits unter
+`/jobs/kaeltetechniker-koeln-34` organisch indexiert, inklusive
+JobPosting-Schema und Sitemap-Eintrag. Zwei indexierte Seiten zur selben
+Position hätten gegeneinander gerankt. Google verlangt für JobPosting-Markup
+zudem ausdrücklich indexierbare Seiten.
+
+Die Landingpage trägt deshalb `robots: { index: false, follow: true }` und kein
+JobPosting-Schema. Open-Graph- und Twitter-Tags sind vollständig, da sie beim
+Teilen unabhängig vom Index wirken.
+
+### Leads in der CRM-Datenbank statt in einem eigenen Supabase-Projekt
+
+Fachlich wäre ein eigenes Projekt sauberer gewesen. Ein zusätzliches
+Supabase-Projekt kostet in der Organisation `zymzwtufvapxzvvgzdwc` jedoch
+10 USD im Monat. Die Tabelle `recruiting_leads` liegt deshalb im
+CRM-Projekt `lkmrsvvgisdthvlqjhdk`.
+
+Risiko begrenzt: Die Tabelle ist eigenständig, verändert keine bestehende
+CRM-Tabelle, hat RLS ohne Policy und entzogene Rechte für `anon` und
+`authenticated`. Ein Umzug in ein eigenes Projekt ist später möglich — der
+Code spricht sie über eigene Umgebungsvariablen (`RECRUITING_SUPABASE_*`) an,
+nicht über die vorhandenen `NEXT_PUBLIC_SUPABASE_*`.
+
+### Cookie-Banner site-weit umgebaut statt eigener Dialog auf den Landingpages
+
+Der bisherige Banner war ein reiner Hinweis mit einem einzigen Knopf
+(„Verstanden") und sagte zu, dass keine Tracking-Cookies eingesetzt werden —
+dieselbe Zusage stand in der Datenschutzerklärung. Mit dem Meta-Pixel wurde
+diese Aussage unzutreffend.
+
+Ein zweiter Consent-Mechanismus nur für die Landingpages hätte zwei
+nebeneinanderliegende Zustimmungsstände erzeugt, die in der
+Datenschutzerklärung nicht sauber darstellbar sind. Deshalb ein echter Banner
+für die gesamte Website: „Alle akzeptieren" / „Nur notwendige", gleich groß und
+gleich gestaltet, Marketing standardmäßig aus.
+
+Neuer Speicherschlüssel `phe_consent_v2`: Ein „Verstanden" aus der alten
+Fassung war keine Marketing-Einwilligung und darf nicht als solche gewertet
+werden. Wiederkehrende Besucher werden einmalig erneut gefragt.
+
+### Antworten zusätzlich als JSONB
+
+`recruiting_leads` hat vier feste Spalten für die Fragen, die in jeder Kampagne
+vorkommen (Qualifikation, Berufserfahrung, Wohnort, Führerschein), und
+zusätzlich `answers` als JSONB mit allen Antworten. Eine künftige Kampagne kann
+damit beliebige weitere Fragen stellen, ohne dass die Tabelle geändert werden
+muss — während die vier Standardfelder für Auswertungen indizierbar bleiben.
+
+### Test-Setup um jsdom erweitert
+
+Vitest lief bewusst node-only. Die geforderten Nachweise (Funnel-Durchlauf,
+Zurück-Navigation ohne Datenverlust, Tastaturbedienung, Erfolgsmeldung nur bei
+echtem Erfolg) sind ohne DOM nicht führbar. Ergänzt wurden `jsdom`,
+`@testing-library/react` und `@testing-library/user-event`; `.test.tsx` läuft in
+jsdom, `.test.ts` unverändert in Node.
+
+`@vitejs/plugin-react` wurde **nicht** aufgenommen: Version 6 verlangt Vite 8,
+Vitest 2 bringt Vite 5 mit. JSX übersetzt stattdessen esbuild
+(`esbuild: { jsx: "automatic" }`) — für Tests ausreichend.

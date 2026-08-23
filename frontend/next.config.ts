@@ -5,15 +5,18 @@ import type { NextConfig } from "next";
 const CSP = [
   "default-src 'self'",
   // Next.js App Router benötigt 'unsafe-inline' für Hydration-Inline-Scripts;
-  // challenges.cloudflare.com für das Turnstile-Bot-Schutz-Widget
-  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+  // challenges.cloudflare.com für das Turnstile-Bot-Schutz-Widget,
+  // connect.facebook.net für den Meta-Pixel auf den Recruiting-Landingpages
+  // (wird nur nach erteilter Marketing-Einwilligung überhaupt angefordert)
+  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://connect.facebook.net",
   // Next.js CSS-in-JS + Styles braucht unsafe-inline
   "style-src 'self' 'unsafe-inline'",
   // data: für Base64-Previews, blob: für File-Viewer
   "img-src 'self' data: blob: https:",
+  // Meta-Pixel meldet Ereignisse als Bild-Abruf und per fetch an facebook.com
   "font-src 'self'",
   // API-Calls: eigene Domain + Supabase + Backend + Nominatim (Standortsuche)
-  `connect-src 'self' https://nominatim.openstreetmap.org ${process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://*.supabase.co"} ${process.env.NEXT_PUBLIC_API_URL ?? ""}`,
+  `connect-src 'self' https://nominatim.openstreetmap.org https://www.facebook.com https://connect.facebook.net ${process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://*.supabase.co"} ${process.env.NEXT_PUBLIC_API_URL ?? ""}`,
   "worker-src 'self' blob:",
   // Turnstile rendert sein Widget in einem iframe
   "frame-src https://challenges.cloudflare.com",
