@@ -3,10 +3,11 @@
 // Zahlen/Gehälter/Benefits. Aussagen zu Reise/Bereitschaft/Wochenende/Firmenwagen
 // erscheinen NUR jobbezogen (in den echten Stellen), nie als pauschales Versprechen.
 //
-// Matching bewusst über den strukturierten Tag "Kältetechnik": dieser Tag liegt exakt
-// auf den vier echten Kältetechnik-Stellen (Jobs 2, 15, 20, 25) und auf keiner anderen
-// Stelle. Kein category-Filter (würde alle Mechatronik-Jobs ziehen), keine breiten
-// Keywords (Service/Wartung/Klima/Anlage) → 0 False Positives. Analyse siehe Bericht.
+// Matching bewusst über den strukturierten Tag "Kältetechnik": Der Tag liegt exakt
+// auf den echten Kältetechnik-Stellen und auf keiner anderen. Kein category-Filter
+// (würde alle Mechatronik-Jobs ziehen), keine breiten Keywords
+// (Service/Wartung/Klima/Anlage) → 0 False Positives. Der Bestand wächst mit dem
+// Sheet; maxJobs ist deshalb bewusst über der aktuellen Trefferzahl gehalten.
 import { DEFAULT_PROCESS, type ProfessionContent } from "./types";
 import { contact } from "../contact";
 
@@ -140,7 +141,9 @@ export const kaeltetechniker = {
   // Strukturierter Tag "Kältetechnik" – exklusiv auf den echten Kälte-Stellen (2,15,20,25).
   jobMatch: {
     tags: ["Kältetechnik"],
-    maxJobs: 6,
+    // Angehoben mit Job 34: bei 6 wäre die älteste der sieben Kälte-Stellen
+    // aus der Liste gefallen, obwohl sie weiter offen ist.
+    maxJobs: 8,
     fallback: "hint-and-joblist",
   },
 
