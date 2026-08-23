@@ -32,6 +32,9 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# .env.example enthält nur Platzhalter und dokumentiert, welche Variablen
+# gebraucht werden — die gehört ins Repo.
+!.env.example
 
 # vercel
 .vercel
