@@ -34,9 +34,15 @@ function titleCarriesCity(title: string, city: string): boolean {
   return title.toLowerCase().includes(city.toLowerCase());
 }
 
-export function jobPageTitle(job: { title: string; city: string }): string {
+export function jobPageTitle(job: { title: string; city: string; nationwide?: boolean }): string {
   const clean = job.title.replace(/\s*\((?:m\/w\/d|w\/m\/d|d\/m\/w|m\/w\/x)\)/gi, "").trim();
-  const base = titleCarriesCity(clean, job.city) ? clean : `${clean} Job ${job.city}`;
+  // "Job Deutschlandweit" liest sich holprig; bei bundesweiten Stellen ist der
+  // Ort kein Ort, sondern eine Eigenschaft der Stelle.
+  const base = titleCarriesCity(clean, job.city)
+    ? clean
+    : job.nationwide
+      ? `${clean} Job bundesweit`
+      : `${clean} Job ${job.city}`;
   const withFest = `${base} – Festanstellung`;
   if ((withFest + BRAND).length <= 65) return withFest + BRAND;
   if ((base + BRAND).length <= 65) return base + BRAND;
@@ -56,9 +62,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const cut = text.slice(0, max);
     return `${cut.slice(0, cut.lastIndexOf(" "))} …`;
   };
+  const ortsangabe = job.nationwide ? "bundesweit" : `in ${job.city}`;
   const description = job.description
-    ? truncateAtWord(`${job.title} in ${job.city}: ${job.description} Festanstellung, ${job.salary}. Kostenlos bewerben.`, 158)
-    : `Jetzt als ${job.title} in ${job.city} bewerben. ${job.salary}. Festanstellung, kostenlos – PHE-Perm Engineering.`;
+    ? truncateAtWord(`${job.title} ${ortsangabe}: ${job.description} Festanstellung, ${job.salary}. Kostenlos bewerben.`, 158)
+    : `Jetzt als ${job.title} ${ortsangabe} bewerben. ${job.salary}. Festanstellung, kostenlos – PHE-Perm Engineering.`;
 
   const ogImageUrl = `https://www.phe-perm.de/jobs/${id}/opengraph-image`;
 
@@ -206,7 +213,9 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
             fontSize: "clamp(30px,5vw,46px)", fontWeight: 800, color: "#fff",
             lineHeight: 1.15, letterSpacing: "-0.02em", marginBottom: 20,
           }}>
-            {titleCarriesCity(job.title, job.city) ? job.title : `${job.title} in ${job.city}`}
+            {titleCarriesCity(job.title, job.city) || job.nationwide
+              ? job.title
+              : `${job.title} in ${job.city}`}
           </h1>
           <div style={{ display: "flex", gap: 24, flexWrap: "wrap", marginBottom: 28 }}>
             <div>

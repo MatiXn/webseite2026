@@ -121,6 +121,11 @@ export const servicetechnikerElektrotechnik = {
   // Exakte Stellentitel statt category-Filter — sonst kämen die Instandhalter
   // im Werk mit in die Liste und die Abgrenzung wäre hinfällig.
   jobMatch: {
+    // Tag "Photovoltaik" als strukturiertes Signal: Über Keywords allein hing
+    // der Treffer davon ab, ob der Rollenname zufällig auch in der
+    // Kurzbeschreibung stand — eine PV-Servicestelle fiel dadurch heraus,
+    // obwohl sie fachlich eindeutig hierher gehört.
+    tags: ["Photovoltaik"],
     keywords: [
       "Servicetechniker Elektrotechnik",
       "Elektroniker als Servicetechniker",
