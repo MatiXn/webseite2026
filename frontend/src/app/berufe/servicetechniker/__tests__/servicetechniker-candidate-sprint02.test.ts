@@ -36,9 +36,9 @@ describe("Servicetechniker – Candidate Sprint 02 (Conversion)", () => {
       expect(joined, t).toContain(t);
     }
   });
-  it("5 – Matching weiterhin konservativ: 9 echte Servicetechniker, 0 False Positives, 8 sichtbar (maxJobs 8)", () => {
+  it("5 – Matching weiterhin konservativ: 11 echte Servicetechniker, 0 False Positives, 8 sichtbar (maxJobs 8)", () => {
     const r = matchJobsForProfession(JOBS, servicetechniker);
-    expect(r.totalMatched).toBe(9);
+    expect(r.totalMatched).toBe(11);
     expect(r.matches.length).toBe(8);
     expect(r.excludedCount).toBe(0);
     // jeder sichtbare Job ist echte Servicetechniker-Stelle (Titel enthält "Servicetechniker")

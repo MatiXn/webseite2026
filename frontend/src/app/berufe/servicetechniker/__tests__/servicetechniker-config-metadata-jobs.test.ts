@@ -70,13 +70,13 @@ describe("Servicetechniker – Metadata", () => {
 });
 
 describe("Servicetechniker – Jobs (Matching-Analyse)", () => {
-  it("1 – 9 Treffer, davon 8 sichtbar (Sprint 02: maxJobs 8), 0 ausgeschlossen", () => {
-    expect(result.totalMatched).toBe(9);
+  it("1 – 11 Treffer, davon 8 sichtbar (Sprint 02: maxJobs 8), 0 ausgeschlossen", () => {
+    expect(result.totalMatched).toBe(11);
     expect(result.matches.length).toBe(8);
     expect(result.excludedCount).toBe(0);
   });
   it("2 – sichtbare Reihenfolge stabil (Score desc)", () => {
-    expect(result.matches.map(x => x.job.id)).toEqual(["14", "18", "2", "21", "27", "32", "16", "23"]);
+    expect(result.matches.map(x => x.job.id)).toEqual(["14", "18", "2", "21", "27", "35", "36", "32"]);
   });
   it("3 – nur matched, alle high/medium, echte Servicetechniker-Rollen", () => {
     expect(result.matches.every(x => x.matched && !x.excluded)).toBe(true);
