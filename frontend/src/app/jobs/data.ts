@@ -30,6 +30,10 @@ export type Job = {
   // keine Zeile im Google Sheet haben. Fehlt das Feld, gilt die Stelle als
   // aktiv. Existiert eine Sheet-Zeile, entscheidet weiterhin das Sheet.
   active?: boolean;
+  // Geforderte Berufserfahrung in Jahren. Landet als
+  // OccupationalExperienceRequirements im JobPosting-Schema — Google filtert
+  // die Jobsuche danach.
+  minExperienceYears?: number;
 };
 
 // Gültigkeitsdauer einer Ausschreibung für das JobPosting-Schema.
@@ -1544,13 +1548,15 @@ export const JOBS: Job[] = [
     region: "Hamburg",
     lat: 53.551,
     lng: 10.0,
-    // Tarifliche Monatsvergütung, vom Arbeitgeber so ausgeschrieben.
-    salary: "4.204 – 4.321 €/Monat",
+    // Tariflich ausgeschrieben als Monatsgehalt (4.204 €, nach der Probezeit
+    // 4.321 €). Auf Wunsch des Auftraggebers als Jahresgehalt geführt:
+    // 4.321 € × 13 Gehälter = 56.173 €.
+    salary: "56.173 €/Jahr",
     type: "Festanstellung",
     datePosted: "2026-09-02",
     tags: ["Instandhaltung", "Produktion", "Betriebstechnik"],
-    description: "Instandhaltung und Störungsbehebung an Produktionsanlagen in Hamburg. Wöchentlicher Wechsel zwischen Früh- und Spätschicht, keine regelmäßige Wochenendarbeit.",
-    intro: "Für einen Produktionsbetrieb in Hamburg suchen wir einen Elektroniker für Betriebstechnik. Sie arbeiten im wöchentlichen Wechsel zwischen Früh- und Spätschicht, von Montag bis Freitag – regelmäßige Wochenendarbeit fällt nicht an. Die Vergütung ist tariflich geregelt und steigt nach der Probezeit.",
+    description: "Instandhaltung und Störungsbehebung an Produktionsanlagen in Hamburg, mindestens 3 Jahre Berufserfahrung. Wöchentlicher Wechsel Früh-/Spätschicht, keine regelmäßige Wochenendarbeit.",
+    intro: "Für einen Produktionsbetrieb in Hamburg suchen wir einen Elektroniker für Betriebstechnik mit mindestens drei Jahren Berufserfahrung. Sie arbeiten im wöchentlichen Wechsel zwischen Früh- und Spätschicht, von Montag bis Freitag – regelmäßige Wochenendarbeit fällt nicht an. Die Vergütung ist tariflich geregelt, steigt nach der Probezeit und wird auf 13 Monatsgehälter gerechnet.",
     aufgaben: [
       "Fehlersuche und Behebung elektrischer, elektronischer und elektropneumatischer Störungen",
       "Wartung, Instandhaltung und Reparatur von Maschinen und Anlagen",
@@ -1560,14 +1566,16 @@ export const JOBS: Job[] = [
     ],
     profil: [
       "Abgeschlossene Ausbildung als Elektroniker für Betriebstechnik, Industrieelektriker oder Mechatroniker",
-      "Erfahrung in Wartung und Instandhaltung von Maschinen und Anlagen",
+      "Mindestens 3 Jahre Berufserfahrung in Wartung und Instandhaltung von Maschinen und Anlagen",
       "Grundkenntnisse in Steuerungs- und Automatisierungstechnik",
       "Selbstständige und strukturierte Arbeitsweise",
       "Teamfähigkeit und Verantwortungsbewusstsein",
     ],
+    minExperienceYears: 3,
     posted: "Aktuell",
     benefits: [
       "Unbefristeter Arbeitsvertrag",
+      "13 Monatsgehälter",
       "Weihnachts- und Urlaubsgeld",
       "Jährliche Gehaltsanpassung",
       "Keine regelmäßige Wochenendarbeit",
