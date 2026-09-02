@@ -68,14 +68,21 @@ export function schemaLocationsOf(job: Job): { locality: string; region?: string
 // steuert, dass im JobPosting-Schema nur maxValue gesetzt wird.
 export function parseSalaryRange(
   salary: string,
-): { min: number; max: number; nurObergrenze?: boolean } | null {
+): { min: number; max: number; unit: "YEAR" | "MONTH"; nurObergrenze?: boolean } | null {
   const nums = salary.match(/\d{1,3}(?:\.\d{3})+/g);
   if (!nums?.length) return null;
-  const vals = nums.map(n => parseInt(n.replace(/\./g, ""), 10)).filter(v => v >= 10000);
+
+  // Tarifstellen nennen häufig Monatsgehälter. Ohne Kenntnis der
+  // Sonderzahlungen wäre eine Hochrechnung aufs Jahr eine erfundene Zahl —
+  // deshalb wird die Einheit übernommen, wie der Arbeitgeber sie angibt.
+  const unit: "YEAR" | "MONTH" = /\/\s*monat|monatlich|pro monat/i.test(salary) ? "MONTH" : "YEAR";
+  const untergrenze = unit === "MONTH" ? 1000 : 10000;
+
+  const vals = nums.map(n => parseInt(n.replace(/\./g, ""), 10)).filter(v => v >= untergrenze);
   if (!vals.length) return null;
 
   const nurObergrenze = vals.length === 1 && /\bbis\b/i.test(salary);
-  const range = { min: Math.min(...vals), max: Math.max(...vals) };
+  const range = { min: Math.min(...vals), max: Math.max(...vals), unit };
   return nurObergrenze ? { ...range, nurObergrenze: true } : range;
 }
 
@@ -1527,6 +1534,50 @@ export const JOBS: Job[] = [
       "Strukturierte Einarbeitung und Produktschulungen",
       "Dienstrad-Leasing",
       "Gesundheitsprogramme und Mitarbeiterrabatte",
+    ],
+  },
+  {
+    id: "43",
+    title: "Elektroniker für Betriebstechnik (m/w/d)",
+    category: "elektro",
+    city: "Hamburg",
+    region: "Hamburg",
+    lat: 53.551,
+    lng: 10.0,
+    // Tarifliche Monatsvergütung, vom Arbeitgeber so ausgeschrieben.
+    salary: "4.204 – 4.321 €/Monat",
+    type: "Festanstellung",
+    datePosted: "2026-09-02",
+    tags: ["Instandhaltung", "Produktion", "Betriebstechnik"],
+    description: "Instandhaltung und Störungsbehebung an Produktionsanlagen in Hamburg. Wöchentlicher Wechsel zwischen Früh- und Spätschicht, keine regelmäßige Wochenendarbeit.",
+    intro: "Für einen Produktionsbetrieb in Hamburg suchen wir einen Elektroniker für Betriebstechnik. Sie arbeiten im wöchentlichen Wechsel zwischen Früh- und Spätschicht, von Montag bis Freitag – regelmäßige Wochenendarbeit fällt nicht an. Die Vergütung ist tariflich geregelt und steigt nach der Probezeit.",
+    aufgaben: [
+      "Fehlersuche und Behebung elektrischer, elektronischer und elektropneumatischer Störungen",
+      "Wartung, Instandhaltung und Reparatur von Maschinen und Anlagen",
+      "Eigenständige Analyse von Fehlerquellen und nachhaltige Störungsbeseitigung",
+      "Elektrische Installationsarbeiten und Anpassungen an Steuerungen",
+      "Optimierung von Anlagenverfügbarkeit und Produktionsprozessen",
+    ],
+    profil: [
+      "Abgeschlossene Ausbildung als Elektroniker für Betriebstechnik, Industrieelektriker oder Mechatroniker",
+      "Erfahrung in Wartung und Instandhaltung von Maschinen und Anlagen",
+      "Grundkenntnisse in Steuerungs- und Automatisierungstechnik",
+      "Selbstständige und strukturierte Arbeitsweise",
+      "Teamfähigkeit und Verantwortungsbewusstsein",
+    ],
+    posted: "Aktuell",
+    benefits: [
+      "Unbefristeter Arbeitsvertrag",
+      "Weihnachts- und Urlaubsgeld",
+      "Jährliche Gehaltsanpassung",
+      "Keine regelmäßige Wochenendarbeit",
+      "Zuschuss zur betrieblichen Altersvorsorge",
+      "Vermögenswirksame Leistungen",
+      "Zuschuss zum Deutschlandticket",
+      "Dienstrad-Leasing",
+      "Betriebskantine mit frisch gekochtem Essen",
+      "Weiterbildungsangebote",
+      "Externe Beratungsangebote zu Beruf und Familie",
     ],
   },
 ];

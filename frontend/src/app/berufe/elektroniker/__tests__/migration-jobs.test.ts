@@ -36,6 +36,6 @@ describe("Elektroniker-Migration – Jobs", () => {
   it("7 – sichtbare Reihenfolge ist deterministisch (Matcher-Reihenfolge)", () => {
     const a = matchJobsForProfession(JOBS, elektroniker).matches.map(m => m.job.id);
     expect(a).toEqual(matches.map(m => m.job.id));
-    expect(a).toEqual(["35", "28", "30", "1", "11", "12"]);
+    expect(a).toEqual(["43", "35", "28", "30", "1", "11"]);
   });
 });

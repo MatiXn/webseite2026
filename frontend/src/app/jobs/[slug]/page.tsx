@@ -150,7 +150,7 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
           // Arbeitgeber nicht gemacht hat.
           ...(salaryRange.nurObergrenze ? {} : { "minValue": salaryRange.min }),
           "maxValue": salaryRange.max,
-          "unitText": "YEAR",
+          "unitText": salaryRange.unit,
         },
       },
     } : {}),

@@ -94,15 +94,15 @@ describe("job-source: Sheet und data.ts zusammenführen", () => {
 
 describe("Gehaltsangaben", () => {
   it("9 – Spanne wird als min und max gelesen", () => {
-    expect(parseSalaryRange("45.000 – 50.000 €/Jahr")).toEqual({ min: 45000, max: 50000 });
+    expect(parseSalaryRange("45.000 – 50.000 €/Jahr")).toEqual({ min: 45000, max: 50000, unit: "YEAR" });
   });
 
   it("10 – reine Obergrenze wird als solche markiert", () => {
-    expect(parseSalaryRange("bis 55.000 €/Jahr")).toEqual({ min: 55000, max: 55000, nurObergrenze: true });
+    expect(parseSalaryRange("bis 55.000 €/Jahr")).toEqual({ min: 55000, max: 55000, unit: "YEAR", nurObergrenze: true });
   });
 
   it("11 – eine einzelne Zahl ohne 'bis' bleibt eine Punktangabe", () => {
-    expect(parseSalaryRange("55.000 €/Jahr")).toEqual({ min: 55000, max: 55000 });
+    expect(parseSalaryRange("55.000 €/Jahr")).toEqual({ min: 55000, max: 55000, unit: "YEAR" });
   });
 
   it("12 – ohne Zahlen keine Spanne", () => {
@@ -115,5 +115,21 @@ describe("Gehaltsangaben", () => {
       if (r) expect(r.min, job.id).toBeLessThanOrEqual(r.max);
       else expect(job.salary, job.id).toBe("Nach Vereinbarung");
     }
+  });
+});
+
+describe("Gehalt: Monatsangaben", () => {
+  it("14 – tarifliche Monatsvergütung wird als MONTH gelesen", () => {
+    expect(parseSalaryRange("4.204 – 4.321 €/Monat")).toEqual({ min: 4204, max: 4321, unit: "MONTH" });
+  });
+
+  it("15 – Jahresangaben bleiben YEAR", () => {
+    expect(parseSalaryRange("45.000 – 50.000 €/Jahr")?.unit).toBe("YEAR");
+  });
+
+  it("16 – Monatswerte rutschen nicht als Jahresgehalt durch", () => {
+    const r = parseSalaryRange("4.204 €/Monat")!;
+    expect(r.unit).toBe("MONTH");
+    expect(r.min).toBeLessThan(10000);
   });
 });
