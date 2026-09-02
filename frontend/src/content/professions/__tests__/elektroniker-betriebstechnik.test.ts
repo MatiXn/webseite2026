@@ -17,7 +17,7 @@ const hubSrc = read("../../../app/berufe/page.tsx");
 const sitemapMod = await import("../../../app/sitemap");
 const configSrc = read("../elektroniker-betriebstechnik.ts");
 
-const EXPECTED = ["1", "6", "8", "9", "11", "12", "24", "28"];
+const EXPECTED = ["1", "6", "8", "9", "11", "12", "24", "28", "43"];
 // Bewusst abgegrenzt (dürfen NICHT matchen):
 const EXCLUDED = ["5", "22", "13", "4", "3", "16", "23", "7", "10", "14", "20", "21", "17", "18", "19", "2", "15", "25"];
 
@@ -68,9 +68,12 @@ describe("Elektroniker für Betriebstechnik – Config", () => {
 
 describe("Elektroniker für Betriebstechnik – Matching", () => {
   const r = matchJobsForProfession(JOBS, elektronikerBetriebstechnik);
-  it("1 – exakt 8 Treffer (1,6,8,9,11,12,24,28), 0 ausgeschlossen", () => {
-    expect(r.matches.map((m) => m.job.id).sort((a, b) => Number(a) - Number(b))).toEqual(EXPECTED);
-    expect(r.totalMatched).toBe(8);
+  it("1 – exakt 9 Treffer (1,6,8,9,11,12,24,28,43), 0 ausgeschlossen", () => {
+    // Der Bestand übersteigt maxJobs — Gesamttreffer und sichtbare Auswahl
+    // sind deshalb getrennt zu prüfen.
+    const alle = matchJobsForProfession(JOBS, { ...elektronikerBetriebstechnik, jobMatch: { ...elektronikerBetriebstechnik.jobMatch, maxJobs: 99 } } as never);
+    expect(alle.matches.map((m) => m.job.id).sort((a, b) => Number(a) - Number(b))).toEqual(EXPECTED);
+    expect(r.totalMatched).toBe(9);
     expect(r.excludedCount).toBe(0);
   });
   it("2 – keine abgegrenzten Berufe (Energie-/Gebäude, MSR, Service, PV, SPS, Mechatronik, Instandhaltung-only, SHK)", () => {

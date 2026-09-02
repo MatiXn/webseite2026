@@ -5,7 +5,7 @@
 // automatisch mit dem Stellenbestand mit — und verschwindet wieder, wenn
 // Stellen besetzt werden.
 
-import { JOBS, distanceKm, type Job } from "../app/jobs/data";
+import { JOBS, distanceKm, parseSalaryRange, type Job } from "../app/jobs/data";
 import { matchJobsForConfig } from "../content-engine/job-matching";
 import { allCities, jobCities, type CityBase } from "./job-cities";
 import { jobRoles, type JobRole } from "./job-roles";
@@ -95,15 +95,19 @@ export function viableRoleCityPages(): RoleCityPage[] {
   return out;
 }
 
-/** Gehaltsspanne der tatsächlich gelisteten Stellen — echte Zahl je Seite. */
+/**
+ * Gehaltsspanne der tatsächlich gelisteten Stellen — echte Zahl je Seite.
+ *
+ * Nur Jahresangaben: Stellen mit tariflicher Monatsvergütung würden sonst mit
+ * ihrem Monatswert in die Spanne einfließen und sie nach unten verzerren. Eine
+ * Hochrechnung aufs Jahr scheidet aus, weil Sonderzahlungen unbekannt sind.
+ */
 export function salaryRangeOf(hits: RoleCityJob[]): { min: number; max: number } | null {
   const values: number[] = [];
   for (const { job } of hits) {
-    const nums = job.salary.match(/\d{1,3}(?:\.\d{3})+/g) ?? [];
-    for (const n of nums) {
-      const v = parseInt(n.replace(/\./g, ""), 10);
-      if (v >= 10000) values.push(v);
-    }
+    const range = parseSalaryRange(job.salary);
+    if (!range || range.unit !== "YEAR") continue;
+    values.push(range.min, range.max);
   }
   if (!values.length) return null;
   return { min: Math.min(...values), max: Math.max(...values) };
