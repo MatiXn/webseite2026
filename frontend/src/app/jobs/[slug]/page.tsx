@@ -157,6 +157,13 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
     "skills": job.tags.join(", "),
     "benefits": job.benefits?.join(", ") || "Festanstellung, Vollzeit",
     "url": `https://www.phe-perm.de${jobPath(job)}`,
+    // Google filtert die Jobsuche nach geforderter Berufserfahrung.
+    ...(job.minExperienceYears ? {
+      "experienceRequirements": {
+        "@type": "OccupationalExperienceRequirements",
+        "monthsOfExperience": job.minExperienceYears * 12,
+      },
+    } : {}),
     "applicantLocationRequirements": { "@type": "Country", "name": "Deutschland" },
     "directApply": true,
   };
