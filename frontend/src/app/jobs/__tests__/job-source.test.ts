@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { mergeSheetJobs, findJobForSheetRow, type SheetRow } from "../job-source";
-import { JOBS } from "../data";
+import { JOBS, parseSalaryRange } from "../data";
 import { jobIdFromParam, jobSlug } from "../../../lib/slug";
 import sheetSnapshot from "./sheet-snapshot.json";
 
@@ -88,6 +88,32 @@ describe("job-source: Sheet und data.ts zusammenführen", () => {
       const slug = `${jobSlug(job)}-${job.id}`;
       expect(jobIdFromParam(slug)).toBe(job.id);
       expect(JOBS.some(j => j.id === job.id)).toBe(true);
+    }
+  });
+});
+
+describe("Gehaltsangaben", () => {
+  it("9 – Spanne wird als min und max gelesen", () => {
+    expect(parseSalaryRange("45.000 – 50.000 €/Jahr")).toEqual({ min: 45000, max: 50000 });
+  });
+
+  it("10 – reine Obergrenze wird als solche markiert", () => {
+    expect(parseSalaryRange("bis 55.000 €/Jahr")).toEqual({ min: 55000, max: 55000, nurObergrenze: true });
+  });
+
+  it("11 – eine einzelne Zahl ohne 'bis' bleibt eine Punktangabe", () => {
+    expect(parseSalaryRange("55.000 €/Jahr")).toEqual({ min: 55000, max: 55000 });
+  });
+
+  it("12 – ohne Zahlen keine Spanne", () => {
+    expect(parseSalaryRange("Nach Vereinbarung")).toBeNull();
+  });
+
+  it("13 – jede Stelle hat entweder eine auswertbare Angabe oder bewusst keine", () => {
+    for (const job of JOBS) {
+      const r = parseSalaryRange(job.salary);
+      if (r) expect(r.min, job.id).toBeLessThanOrEqual(r.max);
+      else expect(job.salary, job.id).toBe("Nach Vereinbarung");
     }
   });
 });

@@ -145,7 +145,10 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
         "currency": "EUR",
         "value": {
           "@type": "QuantitativeValue",
-          "minValue": salaryRange.min,
+          // Nennt die Stelle nur eine Obergrenze, wird auch nur maxValue
+          // gesetzt — eine erfundene Untergrenze wäre eine Zusage, die der
+          // Arbeitgeber nicht gemacht hat.
+          ...(salaryRange.nurObergrenze ? {} : { "minValue": salaryRange.min }),
           "maxValue": salaryRange.max,
           "unitText": "YEAR",
         },
