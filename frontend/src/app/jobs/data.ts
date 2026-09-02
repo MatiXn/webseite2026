@@ -61,12 +61,22 @@ export function schemaLocationsOf(job: Job): { locality: string; region?: string
 }
 
 // "45.000 – 50.000 €/Jahr" → { min: 45000, max: 50000 }
-export function parseSalaryRange(salary: string): { min: number; max: number } | null {
+// "bis 55.000 €/Jahr"       → { min: 55000, max: 55000, nurObergrenze: true }
+//
+// Nennt eine Stelle nur eine Obergrenze, darf daraus keine Spanne werden: Eine
+// Untergrenze zu erfinden wäre eine Zusage, die niemand gemacht hat. Das Flag
+// steuert, dass im JobPosting-Schema nur maxValue gesetzt wird.
+export function parseSalaryRange(
+  salary: string,
+): { min: number; max: number; nurObergrenze?: boolean } | null {
   const nums = salary.match(/\d{1,3}(?:\.\d{3})+/g);
   if (!nums?.length) return null;
   const vals = nums.map(n => parseInt(n.replace(/\./g, ""), 10)).filter(v => v >= 10000);
   if (!vals.length) return null;
-  return { min: Math.min(...vals), max: Math.max(...vals) };
+
+  const nurObergrenze = vals.length === 1 && /\bbis\b/i.test(salary);
+  const range = { min: Math.min(...vals), max: Math.max(...vals) };
+  return nurObergrenze ? { ...range, nurObergrenze: true } : range;
 }
 
 export const JOBS: Job[] = [
@@ -1181,9 +1191,7 @@ export const JOBS: Job[] = [
     nationwide: true,
     lat: 51.165,
     lng: 10.451,
-    // Vom Auftraggeber ohne Gehaltsangabe übermittelt ("leistungsgerechte
-    // Vergütung"). Ohne Zahlen entfällt baseSalary im JobPosting-Schema.
-    salary: "Nach Vereinbarung",
+    salary: "bis 55.000 €/Jahr",
     type: "Festanstellung",
     datePosted: "2026-08-29",
     tags: ["Photovoltaik", "Bundesweit", "Homeoffice"],
@@ -1226,8 +1234,7 @@ export const JOBS: Job[] = [
     region: "Bayern",
     lat: 48.137,
     lng: 11.576,
-    // Ebenfalls ohne Gehaltsangabe übermittelt.
-    salary: "Nach Vereinbarung",
+    salary: "bis 60.000 €/Jahr",
     type: "Festanstellung",
     datePosted: "2026-08-29",
     tags: ["Außendienst", "Wochenmontage", "Mechatronik"],
