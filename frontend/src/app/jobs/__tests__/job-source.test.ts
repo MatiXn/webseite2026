@@ -19,9 +19,22 @@ describe("job-source: Sheet und data.ts zusammenführen", () => {
     expect(unmatched).toEqual([]);
   });
 
-  it("2 – liefert genau so viele Stellen wie das Sheet aktive Zeilen hat", () => {
-    const { jobs } = mergeSheetJobs(snapshotRows);
-    expect(jobs).toHaveLength(snapshotRows.length);
+  it("2 – liefert die Sheet-Zeilen plus die nur im Repository gepflegten Stellen", () => {
+    const { jobs, onlyInRepo } = mergeSheetJobs(snapshotRows);
+    expect(jobs).toHaveLength(snapshotRows.length + onlyInRepo.length);
+    // Keine Stelle doppelt.
+    const ids = jobs.map(j => j.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("2b – jede Stelle aus data.ts ohne Sheet-Zeile wird ausgeliefert und gemeldet", () => {
+    const { jobs, onlyInRepo } = mergeSheetJobs(snapshotRows);
+    const imSnapshot = new Set(snapshotRows.map(r => findJobForSheetRow(r)?.id));
+    for (const job of JOBS) {
+      if (imSnapshot.has(job.id) || job.active === false) continue;
+      expect(onlyInRepo.some(o => o.id === job.id), job.id).toBe(true);
+      expect(jobs.some(j => j.id === job.id), job.id).toBe(true);
+    }
   });
 
   it("3 – eine unbekannte Zeile wird gemeldet statt verlinkt", () => {
@@ -33,9 +46,18 @@ describe("job-source: Sheet und data.ts zusammenführen", () => {
     expect(jobs.some(j => j.city === "Kiel")).toBe(false);
   });
 
-  it("4 – inaktive Zeilen fallen raus", () => {
-    const { jobs } = mergeSheetJobs([{ ...snapshotRows[0], aktiv: false }]);
-    expect(jobs).toEqual([]);
+  it("4 – eine inaktive Sheet-Zeile schaltet die Stelle ab, auch wenn sie in data.ts steht", () => {
+    const abgeschaltet = mergeSheetJobs([{ ...snapshotRows[0], aktiv: false }]);
+    const treffer = findJobForSheetRow(snapshotRows[0])!;
+    expect(abgeschaltet.jobs.some(j => j.id === treffer.id)).toBe(false);
+  });
+
+  it("4b – active: false blendet eine Stelle ohne Sheet-Zeile aus", () => {
+    const { jobs } = mergeSheetJobs([]);
+    const sichtbar = new Set(jobs.map(j => j.id));
+    for (const job of JOBS) {
+      expect(sichtbar.has(job.id), job.id).toBe(job.active !== false);
+    }
   });
 
   it("5 – die ID hängt am Job, nicht an der Zeilenposition", () => {

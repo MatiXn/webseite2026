@@ -1,14 +1,18 @@
 // Zusammenführung der beiden Job-Quellen.
 //
-// Das Google Sheet steuert, welche Stellen aktiv ausgeschrieben sind, und hält
-// die schnell veränderlichen Felder (Gehalt, Kurzbeschreibung, Tags, Benefits).
-// `data.ts` hält die redaktionelle Tiefe (Einleitung, Aufgaben, Profil) und
-// vergibt die stabile ID, aus der die URL entsteht.
+// `data.ts` ist die Wahrheit über den Stellenbestand: dort stehen Inhalt,
+// stabile ID und die URL. Das Google Sheet ist das Steuerwerkzeug für die
+// tägliche Pflege — es kann Stellen deaktivieren und die schnell
+// veränderlichen Felder überschreiben (Gehalt, Kurzbeschreibung, Tags,
+// Benefits).
 //
-// Entscheidend: Es dürfen nur Stellen ausgeliefert werden, für die auch eine
-// Detailseite existiert. Vorher erzeugte das Sheet Listeneinträge mit
-// laufender Zeilennummer als ID — jede Zeile ohne Gegenstück in `data.ts`
-// verlinkte damit auf einen 404.
+// Daraus folgen zwei Regeln:
+//   1. Eine Sheet-Zeile ohne Gegenstück in `data.ts` wird nicht ausgeliefert.
+//      Vorher erzeugte das Sheet Listeneinträge mit laufender Zeilennummer als
+//      ID — jede solche Zeile verlinkte auf einen 404.
+//   2. Eine Stelle aus `data.ts` ohne Sheet-Zeile wird ausgeliefert, solange
+//      sie nicht `active: false` trägt. So lassen sich Stellen vollständig im
+//      Repository pflegen, ohne dass jemand das Sheet nachziehen muss.
 
 import { JOBS, type Job } from "./data";
 import { slugify } from "../../lib/slug";
@@ -47,20 +51,28 @@ export type MergeResult = {
   jobs: Job[];
   /** Sheet-Zeilen ohne Gegenstück in data.ts. Brauchen redaktionelle Pflege. */
   unmatched: { title: string; city: string }[];
+  /** Stellen aus data.ts, die (noch) keine Sheet-Zeile haben. Nur Information. */
+  onlyInRepo: { id: string; title: string; city: string }[];
 };
 
 export function mergeSheetJobs(rows: SheetRow[]): MergeResult {
   const jobs: Job[] = [];
   const unmatched: { title: string; city: string }[] = [];
+  const ausSheet = new Set<string>();
 
   for (const row of rows) {
-    if (!row.aktiv || !row.title) continue;
+    if (!row.title) continue;
 
     const base = findJobForSheetRow(row);
     if (!base) {
-      unmatched.push({ title: row.title, city: row.city });
+      if (row.aktiv) unmatched.push({ title: row.title, city: row.city });
       continue;
     }
+
+    // Die Sheet-Zeile hat das letzte Wort über die Sichtbarkeit — auch wenn sie
+    // die Stelle abschaltet.
+    ausSheet.add(base.id);
+    if (!row.aktiv) continue;
 
     // Sheet-Werte übernehmen, wo sie gepflegt sind; sonst den Stand aus data.ts.
     jobs.push({
@@ -72,5 +84,14 @@ export function mergeSheetJobs(rows: SheetRow[]): MergeResult {
     });
   }
 
-  return { jobs, unmatched };
+  // Stellen, die nur im Repository gepflegt sind, laufen mit — sonst müsste
+  // jede neu angelegte Stelle zusätzlich von Hand ins Sheet übertragen werden.
+  const onlyInRepo: { id: string; title: string; city: string }[] = [];
+  for (const job of JOBS) {
+    if (ausSheet.has(job.id) || job.active === false) continue;
+    onlyInRepo.push({ id: job.id, title: job.title, city: job.city });
+    jobs.push(job);
+  }
+
+  return { jobs, unmatched, onlyInRepo };
 }

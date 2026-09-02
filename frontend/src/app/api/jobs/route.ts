@@ -43,7 +43,14 @@ export async function GET() {
       };
     });
 
-    const { jobs, unmatched } = mergeSheetJobs(rows);
+    const { jobs, unmatched, onlyInRepo } = mergeSheetJobs(rows);
+
+    if (onlyInRepo.length) {
+      console.info(
+        `[jobs] ${onlyInRepo.length} Stelle(n) nur in data.ts gepflegt, ohne Sheet-Zeile: ` +
+        onlyInRepo.map(j => `#${j.id} "${j.title}" (${j.city})`).join(", ")
+      );
+    }
 
     // Eine Sheet-Zeile ohne Gegenstück in data.ts darf nicht in die Liste:
     // ihre Detailseite existiert nicht und der Link liefe auf einen 404.
