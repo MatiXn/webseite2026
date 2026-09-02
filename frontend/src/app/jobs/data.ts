@@ -1551,12 +1551,12 @@ export const JOBS: Job[] = [
     // Tariflich ausgeschrieben als Monatsgehalt (4.204 €, nach der Probezeit
     // 4.321 €). Auf Wunsch des Auftraggebers als Jahresgehalt geführt:
     // 4.321 € × 13 Gehälter = 56.173 €.
-    salary: "56.173 €/Jahr",
+    salary: "56.173 €/Jahr zzgl. Zulagen",
     type: "Festanstellung",
     datePosted: "2026-09-02",
     tags: ["Instandhaltung", "Produktion", "Betriebstechnik"],
     description: "Instandhaltung und Störungsbehebung an Produktionsanlagen in Hamburg, mindestens 3 Jahre Berufserfahrung. Wöchentlicher Wechsel Früh-/Spätschicht, keine regelmäßige Wochenendarbeit.",
-    intro: "Für einen Produktionsbetrieb in Hamburg suchen wir einen Elektroniker für Betriebstechnik mit mindestens drei Jahren Berufserfahrung. Sie arbeiten im wöchentlichen Wechsel zwischen Früh- und Spätschicht, von Montag bis Freitag – regelmäßige Wochenendarbeit fällt nicht an. Die Vergütung ist tariflich geregelt, steigt nach der Probezeit und wird auf 13 Monatsgehälter gerechnet.",
+    intro: "Für einen Produktionsbetrieb in Hamburg suchen wir einen Elektroniker für Betriebstechnik mit mindestens drei Jahren Berufserfahrung. Sie arbeiten im wöchentlichen Wechsel zwischen Früh- und Spätschicht, von Montag bis Freitag – regelmäßige Wochenendarbeit fällt nicht an. Die Vergütung ist tariflich geregelt, steigt nach der Probezeit und wird auf 13 Monatsgehälter gerechnet – Zulagen kommen zusätzlich hinzu.",
     aufgaben: [
       "Fehlersuche und Behebung elektrischer, elektronischer und elektropneumatischer Störungen",
       "Wartung, Instandhaltung und Reparatur von Maschinen und Anlagen",
@@ -1575,7 +1575,7 @@ export const JOBS: Job[] = [
     posted: "Aktuell",
     benefits: [
       "Unbefristeter Arbeitsvertrag",
-      "13 Monatsgehälter",
+      "13 Monatsgehälter zzgl. Zulagen",
       "Weihnachts- und Urlaubsgeld",
       "Jährliche Gehaltsanpassung",
       "Keine regelmäßige Wochenendarbeit",
