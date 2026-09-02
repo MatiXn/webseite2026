@@ -1266,9 +1266,7 @@ export const JOBS: Job[] = [
     region: "Berlin",
     lat: 52.52,
     lng: 13.405,
-    // Ohne Gehaltsangabe übermittelt (tarifgebundene Vergütung, keine Spanne
-    // genannt). Ohne Zahlen entfällt baseSalary im JobPosting-Schema.
-    salary: "Nach Vereinbarung",
+    salary: "55.000 – 65.000 €/Jahr",
     type: "Festanstellung",
     datePosted: "2026-09-02",
     tags: ["Kältetechnik", "Klimaanlagen", "Rufbereitschaft"],
@@ -1312,9 +1310,7 @@ export const JOBS: Job[] = [
     region: "Nordrhein-Westfalen",
     lat: 51.457,
     lng: 7.012,
-    // Ohne Gehaltsangabe übermittelt (tarifgebundene Vergütung, keine Spanne
-    // genannt). Ohne Zahlen entfällt baseSalary im JobPosting-Schema.
-    salary: "Nach Vereinbarung",
+    salary: "55.000 – 65.000 €/Jahr",
     type: "Festanstellung",
     datePosted: "2026-09-02",
     tags: ["Kältetechnik", "Klimaanlagen", "Rufbereitschaft"],
@@ -1358,9 +1354,7 @@ export const JOBS: Job[] = [
     region: "Sachsen",
     lat: 51.34,
     lng: 12.375,
-    // Ohne Gehaltsangabe übermittelt (tarifgebundene Vergütung, keine Spanne
-    // genannt). Ohne Zahlen entfällt baseSalary im JobPosting-Schema.
-    salary: "Nach Vereinbarung",
+    salary: "55.000 – 65.000 €/Jahr",
     type: "Festanstellung",
     datePosted: "2026-09-02",
     tags: ["Kältetechnik", "Klimaanlagen", "Rufbereitschaft"],
@@ -1404,9 +1398,7 @@ export const JOBS: Job[] = [
     region: "Bayern",
     lat: 48.137,
     lng: 11.576,
-    // Ohne Gehaltsangabe übermittelt (tarifgebundene Vergütung, keine Spanne
-    // genannt). Ohne Zahlen entfällt baseSalary im JobPosting-Schema.
-    salary: "Nach Vereinbarung",
+    salary: "55.000 – 65.000 €/Jahr",
     type: "Festanstellung",
     datePosted: "2026-09-02",
     tags: ["Kältetechnik", "Klimaanlagen", "Rufbereitschaft"],
@@ -1450,9 +1442,7 @@ export const JOBS: Job[] = [
     region: "Bayern",
     lat: 49.017,
     lng: 12.097,
-    // Ohne Gehaltsangabe übermittelt (tarifgebundene Vergütung, keine Spanne
-    // genannt). Ohne Zahlen entfällt baseSalary im JobPosting-Schema.
-    salary: "Nach Vereinbarung",
+    salary: "55.000 – 65.000 €/Jahr",
     type: "Festanstellung",
     datePosted: "2026-09-02",
     tags: ["Kältetechnik", "Klimaanlagen", "Rufbereitschaft"],
@@ -1496,9 +1486,7 @@ export const JOBS: Job[] = [
     region: "Baden-Württemberg",
     lat: 48.783,
     lng: 9.182,
-    // Ohne Gehaltsangabe übermittelt (tarifgebundene Vergütung, keine Spanne
-    // genannt). Ohne Zahlen entfällt baseSalary im JobPosting-Schema.
-    salary: "Nach Vereinbarung",
+    salary: "55.000 – 65.000 €/Jahr",
     type: "Festanstellung",
     datePosted: "2026-09-02",
     tags: ["Kältetechnik", "Klimaanlagen", "Rufbereitschaft"],
