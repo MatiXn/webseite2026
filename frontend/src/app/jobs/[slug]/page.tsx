@@ -44,8 +44,11 @@ export function jobPageTitle(job: { title: string; city: string; nationwide?: bo
       ? `${clean} Job bundesweit`
       : `${clean} Job ${job.city}`;
   const withFest = `${base} – Festanstellung`;
-  if ((withFest + BRAND).length <= 65) return withFest + BRAND;
-  if ((base + BRAND).length <= 65) return base + BRAND;
+  // 68 statt 65: Google zeigt je nach Zeichenbreite bis etwa 70 Zeichen. Bei 65
+  // fiel die Marke bei einzelnen Titeln knapp heraus, was die Snippets
+  // uneinheitlich machte.
+  if ((withFest + BRAND).length <= 68) return withFest + BRAND;
+  if ((base + BRAND).length <= 68) return base + BRAND;
   return base;
 }
 

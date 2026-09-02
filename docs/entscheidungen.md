@@ -302,3 +302,37 @@ jsdom, `.test.ts` unverändert in Node.
 `@vitejs/plugin-react` wurde **nicht** aufgenommen: Version 6 verlangt Vite 8,
 Vitest 2 bringt Vite 5 mit. JSX übersetzt stattdessen esbuild
 (`esbuild: { jsx: "automatic" }`) — für Tests ausreichend.
+
+## data.ts liefert auch ohne Sheet-Zeile aus
+
+**Belegt:** `mergeSheetJobs` in `frontend/src/app/jobs/job-source.ts` nimmt
+Stellen aus `data.ts` jetzt auch dann in die Ausgabe, wenn dafür keine Zeile im
+Google Sheet existiert — ausgenommen Stellen mit `active: false`. Existiert eine
+Sheet-Zeile, entscheidet weiterhin das Sheet, auch wenn es die Stelle abschaltet.
+
+Vorher war eine Sheet-Zeile Pflicht: Eine im Repository angelegte Stelle hatte
+Detailseite, Sitemap-Eintrag und JobPosting-Schema, fehlte aber in der Übersicht
+unter `/jobs`. Jede neu gepflegte Stelle musste zusätzlich von Hand ins Sheet
+übertragen werden.
+
+Die Rollen sind damit klar getrennt: `data.ts` ist die Wahrheit über den
+Bestand, das Sheet bleibt das Werkzeug für die tägliche Pflege — Stellen
+abschalten und die veränderlichen Felder (Gehalt, Kurzbeschreibung, Tags,
+Benefits) überschreiben. Stellen ohne Sheet-Zeile werden beim Abruf
+protokolliert.
+
+## Sichtbare Trefferlisten diversifizieren nach Titel
+
+**Belegt:** `matchJobsForConfig` in
+`frontend/src/content-engine/job-matching/match-jobs-for-profession.ts` lässt
+höchstens `MAX_JE_TITEL` (2) Stellen mit identischem Titel in den vorderen Teil
+der Liste; die übrigen rutschen ans Ende statt aus ihr heraus.
+
+Anlass: Sechs Servicetechniker-Stellen derselben Position an sechs Standorten
+haben denselben Titel, denselben Score und dasselbe Veröffentlichungsdatum. Auf
+`/berufe/mechatroniker` füllten sie damit die komplette sichtbare Liste und
+verdrängten sämtliche anderen Treffer — die Seite zeigte sechsmal dieselbe
+Position mit unterschiedlichem Ort.
+
+Die Sortierung bleibt deterministisch: Innerhalb beider Gruppen gilt weiter
+Score, dann Veröffentlichungsdatum, dann ID.
