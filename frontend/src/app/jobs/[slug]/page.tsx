@@ -118,13 +118,24 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
     "datePosted": job.datePosted,
     "validThrough": validThroughOf(job),
     "employmentType": "FULL_TIME",
+    // Zusätzlich als EmploymentAgency ausgezeichnet: Die einstellende Stelle im
+    // Sinne des Schemas ist die Vermittlung, nicht der Betrieb — und das ist
+    // maschinenlesbar besser, als es unter "Organization" zu verbergen. Die
+    // Organisation der Website trägt denselben Typ.
     "hiringOrganization": {
-      "@type": "Organization",
+      "@type": ["Organization", "EmploymentAgency"],
       "name": "PHE-Perm Engineering Ingenieure & Techniker GmbH",
       "url": "https://www.phe-perm.de",
       "sameAs": "https://www.phe-perm.de",
       "logo": "https://www.phe-perm.de/phe-logo.png",
     },
+    // Stellt klar, in welcher Rolle wir ausschreiben. Google wertet das Feld
+    // für die Darstellung in der Jobsuche aus.
+    "employerOverview":
+      "PHE-Perm Engineering ist eine spezialisierte Personalvermittlung für technische Fachkräfte. " +
+      "Diese Position schreiben wir im Auftrag eines Kundenunternehmens aus und vermitteln in eine " +
+      "direkte, unbefristete Festanstellung bei diesem Unternehmen – keine Arbeitnehmerüberlassung " +
+      "und keine Zeitarbeit. Für Bewerber ist die Vermittlung kostenfrei.",
     "jobLocation": schemaLocationsOf(job).length
       ? schemaLocationsOf(job).map(loc => ({
           "@type": "Place",
