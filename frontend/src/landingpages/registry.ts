@@ -6,8 +6,12 @@
 
 import type { LandingpageConfig } from "./typen";
 import { kaeltetechnikerKoeln } from "./kampagnen/kaeltetechniker-koeln";
+import { kaeltetechnikerDeutschland } from "./kampagnen/kaeltetechniker-deutschland";
 
-export const KAMPAGNEN: LandingpageConfig[] = [kaeltetechnikerKoeln];
+export const KAMPAGNEN: LandingpageConfig[] = [
+  kaeltetechnikerKoeln,
+  kaeltetechnikerDeutschland,
+];
 
 export function findeKampagne(slug: string): LandingpageConfig | undefined {
   return KAMPAGNEN.find((k) => k.slug === slug);

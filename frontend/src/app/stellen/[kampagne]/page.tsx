@@ -31,9 +31,10 @@ export async function generateMetadata({
   if (!config) return {};
 
   const url = `${BASIS_URL}${kampagnenPfad(config)}`;
-  const bild = config.heroBild
-    ? `${BASIS_URL}${config.heroBild.pfad}`
-    : `${BASIS_URL}/jobs/opengraph-image`;
+  // Eigenes Vorschaubild je Kampagne (siehe opengraph-image.tsx). Trägt
+  // Position, Einsatzgebiet und die drei stärksten Vorteile — beim Teilen auf
+  // LinkedIn, Xing oder WhatsApp steht damit das Wesentliche schon im Bild.
+  const bild = `${BASIS_URL}/stellen/${config.slug}/opengraph-image`;
 
   return {
     // `absolute` umgeht die Vorlage aus dem Root-Layout ("%s | PHE-Perm
