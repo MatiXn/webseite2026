@@ -4,29 +4,12 @@ import type { Metadata } from "next";
 import { JOBS } from "../../data";
 import { jobSlug, jobPath, jobIdFromParam } from "../../../../lib/slug";
 import SocialHub from "./SocialHub";
+import { buildCaption } from "../../../../content/social-caption";
 
 export const metadata: Metadata = {
   title: "Social-Media-Kit",
   robots: { index: false, follow: false },
 };
-
-function buildCaption(job: (typeof JOBS)[number]): string {
-  const benefits = job.benefits.slice(0, 4).map(b => `✅ ${b}`).join("\n");
-  return `💰 ${job.salary} – ${job.title} in ${job.city} gesucht!
-
-📍 ${job.city}, ${job.region}
-📃 ${job.type} – direkt beim Unternehmen, keine Zeitarbeit
-
-Das erwartet dich:
-${benefits}
-
-Bewerbung dauert 60 Sekunden – ohne Anschreiben, ohne Lebenslauf.
-100 % kostenlos & unverbindlich. Wir melden uns innerhalb von 24 h. 👇
-
-🔗 Link in Bio oder direkt: phe-perm.de${jobPath(job)}
-
-#job #jobs #karriere #stellenangebot #${job.category} #${job.city.split(",")[0].replace(/[^a-zA-ZäöüÄÖÜß]/g, "").toLowerCase()} #handwerk #techniker #festanstellung #jobsuche #neuerjob #phePerm`;
-}
 
 export function generateStaticParams() {
   return JOBS.map(j => ({ slug: `${jobSlug(j)}-${j.id}` }));
