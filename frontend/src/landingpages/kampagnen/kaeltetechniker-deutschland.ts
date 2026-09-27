@@ -12,8 +12,12 @@ import type { LandingpageConfig } from "../typen";
 //
 //   - Gehaltsspanne über alle Stellen: 45.000 (Köln) bis 65.000 (München u. a.)
 //   - 30 Tage Urlaub: in allen 14 Datensätzen hinterlegt
-//   - Dienstwagen und unbefristeter Vertrag: in den Daten nur lückenhaft
-//     gepflegt, laut Auskunft vom 26.09.2026 aber bei allen Stellen zugesagt
+//   - Unbefristeter Vertrag: laut Auskunft vom 26.09.2026 bei allen Stellen;
+//     am 27.09.2026 in data.ts für alle 44 Stellen nachgetragen
+//   - Fahrzeug: 12 der 14 Stellen bieten eines mit Privatnutzung. Würzburg (44)
+//     stellt nur ein Poolfahrzeug, der Hamburger Qualitätssicherer (29) arbeitet
+//     im Innendienst. Deshalb "bei fast allen Stellen" statt einer pauschalen
+//     Zusage — die fiele sonst im Gespräch auf.
 //
 // Bewusst NICHT übernommen aus der Köln-Seite: „ausschließlich B2B-Kunden"
 // (nur 1 von 14) und „nur Tagesreisen" (10 von 14). Beides wäre hier falsch.
@@ -34,7 +38,7 @@ export const kaeltetechnikerDeutschland: LandingpageConfig = {
 
   vorteile: [
     { titel: "45.000–65.000 €", zusatz: "Jahresgehalt je nach Region" },
-    { titel: "Dienstwagen", zusatz: "inklusive Privatnutzung" },
+    { titel: "Dienstwagen", zusatz: "bei fast allen Stellen privat nutzbar" },
     { titel: "30 Tage Urlaub", zusatz: "Zeit für das, was zählt" },
     { titel: "Unbefristet", zusatz: "Festanstellung beim Arbeitgeber" },
   ],

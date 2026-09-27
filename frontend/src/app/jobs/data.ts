@@ -121,7 +121,7 @@ export const JOBS: Job[] = [
       "Sorgfältige und selbstständige Arbeitsweise",
     ],
     posted: "vor 2 Tagen",
-    benefits: ["30 Tage Urlaub", "Gleitzeit", "Betriebliche Altersvorsorge", "Weiterbildungsbudget"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "30 Tage Urlaub", "Gleitzeit", "Betriebliche Altersvorsorge", "Weiterbildungsbudget"],
   },
   {
     id: "2",
@@ -153,7 +153,7 @@ export const JOBS: Job[] = [
       "Gute Deutschkenntnisse und sicheres Auftreten beim Kunden",
     ],
     posted: "vor 3 Tagen",
-    benefits: ["Firmenwagen (auch privat)", "30 Tage Urlaub", "Spesen & Auslöse", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Firmenwagen (auch privat)", "30 Tage Urlaub", "Spesen & Auslöse", "Betriebliche Altersvorsorge"],
   },
   {
     id: "3",
@@ -185,7 +185,7 @@ export const JOBS: Job[] = [
       "Selbstständige und zuverlässige Arbeitsweise",
     ],
     posted: "vor 1 Woche",
-    benefits: ["Keine Wochenendarbeit", "Firmenwagen", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Keine Wochenendarbeit", "Firmenwagen", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "4",
@@ -217,7 +217,7 @@ export const JOBS: Job[] = [
       "Teamfähigkeit und eine sorgfältige Arbeitsweise",
     ],
     posted: "vor 4 Tagen",
-    benefits: ["Überstundenausgleich", "Weiterbildungsbudget", "Jobticket", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Dienstwagen mit Privatnutzung", "Überstundenausgleich", "Weiterbildungsbudget", "Jobticket", "Betriebliche Altersvorsorge"],
   },
   {
     id: "5",
@@ -249,7 +249,7 @@ export const JOBS: Job[] = [
       "Strukturierte und eigenverantwortliche Arbeitsweise",
     ],
     posted: "vor 5 Tagen",
-    benefits: ["Keine Schichtarbeit", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Mitarbeiterrabatte"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Keine Schichtarbeit", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Mitarbeiterrabatte"],
   },
   {
     id: "6",
@@ -281,7 +281,7 @@ export const JOBS: Job[] = [
       "Zuverlässige, lösungsorientierte Arbeitsweise",
     ],
     posted: "vor 6 Tagen",
-    benefits: ["30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge", "Kantine"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge", "Kantine"],
   },
   {
     id: "7",
@@ -313,7 +313,7 @@ export const JOBS: Job[] = [
       "Analytische und strukturierte Arbeitsweise",
     ],
     posted: "vor 3 Tagen",
-    benefits: ["Homeoffice möglich", "30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Homeoffice möglich", "30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge"],
   },
   {
     id: "8",
@@ -345,7 +345,7 @@ export const JOBS: Job[] = [
       "Sorgfältige und teamorientierte Arbeitsweise",
     ],
     posted: "vor 1 Woche",
-    benefits: ["30 Tage Urlaub", "Schichtzulage", "Betriebliche Altersvorsorge", "Mitarbeiterrabatte"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "30 Tage Urlaub", "Schichtzulage", "Betriebliche Altersvorsorge", "Mitarbeiterrabatte"],
   },
   {
     id: "9",
@@ -377,7 +377,7 @@ export const JOBS: Job[] = [
       "Hands-on-Mentalität und selbstständige Arbeitsweise",
     ],
     posted: "vor 2 Wochen",
-    benefits: ["30 Tage Urlaub", "Betriebliche Altersvorsorge", "Jobrad", "Mitarbeiterevents"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Jobrad", "Mitarbeiterevents"],
   },
   {
     id: "10",
@@ -409,7 +409,7 @@ export const JOBS: Job[] = [
       "Sorgfältige, qualitätsbewusste Arbeitsweise",
     ],
     posted: "vor 3 Tagen",
-    benefits: ["30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge", "Moderne Werkzeuge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge", "Moderne Werkzeuge"],
   },
   {
     id: "11",
@@ -441,7 +441,7 @@ export const JOBS: Job[] = [
       "Belastbarkeit und zuverlässige Arbeitsweise",
     ],
     posted: "vor 5 Tagen",
-    benefits: ["30 Tage Urlaub", "Schichtzulage", "Betriebliche Altersvorsorge", "Kantine"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "30 Tage Urlaub", "Schichtzulage", "Betriebliche Altersvorsorge", "Kantine"],
   },
   {
     id: "12",
@@ -473,7 +473,7 @@ export const JOBS: Job[] = [
       "Teamfähigkeit und strukturierte Arbeitsweise",
     ],
     posted: "vor 1 Woche",
-    benefits: ["Keine Wochenendarbeit", "Schichtzulage", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Keine Wochenendarbeit", "Schichtzulage", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "13",
@@ -505,7 +505,7 @@ export const JOBS: Job[] = [
       "Selbstständige und dienstleistungsorientierte Arbeitsweise",
     ],
     posted: "vor 4 Tagen",
-    benefits: ["Firmenwagen", "30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Firmenwagen", "30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge"],
   },
   {
     id: "14",
@@ -537,7 +537,7 @@ export const JOBS: Job[] = [
       "Eigenverantwortliche und flexible Arbeitsweise",
     ],
     posted: "vor 2 Tagen",
-    benefits: ["Firmenwagen (auch privat)", "Spesen & Auslöse", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Firmenwagen (auch privat)", "Spesen & Auslöse", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "15",
@@ -569,7 +569,7 @@ export const JOBS: Job[] = [
       "Selbstständige, kundenorientierte Arbeitsweise",
     ],
     posted: "vor 3 Tagen",
-    benefits: ["Kein Übernachten", "Firmenwagen", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Kein Übernachten", "Firmenwagen", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "16",
@@ -601,7 +601,7 @@ export const JOBS: Job[] = [
       "Gute Deutschkenntnisse und selbstständige Arbeitsweise",
     ],
     posted: "vor 6 Tagen",
-    benefits: ["Firmenwagen (auch privat)", "Weiterbildungsbudget", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Firmenwagen (auch privat)", "Weiterbildungsbudget", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "17",
@@ -633,7 +633,7 @@ export const JOBS: Job[] = [
       "Zuverlässige und genaue Arbeitsweise",
     ],
     posted: "vor 1 Woche",
-    benefits: ["30 Tage Urlaub", "Betriebliche Altersvorsorge", "Jobticket", "Mitarbeiterevents"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Jobticket", "Mitarbeiterevents"],
   },
   {
     id: "18",
@@ -665,7 +665,7 @@ export const JOBS: Job[] = [
       "Hohes Maß an Selbstorganisation",
     ],
     posted: "vor 4 Tagen",
-    benefits: ["Firmenwagen (auch privat)", "Spesen & Auslöse", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Firmenwagen (auch privat)", "Spesen & Auslöse", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "19",
@@ -697,7 +697,7 @@ export const JOBS: Job[] = [
       "Freundliches Auftreten und saubere Arbeitsweise",
     ],
     posted: "vor 2 Wochen",
-    benefits: ["30 Tage Urlaub", "Firmenwagen", "Weiterbildungsbudget", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "30 Tage Urlaub", "Firmenwagen", "Weiterbildungsbudget", "Betriebliche Altersvorsorge"],
   },
   {
     id: "20",
@@ -729,7 +729,7 @@ export const JOBS: Job[] = [
       "Gute Deutschkenntnisse und zuverlässige Arbeitsweise",
     ],
     posted: "vor 3 Tagen",
-    benefits: ["30 Tage Urlaub", "Betriebliche Altersvorsorge", "Jobticket", "Weiterbildungsbudget"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Dienstwagen mit Privatnutzung", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Jobticket", "Weiterbildungsbudget"],
   },
   {
     id: "21",
@@ -761,7 +761,7 @@ export const JOBS: Job[] = [
       "Selbstständige, verantwortungsbewusste Arbeitsweise",
     ],
     posted: "vor 5 Tagen",
-    benefits: ["Firmenwagen (auch privat)", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Spesen & Auslöse"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Firmenwagen (auch privat)", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Spesen & Auslöse"],
   },
   {
     id: "22",
@@ -793,7 +793,7 @@ export const JOBS: Job[] = [
       "Strukturierte, eigenverantwortliche Arbeitsweise",
     ],
     posted: "vor 1 Woche",
-    benefits: ["Homeoffice möglich", "30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Homeoffice möglich", "30 Tage Urlaub", "Weiterbildungsbudget", "Betriebliche Altersvorsorge"],
   },
   {
     id: "23",
@@ -826,7 +826,7 @@ export const JOBS: Job[] = [
       "Gute Deutschkenntnisse und sicheres Auftreten beim Kunden",
     ],
     posted: "vor 2 Tagen",
-    benefits: ["Firmenwagen (auch privat)", "Spesen & Auslöse", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Firmenwagen (auch privat)", "Spesen & Auslöse", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "24",
@@ -858,7 +858,7 @@ export const JOBS: Job[] = [
       "Teamfähigkeit und zuverlässige Arbeitsweise",
     ],
     posted: "vor 4 Tagen",
-    benefits: ["30 Tage Urlaub", "Betriebliche Altersvorsorge", "Kantine", "Mitarbeiterrabatte"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Kantine", "Mitarbeiterrabatte"],
   },
   {
     id: "25",
@@ -890,7 +890,7 @@ export const JOBS: Job[] = [
       "Gute Deutschkenntnisse und eigenständige Arbeitsweise",
     ],
     posted: "vor 6 Tagen",
-    benefits: ["Kein Übernachten", "Firmenwagen (auch privat)", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Kein Übernachten", "Firmenwagen (auch privat)", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "26",
@@ -922,7 +922,7 @@ export const JOBS: Job[] = [
       "Selbstständige Arbeitsweise und Freude am Kundenkontakt",
     ],
     posted: "Aktuell",
-    benefits: ["Firmenwagen", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Weiterbildungsbudget"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Firmenwagen", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Weiterbildungsbudget"],
   },
   {
     id: "27",
@@ -955,7 +955,7 @@ export const JOBS: Job[] = [
       "Gute Deutschkenntnisse und selbstständige Arbeitsweise",
     ],
     posted: "Aktuell",
-    benefits: ["Firmenwagen (auch privat)", "Spesen & Auslöse", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Firmenwagen (auch privat)", "Spesen & Auslöse", "30 Tage Urlaub", "Betriebliche Altersvorsorge"],
   },
   {
     id: "28",
@@ -987,7 +987,7 @@ export const JOBS: Job[] = [
       "Gute Deutschkenntnisse in Wort und Schrift",
     ],
     posted: "Aktuell",
-    benefits: ["Schichtzulage", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Keine Wochenendarbeit"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Schichtzulage", "30 Tage Urlaub", "Betriebliche Altersvorsorge", "Keine Wochenendarbeit"],
   },
   {
     id: "29",
@@ -1019,7 +1019,7 @@ export const JOBS: Job[] = [
       "Gute Deutschkenntnisse in Wort und Schrift",
     ],
     posted: "Aktuell",
-    benefits: ["Tarifvertrag", "Keine Schichtarbeit", "30 Tage Urlaub", "Weiterbildungen", "Job-Rad"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Tarifvertrag", "Keine Schichtarbeit", "30 Tage Urlaub", "Weiterbildungen", "Job-Rad"],
   },
   {
     id: "30",
@@ -1052,7 +1052,7 @@ export const JOBS: Job[] = [
       "Gute Deutschkenntnisse in Wort und Schrift",
     ],
     posted: "Aktuell",
-    benefits: ["Sicheres Arbeitsumfeld", "30 Tage Urlaub", "Aufstiegsmöglichkeiten", "Betriebliche Altersvorsorge", "Vermögenswirksame Leistungen", "Job-Rad"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Sicheres Arbeitsumfeld", "30 Tage Urlaub", "Aufstiegsmöglichkeiten", "Betriebliche Altersvorsorge", "Vermögenswirksame Leistungen", "Job-Rad"],
   },
   {
     id: "31",
@@ -1085,7 +1085,7 @@ export const JOBS: Job[] = [
       "Gute Deutschkenntnisse in Wort und Schrift",
     ],
     posted: "Aktuell",
-    benefits: ["Sicheres Arbeitsumfeld", "30 Tage Urlaub", "Aufstiegsmöglichkeiten", "Betriebliche Altersvorsorge", "Vermögenswirksame Leistungen", "Job-Rad"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Sicheres Arbeitsumfeld", "30 Tage Urlaub", "Aufstiegsmöglichkeiten", "Betriebliche Altersvorsorge", "Vermögenswirksame Leistungen", "Job-Rad"],
   },
   {
     id: "32",
@@ -1118,7 +1118,7 @@ export const JOBS: Job[] = [
       "Gute Deutschkenntnisse und sicheres Auftreten beim Kunden",
     ],
     posted: "Aktuell",
-    benefits: ["Firmenwagen mit Privatnutzung", "13. Gehalt", "Bonuszahlung", "30 Tage Urlaub", "50 € Sachbezug monatlich"],
+    benefits: ["Unbefristeter Arbeitsvertrag", "Firmenwagen mit Privatnutzung", "13. Gehalt", "Bonuszahlung", "30 Tage Urlaub", "50 € Sachbezug monatlich"],
   },
   {
     id: "33",
@@ -1227,6 +1227,7 @@ export const JOBS: Job[] = [
     ],
     posted: "Aktuell",
     benefits: [
+      "Dienstwagen mit Privatnutzung",
       "Unbefristeter Arbeitsvertrag",
       "Wohnort bundesweit frei wählbar",
       "Flexible Arbeitszeiten mit Homeoffice-Anteil",
@@ -1308,6 +1309,7 @@ export const JOBS: Job[] = [
     ],
     posted: "Aktuell",
     benefits: [
+      "Unbefristeter Arbeitsvertrag",
       "Kundendienstfahrzeug auch zur Privatnutzung",
       "Tarifgebundene Vergütung mit Leistungszulagen und Sonderzahlungen",
       "Jährliche Gewinnbeteiligung",
@@ -1352,6 +1354,7 @@ export const JOBS: Job[] = [
     ],
     posted: "Aktuell",
     benefits: [
+      "Unbefristeter Arbeitsvertrag",
       "Kundendienstfahrzeug auch zur Privatnutzung",
       "Tarifgebundene Vergütung mit Leistungszulagen und Sonderzahlungen",
       "Jährliche Gewinnbeteiligung",
@@ -1396,6 +1399,7 @@ export const JOBS: Job[] = [
     ],
     posted: "Aktuell",
     benefits: [
+      "Unbefristeter Arbeitsvertrag",
       "Kundendienstfahrzeug auch zur Privatnutzung",
       "Tarifgebundene Vergütung mit Leistungszulagen und Sonderzahlungen",
       "Jährliche Gewinnbeteiligung",
@@ -1440,6 +1444,7 @@ export const JOBS: Job[] = [
     ],
     posted: "Aktuell",
     benefits: [
+      "Unbefristeter Arbeitsvertrag",
       "Kundendienstfahrzeug auch zur Privatnutzung",
       "Tarifgebundene Vergütung mit Leistungszulagen und Sonderzahlungen",
       "Jährliche Gewinnbeteiligung",
@@ -1484,6 +1489,7 @@ export const JOBS: Job[] = [
     ],
     posted: "Aktuell",
     benefits: [
+      "Unbefristeter Arbeitsvertrag",
       "Kundendienstfahrzeug auch zur Privatnutzung",
       "Tarifgebundene Vergütung mit Leistungszulagen und Sonderzahlungen",
       "Jährliche Gewinnbeteiligung",
@@ -1528,6 +1534,7 @@ export const JOBS: Job[] = [
     ],
     posted: "Aktuell",
     benefits: [
+      "Unbefristeter Arbeitsvertrag",
       "Kundendienstfahrzeug auch zur Privatnutzung",
       "Tarifgebundene Vergütung mit Leistungszulagen und Sonderzahlungen",
       "Jährliche Gewinnbeteiligung",
