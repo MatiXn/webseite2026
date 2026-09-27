@@ -20,10 +20,9 @@
       Dublettenschutz greift. Testdaten wurden wieder gelöscht.
 - [ ] Erste echte Bewerbung abwarten und prüfen, ob Mail und Datensatz im
       Alltag taugen.
-- [ ] Mobile Darstellung noch nicht mit echtem Viewport geprüft: In der
-      Testumgebung ließ sich der Browser-Viewport nicht unter 1440 px bringen.
-      Struktur ist mobile-first, Touchflächen ab 44 px, kein horizontaler
-      Überlauf — eine Sichtprüfung auf einem echten Gerät steht aus.
+- [x] Mobile Darstellung am 28.09.2026 auf einem echten Gerät geprüft und für
+      gut befunden. (In der Testumgebung ließ sich der Browser-Viewport nicht
+      unter 1440 px bringen, deshalb war das offengeblieben.)
 - [ ] Kein Löschkonzept für `recruiting_leads`. Üblich sind sechs Monate nach
       Abschluss des Besetzungsverfahrens; derzeit keine automatische Löschung.
 - [ ] Salesforce-Feldzuordnung (`Recruiting_*__c` in
