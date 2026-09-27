@@ -105,9 +105,25 @@ supported". Die vorhandenen Social-Bilder sind PNG, weil `ImageResponse`
 nichts anderes erzeugt.
 
 Deshalb gibt es `frontend/src/app/jobs/[slug]/instagram-image/route.ts`: Sie
-holt das fertige PNG der jeweiligen Route und wandelt es mit `sharp` in JPEG.
-Ändert sich die Gestaltung der Social-Bilder, zieht diese Route automatisch
-mit — es gibt kein zweites Layout zu pflegen.
+holt das fertige PNG der jeweiligen Route und wandelt es um. Ändert sich die
+Gestaltung der Social-Bilder, zieht diese Route automatisch mit — es gibt kein
+zweites Layout zu pflegen.
+
+Umgewandelt wird mit `pngjs` und `jpeg-js`, nicht mit `sharp`. Das hat einen
+Grund: sharp lädt seine nativen Bibliotheken erst zur Laufzeit per `dlopen`.
+Der Datei-Tracer von Next.js erkennt sie deshalb nicht und liefert sie nicht
+mit — in Produktion scheiterte der Import an
+`libvips-cpp.so.8.18.6: cannot open shared object file`, obwohl alle
+Linux-Binärdateien samt Prüfsumme im Lockfile standen. Weder ein Build ohne
+Cache noch `outputFileTracingIncludes` halfen. Die beiden reinen
+JavaScript-Bibliotheken haben keine eigenen Abhängigkeiten und laufen überall
+gleich; sie sind langsamer, aber das Ergebnis wird einen Tag zwischengespeichert.
+
+Der interne Abruf des Quellbilds schickt den Automatisierungs-Bypass mit
+(`VERCEL_AUTOMATION_BYPASS_SECRET`, in jedem Deployment als Systemvariable
+vorhanden). Ohne ihn landet die Route in geschützten Preview-Deployments auf
+der Anmeldeseite statt beim Bild und kann nichts umwandeln. In Produktion gibt
+es keinen Schutz — dort ist die Kopfzeile wirkungslos.
 
 Das Skript prüft vor dem Posten per HEAD-Anfrage, dass wirklich `image/jpeg`
 ausgeliefert wird. Sonst bricht es mit klarer Meldung ab, statt in den
