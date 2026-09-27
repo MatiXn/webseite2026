@@ -82,6 +82,9 @@ cd frontend && npm run dev                     # Frontend
 - **Service-Role-Key niemals ins Frontend:** `backend/.env.example` warnt explizit, dass `SUPABASE_SERVICE_ROLE_KEY` volle DB-Rechte hat; das Frontend darf laut `frontend/.env.example` nur `NEXT_PUBLIC_`-Variablen und den `ANON_KEY` verwenden.
 - **Rate-Limiting ist in-memory ohne `REDIS_URL`:** funktioniert laut Kommentar in `.env.example` nur für eine einzelne Instanz; für Multi-Instance-Betrieb wäre Redis nötig.
 - **`api/routes/` und `services/` sind leer:** neue Endpunkte aktuell alle direkt in `backend/app/main.py`, nicht in separate Router-Module ausgelagert.
+- **Git-Remote ist SSH, nicht HTTPS** (seit 27.09.2026). Der GitHub-Eintrag im
+  macOS-Schlüsselbund war weg, HTTPS-Pushes scheiterten mit „could not read
+  Username". `~/.ssh/id_ed25519` ist bei GitHub hinterlegt und funktioniert.
 - **Zwei Supabase-Migrationsordner mit verschiedenen Zielen:**
   `backend/supabase/migrations/` gehört zur ATS-Datenbank des FastAPI-Backends.
   `frontend/supabase/migrations/` gehört zu den Recruiting-Landingpages und
