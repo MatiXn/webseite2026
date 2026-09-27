@@ -50,6 +50,15 @@ const nextConfig: NextConfig = {
     ];
   },
 
+  // sharp laedt seine nativen Bibliotheken erst zur Laufzeit per dlopen. Der
+  // Datei-Tracer von Next.js erkennt sie deshalb nicht und liefert sie nicht
+  // mit — in Produktion scheitert der Import dann an
+  // "libvips-cpp.so: cannot open shared object file". Die Binaerdateien
+  // deshalb ausdruecklich in die Serverless-Function aufnehmen.
+  outputFileTracingIncludes: {
+    "/jobs/[slug]/instagram-image": ["./node_modules/@img/**/*"],
+  },
+
   images: {
     remotePatterns: [
       {
