@@ -14,10 +14,11 @@ import type { LandingpageConfig } from "../typen";
 //   - 30 Tage Urlaub: in allen 14 Datensätzen hinterlegt
 //   - Unbefristeter Vertrag: laut Auskunft vom 26.09.2026 bei allen Stellen;
 //     am 27.09.2026 in data.ts für alle 44 Stellen nachgetragen
-//   - Fahrzeug: 12 der 14 Stellen bieten eines mit Privatnutzung. Würzburg (44)
-//     stellt nur ein Poolfahrzeug, der Hamburger Qualitätssicherer (29) arbeitet
-//     im Innendienst. Deshalb "bei fast allen Stellen" statt einer pauschalen
-//     Zusage — die fiele sonst im Gespräch auf.
+//   - Fahrzeug mit Privatnutzung: 13 der 14 Stellen. Einzige Ausnahme ist der
+//     Qualitätssicherer Hamburg (29) — laut Beschreibung reiner Innendienst und
+//     damit keine Position, die über eine Kältetechniker-Anzeige gesucht wird.
+//     Stand 27.09.2026 nach Klärung der Würzburger Stelle (44): Das dortige
+//     Fahrzeug ist entgegen der früheren Datenpflege privat nutzbar.
 //
 // Bewusst NICHT übernommen aus der Köln-Seite: „ausschließlich B2B-Kunden"
 // (nur 1 von 14) und „nur Tagesreisen" (10 von 14). Beides wäre hier falsch.
@@ -38,7 +39,7 @@ export const kaeltetechnikerDeutschland: LandingpageConfig = {
 
   vorteile: [
     { titel: "45.000–65.000 €", zusatz: "Jahresgehalt je nach Region" },
-    { titel: "Dienstwagen", zusatz: "bei fast allen Stellen privat nutzbar" },
+    { titel: "Dienstwagen", zusatz: "inklusive Privatnutzung" },
     { titel: "30 Tage Urlaub", zusatz: "Zeit für das, was zählt" },
     { titel: "Unbefristet", zusatz: "Festanstellung beim Arbeitgeber" },
   ],

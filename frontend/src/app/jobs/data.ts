@@ -1607,8 +1607,8 @@ export const JOBS: Job[] = [
     type: "Festanstellung",
     datePosted: "2026-09-14",
     tags: ["Kältetechnik", "Tagesreisen", "Regional"],
-    description: "Wartung, Instandhaltung und Störungsbehebung an Kälte- und Klimaanlagen im Raum Würzburg. Ausschließlich Tagesreisen, keine Übernachtungen, Poolfahrzeug für die Einsätze.",
-    intro: "Für einen Arbeitgeber im Raum Würzburg suchen wir einen Kältetechniker mit mindestens zwei Jahren Berufserfahrung. Das Einsatzgebiet ist regional zugeschnitten: Sie fahren ausschließlich Tagesreisen und sind abends zuhause – Übernachtungen fallen nicht an. Für die Einsätze steht ein Poolfahrzeug bereit.",
+    description: "Wartung, Instandhaltung und Störungsbehebung an Kälte- und Klimaanlagen im Raum Würzburg. Ausschließlich Tagesreisen, keine Übernachtungen, Firmenfahrzeug mit Privatnutzung.",
+    intro: "Für einen Arbeitgeber im Raum Würzburg suchen wir einen Kältetechniker mit mindestens zwei Jahren Berufserfahrung. Das Einsatzgebiet ist regional zugeschnitten: Sie fahren ausschließlich Tagesreisen und sind abends zuhause – Übernachtungen fallen nicht an. Für die Einsätze steht ein Firmenfahrzeug bereit, das Sie auch privat nutzen können.",
     aufgaben: [
       "Wartung und Instandhaltung von Kälte- und Klimaanlagen",
       "Störungsdiagnose und Reparatur im Kundendienst",
@@ -1629,7 +1629,7 @@ export const JOBS: Job[] = [
     posted: "Aktuell",
     benefits: [
       "Ausschließlich Tagesreisen, keine Übernachtungen",
-      "Poolfahrzeug für die Einsätze",
+      "Firmenfahrzeug mit Privatnutzung",
       "Regionales Einsatzgebiet",
       "Unbefristeter Arbeitsvertrag",
       "30 Tage Urlaub",
