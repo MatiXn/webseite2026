@@ -9,9 +9,24 @@ und `BroadcastEvent`. Unsere Stellenseiten fallen darunter. Für alle anderen
 Seiten der Domain bleibt die Sitemap zuständig — dort hätte die API keine
 Wirkung.
 
-> **[OFFEN]** Noch nicht eingerichtet. Die Schritte 1 bis 5 erfordern einen
-> Browser-Login und müssen von einer Person mit Zugriff auf das Google-Konto
-> ausgeführt werden.
+**Eingerichtet am 27.09.2026.** Erster Lauf: 44 von 44 Stellen gemeldet.
+
+| | |
+|---|---|
+| Cloud-Projekt | `phe-perm-indexing-509818` |
+| Dienstkonto | `indexing-bot@phe-perm-indexing-509818.iam.gserviceaccount.com` |
+| Schlüssel | `~/phe-indexing-key.json` (Rechte 600, nicht im Repo, nicht in iCloud) |
+| Search Console | als **Inhaber** auf der Property `phe-perm.de` |
+
+Ein eigenes Cloud-Projekt statt des CRM-Projekts `crm-phe-production-475021`:
+Dort fehlten die Rechte, Dienstkonten und Schlüssel anzulegen — „Dienstkonto
+erstellen" war ausgegraut.
+
+> **[OFFEN]** In der Search Console steht zusätzlich das Dienstkonto
+> `webseitestellen@webseite-stellenanzeigen.iam.gserviceaccount.com` als
+> Inhaber. Herkunft und Zweck sind ungeklärt; vermutlich ein früherer Anlauf.
+> Jeder Inhaber-Eintrag ist ein vollwertiger Zugang — prüfen und gegebenenfalls
+> entfernen.
 
 ## Einmalige Einrichtung
 
