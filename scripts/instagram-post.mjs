@@ -8,11 +8,17 @@
 //
 // Einrichtung und Token-Erneuerung: docs/instagram-posting.md
 //
+// Der Token kommt aus ~/.instagram-token (dort legt ihn ig-token.mjs ab).
+//
 // Aufruf:
-//   IG_ACCESS_TOKEN=… IG_USER_ID=… node scripts/instagram-post.mjs --job 34
-//   …  --job 34 --format story
-//   …  --job 34 --dry-run        zeigt Bild und Text, postet nichts
-//   …  --list                    zeigt alle Stellen mit ihren IDs
+//   node scripts/instagram-post.mjs --list            alle Stellen mit IDs
+//   node scripts/instagram-post.mjs --job 34 --dry-run
+//   node scripts/instagram-post.mjs --job 34
+//   node scripts/instagram-post.mjs --job 34 --format story
+
+import { existsSync, readFileSync } from "node:fs";
+import { homedir } from "node:os";
+import { join } from "node:path";
 
 const BASIS = process.env.PHE_BASIS_URL ?? "https://www.phe-perm.de";
 const API = "https://graph.instagram.com/v21.0";
@@ -99,11 +105,24 @@ async function main() {
     return;
   }
 
-  const token = process.env.IG_ACCESS_TOKEN?.trim();
-  const nutzer = process.env.IG_USER_ID?.trim();
-  if (!token || !nutzer) {
-    abbruch("IG_ACCESS_TOKEN und IG_USER_ID fehlen. Siehe docs/instagram-posting.md");
+  // Token bevorzugt aus ~/.instagram-token — dort legt ihn `ig-token.mjs` ab.
+  let token = process.env.IG_ACCESS_TOKEN?.trim();
+  if (!token) {
+    const datei = join(homedir(), ".instagram-token");
+    if (existsSync(datei)) token = readFileSync(datei, "utf8").trim();
   }
+  if (!token) {
+    abbruch(
+      "Kein Zugriffstoken. Entweder IG_ACCESS_TOKEN setzen oder einen\n" +
+        "  ablegen mit: node scripts/ig-token.mjs\n" +
+        "  Siehe docs/instagram-posting.md",
+    );
+  }
+
+  // `/me` statt einer Konto-ID: Bei der Instagram-Login-API ist das der
+  // vorgesehene Weg. Das Dashboard zeigt eine andere Kennung als die API
+  // selbst — mit `/me` kann man sie nicht verwechseln.
+  const nutzer = "me";
 
   // Schritt 1: Container anlegen
   const containerFelder = new URLSearchParams({ image_url: bild, caption, access_token: token });

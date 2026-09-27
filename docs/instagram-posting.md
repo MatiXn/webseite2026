@@ -4,9 +4,16 @@
 Instagram-Konto von PHE — mit dem Bild und der Bildunterschrift aus dem
 Social-Kit.
 
-> **[OFFEN]** Noch nicht eingerichtet. Die Schritte 1 bis 4 erfordern einen
-> Browser-Login bei Meta und müssen von einer Person mit Zugriff auf das
-> Instagram-Konto ausgeführt werden.
+**Eingerichtet am 28.09.2026.**
+
+| | |
+|---|---|
+| Meta-App | „PHE Stellenanzeigen", Instagram-App-ID `1625151512739038` |
+| Instagram-Konto | `@phe_perm_engineering`, Typ BUSINESS |
+| Token | `~/.instagram-token`, 60 Tage gültig |
+| App-Geheimcode | `~/.instagram-app-secret` |
+
+Beide Dateien liegen außerhalb des Repositories mit Rechten 600.
 
 ## Warum ein Skript und kein Knopf im Social-Kit
 
@@ -72,8 +79,11 @@ node scripts/instagram-post.mjs --job 34 --dry-run
 Veröffentlichen:
 
 ```bash
-IG_ACCESS_TOKEN=… IG_USER_ID=… node scripts/instagram-post.mjs --job 34
+node scripts/instagram-post.mjs --job 34
 ```
+
+Der Token wird aus `~/.instagram-token` gelesen; `IG_ACCESS_TOKEN` in der
+Umgebung hat Vorrang, falls gesetzt.
 
 Format wählen:
 
@@ -91,12 +101,37 @@ Format wählen:
 
 | Variable | Woher |
 |---|---|
-| `IG_ACCESS_TOKEN` | langlebiger Token aus Schritt 4 |
-| `IG_USER_ID` | Instagram-Konto-ID, steht im API-Setup der Meta-App |
+| `IG_ACCESS_TOKEN` | optional — sonst aus `~/.instagram-token` |
 | `PHE_BASIS_URL` | optional, für lokale Tests: `http://localhost:3000` |
 
-Den Token **nicht** ins Repository legen. Entweder bei jedem Aufruf voranstellen
-oder in einer Datei außerhalb des Repos ablegen und vor dem Aufruf laden.
+Eine Konto-ID wird **nicht** gebraucht: Das Skript spricht `/me` an. Das
+Dashboard zeigt eine andere Kennung (`17841409221592746`) als die API selbst
+(`28513357231625561`) — mit `/me` kann man sie nicht verwechseln.
+
+Den Token **nicht** ins Repository legen.
+
+## Token erneuern
+
+Der Token gilt 60 Tage. Ab dem zweiten Tag lässt er sich verlängern, ohne im
+Dashboard einen neuen zu erzeugen:
+
+```bash
+node scripts/ig-token.mjs --refresh
+```
+
+Setz dir eine Erinnerung auf etwa 50 Tage. Ein **abgelaufener** Token lässt
+sich nicht mehr verlängern — dann im Dashboard unter
+Anwendungsfälle → Instagram API → API-Einrichtung mit Instagram-Login einen
+neuen erzeugen, kopieren und tauschen:
+
+```bash
+node scripts/ig-token.mjs
+```
+
+Das Skript nimmt den Token aus der Zwischenablage und den Geheimcode aus
+`~/.instagram-app-secret`. Es prüft vorher, ob der Token überhaupt gültig ist —
+die Meldung „Session key invalid" kommt sonst sowohl bei einem abgelaufenen
+Token als auch dann, wenn in der Zwischenablage etwas ganz anderes steht.
 
 ## Wie das Bild entsteht
 
