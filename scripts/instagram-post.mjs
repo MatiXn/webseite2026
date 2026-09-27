@@ -16,48 +16,58 @@
 //   node scripts/instagram-post.mjs --job 34
 //   node scripts/instagram-post.mjs --job 34 --format story
 
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 
-// Merkliste der bereits veroeffentlichten Stellen. Liegt ausserhalb des
-// Repositories: Das sind Laufzeitdaten dieses Rechners, keine Projektinhalte.
-const VERLAUF = join(homedir(), ".instagram-posted.json");
+// Welche Stelle wann veroeffentlicht wurde, steht auf dem Instagram-Konto
+// selbst: Jede Bildunterschrift enthaelt die Job-URL mit der ID am Ende.
+// Damit braucht der Zeitplan keinen eigenen Speicher — wichtig fuer GitHub
+// Actions, wo zwischen zwei Laeufen nichts erhalten bleibt. Nebeneffekt: Auch
+// von Hand abgesetzte Posts werden beruecksichtigt.
+//
+// Stories tauchen in /me/media nicht auf. Sie zaehlen deshalb nicht als
+// "gepostet" — was passt, denn sie verschwinden nach 24 Stunden ohnehin.
 
-function ladeVerlauf() {
-  if (!existsSync(VERLAUF)) return {};
-  try {
-    return JSON.parse(readFileSync(VERLAUF, "utf8"));
-  } catch {
-    return {};
+async function holeVeroeffentlichte(token) {
+  const gepostet = new Map(); // Stellen-ID → Zeitpunkt der letzten Veroeffentlichung
+  let url =
+    `${API}/me/media?fields=id,caption,timestamp&limit=100` +
+    `&access_token=${encodeURIComponent(token)}`;
+
+  // Bis zu drei Seiten: 300 Beitraege reichen weit ueber den Stellenbestand
+  for (let seite = 0; seite < 3 && url; seite++) {
+    const antwort = await fetch(url).then((r) => r.json());
+    if (antwort.error) {
+      abbruch(`Veroeffentlichte Beitraege nicht abrufbar: ${antwort.error.message}`);
+    }
+
+    for (const m of antwort.data ?? []) {
+      const treffer = /phe-perm\.de\/jobs\/[a-z0-9-]*?-(\d+)/.exec(m.caption ?? "");
+      if (!treffer) continue;
+      const id = treffer[1];
+      // Die API liefert absteigend nach Datum — der erste Treffer ist der neueste
+      if (!gepostet.has(id)) gepostet.set(id, m.timestamp);
+    }
+
+    url = antwort.paging?.next ?? null;
   }
-}
 
-function merkeVeroeffentlicht(jobId, format, beitragId) {
-  const v = ladeVerlauf();
-  v[String(jobId)] = {
-    zuletzt: new Date().toISOString(),
-    format,
-    beitrag: beitragId,
-    anzahl: (v[String(jobId)]?.anzahl ?? 0) + 1,
-  };
-  writeFileSync(VERLAUF, JSON.stringify(v, null, 1), "utf8");
+  return gepostet;
 }
 
 /** Waehlt die Stelle, die am laengsten nicht gepostet wurde.
  *  Noch nie gepostete kommen zuerst, danach die aelteste Veroeffentlichung. */
-function naechsteStelle(stellen) {
-  const v = ladeVerlauf();
-  const bewertet = stellen.map((j) => ({
-    job: j,
-    zuletzt: v[String(j.id)]?.zuletzt ?? null,
-  }));
+async function naechsteStelle(stellen, token) {
+  const gepostet = await holeVeroeffentlichte(token);
 
-  const nie = bewertet.filter((b) => !b.zuletzt);
-  if (nie.length) return nie[0].job;
+  const nie = stellen.filter((j) => !gepostet.has(String(j.id)));
+  if (nie.length) return { job: nie[0], zuletzt: null, offen: nie.length };
 
-  bewertet.sort((a, b) => a.zuletzt.localeCompare(b.zuletzt));
-  return bewertet[0].job;
+  const sortiert = [...stellen].sort((a, b) =>
+    gepostet.get(String(a.id)).localeCompare(gepostet.get(String(b.id))),
+  );
+  return { job: sortiert[0], zuletzt: gepostet.get(String(sortiert[0].id)), offen: 0 };
 }
 
 const BASIS = process.env.PHE_BASIS_URL ?? "https://www.phe-perm.de";
@@ -97,6 +107,17 @@ async function ladeStellen() {
   return stellen;
 }
 
+/** Token aus der Umgebung oder aus ~/.instagram-token. */
+function ladeToken() {
+  const ausUmgebung = process.env.IG_ACCESS_TOKEN?.trim();
+  if (ausUmgebung) return ausUmgebung;
+
+  const datei = join(homedir(), ".instagram-token");
+  if (existsSync(datei)) return readFileSync(datei, "utf8").trim();
+
+  return undefined;
+}
+
 async function main() {
   const arg = argumente();
   const stellen = await ladeStellen();
@@ -111,27 +132,36 @@ async function main() {
   }
 
   if (arg.verlauf) {
-    const v = ladeVerlauf();
-    const eintraege = Object.entries(v).sort((a, b) => b[1].zuletzt.localeCompare(a[1].zuletzt));
-    console.log(`\n  ${eintraege.length} von ${stellen.length} Stellen wurden schon gepostet:\n`);
-    for (const [id, e] of eintraege) {
-      const titel = stellen.find((j) => String(j.id) === id)?.title ?? "(nicht mehr online)";
-      const datum = new Date(e.zuletzt).toLocaleString("de-DE", { dateStyle: "short", timeStyle: "short" });
-      console.log(`  ${id.padStart(3)}  ${datum}  ${e.format.padEnd(7)} ${titel.slice(0, 42)}`);
+    const token = ladeToken();
+    if (!token) abbruch("Kein Zugriffstoken — siehe docs/instagram-posting.md");
+
+    const gepostet = await holeVeroeffentlichte(token);
+    const mitDatum = stellen
+      .filter((j) => gepostet.has(String(j.id)))
+      .sort((a, b) => gepostet.get(String(b.id)).localeCompare(gepostet.get(String(a.id))));
+
+    console.log(`\n  ${mitDatum.length} von ${stellen.length} Stellen wurden schon gepostet:\n`);
+    for (const j of mitDatum) {
+      const datum = new Date(gepostet.get(String(j.id))).toLocaleString("de-DE", {
+        dateStyle: "short",
+        timeStyle: "short",
+      });
+      console.log(`  ${String(j.id).padStart(3)}  ${datum}  ${(j.title ?? "").slice(0, 44)}`);
     }
-    const offen = stellen.filter((j) => !v[String(j.id)]).length;
-    console.log(`\n  Noch nie gepostet: ${offen}\n`);
+    console.log(`\n  Noch nie gepostet: ${stellen.length - mitDatum.length}\n`);
     return;
   }
 
   if (arg.naechste && !arg.job) {
-    const naechste = naechsteStelle(stellen);
+    const token = ladeToken();
+    if (!token) abbruch("Kein Zugriffstoken — siehe docs/instagram-posting.md");
+
+    const { job: naechste, zuletzt, offen } = await naechsteStelle(stellen, token);
     arg.job = String(naechste.id);
-    const v = ladeVerlauf()[arg.job];
     console.log(
-      v
-        ? `\n  Naechste Stelle: ${arg.job} (zuletzt ${new Date(v.zuletzt).toLocaleDateString("de-DE")})`
-        : `\n  Naechste Stelle: ${arg.job} (noch nie gepostet)`,
+      zuletzt
+        ? `\n  Naechste Stelle: ${arg.job} (zuletzt ${new Date(zuletzt).toLocaleDateString("de-DE")})`
+        : `\n  Naechste Stelle: ${arg.job} (noch nie gepostet, ${offen} offen)`,
     );
   }
 
@@ -172,17 +202,12 @@ async function main() {
     return;
   }
 
-  // Token bevorzugt aus ~/.instagram-token — dort legt ihn `ig-token.mjs` ab.
-  let token = process.env.IG_ACCESS_TOKEN?.trim();
-  if (!token) {
-    const datei = join(homedir(), ".instagram-token");
-    if (existsSync(datei)) token = readFileSync(datei, "utf8").trim();
-  }
+  const token = ladeToken();
   if (!token) {
     abbruch(
-      "Kein Zugriffstoken. Entweder IG_ACCESS_TOKEN setzen oder einen\n" +
-        "  ablegen mit: node scripts/ig-token.mjs\n" +
-        "  Siehe docs/instagram-posting.md",
+      "Kein Zugriffstoken. Entweder IG_ACCESS_TOKEN setzen oder einen" +
+        "\n  ablegen mit: node scripts/ig-token.mjs" +
+        "\n  Siehe docs/instagram-posting.md",
     );
   }
 
@@ -225,7 +250,6 @@ async function main() {
 
   if (post.error) abbruch(`Veröffentlichen fehlgeschlagen: ${post.error.message}`);
 
-  merkeVeroeffentlicht(job.id, arg.format, post.id);
   console.log(`\n  ✓ Veröffentlicht. Beitrags-ID: ${post.id}\n`);
 }
 

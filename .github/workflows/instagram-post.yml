@@ -1,0 +1,114 @@
+name: Stellenanzeige auf Instagram posten
+
+# Zweimal taeglich die am laengsten nicht veroeffentlichte Stelle posten.
+#
+# Welche das ist, ermittelt das Skript vom Instagram-Konto selbst — jede
+# Bildunterschrift enthaelt die Job-URL mit der ID. Deshalb braucht dieser
+# Workflow keinen Zustand zwischen den Laeufen.
+#
+# Voraussetzung: das Repository-Secret INSTAGRAM_ACCESS_TOKEN.
+# Einrichtung und Token-Erneuerung: docs/instagram-posting.md
+
+on:
+  schedule:
+    # GitHub Actions rechnet in UTC. Deutschland liegt im Sommer 2, im Winter
+    # 1 Stunde davor — die Posts verschieben sich zur Zeitumstellung also um
+    # eine Stunde. Fuer Stellenanzeigen ist das unerheblich.
+    - cron: "0 7 * * *"   # 9:00 MESZ / 8:00 MEZ
+    - cron: "0 16 * * *"  # 18:00 MESZ / 17:00 MEZ
+
+  # Von Hand ausloesbar — zum Testen und fuer einen Nachschlag zwischendurch
+  workflow_dispatch:
+    inputs:
+      stelle:
+        description: "Stellen-ID (leer = naechste faellige)"
+        required: false
+        type: string
+      format:
+        description: "Bildformat"
+        required: false
+        default: feed
+        type: choice
+        options: [feed, story, square]
+      trocken:
+        description: "Nur anzeigen, nichts veroeffentlichen"
+        required: false
+        default: false
+        type: boolean
+
+# Zwei Laeufe duerfen sich nicht ueberschneiden — sonst koennte dieselbe
+# Stelle zweimal drankommen, bevor der erste Post bei Instagram sichtbar ist.
+concurrency:
+  group: instagram-post
+  cancel-in-progress: false
+
+jobs:
+  posten:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Token pruefen
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$IG_ACCESS_TOKEN" ]; then
+            echo "::error::Secret INSTAGRAM_ACCESS_TOKEN ist nicht gesetzt."
+            exit 1
+          fi
+          ANTWORT=$(curl -s "https://graph.instagram.com/v21.0/me?fields=username&access_token=$IG_ACCESS_TOKEN")
+          if echo "$ANTWORT" | grep -q '"error"'; then
+            echo "::error::Token ungueltig oder abgelaufen. Erneuern mit: node scripts/ig-token.mjs --refresh"
+            echo "$ANTWORT"
+            exit 1
+          fi
+          echo "Konto: $(echo "$ANTWORT" | sed -n 's/.*"username":"\([^"]*\)".*/\1/p')"
+
+      - name: Veroeffentlichen
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          # Eingaben ueber die Umgebung, nicht direkt in die Befehlszeile:
+          # Sonst koennte ein Wert wie "1; rm -rf ." als Befehl ausgefuehrt
+          # werden. workflow_dispatch kann zwar nur ausloesen, wer Schreibrechte
+          # hat — aber das ist kein Grund, es falsch zu machen.
+          EINGABE_STELLE: ${{ inputs.stelle }}
+          EINGABE_FORMAT: ${{ inputs.format }}
+          EINGABE_TROCKEN: ${{ inputs.trocken }}
+        run: |
+          set -euo pipefail
+          ARGUMENTE=()
+
+          if [ -n "${EINGABE_STELLE:-}" ]; then
+            # Nur Ziffern zulassen
+            if ! printf '%s' "$EINGABE_STELLE" | grep -qE '^[0-9]+$'; then
+              echo "::error::Stellen-ID muss eine Zahl sein, war: $EINGABE_STELLE"
+              exit 1
+            fi
+            ARGUMENTE+=(--job "$EINGABE_STELLE")
+          else
+            ARGUMENTE+=(--next)
+          fi
+
+          case "${EINGABE_FORMAT:-feed}" in
+            feed|story|square) ARGUMENTE+=(--format "${EINGABE_FORMAT:-feed}") ;;
+            *) echo "::error::Unbekanntes Format: ${EINGABE_FORMAT:-}"; exit 1 ;;
+          esac
+
+          if [ "${EINGABE_TROCKEN:-false}" = "true" ]; then
+            ARGUMENTE+=(--dry-run)
+          fi
+
+          echo "Aufruf: node scripts/instagram-post.mjs ${ARGUMENTE[*]}"
+          node scripts/instagram-post.mjs "${ARGUMENTE[@]}"
+
+      - name: Stand nach dem Lauf
+        if: always()
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+        run: node scripts/instagram-post.mjs --history | tail -5

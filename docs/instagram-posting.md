@@ -180,60 +180,76 @@ gepostete Fassung können damit nicht auseinanderlaufen.
 
 ## Automatischer Zeitplan
 
-Seit 28.09.2026 postet der Rechner zweimal täglich selbstständig — **9:00** und
-**18:00** Uhr, jeweils die am längsten nicht gepostete Stelle.
+Seit 28.09.2026 laeuft der Zeitplan als **GitHub Action**, nicht mehr auf
+einem Rechner: `.github/workflows/instagram-post.yml`. Zweimal taeglich wird
+die am laengsten nicht veroeffentlichte Stelle gepostet.
 
-| Datei | Zweck |
+| | |
 |---|---|
-| `scripts/instagram-auto.sh` | prüft Token und postet die nächste Stelle |
-| `~/Library/LaunchAgents/de.phe-perm.instagram-morgens.plist` | Zeitplan 9:00 |
-| `~/Library/LaunchAgents/de.phe-perm.instagram-abends.plist` | Zeitplan 18:00 |
-| `~/.instagram-posted.json` | welche Stelle wann gepostet wurde |
-| `~/.instagram-auto.log` | Protokoll jedes Laufs |
+| Zeiten | 7:00 und 16:00 UTC (9:00 und 18:00 MESZ) |
+| Secret | `INSTAGRAM_ACCESS_TOKEN` in den Repository-Einstellungen |
+| Von Hand ausloesbar | Actions → „Stellenanzeige auf Instagram posten" → Run workflow |
 
-`launchd` statt `cron`: Es holt einen Lauf nach, wenn der Mac zur geplanten
-Zeit geschlafen hat. **Ist der Rechner ausgeschaltet, fällt der Post aus** —
-für einen durchgehend zuverlässigen Betrieb müsste der Zeitplan in die Cloud,
-etwa nach GitHub Actions.
+GitHub rechnet in UTC. Zur Zeitumstellung verschieben sich die Posts um eine
+Stunde — fuer Stellenanzeigen unerheblich.
+
+### Woher der Workflow weiss, was schon dran war
+
+Gar nicht aus eigenem Speicher: Das Skript liest die letzten Beitraege vom
+Instagram-Konto und zieht die Stellen-ID aus der Bildunterschrift, wo die
+Job-URL steht. GitHub Actions haben zwischen zwei Laeufen keinen Zustand —
+so ist auch keiner noetig. Nebeneffekt: Von Hand abgesetzte Posts zaehlen
+ebenfalls.
+
+Stories tauchen in `/me/media` nicht auf und zaehlen deshalb nicht als
+„gepostet". Das passt, denn sie verschwinden nach 24 Stunden ohnehin.
+
+### Secret einrichten
+
+```
+https://github.com/MatiXn/webseite2026/settings/secrets/actions
+```
+
+**New repository secret** → Name `INSTAGRAM_ACCESS_TOKEN`, Wert aus
+`~/.instagram-token`. **Nach jeder Token-Erneuerung muss auch das Secret
+aktualisiert werden** — sonst laeuft der Workflow ins Leere, waehrend lokal
+alles funktioniert.
 
 ### Nachsehen, was passiert ist
 
-```bash
-tail -20 ~/.instagram-auto.log          # Protokoll der letzten Läufe
-node scripts/instagram-post.mjs --history   # welche Stellen schon dran waren
+```
+https://github.com/MatiXn/webseite2026/actions
 ```
 
-### Anhalten und wieder starten
+Jeder Lauf zeigt am Ende den Stand: welche Stellen schon dran waren und wie
+viele noch offen sind. Der Workflow prueft ausserdem vor jedem Post, ob der
+Token noch gilt, und bricht mit klarer Fehlermeldung ab, statt unbemerkt
+stehenzubleiben.
 
-```bash
-launchctl unload ~/Library/LaunchAgents/de.phe-perm.instagram-morgens.plist
-launchctl unload ~/Library/LaunchAgents/de.phe-perm.instagram-abends.plist
+### Anhalten
 
-launchctl load ~/Library/LaunchAgents/de.phe-perm.instagram-morgens.plist
-launchctl load ~/Library/LaunchAgents/de.phe-perm.instagram-abends.plist
-```
+Actions → „Stellenanzeige auf Instagram posten" → **Disable workflow**.
+Wieder einschalten ueber denselben Weg.
 
-### Uhrzeiten ändern
+### Uhrzeiten aendern
 
-In der jeweiligen `.plist` den Wert unter `Hour` anpassen, dann `unload` und
-`load` wie oben.
+Die `cron`-Zeilen in `.github/workflows/instagram-post.yml` anpassen — in UTC,
+also zwei Stunden vor der gewuenschten Sommerzeit.
 
 ### Was nach 22 Tagen passiert
 
-Bei 44 Stellen und zwei Posts täglich ist der Bestand nach gut drei Wochen
-einmal durch. Danach beginnt die Automatik von vorn — immer mit der Stelle,
-die am längsten nicht dran war. Neue Stellen aus dem Google Sheet rücken
+Bei 44 Stellen und zwei Posts taeglich ist der Bestand nach gut drei Wochen
+einmal durch. Danach beginnt die Automatik von vorn, immer mit der Stelle, die
+am laengsten nicht dran war. Neue Stellen aus dem Google Sheet ruecken
 automatisch nach vorn, weil sie noch nie gepostet wurden.
 
-### Wenn der Token abläuft
+### Der lokale Zeitplan
 
-Das Skript prüft vor jedem Post, ob der Token noch gilt. Ist er abgelaufen,
-bricht es ab und schreibt ins Protokoll:
+Bis zum 28.09.2026 lief das ueber `launchd` auf einem Mac
+(`scripts/instagram-auto.sh` und zwei `.plist`-Dateien). Das haengt daran, dass
+der Rechner laeuft, und wurde deshalb abgeloest. Die Dateien liegen unter
+`~/.phe-backup/`, das Skript bleibt im Repo — beides funktioniert weiterhin,
+falls der Weg ueber GitHub einmal nicht geht.
 
-```
-ABBRUCH: Token UNGUELTIG: …
-  Erneuern mit: node scripts/ig-token.mjs --refresh
-```
-
-Es wird dann **nichts** gepostet, bis der Token erneuert ist. Schau alle paar
-Wochen ins Protokoll — oder setz dir die Erinnerung auf 50 Tage.
+**Nicht beide gleichzeitig laufen lassen**, sonst werden zwei Stellen pro
+Zeitfenster gepostet.
