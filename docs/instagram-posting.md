@@ -178,8 +178,62 @@ gepostete Fassung können damit nicht auseinanderlaufen.
 - Die API veröffentlicht sofort. Einen Terminplaner gibt es hier nicht — dafür
   ist die Meta Business Suite gedacht.
 
-## Was noch fehlen könnte
+## Automatischer Zeitplan
 
-> **[OFFEN]** Es wird nicht festgehalten, welche Stelle bereits gepostet wurde.
-> Bei 44 Stellen und gelegentlichem Posten ist das verschmerzbar; wer
-> regelmäßig postet, will irgendwann eine Liste.
+Seit 28.09.2026 postet der Rechner zweimal täglich selbstständig — **9:00** und
+**18:00** Uhr, jeweils die am längsten nicht gepostete Stelle.
+
+| Datei | Zweck |
+|---|---|
+| `scripts/instagram-auto.sh` | prüft Token und postet die nächste Stelle |
+| `~/Library/LaunchAgents/de.phe-perm.instagram-morgens.plist` | Zeitplan 9:00 |
+| `~/Library/LaunchAgents/de.phe-perm.instagram-abends.plist` | Zeitplan 18:00 |
+| `~/.instagram-posted.json` | welche Stelle wann gepostet wurde |
+| `~/.instagram-auto.log` | Protokoll jedes Laufs |
+
+`launchd` statt `cron`: Es holt einen Lauf nach, wenn der Mac zur geplanten
+Zeit geschlafen hat. **Ist der Rechner ausgeschaltet, fällt der Post aus** —
+für einen durchgehend zuverlässigen Betrieb müsste der Zeitplan in die Cloud,
+etwa nach GitHub Actions.
+
+### Nachsehen, was passiert ist
+
+```bash
+tail -20 ~/.instagram-auto.log          # Protokoll der letzten Läufe
+node scripts/instagram-post.mjs --history   # welche Stellen schon dran waren
+```
+
+### Anhalten und wieder starten
+
+```bash
+launchctl unload ~/Library/LaunchAgents/de.phe-perm.instagram-morgens.plist
+launchctl unload ~/Library/LaunchAgents/de.phe-perm.instagram-abends.plist
+
+launchctl load ~/Library/LaunchAgents/de.phe-perm.instagram-morgens.plist
+launchctl load ~/Library/LaunchAgents/de.phe-perm.instagram-abends.plist
+```
+
+### Uhrzeiten ändern
+
+In der jeweiligen `.plist` den Wert unter `Hour` anpassen, dann `unload` und
+`load` wie oben.
+
+### Was nach 22 Tagen passiert
+
+Bei 44 Stellen und zwei Posts täglich ist der Bestand nach gut drei Wochen
+einmal durch. Danach beginnt die Automatik von vorn — immer mit der Stelle,
+die am längsten nicht dran war. Neue Stellen aus dem Google Sheet rücken
+automatisch nach vorn, weil sie noch nie gepostet wurden.
+
+### Wenn der Token abläuft
+
+Das Skript prüft vor jedem Post, ob der Token noch gilt. Ist er abgelaufen,
+bricht es ab und schreibt ins Protokoll:
+
+```
+ABBRUCH: Token UNGUELTIG: …
+  Erneuern mit: node scripts/ig-token.mjs --refresh
+```
+
+Es wird dann **nichts** gepostet, bis der Token erneuert ist. Schau alle paar
+Wochen ins Protokoll — oder setz dir die Erinnerung auf 50 Tage.

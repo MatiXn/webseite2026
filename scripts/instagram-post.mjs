@@ -16,9 +16,49 @@
 //   node scripts/instagram-post.mjs --job 34
 //   node scripts/instagram-post.mjs --job 34 --format story
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
+
+// Merkliste der bereits veroeffentlichten Stellen. Liegt ausserhalb des
+// Repositories: Das sind Laufzeitdaten dieses Rechners, keine Projektinhalte.
+const VERLAUF = join(homedir(), ".instagram-posted.json");
+
+function ladeVerlauf() {
+  if (!existsSync(VERLAUF)) return {};
+  try {
+    return JSON.parse(readFileSync(VERLAUF, "utf8"));
+  } catch {
+    return {};
+  }
+}
+
+function merkeVeroeffentlicht(jobId, format, beitragId) {
+  const v = ladeVerlauf();
+  v[String(jobId)] = {
+    zuletzt: new Date().toISOString(),
+    format,
+    beitrag: beitragId,
+    anzahl: (v[String(jobId)]?.anzahl ?? 0) + 1,
+  };
+  writeFileSync(VERLAUF, JSON.stringify(v, null, 1), "utf8");
+}
+
+/** Waehlt die Stelle, die am laengsten nicht gepostet wurde.
+ *  Noch nie gepostete kommen zuerst, danach die aelteste Veroeffentlichung. */
+function naechsteStelle(stellen) {
+  const v = ladeVerlauf();
+  const bewertet = stellen.map((j) => ({
+    job: j,
+    zuletzt: v[String(j.id)]?.zuletzt ?? null,
+  }));
+
+  const nie = bewertet.filter((b) => !b.zuletzt);
+  if (nie.length) return nie[0].job;
+
+  bewertet.sort((a, b) => a.zuletzt.localeCompare(b.zuletzt));
+  return bewertet[0].job;
+}
 
 const BASIS = process.env.PHE_BASIS_URL ?? "https://www.phe-perm.de";
 const API = "https://graph.instagram.com/v21.0";
@@ -36,6 +76,8 @@ function argumente() {
     format: wert("--format") ?? "feed",
     trocken: a.includes("--dry-run"),
     liste: a.includes("--list"),
+    naechste: a.includes("--next"),
+    verlauf: a.includes("--history"),
   };
 }
 
@@ -68,8 +110,33 @@ async function main() {
     return;
   }
 
+  if (arg.verlauf) {
+    const v = ladeVerlauf();
+    const eintraege = Object.entries(v).sort((a, b) => b[1].zuletzt.localeCompare(a[1].zuletzt));
+    console.log(`\n  ${eintraege.length} von ${stellen.length} Stellen wurden schon gepostet:\n`);
+    for (const [id, e] of eintraege) {
+      const titel = stellen.find((j) => String(j.id) === id)?.title ?? "(nicht mehr online)";
+      const datum = new Date(e.zuletzt).toLocaleString("de-DE", { dateStyle: "short", timeStyle: "short" });
+      console.log(`  ${id.padStart(3)}  ${datum}  ${e.format.padEnd(7)} ${titel.slice(0, 42)}`);
+    }
+    const offen = stellen.filter((j) => !v[String(j.id)]).length;
+    console.log(`\n  Noch nie gepostet: ${offen}\n`);
+    return;
+  }
+
+  if (arg.naechste && !arg.job) {
+    const naechste = naechsteStelle(stellen);
+    arg.job = String(naechste.id);
+    const v = ladeVerlauf()[arg.job];
+    console.log(
+      v
+        ? `\n  Naechste Stelle: ${arg.job} (zuletzt ${new Date(v.zuletzt).toLocaleDateString("de-DE")})`
+        : `\n  Naechste Stelle: ${arg.job} (noch nie gepostet)`,
+    );
+  }
+
   if (!arg.job) {
-    abbruch("Bitte eine Stelle angeben: --job <ID>. Alle anzeigen: --list");
+    abbruch("Bitte eine Stelle angeben: --job <ID> oder --next. Alle anzeigen: --list");
   }
   if (!(arg.format in FORMATE)) {
     abbruch(`Unbekanntes Format "${arg.format}". Erlaubt: ${Object.keys(FORMATE).join(", ")}`);
@@ -158,6 +225,7 @@ async function main() {
 
   if (post.error) abbruch(`Veröffentlichen fehlgeschlagen: ${post.error.message}`);
 
+  merkeVeroeffentlicht(job.id, arg.format, post.id);
   console.log(`\n  ✓ Veröffentlicht. Beitrags-ID: ${post.id}\n`);
 }
 
