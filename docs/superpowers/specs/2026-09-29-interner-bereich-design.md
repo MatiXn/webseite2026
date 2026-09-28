@@ -176,8 +176,9 @@ Selbstregistrierung. `@supabase/ssr` ist im Projekt vorhanden.
 Alle Routen unter `/intern` sind geschützt; Unangemeldete werden zur
 Anmeldeseite geleitet.
 
-> **[OFFEN]** Ob es Rollen braucht (wer darf veröffentlichen, wer nur ansehen),
-> ist noch nicht entschieden. Für den Start bekommen alle dieselben Rechte.
+**Keine Rollen.** Die App nutzen zwei Personen, Matin und Alex, mit denselben
+Rechten. Eine Rechteverwaltung für zwei Menschen ist Aufwand ohne Nutzen —
+sollte das Team wachsen, lässt sie sich nachrüsten.
 
 ## Farben je Arbeitgeber
 
@@ -264,12 +265,17 @@ zwischen zwei Terminen.
 postet auf Anforderung; die Automatik arbeitet unabhängig davon weiter.
 
 **Ebenfalls nicht enthalten:** Bewerberstatus und Notizen, eigene Domains,
-Rollen und Rechte, Bearbeiten veröffentlichter Seiten vom Handy aus.
+Rollen und Rechte.
 
-> **[OFFEN]** Ob eine veröffentlichte Landingpage auch unterwegs geändert
-> werden soll. Dagegen spricht: Wer eine laufende Anzeigenkampagne bedient,
-> ändert die Zielseite besser nicht nebenbei. Dafür spricht: Ein Tippfehler im
-> Gehalt will sofort korrigiert werden.
+**Bearbeiten veröffentlichter Seiten ist dagegen enthalten.** Wer vom Handy aus
+arbeitet, muss einen Tippfehler im Gehalt auch unterwegs korrigieren können —
+sonst bleibt der Rechner doch nötig, und das war der Ausgangspunkt.
+
+Damit das nicht zum Problem wird: Läuft auf die Seite gerade eine
+Meta-Kampagne, weist die App vor dem Speichern darauf hin. Geändert wird
+trotzdem, aber bewusst. Die Bildunterschrift bereits veröffentlichter
+Instagram-Beiträge lässt sich nachträglich nicht ändern — auch darauf weist
+die App hin, wenn das Gehalt angefasst wird.
 
 ## Reihenfolge der Umsetzung
 
