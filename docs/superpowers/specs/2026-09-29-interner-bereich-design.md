@@ -1,0 +1,214 @@
+# Interner Bereich: Landingpages und Bewerbungen verwalten
+
+**Stand:** 29.09.2026
+**Status:** Entwurf, noch nicht umgesetzt
+
+## Worum es geht
+
+Die Recruiting-Landingpages unter `/stellen/<slug>` entstehen heute als
+TypeScript-Dateien im Repository. Eine neue Seite bedeutet: Code schreiben,
+committen, deployen. Das kann nur, wer das Projekt kennt.
+
+Die Bewerbungen landen in der Tabelle `recruiting_leads` und sind dort nur
+über SQL oder das Supabase-Dashboard sichtbar. Recruiter kommen gar nicht
+heran; sie erfahren von einer Bewerbung ausschließlich über die
+Benachrichtigungsmail.
+
+Der interne Bereich löst beides: Landingpages über ein Formular anlegen,
+Bewerbungen in einer Liste ansehen.
+
+## Abgrenzung
+
+**Dies ist ein internes Werkzeug für PHE, kein Produkt.** Die Überlegung, daraus
+eine verkaufbare App zu machen, wurde am 29.09.2026 bewusst zurückgestellt: Erst
+soll das Werkzeug im eigenen Alltag funktionieren, danach lässt sich beurteilen,
+was ein anderer Personalvermittler daran bezahlen würde.
+
+Daraus folgt für diesen Entwurf:
+
+- keine Mandantentrennung zwischen fremden Konten, keine Tarife, keine
+  Abrechnung, keine Selbstregistrierung
+- kein Auftragsverarbeitungsverhältnis — PHE verarbeitet eigene Daten
+
+**Was trotzdem bleibt**, weil es PHEs Geschäft ist: die Arbeitgeber-Ebene und
+die Vertraulichkeit. PHE sucht für Kunden, und keine der 44 Stellenanzeigen
+nennt den Arbeitgeber.
+
+Die Entscheidung, wo die App liegt, folgt daraus: **im bestehenden Repository
+`phe-2026`**, nicht in einem eigenen Projekt. Dort liegen bereits die
+Landingpage-Engine, die Stellendaten und der Lead-Endpunkt.
+
+## Datenmodell
+
+```
+Arbeitgeber (Kunde von PHE)
+ └─ Landingpage
+     └─ Bewerbung
+```
+
+### Arbeitgeber
+
+Ein Kunde von PHE. Trägt das Erscheinungsbild, das für alle seine Landingpages
+gilt — einmal eingerichtet, dann genutzt.
+
+| Feld | Zweck |
+|---|---|
+| `name` | „Mustermann GmbH" |
+| `slug` | URL-Bestandteil |
+| `logo_url` | Datei in Supabase Storage |
+| `farbe` | Hausfarbe als Hex-Wert |
+| `umschreibung` | für vertrauliche Suchen: „ein Gebäudetechnik-Dienstleister" |
+| `notiz` | intern, für Recruiter |
+
+### Landingpage
+
+Löst die heutigen Dateien in `src/landingpages/kampagnen/` ab. Die Felder
+entsprechen dem bestehenden Typ `LandingpageConfig`, ergänzt um:
+
+| Feld | Zweck |
+|---|---|
+| `arbeitgeber_id` | Zuordnung |
+| `vertraulich` | offen oder anonym |
+| `status` | Entwurf oder veröffentlicht |
+| `veroeffentlicht_am` | für die Übersicht |
+
+### Bewerbung
+
+Entspricht der heutigen Tabelle `recruiting_leads`, erweitert um die
+Zuordnung zur Landingpage. Die bestehenden Datensätze werden übernommen.
+
+## Vertraulichkeit
+
+Der Schalter steht **pro Landingpage**, nicht pro Arbeitgeber — derselbe Kunde
+kann bei einer Position genannt werden wollen und bei einer anderen nicht.
+
+| | offen | vertraulich |
+|---|---|---|
+| Logo und Farben | des Arbeitgebers | von PHE |
+| Bezeichnung | „Mustermann GmbH" | die Umschreibung |
+| Vorschaubild | Arbeitgeber-Logo | PHE-Logo |
+
+Der Arbeitgebername darf bei vertraulichen Seiten an **keiner** Stelle
+erscheinen: nicht im Text, nicht im Bild, nicht in den Metadaten, nicht in der
+Bildunterschrift für Social Media.
+
+## Die beiden Bereiche
+
+### Öffentlich — `/stellen/<slug>`
+
+Die bestehende Route, aber gespeist aus der Datenbank statt aus der Registry.
+Aufbau, Funnel und Lead-Endpunkt bleiben unverändert; sie laufen seit dem
+23.09.2026 in Produktion und sind durch 116 Tests abgedeckt.
+
+Veröffentlichte Seiten werden weiterhin statisch vorgerendert. Da die Inhalte
+nicht mehr zur Bauzeit feststehen, braucht es eine Neuvalidierung beim
+Veröffentlichen (`revalidatePath`).
+
+### Intern — `/intern`
+
+Hinter Anmeldung. Vier Ansichten:
+
+**Übersicht** — offene Bewerbungen, zuletzt veröffentlichte Seiten, Hinweise
+auf fehlgeschlagene Benachrichtigungen.
+
+**Arbeitgeber** — anlegen, Logo hochladen, Farbe setzen, Umschreibung pflegen.
+
+**Landingpages** — Liste mit Status; Formular zum Anlegen und Bearbeiten,
+Vorschau vor dem Veröffentlichen.
+
+**Bewerbungen** — Liste mit allen Angaben, Filter nach Landingpage und
+Zeitraum, CSV-Export.
+
+## Anmeldung
+
+Supabase Auth mit E-Mail und Passwort. Konten legt PHE selbst an, keine
+Selbstregistrierung. `@supabase/ssr` ist im Projekt vorhanden.
+
+Alle Routen unter `/intern` sind geschützt; Unangemeldete werden zur
+Anmeldeseite geleitet.
+
+> **[OFFEN]** Ob es Rollen braucht (wer darf veröffentlichen, wer nur ansehen),
+> ist noch nicht entschieden. Für den Start bekommen alle dieselben Rechte.
+
+## Farben je Arbeitgeber
+
+Günstiger als zunächst angenommen: Die Hausfarbe ist im `lp-*`-Block von
+`globals.css` bereits eine Variable. `var(--blue)` wird 17 Mal verwendet und
+muss nur pro Seite überschrieben werden — nicht 40 Stellen umgeschrieben.
+
+Die eigentliche Arbeit sind die **abgeleiteten Töne**, die heute fest
+eingetragen sind:
+
+| Wert | Verwendung |
+|---|---|
+| `#1e3a5f` | dunkler Verlauf im Hero |
+| `#9fc4f0`, `#c3d8f0` | helle Schrift auf dunklem Grund |
+| `#f2f8ff` | Hintergrund ausgewählter Antworten |
+| `#bcd9f7` | Rahmen der positiven Spalte |
+
+Sie müssen aus der Hausfarbe berechnet werden, damit ein Kunde mit grüner oder
+roter Hausfarbe nicht blaue Sprenkel auf seiner Seite hat. Rechnung im
+HSL-Raum: Farbton übernehmen, Helligkeit und Sättigung nach festen Regeln
+ableiten.
+
+Davon unberührt bleiben die neutralen Töne (`--ink`, `--gray`, `--border`,
+`--fog`) und die Fokusfarbe `#f59e0b` — Letztere muss sich bewusst von jeder
+Hausfarbe abheben und bleibt deshalb fest.
+
+Dazu eine Kontrastprüfung: Wählt jemand ein helles Gelb, muss die Schrift auf
+farbigen Flächen dunkel werden statt weiß. Sie läuft beim Speichern und weist
+auf zu schwache Kombinationen hin.
+
+## Absicherung
+
+Die Tabellen bekommen Row Level Security mit Policies für angemeldete Nutzer —
+anders als bei `recruiting_leads`, wo RLS bewusst ohne Policy eingerichtet
+wurde, weil dort nur serverseitig geschrieben wird.
+
+Beim Logo-Upload werden Dateityp und Größe geprüft. Erlaubt sind PNG, JPEG und
+SVG bis 2 MB. Bei SVG ist Vorsicht geboten: Die Dateien können Skripte
+enthalten und müssen bereinigt werden — `dompurify` ist im Projekt vorhanden.
+
+## Fehlerbehandlung
+
+**Beim Veröffentlichen** wird geprüft, ob die Pflichtangaben vollständig sind —
+dieselben Regeln, die heute `kampagnen.test.ts` gegen die Code-Dateien prüft.
+Sie wandern in ein gemeinsames Modul, das Formular und Test nutzen.
+
+**Beim Löschen eines Arbeitgebers** mit veröffentlichten Seiten: Hinweis statt
+stiller Löschung. Bewerbungen bleiben erhalten, auch wenn die zugehörige Seite
+entfernt wird.
+
+**Bei fehlgeschlagenen Benachrichtigungen** zeigt die Übersicht die betroffenen
+Bewerbungen. Heute fällt das nur auf, wer die Datenbank abfragt.
+
+## Tests
+
+| Was | Warum |
+|---|---|
+| Vertraulichkeit | Erscheint der Arbeitgebername wirklich nirgends? Text, Bild, Metadaten, Social-Caption |
+| Zugriffsschutz | Kommt ein Unangemeldeter an `/intern` oder an Bewerbungsdaten? |
+| Pflichtangaben | Lässt sich eine unvollständige Seite veröffentlichen? |
+| Farbkontrast | Wird eine unlesbare Kombination erkannt? |
+| Übernahme | Ergeben die migrierten Kampagnen dieselben Seiten wie vorher? |
+
+Die 116 bestehenden Tests werden übernommen und auf Datenbank-Kampagnen
+umgestellt.
+
+## Übernahme der bestehenden Daten
+
+Die beiden Kampagnen `kaeltetechniker-koeln` und `kaeltetechniker-deutschland`
+werden in die Datenbank überführt. Ein Test vergleicht das Ergebnis mit dem
+heutigen HTML — die Seiten dürfen sich nicht verändern.
+
+Die Code-Dateien bleiben zunächst bestehen und werden erst entfernt, wenn die
+Datenbank-Fassung nachweislich dasselbe liefert.
+
+## Was nicht dazugehört
+
+Instagram-Posting, Meta-Anzeigen und Google-Indexing laufen weiter über die
+vorhandenen Skripte. Sie in die Oberfläche zu holen, ist ein eigener Schritt —
+sinnvoll, sobald dieser Bereich im Alltag genutzt wird.
+
+Ebenso nicht enthalten: Bewerberstatus, Notizen zu Bewerbungen, eigene Domains,
+Rollen und Rechte.
