@@ -1,21 +1,21 @@
-# Interner Bereich: Landingpages und Bewerbungen verwalten
+# Recruiting-App: Landingpages vom Handy aus anlegen und verteilen
 
 **Stand:** 29.09.2026
 **Status:** Entwurf, noch nicht umgesetzt
 
 ## Worum es geht
 
-Die Recruiting-Landingpages unter `/stellen/<slug>` entstehen heute als
-TypeScript-Dateien im Repository. Eine neue Seite bedeutet: Code schreiben,
-committen, deployen. Das kann nur, wer das Projekt kennt.
+**Das Ziel ist eine App auf dem Handy.** Von unterwegs eine Landingpage
+anlegen, veröffentlichen und verteilen — ohne Rechner.
 
-Die Bewerbungen landen in der Tabelle `recruiting_leads` und sind dort nur
-über SQL oder das Supabase-Dashboard sichtbar. Recruiter kommen gar nicht
-heran; sie erfahren von einer Bewerbung ausschließlich über die
-Benachrichtigungsmail.
+Heute geht davon nichts. Eine Landingpage entsteht als TypeScript-Datei im
+Repository: Code schreiben, committen, deployen. Das Posten auf Instagram
+läuft über ein Skript im Terminal. Bewerbungen sind nur über SQL oder das
+Supabase-Dashboard sichtbar; Recruiter erfahren von ihnen ausschließlich über
+die Benachrichtigungsmail.
 
-Der interne Bereich löst beides: Landingpages über ein Formular anlegen,
-Bewerbungen in einer Liste ansehen.
+Jeder dieser Schritte setzt einen Rechner und Kenntnis des Projekts voraus.
+Genau das soll wegfallen.
 
 ## Abgrenzung
 
@@ -37,6 +37,50 @@ nennt den Arbeitgeber.
 Die Entscheidung, wo die App liegt, folgt daraus: **im bestehenden Repository
 `phe-2026`**, nicht in einem eigenen Projekt. Dort liegen bereits die
 Landingpage-Engine, die Stellendaten und der Lead-Endpunkt.
+
+## Was „App" hier bedeutet
+
+Eine Web-App, die sich auf den Startbildschirm legen lässt: eigenes Symbol,
+Vollbild, kein Browser-Rahmen. Kein App Store, keine Freigabeverfahren,
+Aktualisierungen sofort wirksam. Derselbe Code läuft auf iPhone, Android und
+am Rechner.
+
+Technisch: ein Web-App-Manifest, Symbole in den nötigen Größen, ein
+Service Worker für den Start ohne Verzögerung.
+
+**Die Oberfläche wird für den Daumen gebaut, nicht für die Maus.** Das ist kein
+Desktop-Formular in schmal: Eine Landingpage anzulegen läuft in Schritten,
+ähnlich dem Bewerber-Funnel — wenige Angaben je Bildschirm, große Flächen,
+Fortschritt sichtbar. Lange Formulare tippt niemand unterwegs.
+
+## Der eine Klick
+
+Beim Veröffentlichen passiert alles zusammen:
+
+| Schritt | Was geschieht |
+|---|---|
+| Landingpage | wird unter `/stellen/<slug>` erreichbar |
+| Instagram | Bild wird erzeugt und auf dem Konto veröffentlicht |
+| Google | Stellenseite wird über die Indexing API gemeldet |
+| Teilen | Link wird über die Teilen-Funktion des Handys angeboten |
+
+Für WhatsApp, LinkedIn und Xing braucht es keine Schnittstelle. Die App reicht
+den fertigen Link an die Teilen-Funktion des Geräts weiter — dort wählt man das
+Ziel und schreibt die Nachricht im gewohnten Umfeld.
+
+**Meta-Anzeigen bleiben bewusst außen vor.** Dort fließt Geld, und eine
+Kampagne mit falschem Budget oder fehlender Sonderkategorie ist teuer.
+Das gehört auf einen eigenen, bewussten Schritt — nicht auf denselben Knopf
+wie ein Instagram-Post.
+
+## Benachrichtigungen
+
+Bei einer neuen Bewerbung erscheint eine Mitteilung auf dem Sperrbildschirm.
+Web-Push funktioniert auf Android seit Langem und auf iOS ab Version 16.4 —
+dort allerdings nur, wenn die App auf dem Startbildschirm liegt.
+
+Die E-Mail an `bewerbung@phe-perm.de` bleibt zusätzlich bestehen: Sie ist der
+verlässliche Weg und erreicht auch Kollegen ohne App.
 
 ## Datenmodell
 
@@ -104,20 +148,25 @@ Veröffentlichte Seiten werden weiterhin statisch vorgerendert. Da die Inhalte
 nicht mehr zur Bauzeit feststehen, braucht es eine Neuvalidierung beim
 Veröffentlichen (`revalidatePath`).
 
-### Intern — `/intern`
+### Die App — `/app`
 
-Hinter Anmeldung. Vier Ansichten:
+Hinter Anmeldung, für das Handy gebaut. Vier Ansichten, unten eine Leiste zum
+Wechseln:
 
-**Übersicht** — offene Bewerbungen, zuletzt veröffentlichte Seiten, Hinweise
-auf fehlgeschlagene Benachrichtigungen.
+**Start** — neue Bewerbungen, zuletzt veröffentlichte Seiten, Hinweise auf
+fehlgeschlagene Benachrichtigungen. Dazu der Knopf für eine neue Landingpage.
 
-**Arbeitgeber** — anlegen, Logo hochladen, Farbe setzen, Umschreibung pflegen.
+**Anlegen** — in Schritten geführt: Arbeitgeber wählen, Position und Ort,
+Gehalt und Vorteile, Funnel-Fragen, offen oder vertraulich. Am Ende die
+Vorschau und der Knopf zum Veröffentlichen.
 
-**Landingpages** — Liste mit Status; Formular zum Anlegen und Bearbeiten,
-Vorschau vor dem Veröffentlichen.
+**Bewerbungen** — Liste, nach Landingpage filterbar. Antippen zeigt alle
+Angaben; Anrufen und Mailen direkt aus der Ansicht. Export für den Rechner.
 
-**Bewerbungen** — Liste mit allen Angaben, Filter nach Landingpage und
-Zeitraum, CSV-Export.
+**Arbeitgeber** — anlegen, Logo aus der Fotobibliothek oder Kamera, Farbe,
+Umschreibung.
+
+Am Rechner funktioniert dieselbe Oberfläche — breiter, aber nicht anders.
 
 ## Anmeldung
 
@@ -191,6 +240,7 @@ Bewerbungen. Heute fällt das nur auf, wer die Datenbank abfragt.
 | Pflichtangaben | Lässt sich eine unvollständige Seite veröffentlichen? |
 | Farbkontrast | Wird eine unlesbare Kombination erkannt? |
 | Übernahme | Ergeben die migrierten Kampagnen dieselben Seiten wie vorher? |
+| Bedienung am Handy | Lässt sich der Anlegen-Ablauf mit dem Daumen bedienen? Touchflächen ab 44 px, keine Eingabefelder unter 16 px Schrift |
 
 Die 116 bestehenden Tests werden übernommen und auf Datenbank-Kampagnen
 umgestellt.
@@ -206,9 +256,33 @@ Datenbank-Fassung nachweislich dasselbe liefert.
 
 ## Was nicht dazugehört
 
-Instagram-Posting, Meta-Anzeigen und Google-Indexing laufen weiter über die
-vorhandenen Skripte. Sie in die Oberfläche zu holen, ist ein eigener Schritt —
-sinnvoll, sobald dieser Bereich im Alltag genutzt wird.
+**Meta-Anzeigen.** Sie bleiben im Werbeanzeigenmanager. Begründung oben: Dort
+fließt Geld, und der Schritt gehört bewusst getan, nicht per Knopfdruck
+zwischen zwei Terminen.
 
-Ebenso nicht enthalten: Bewerberstatus, Notizen zu Bewerbungen, eigene Domains,
-Rollen und Rechte.
+**Der tägliche Instagram-Zeitplan** läuft weiter als GitHub Action. Die App
+postet auf Anforderung; die Automatik arbeitet unabhängig davon weiter.
+
+**Ebenfalls nicht enthalten:** Bewerberstatus und Notizen, eigene Domains,
+Rollen und Rechte, Bearbeiten veröffentlichter Seiten vom Handy aus.
+
+> **[OFFEN]** Ob eine veröffentlichte Landingpage auch unterwegs geändert
+> werden soll. Dagegen spricht: Wer eine laufende Anzeigenkampagne bedient,
+> ändert die Zielseite besser nicht nebenbei. Dafür spricht: Ein Tippfehler im
+> Gehalt will sofort korrigiert werden.
+
+## Reihenfolge der Umsetzung
+
+Die App entsteht in Schritten, jeder für sich nutzbar:
+
+1. **Anmeldung und Gerüst** — Supabase Auth, App-Manifest, Navigation
+2. **Landingpages aus der Datenbank** — Umstellung der öffentlichen Route,
+   Übernahme der beiden bestehenden Kampagnen
+3. **Anlegen und Veröffentlichen** — der geführte Ablauf, zunächst nur die
+   Landingpage
+4. **Bewerbungen** — Liste, Detailansicht, Export, Push-Mitteilungen
+5. **Verteilen** — Instagram und Google an den Veröffentlichen-Knopf, Teilen
+   über das Gerät
+
+Nach Schritt 3 kannst du vom Handy aus Landingpages anlegen — das allein
+ersetzt schon den heutigen Weg über Code und Deployment.
