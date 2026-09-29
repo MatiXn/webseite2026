@@ -105,23 +105,28 @@ und die öffentlichen Seiten kommen aus der Datenbank. Anlegen geht noch nicht.
 
 ## Vorbedingungen
 
-Vor Aufgabe 1 zu erledigen — ohne das läuft nichts:
+Am 29.09.2026 im Projekt `lkmrsvvgisdthvlqjhdk` („Occtaai") nachgesehen:
 
-- [ ] **Benutzerkonten anlegen.** Im Supabase-Dashboard des CRM-Projekts
-      (`lkmrsvvgisdthvlqjhdk`) unter *Authentication → Users → Add user* zwei
-      Konten anlegen: das eigene und das von Alex. Haken bei „Auto Confirm
-      User" setzen, sonst wartet das Konto auf eine Bestätigungsmail.
+**Konten müssen nicht angelegt werden.** Es gibt sie schon —
+`matin.askaryar@phe-perm.de` (seit 18.10.2025) und
+`alexandros.selemidis@phe-perm.de` (seit 10.12.2025), beide bestätigt, beide
+zuletzt am 07.07.2026 angemeldet.
 
-- [ ] **Selbstregistrierung abschalten.** Im selben Projekt unter
-      *Authentication → Providers → Email* die Option „Enable Sign Up"
-      **ausschalten**. Sonst kann sich jeder, der die Adresse kennt, selbst
-      ein Konto anlegen — die App hat keine Rollenprüfung, die das auffinge.
+Es gibt ein **drittes** Konto: `ti@phe-perm.de`, angelegt am 15.10.2025, noch
+nie angemeldet. Es gehört zum CRM, nicht zu dieser App, und bekommt keinen
+Zugang — siehe Aufgabe 7, wo die Policies das durchsetzen. Das Konto selbst
+wird nicht angetastet; es hängt möglicherweise am CRM.
+
+Vor Aufgabe 1 zu erledigen:
+
+- [ ] **Selbstregistrierung abschalten.** Im Dashboard unter *Authentication →
+      Sign In / Providers → Email* die Option „Allow new users to sign up"
+      **ausschalten**. Sonst kann sich jeder, der die Adresse
+      `/intern/anmelden` kennt, selbst ein Konto anlegen.
 
 - [ ] **Anon-Key notieren.** *Project Settings → API → Project API keys →
       `anon` `public`*. Dieser Schlüssel darf im Browser landen; der
       `service_role`-Schlüssel niemals.
-
----
 
 ## Aufgabe 1: Supabase-Clients für den internen Bereich
 
@@ -1886,9 +1891,29 @@ Beide brauchen Wissen von außerhalb der Konfiguration."
 
 ## Aufgabe 7: Tabellen für Arbeitgeber und Landingpages
 
-Die Migration läuft in der **CRM-Datenbank** (`lkmrsvvgisdthvlqjhdk`) — dort
-liegt auch `recruiting_leads`. Nicht zu verwechseln mit
+Die Migration läuft in der **CRM-Datenbank** (`lkmrsvvgisdthvlqjhdk`,
+„Occtaai") — dort liegt auch `recruiting_leads`. Nicht zu verwechseln mit
 `backend/supabase/migrations/`, das zur ATS-Datenbank gehört.
+
+**Diese Entscheidung hat eine Folge, die diese Aufgabe tragen muss.** Am
+29.09.2026 wurde bewusst entschieden, kein eigenes Supabase-Projekt anzulegen
+(das hätte 10 $ im Monat gekostet). Damit teilen die neuen Tabellen ihr
+Projekt mit dem CRM — und damit auch dessen Anmeldekonten. `authenticated`
+bedeutet hier **nicht** „Matin oder Alex", sondern „irgendein Konto dieses
+Projekts", heute einschließlich `ti@phe-perm.de` und künftig jedes weitere
+CRM-Konto.
+
+Eine Policy mit `using (true)` wäre deshalb falsch. Der Zugang wird über eine
+Erlaubnisliste in einer zentralen Funktion geregelt. Zentral, weil eine an
+jeder Tabelle wiederholte Liste genau die Stelle ist, an der man bei der
+nächsten Tabelle etwas vergisst.
+
+Ebenfalls eine Folge des geteilten Projekts: Dort liegt bereits eine
+Firmen-Tabelle `companies` mit 4678 Zeilen aus Salesforce. Sie trägt nur
+`id`, `tenant_id`, `name` und `website` — kein Logo, keine Farbe, keine
+Umschreibung, keinen Slug. Als Arbeitgeber-Quelle für Landingpages taugt sie
+deshalb nicht, aber `arbeitgeber` bekommt einen optionalen Verweis darauf,
+damit die Verbindung zum CRM-Kunden herstellbar ist, ohne Namen zu doppeln.
 
 Die Konfiguration wird als **ein `jsonb`-Feld** gespeichert, nicht auf zwanzig
 Spalten verteilt. Begründung: `LandingpageConfig` ist verschachtelt, und
@@ -1924,6 +1949,14 @@ create table if not exists public.arbeitgeber (
   name text not null check (length(trim(name)) > 1),
   -- Bestandteil künftiger Adressen, deshalb dieselbe Form wie ein Slug.
   slug text not null unique check (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
+
+  -- Optionaler Verweis auf den CRM-Kunden aus dem Salesforce-Import.
+  -- Bewusst optional und bewusst nur ein Verweis: `companies` trägt weder
+  -- Logo noch Farbe noch Umschreibung, taugt also nicht als Quelle — aber
+  -- ohne diesen Verweis entstehen zwei Wahrheiten über denselben Kunden.
+  -- `on delete set null`, weil eine im CRM gelöschte Firma keine laufende
+  -- Landingpage mitreißen darf.
+  company_id uuid references public.companies(id) on delete set null,
 
   logo_url text,
   -- Hausfarbe als Hex-Wert. Die abgeleiteten Töne werden daraus berechnet.
@@ -2034,21 +2067,59 @@ create trigger landingpages_geaendert
 alter table public.arbeitgeber enable row level security;
 alter table public.landingpages enable row level security;
 
--- Keine Rollen: Die App nutzen zwei Personen mit denselben Rechten. Eine
--- Rechteverwaltung für zwei Menschen ist Aufwand ohne Nutzen.
+-- ── Wer darf hinein ──────────────────────────────────────────────────────
+--
+-- `authenticated` genügt hier NICHT: Dieses Projekt teilt seine Anmeldekonten
+-- mit dem CRM. Heute hat `ti@phe-perm.de` ein Konto, morgen vielleicht weitere
+-- Kolleginnen und Kollegen — die sollen an Kundendaten und Bewerbungen nicht
+-- vorbeikommen, nur weil sie im CRM arbeiten.
+--
+-- Die Liste steht in einer Funktion und nicht in jeder Policy: Sonst ist sie
+-- an vier Stellen zu pflegen, und die fünfte Tabelle bekommt sie nicht.
+--
+-- Geprüft wird die Kennung (`auth.uid()`), nicht die E-Mail-Adresse. Eine
+-- Kennung ändert sich nie; eine Adresse schon, und dann hängt der Zugang an
+-- einer Zeichenkette.
+--
+-- Das ist keine Rechteverwaltung: Beide Personen haben dieselben Rechte. Es
+-- ist eine Türliste, und sie ist nur nötig, weil das Projekt geteilt wird.
+-- In einem eigenen Projekt wäre sie überflüssig.
+
+create or replace function public.ist_recruiting_nutzer()
+returns boolean
+language sql
+stable
+security invoker
+set search_path = ''
+as $$
+  select auth.uid() in (
+    '40348df4-e363-4c25-8143-dcb237652e29',  -- matin.askaryar@phe-perm.de
+    'e932b1ab-e382-48fa-992a-c54ff6c12f06'   -- alexandros.selemidis@phe-perm.de
+  );
+$$;
+
+comment on function public.ist_recruiting_nutzer() is
+  'Türliste für den internen Recruiting-Bereich. Nötig, weil das Projekt seine Anmeldekonten mit dem CRM teilt.';
+
+-- Die Funktion darf aufgerufen werden — sie verrät nichts, sie antwortet nur
+-- über den Aufrufer selbst.
+grant execute on function public.ist_recruiting_nutzer() to authenticated;
+
 drop policy if exists "angemeldete duerfen alles" on public.arbeitgeber;
-create policy "angemeldete duerfen alles"
+drop policy if exists "recruiting-nutzer duerfen alles" on public.arbeitgeber;
+create policy "recruiting-nutzer duerfen alles"
   on public.arbeitgeber for all
   to authenticated
-  using (true)
-  with check (true);
+  using (public.ist_recruiting_nutzer())
+  with check (public.ist_recruiting_nutzer());
 
 drop policy if exists "angemeldete duerfen alles" on public.landingpages;
-create policy "angemeldete duerfen alles"
+drop policy if exists "recruiting-nutzer duerfen alles" on public.landingpages;
+create policy "recruiting-nutzer duerfen alles"
   on public.landingpages for all
   to authenticated
-  using (true)
-  with check (true);
+  using (public.ist_recruiting_nutzer())
+  with check (public.ist_recruiting_nutzer());
 
 -- Unangemeldete haben hier nichts zu suchen. Die öffentliche Route liest mit
 -- dem Service-Role-Schlüssel, der RLS ohnehin umgeht.
@@ -2065,13 +2136,14 @@ Erwartet: „Success. No rows returned."
 
 - [ ] **Schritt 3: Absicherung nachweisen**
 
-Dieser Schritt ist nicht optional. Die Frage „ist RLS wirklich aktiv" lässt
-sich nicht durch Hinsehen beantworten.
+Dieser Schritt ist nicht optional. Ob RLS aktiv ist und ob die Türliste
+greift, lässt sich nicht durch Hinsehen beantworten — und beim geteilten
+Projekt hängt daran, wer an die Bewerberdaten kommt.
 
 Im SQL Editor ausführen:
 
 ```sql
--- Ist RLS an, und gibt es Policies?
+-- 1. Ist RLS an, und gibt es Policies?
 select
   c.relname as tabelle,
   c.relrowsecurity as rls_aktiv,
@@ -2082,18 +2154,68 @@ left join pg_policies p
 where c.relname in ('arbeitgeber', 'landingpages')
 group by c.relname, c.relrowsecurity;
 
--- Welche Rechte hat anon?
+-- 2. Welche Rechte hat anon?
 select table_name, privilege_type
 from information_schema.role_table_grants
 where grantee = 'anon' and table_name in ('arbeitgeber', 'landingpages');
+
+-- 3. Wer steht auf der Türliste? Alle Konten dieses Projekts im Überblick.
+select
+  u.email,
+  u.id in (
+    '40348df4-e363-4c25-8143-dcb237652e29',
+    'e932b1ab-e382-48fa-992a-c54ff6c12f06'
+  ) as hat_zugang
+from auth.users u
+order by hat_zugang desc, u.email;
 ```
 
 Erwartet:
-- Erste Abfrage: beide Tabellen `rls_aktiv = true`, `policies = 1`
-- Zweite Abfrage: **keine Zeilen**
+- Abfrage 1: beide Tabellen `rls_aktiv = true`, `policies = 1`
+- Abfrage 2: **keine Zeilen**
+- Abfrage 3: `matin.askaryar@` und `alexandros.selemidis@` mit
+  `hat_zugang = true`, **`ti@phe-perm.de` mit `false`**
 
-Liefert die zweite Abfrage Zeilen, greift das `revoke` nicht — dann ist die
-Migration nicht vollständig durchgelaufen.
+Liefert Abfrage 2 Zeilen, greift das `revoke` nicht — dann ist die Migration
+nicht vollständig durchgelaufen.
+
+- [ ] **Schritt 3b: Die Türliste im Betrieb prüfen**
+
+Abfrage 3 zeigt die Liste, beweist aber nicht, dass die Policy sie anwendet.
+Das prüft eine vorgetäuschte Anmeldung. Die Transaktion wird am Ende
+zurückgerollt und ändert nichts:
+
+```sql
+-- Als ti@phe-perm.de: darf nichts sehen.
+begin;
+  set local role authenticated;
+  set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-000000000000","role":"authenticated"}';
+  select public.ist_recruiting_nutzer() as sollte_false_sein;
+  select count(*) as sollte_null_sein from public.landingpages;
+rollback;
+
+-- Als Matin: darf alles sehen.
+begin;
+  set local role authenticated;
+  set local request.jwt.claims = '{"sub":"40348df4-e363-4c25-8143-dcb237652e29","role":"authenticated"}';
+  select public.ist_recruiting_nutzer() as sollte_true_sein;
+  select count(*) as zeilen from public.landingpages;
+rollback;
+```
+
+Erwartet:
+- Erster Block: `sollte_false_sein = false`, `sollte_null_sein = 0`
+- Zweiter Block: `sollte_true_sein = true`, `zeilen` = Anzahl der Einträge
+  (unmittelbar nach der Migration 0, nach Aufgabe 12 dann 2)
+
+Zeigt der erste Block `0` **und** der zweite nach Aufgabe 12 `2`, ist
+bewiesen: Die Policy unterscheidet, und zwar in beide Richtungen. Zeigt der
+erste Block Zeilen, ist die Türliste unwirksam — dann nicht weitergehen.
+
+Die Kennung `00000000-…` im ersten Block steht für „irgendein anderes Konto".
+Wer es genauer will, setzt die echte Kennung von `ti@phe-perm.de` ein; sie
+steht in der Ausgabe von Abfrage 3 nicht, lässt sich aber über
+`select id from auth.users where email = 'ti@phe-perm.de'` holen.
 
 - [ ] **Schritt 4: Von außen prüfen**
 
@@ -2122,10 +2244,14 @@ Die Konfiguration liegt als ein jsonb-Feld, nicht auf zwanzig Spalten:
 LandingpageConfig ist verschachtelt, funnel.schritte ein Vereinigungstyp
 mit drei Varianten. Geprüft wird beim Schreiben durch pruefung.ts.
 
-RLS mit Policy für authenticated — anders als bei recruiting_leads, wo
-nur serverseitig geschrieben wird und RLS deshalb ohne Policy bleibt.
-Trigger-Funktion SECURITY INVOKER, sonst wäre sie über /rest/v1/rpc/
-aufrufbar."
+Der Zugang haengt an einer Tuerliste in ist_recruiting_nutzer(), nicht
+an `authenticated`: Das Projekt teilt seine Anmeldekonten mit dem CRM,
+wo heute schon ein drittes Konto existiert. Geprueft wird die Kennung,
+nicht die E-Mail-Adresse — eine Kennung aendert sich nie.
+
+Trigger-Funktion SECURITY INVOKER, sonst waere sie ueber /rest/v1/rpc/
+aufrufbar. arbeitgeber verweist optional auf companies, damit nicht
+zwei Wahrheiten ueber denselben Kunden entstehen."
 ```
 
 ---
@@ -3329,9 +3455,9 @@ Gegen die Spezifikation abgeglichen am 29.09.2026.
 | Anforderung der Spec | Aufgabe |
 |---|---|
 | Supabase Auth, E-Mail und Passwort | 1, 3 |
-| Konten legt PHE an, keine Selbstregistrierung | Vorbedingungen |
+| Konten legt PHE an, keine Selbstregistrierung | Vorbedingungen — Konten bestehen bereits, nur die Selbstregistrierung ist abzuschalten |
 | Alle Routen unter `/intern` geschützt | 2 |
-| Keine Rollen | 7 (eine Policy für `authenticated`) |
+| Keine Rollen | 7 — eine Türliste, keine Rechteverwaltung: beide Personen haben dieselben Rechte. Nötig nur, weil das Projekt mit dem CRM geteilt wird |
 | Web-App-Manifest, Symbole | 5 |
 | Für den Daumen gebaut, 44 px, 16 px Schrift | 3 (`intern.css`), 4 (Prüfschritt) |
 | Untere Leiste zum Wechseln | 4 |
@@ -3343,7 +3469,7 @@ Gegen die Spezifikation abgeglichen am 29.09.2026.
 |---|---|
 | Tabellen Arbeitgeber und Landingpage | 7 |
 | Felder `arbeitgeber_id`, `vertraulich`, `status`, `veroeffentlicht_am` | 7 |
-| RLS mit Policies für angemeldete Nutzer | 7, nachgewiesen in 7/3 und 7/4 |
+| RLS mit Policies für angemeldete Nutzer | 7, nachgewiesen in 7/3, 7/3b und 7/4 |
 | Öffentliche Route aus der Datenbank | 10 |
 | Aufbau, Funnel, Lead-Endpunkt unverändert | nicht angefasst — siehe „Bewusst nicht angefasst" |
 | Prüfregeln in ein gemeinsames Modul | 6 |
