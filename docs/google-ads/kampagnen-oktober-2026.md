@@ -14,9 +14,9 @@ Gemessen wird über die Conversions „Kontakt (Website-Formular)“ und „Term
 |---|---|---|---|
 | Kältetechniker Deutschland | Deutschland | 14,50 €/Tag, eigenes Budget | bereit |
 | Mechatroniker Köln | Köln + 40 km | gemeinsames Budget „Lokal“ | bereit |
-| Mechatroniker Darmstadt | Darmstadt + 40 km | gemeinsames Budget „Lokal“ | bereit (Seite geht mit dem nächsten Deployment live) |
+| Mechatroniker Darmstadt | Darmstadt + 40 km | gemeinsames Budget „Lokal“ | bereit |
 | Anlagenmechaniker Augsburg | Augsburg + 40 km | gemeinsames Budget „Lokal“ | bereit |
-| Anlagenmechaniker Berlin | Berlin + 30 km | gemeinsames Budget „Lokal“ | wartet auf Stellenseite |
+| Anlagenmechaniker Berlin | Berlin + 30 km | gemeinsames Budget „Lokal“ | bereit |
 
 Gemeinsames Budget „Lokal“: 17,50 €/Tag für die vier lokalen Kampagnen. Summe 32 €/Tag ≈ 975 € im Oktober.
 
@@ -64,9 +64,9 @@ Medizintechnik-Service, Mo–Fr mit 2–3 Übernachtungen. Die Reisetätigkeit s
 
 `"mechatroniker job"`, `"mechatroniker stellenangebote"`, `"mechatroniker gesucht"`, `"servicetechniker mechatronik job"`, `"mechatroniker medizintechnik job"`, `"mechatroniker job darmstadt"`, `[mechatroniker jobs darmstadt]`, `"mechatroniker stelle darmstadt"`
 
-### Anlagenmechaniker Berlin
+### Anlagenmechaniker Berlin → `/jobs/anlagenmechaniker-shk-berlin-46`
 
-Keywords wie Augsburg mit Ort Berlin. Anzeige folgt, sobald die Stellenseite steht.
+`"anlagenmechaniker shk job"`, `"anlagenmechaniker stellenangebote"`, `"anlagenmechaniker gesucht"`, `"shk monteur job"`, `"anlagenmechaniker heizung job"`, `"anlagenmechaniker job berlin"`, `[anlagenmechaniker jobs berlin]`, `"shk job berlin"`
 
 ## Ausschluss-Keywords
 
@@ -190,7 +190,7 @@ ausbildung, azubi, lehrstelle, lehre, praktikum, praktikant, duales studium, stu
 4. 4.000 € Grundgehalt im Monat (28)
 5. 13 Gehälter plus Bonus (22)
 6. Firmenwagen auch privat (23)
-7. 50-€-Cashkarte obendrauf (24)
+7. 50 € Cashkarte jeden Monat (26)
 8. Medizintechnik statt Fließband (30)
 9. Servicetechniker Mechatronik (28)
 10. Unbefristete Festanstellung (27)
@@ -222,7 +222,7 @@ ausbildung, azubi, lehrstelle, lehre, praktikum, praktikant, duales studium, stu
 4. 4.000 € Grundgehalt im Monat (28)
 5. 13 Gehälter plus Bonus (22)
 6. Firmenwagen auch privat (23)
-7. 50-€-Cashkarte obendrauf (24)
+7. 50 € Cashkarte jeden Monat (26)
 8. Medizintechnik statt Fließband (30)
 9. Servicetechniker Mechatronik (28)
 10. Unbefristete Festanstellung (27)
@@ -268,6 +268,38 @@ ausbildung, azubi, lehrstelle, lehre, praktikum, praktikant, duales studium, stu
 
 1. Anlagenmechaniker SHK (m/w/d) im Raum Augsburg: 48–55 T€, Firmenwagen mit Tankkarte. (84)
 2. Geschäftskunden im Tagespendelbereich, keine Übernachtungen. Unbefristeter Vertrag. (83)
+3. Kurz bewerben, ohne Anschreiben. Wir melden uns innerhalb von 24 Stunden bei Ihnen. (83)
+4. Feste Anstellung, keine Zeitarbeit. Die Vermittlung ist für Sie komplett kostenlos. (83)
+
+### RSA – Anlagenmechaniker – Berlin
+
+- Kampagne: Anlagenmechaniker Berlin
+- Finale URL: https://www.phe-perm.de/jobs/anlagenmechaniker-shk-berlin-46
+- Pfad: `/shk-jobs/berlin`
+- Pinning: keins
+
+**Überschriften (15, je ≤ 30 Zeichen)**
+
+1. Anlagenmechaniker Job Berlin (28)
+2. Anlagenmechaniker SHK (m/w/d) (29)
+3. SHK-Job im Raum Berlin (22)
+4. Bis 55.000 € Jahresgehalt (25)
+5. Nur Tagesreisen (15)
+6. Abends wieder zu Hause (22)
+7. Firmenwagen mit Tankkarte (25)
+8. Firmenwagen auch privat (23)
+9. Unbefristeter Vertrag (21)
+10. Heizung & Sanitär Berlin (24)
+11. Feste Stelle, keine Zeitarbeit (30)
+12. Kostenlos für Bewerber (22)
+13. Antwort in 24 Stunden (21)
+14. Bewerbung ohne Anschreiben (26)
+15. 30 Tage Urlaub (14)
+
+**Beschreibungen (4, je ≤ 90 Zeichen)**
+
+1. Anlagenmechaniker SHK (m/w/d) im Raum Berlin: bis 55.000 € im Jahr, nur Tagesreisen. (84)
+2. Firmenwagen mit Tankkarte, auch privat nutzbar. Abends sind Sie wieder zu Hause. (80)
 3. Kurz bewerben, ohne Anschreiben. Wir melden uns innerhalb von 24 Stunden bei Ihnen. (83)
 4. Feste Anstellung, keine Zeitarbeit. Die Vermittlung ist für Sie komplett kostenlos. (83)
 
