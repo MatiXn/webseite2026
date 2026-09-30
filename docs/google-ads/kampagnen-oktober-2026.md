@@ -326,3 +326,11 @@ ausbildung, azubi, lehrstelle, lehre, praktikum, praktikant, duales studium, stu
 - **Nach 7 Tagen:** Die maximale Klickgebühr an die echten Klickpreise anpassen und Budget zwischen den Kampagnen verschieben.
 - **Ab ~15 Bewerbungen je Kampagne:** Gebotsstrategie auf „Conversions maximieren“ umstellen.
 - **Später:** Qualifizierte Bewerber und Vermittlungen aus dem CRM als Offline-Conversions an Google zurückmelden (`gclid` am Lead speichern).
+
+## Anlage im Konto (30.09.2026)
+
+Der Web-Upload unter „Tools → Bulk-Aktionen → Uploads“ hat sich als unzuverlässig erwiesen: Er lehnt Ausschluss-Keywords ab und meldet bei Anzeigen nur allgemeine Fehler. Die Kampagnen werden deshalb über den **Google Ads Editor** angelegt, mit der Datei `editor-import-oktober-2026.csv`. Alle Kampagnen kommen pausiert ins Konto.
+
+Danach im Web-Interface nachziehen: Umkreis statt Stadtgebiet (Köln/Darmstadt/Augsburg 40 km, Berlin 30 km), das gemeinsame Budget „Lokal Bewerbersuche Okt 2026“ (17,50 €/Tag, bereits angelegt), die maximale Klickgebühr 2,50 €, die Standortoption „Präsenz“ sowie Sitelinks und Callouts.
+
+Die Import-Datei wird aus dem Plan erzeugt, nicht von Hand gepflegt. Wer Texte ändert, ändert sie im Plan und erzeugt die Datei neu.
