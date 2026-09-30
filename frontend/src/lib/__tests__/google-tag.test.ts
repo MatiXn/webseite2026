@@ -95,7 +95,11 @@ describe("Conversions", () => {
 
     meldeKontaktConversion("bewerbung");
 
-    expect(befehle()).toContainEqual(["event", CONVERSION.kontakt, { quelle: "bewerbung" }]);
+    expect(befehle()).toContainEqual([
+      "event",
+      "conversion",
+      { send_to: CONVERSION.kontakt, quelle: "bewerbung" },
+    ]);
   });
 
   it("lädt das Tag selbst nach, wenn ein Formular vor dem Lader meldet", async () => {
@@ -117,9 +121,18 @@ describe("Conversions", () => {
 
     expect(befehle()).toContainEqual([
       "event",
-      CONVERSION.termin,
-      { kanal: "whatsapp", transport_type: "beacon" },
+      "conversion",
+      { send_to: CONVERSION.termin, kanal: "whatsapp", transport_type: "beacon" },
     ]);
+  });
+});
+
+describe("Conversion-Ziele", () => {
+  it("gehören zum Ads-Konto und haben ein Label", async () => {
+    const { CONVERSION, GOOGLE_ADS_ID } = await frischesTag();
+    for (const ziel of Object.values(CONVERSION)) {
+      expect(ziel).toMatch(new RegExp(`^${GOOGLE_ADS_ID}/[A-Za-z0-9_-]+$`));
+    }
   });
 });
 

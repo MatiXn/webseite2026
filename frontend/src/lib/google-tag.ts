@@ -18,10 +18,19 @@ import { marketingErlaubt } from "./consent";
 /** Konto-ID aus Google Ads. Nicht geheim — sie steht in jedem Seitenquelltext. */
 export const GOOGLE_ADS_ID = "AW-10801717598";
 
-/** Ereignisnamen, wie sie in Google Ads als Conversion-Aktion angelegt sind. */
+/**
+ * Conversion-Ziele (`send_to`) der Website-Aktionen in Google Ads.
+ *
+ * Nicht die Ereignisnamen `ads_conversion_…` aus Googles Anleitungs-Mail
+ * verwenden: Die gleichnamigen Aktionen „Kontakt“ und „Termin vereinbaren“
+ * werden aus GA4 importiert, und GA4 ist auf der Website nicht eingebunden.
+ * Diese hier (angelegt am 30.09.2026) zählen direkt über das Ads-Tag.
+ */
 export const CONVERSION = {
-  kontakt: "ads_conversion_Kontakt_1",
-  termin: "ads_conversion_Termin_vereinbaren_1",
+  /** „Kontakt (Website-Formular)“, Zielvorhaben Kontakt */
+  kontakt: `${GOOGLE_ADS_ID}/fh9dCJjl14sdEN7C1J4o`,
+  /** „Termin (Telefon/WhatsApp-Klick)“, Zielvorhaben Termin vereinbaren */
+  termin: `${GOOGLE_ADS_ID}/CcR9CJvl14sdEN7C1J4o`,
 } as const;
 
 declare global {
@@ -70,7 +79,7 @@ export function ladeGoogleTag(): void {
   document.head.appendChild(skript);
 }
 
-function melde(ereignis: string, parameter?: Record<string, unknown>): void {
+function melde(sendTo: string, parameter?: Record<string, unknown>): void {
   if (typeof window === "undefined") return;
   if (!marketingErlaubt()) return;
 
@@ -78,7 +87,7 @@ function melde(ereignis: string, parameter?: Record<string, unknown>): void {
   // ausführt (z. B. die LinkedIn-Bewerbung direkt beim Seitenaufbau). Dann
   // hier laden — gtag puffert das Ereignis, bis das Skript da ist.
   ladeGoogleTag();
-  window.gtag?.("event", ereignis, parameter ?? {});
+  window.gtag?.("event", "conversion", { send_to: sendTo, ...parameter });
 }
 
 /**
