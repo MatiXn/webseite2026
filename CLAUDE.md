@@ -100,9 +100,16 @@ cd frontend && npm run dev                     # Frontend
   Sie sind Ziele bezahlter Anzeigen; die Stelle ist unter `/jobs/…` organisch
   indexiert. Das ist kein Versehen und darf nicht „korrigiert" werden.
 - **Der Cookie-Banner ist seit 23.08.2026 ein echter Consent** (`lib/consent.ts`,
-  Schlüssel `phe_consent_v2`). Der Meta-Pixel wird ohne Marketing-Einwilligung
-  gar nicht erst angefordert. Wer daran etwas ändert, muss die Ziffern 7/7b der
-  Datenschutzerklärung mitziehen.
+  seit 30.09.2026 Schlüssel `phe_consent_v3`). Meta-Pixel (nur `/stellen/`) und
+  Google-Tag für Google Ads (site-weit, `lib/google-tag.ts`) werden ohne
+  Marketing-Einwilligung gar nicht erst angefordert. Den Google-Schnipsel
+  **nicht** fest in den `<head>` setzen, auch wenn Google Ads das so anleitet.
+  Wer am Tracking etwas ändert, muss die Ziffern 7/7b/7d der
+  Datenschutzerklärung und die CSP in `next.config.ts` mitziehen. Kommt ein
+  neuer Empfänger dazu, braucht es eine neue Consent-Fassung.
+- **Neue Formulare brauchen `meldeKontaktConversion(...)`** nach dem
+  erfolgreichen Versand, sonst zählt Google Ads sie nicht. Klicks auf
+  Telefon- und WhatsApp-Links werden dagegen automatisch erfasst.
 - **Bestandsrauschen bei den Qualitätsprüfungen:** `npx tsc --noEmit` meldet
   Fehler in 11 alten Testdateien, `npm run lint` 25 Befunde (überwiegend
   `setState in effect`, ein projektweites Muster in `Nav.tsx`, `ApplyForm.tsx`,

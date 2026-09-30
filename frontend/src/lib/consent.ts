@@ -5,14 +5,19 @@
 // Recruiting-Landingpages gibt es erstmals eine echte Entscheidung, deshalb
 // Version 2 mit eigenem Speicherschlüssel: Wer damals nur „Verstanden"
 // geklickt hat, hat Marketing nie zugestimmt und muss erneut gefragt werden.
+//
+// Version 3 (September 2026): Das Google-Tag für Google Ads kommt hinzu, und
+// zwar auf der ganzen Website statt nur auf den Landingpages. Eine Zustimmung
+// aus Version 2 galt nur dem Meta-Pixel auf /stellen/ — sie trägt Google nicht.
+// Deshalb wieder ein neuer Schlüssel und alle werden neu gefragt.
 
-const SPEICHER_SCHLUESSEL = "phe_consent_v2";
+const SPEICHER_SCHLUESSEL = "phe_consent_v3";
 
 /** Wird ausgelöst, sobald sich die Einwilligung ändert. */
 export const CONSENT_EREIGNIS = "phe-consent-geaendert";
 
 export type Consent = {
-  /** Marketing- und Trackingdienste, insbesondere Meta-Pixel. */
+  /** Marketing- und Trackingdienste: Meta-Pixel und Google-Tag (Google Ads). */
   marketing: boolean;
   /** Zeitpunkt der Entscheidung, ISO-8601. */
   zeitpunkt: string;

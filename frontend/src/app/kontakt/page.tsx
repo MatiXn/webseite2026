@@ -7,6 +7,7 @@ import FaqSection from "../components/FaqSection";
 import Footer from "../components/Footer";
 import JsonLd from "../components/JsonLd";
 import Turnstile from "@/components/Turnstile";
+import { meldeKontaktConversion } from "@/lib/google-tag";
 
 const WhatsAppIcon = ({ size = 16 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -97,6 +98,7 @@ export default function KontaktPage() {
         const data = await res.json().catch(() => null);
         throw new Error(data?.error);
       }
+      meldeKontaktConversion("kontakt");
       setSent(true);
     } catch (err) {
       setError(

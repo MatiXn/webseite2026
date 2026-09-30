@@ -336,3 +336,12 @@ Position mit unterschiedlichem Ort.
 
 Die Sortierung bleibt deterministisch: Innerhalb beider Gruppen gilt weiter
 Score, dann Veröffentlichungsdatum, dann ID.
+
+## Google-Tag nur nach Einwilligung statt fest im `<head>` (30.09.2026)
+
+**Belegt:** Google Ads empfiehlt, den gtag.js-Schnipsel fest vor `</head>` zu setzen. Stattdessen lädt `frontend/src/lib/google-tag.ts` das Skript erst nach Marketing-Einwilligung, nach demselben Muster wie der Meta-Pixel. Grund: Schon der Abruf von googletagmanager.com überträgt die IP-Adresse an Google, und das darf nach § 25 TDDDG erst nach Zustimmung passieren.
+
+- **Consent-Fassung v3 (`phe_consent_v3`)**: Die Zustimmung aus v2 bezog sich nur auf den Meta-Pixel unter `/stellen/`. Das Google-Tag läuft auf der ganzen Website und übermittelt an einen anderen Empfänger. Eine alte Zustimmung deckt das nicht, deshalb werden alle Besucher einmal neu gefragt.
+- **Conversion „Kontakt“** (`ads_conversion_Kontakt_1`) wird erst nach erfolgreichem Versand ausgelöst. Das gilt für `/kontakt`, die Bewerbung unter `/jobs/…` (auch per LinkedIn), die Unternehmensanfrage auf `/technische-personalvermittlung` und den Funnel unter `/stellen/…`. Der Parameter `quelle` unterscheidet die Formulare.
+- **Conversion „Termin vereinbaren“** (`ads_conversion_Termin_vereinbaren_1`) zählt Klicks auf `tel:`- und WhatsApp-Links. Ein Terminformular gibt es auf der Website nicht. Ein Klick ist also nur eine Absicht, kein bestätigter Termin. Erfasst wird über einen einzigen Listener am Dokument (`GoogleTagLader`), damit auch neue Links ohne zusätzlichen Code mitzählen.
+- **Consent Mode v2** wird beim Laden auf `granted` gesetzt, weil das Tag ohnehin nur nach Zustimmung existiert. `analytics_storage` bleibt `denied`, weil kein Google Analytics im Einsatz ist.

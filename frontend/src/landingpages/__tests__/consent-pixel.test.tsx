@@ -48,7 +48,7 @@ describe("Einwilligung speichern und lesen", () => {
   });
 
   it("behandelt einen beschädigten Eintrag wie „noch nicht gefragt“", () => {
-    window.localStorage.setItem("phe_consent_v2", "{kein json");
+    window.localStorage.setItem("phe_consent_v3", "{kein json");
     expect(leseConsent()).toBeNull();
     expect(marketingErlaubt()).toBe(false);
   });

@@ -18,7 +18,7 @@ export default function DatenschutzPage() {
           <h1 style={{ fontSize: 40, fontWeight: 700, color: "#1d1d1f", letterSpacing: "-0.015em", lineHeight: 1.1, marginBottom: 8 }}>
             Datenschutzerklärung
           </h1>
-          <p style={{ fontSize: 15, color: "#707070", marginBottom: 32 }}>Stand: Juli 2026</p>
+          <p style={{ fontSize: 15, color: "#707070", marginBottom: 32 }}>Stand: September 2026</p>
 
           <p style={{ fontSize: 15, color: "#3d3d3f", lineHeight: 1.7, marginBottom: 48 }}>
             Wir freuen uns über Ihren Besuch auf unserer Website und Ihr Interesse an unserem Unternehmen. Der Schutz Ihrer personenbezogenen Daten hat für uns einen hohen Stellenwert. Die Verarbeitung Ihrer personenbezogenen Daten erfolgt ausschließlich im Rahmen der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Datenschutz-Grundverordnung (DSGVO), des Bundesdatenschutzgesetzes (BDSG), des Digitale-Dienste-Gesetzes (DDG) sowie des Telekommunikation-Digitale-Dienste-Datenschutz-Gesetzes (TDDDG).
@@ -94,9 +94,9 @@ export default function DatenschutzPage() {
 
           <Block title="7. Cookies und vergleichbare Technologien">
             <p>Für den Betrieb unserer Website verwenden wir technisch notwendige Speicherung, insbesondere für Ihre Auswahl im Einwilligungsbanner. Diese ist ohne Ihre Einwilligung zulässig.</p>
-            <p>Darüber hinaus setzen wir auf unseren Stellen-Landingpages den Meta-Pixel ein (siehe Ziffer 7b). Dieser wird ausschließlich geladen, wenn Sie im Einwilligungsbanner ausdrücklich zugestimmt haben. Lehnen Sie ab oder treffen Sie keine Auswahl, findet keine Übertragung an Meta statt.</p>
+            <p>Darüber hinaus setzen wir auf der gesamten Website das Google-Tag für Google Ads ein (siehe Ziffer 7d) und auf unseren Stellen-Landingpages den Meta-Pixel (siehe Ziffer 7b). Beide werden ausschließlich geladen, wenn Sie im Einwilligungsbanner ausdrücklich zugestimmt haben. Lehnen Sie ab oder treffen Sie keine Auswahl, findet keine Übertragung an Google oder Meta statt.</p>
             <p>Sie können Ihre Entscheidung jederzeit ändern, indem Sie die in Ihrem Browser für diese Website gespeicherten Daten löschen. Beim nächsten Aufruf erscheint das Banner erneut.</p>
-            <p>Rechtsgrundlagen: Art. 6 Abs. 1 lit. f DSGVO und § 25 Abs. 2 TDDDG für die notwendige Speicherung; Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG für den Meta-Pixel.</p>
+            <p>Rechtsgrundlagen: Art. 6 Abs. 1 lit. f DSGVO und § 25 Abs. 2 TDDDG für die notwendige Speicherung; Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG für das Google-Tag und den Meta-Pixel.</p>
           </Block>
 
           <Block title="7b. Meta-Pixel auf unseren Stellen-Landingpages">
@@ -115,6 +115,15 @@ export default function DatenschutzPage() {
             <p>Zusätzlich speichern wir den Zeitpunkt Ihrer Einwilligung, die Fassung des Einwilligungstextes sowie die Kampagnenparameter der aufgerufenen Anzeige. Dies dient dem Nachweis der Einwilligung.</p>
             <p>Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Ihre Einwilligung) sowie Art. 6 Abs. 1 lit. b DSGVO und § 26 Abs. 1 BDSG für die Anbahnung eines Beschäftigungsverhältnisses.</p>
             <p>Die Daten werden auf Servern innerhalb der Europäischen Union gespeichert. Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen; schreiben Sie uns dazu an info@phe-perm.de.</p>
+          </Block>
+
+          <Block title="7d. Google Ads Conversion-Tracking (Google-Tag)">
+            <p>Auf unserer Website setzen wir das Google-Tag (gtag.js) der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland ein. Wir nutzen es, um zu messen, welche unserer Anzeigen bei Google tatsächlich zu einer Anfrage, Bewerbung oder Kontaktaufnahme führen.</p>
+            <p><strong>Nur mit Ihrer Einwilligung:</strong> Das Skript wird erst nach Ihrer ausdrücklichen Zustimmung im Einwilligungsbanner geladen. Ohne Zustimmung wird es nicht angefordert, und es werden keine Daten an Google übermittelt. Die Website ist ohne Einwilligung uneingeschränkt nutzbar.</p>
+            <p>Erfasst werden der Aufruf der Seiten, das erfolgreiche Absenden unserer Kontakt-, Bewerbungs- und Anfrageformulare sowie Klicks auf Telefon- und WhatsApp-Links. Wir übermitteln dabei keine Namen, Telefonnummern oder E-Mail-Adressen an Google, sondern ausschließlich die Art des Ereignisses und das betroffene Formular. Google setzt hierfür Cookies und vergleichbare Kennungen, um einen Klick auf eine Anzeige einer späteren Handlung zuordnen zu können.</p>
+            <p>Google kann diese Informationen Ihrem Google-Konto zuordnen, sofern Sie angemeldet sind, und für eigene Zwecke verarbeiten. Eine Übermittlung in die USA ist nicht ausgeschlossen. Google stützt sich hierfür auf das EU-US Data Privacy Framework sowie auf Standardvertragsklauseln.</p>
+            <p>Weitere Informationen finden Sie in der Datenschutzerklärung von Google unter <span style={{ wordBreak: "break-all" }}>https://policies.google.com/privacy</span>.</p>
+            <p>Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG. Ihre Einwilligung ist freiwillig und jederzeit mit Wirkung für die Zukunft widerrufbar.</p>
           </Block>
 
           <Block title="7a. Umkreissuche in der Jobbörse (OpenStreetMap / Nominatim)">
@@ -169,7 +178,7 @@ export default function DatenschutzPage() {
           <Block title="13. Änderungen dieser Datenschutzerklärung">
             <p>Wir behalten uns vor, diese Datenschutzerklärung anzupassen, sofern dies aufgrund geänderter gesetzlicher Vorgaben, technischer Entwicklungen oder Änderungen unserer Dienstleistungen erforderlich wird.</p>
             <p>Es gilt jeweils die auf unserer Website veröffentlichte aktuelle Fassung.</p>
-            <p style={{ color: "#707070", fontSize: 14 }}>Stand: Juli 2026</p>
+            <p style={{ color: "#707070", fontSize: 14 }}>Stand: September 2026</p>
           </Block>
         </div>
       </main>

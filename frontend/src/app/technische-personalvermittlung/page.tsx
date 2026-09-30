@@ -9,6 +9,7 @@ import Footer from "@/app/components/Footer";
 import JsonLd from "@/app/components/JsonLd";
 import Breadcrumbs from "@/app/components/Breadcrumbs";
 import Turnstile from "@/components/Turnstile";
+import { meldeKontaktConversion } from "@/lib/google-tag";
 
 const MAIL_EMPLOYER = "recruiting@phe-perm.de";
 
@@ -253,6 +254,7 @@ function ContactForm() {
         }),
       });
       if (!res.ok) throw new Error();
+      meldeKontaktConversion("unternehmensanfrage");
       setSent(true);
     } catch {
       setError("Versand fehlgeschlagen. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt an info@phe-perm.de.");

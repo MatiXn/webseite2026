@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import CookieBanner from "./components/CookieBanner";
+import GoogleTagLader from "./components/GoogleTagLader";
 import JsonLd from "./components/JsonLd";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -127,6 +128,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd data={orgSchema} />
         {children}
         <CookieBanner />
+        <GoogleTagLader />
       </body>
     </html>
   );

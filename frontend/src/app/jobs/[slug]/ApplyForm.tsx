@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Turnstile from "@/components/Turnstile";
+import { meldeKontaktConversion } from "@/lib/google-tag";
 
 // Vom LinkedIn-Callback gesetztes Cookie mit verifizierten Profildaten lesen
 function readLinkedInProfile(): { name: string; email: string; token: string } | null {
@@ -42,6 +43,7 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
     // Callback hat die Bewerbung bereits automatisch verschickt
     if (new URLSearchParams(window.location.search).get("linkedin") === "applied") {
       setAutoApplied(true);
+      meldeKontaktConversion("bewerbung_linkedin");
     }
   }, []);
 
@@ -107,6 +109,7 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
         throw new Error(data?.error);
       }
       setConfirmedDirectly(data?.confirmed === true);
+      meldeKontaktConversion("bewerbung");
       setSent(true);
     } catch (err) {
       setError(

@@ -25,6 +25,7 @@ import {
 } from "../kampagnen-parameter";
 import { EINWILLIGUNG_TEXT_VOR_LINK, EINWILLIGUNG_VERSION } from "../einwilligung";
 import { meldeLead } from "../../lib/meta-pixel";
+import { meldeKontaktConversion } from "../../lib/google-tag";
 import { FUNNEL_ANKER } from "./Abschnitte";
 
 type Zustand = "eingabe" | "sendet" | "erfolg";
@@ -131,6 +132,7 @@ export default function Funnel({ config }: { config: LandingpageConfig }) {
       // Das Lead-Event darf erst hier ausgelöst werden — vorher ist nichts
       // gespeichert und Meta würde auf falsche Zahlen hin optimieren.
       meldeLead({ kampagne: config.slug, eventId: daten.event_id });
+      meldeKontaktConversion("landingpage");
 
       setZustand("erfolg");
     } catch (err) {

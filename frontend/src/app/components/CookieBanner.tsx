@@ -47,9 +47,9 @@ export default function CookieBanner() {
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
           <p style={{ flex: 1, minWidth: 240, fontSize: 13, color: "#3d3d3f", lineHeight: 1.55 }}>
-            Wir nutzen technisch notwendige Speicherung. Auf unseren Stellen-Landingpages
-            setzen wir zusätzlich den Meta-Pixel ein, um den Erfolg unserer Anzeigen zu
-            messen — aber nur mit Ihrer Einwilligung.{" "}
+            Wir nutzen technisch notwendige Speicherung. Um den Erfolg unserer Anzeigen
+            zu messen, setzen wir zusätzlich das Google-Tag (Google Ads) und auf unseren
+            Stellen-Landingpages den Meta-Pixel ein — aber nur mit Ihrer Einwilligung.{" "}
             <Link href="/datenschutz" style={{ color: "#0071e3", textDecoration: "none" }}>
               Datenschutz
             </Link>
@@ -90,8 +90,8 @@ export default function CookieBanner() {
               immerAktiv
             />
             <Kategorie
-              titel="Marketing (Meta-Pixel)"
-              text="Nur auf unseren Stellen-Landingpages. Misst, welche Facebook- und Instagram-Anzeige zu einer Bewerbung geführt hat. Überträgt Daten an Meta Platforms Ireland Ltd. Ohne Ihre Zustimmung wird der Pixel nicht geladen."
+              titel="Marketing (Google Ads, Meta-Pixel)"
+              text="Google-Tag auf der gesamten Website: misst, welche Google-Anzeige zu einer Anfrage, Bewerbung oder einem Anruf geführt hat; überträgt Daten an Google Ireland Ltd. Meta-Pixel nur auf unseren Stellen-Landingpages: misst dasselbe für Facebook- und Instagram-Anzeigen; überträgt Daten an Meta Platforms Ireland Ltd. Ohne Ihre Zustimmung wird keines der beiden Skripte geladen."
             />
           </div>
         )}
