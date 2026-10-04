@@ -71,7 +71,7 @@ Medizintechnik-Service, Mo–Fr mit 2–3 Übernachtungen. Die Reisetätigkeit s
 ## Ausschluss-Keywords
 
 **Liste auf Kontoebene „Keine Bewerber“ (für alle fünf Kampagnen):**
-ausbildung, azubi, lehrstelle, lehre, praktikum, praktikant, duales studium, studium, umschulung, weiterbildung, meisterschule, meister kurs, kurs, prüfung, berichtsheft, minijob, nebenjob, schülerjob, werkstudent, teilzeit, gehaltstabelle, was macht, definition, voraussetzungen, reparatur, notdienst, kosten, preis, kaufen, angebot anfordern, wartung vertrag, klimaanlage einbauen, schweiz, österreich
+ausbildung, azubi, lehrstelle, lehre, praktikum, praktikant, duales studium, studium, umschulung, weiterbildung, meisterschule, meister kurs, kurs, prüfung, berichtsheft, minijob, nebenjob, schülerjob, werkstudent, teilzeit, gehaltstabelle, was macht, definition, voraussetzungen, reparatur, notdienst, kosten, preis, kaufen, angebot anfordern, wartung vertrag, klimaanlage einbauen, schweiz, österreich, gehalt, öffentlicher dienst, kfz *(die letzten drei am 04.10.2026 nach dem ersten Suchbegriffe-Bericht ergänzt)*
 
 **Nur in der Kampagne Kältetechniker Deutschland:** kühlschrank, kältemittel kaufen, kühlzelle kaufen
 
@@ -334,3 +334,8 @@ Der Web-Upload unter „Tools → Bulk-Aktionen → Uploads“ hat sich als unzu
 Danach im Web-Interface nachziehen: Umkreis statt Stadtgebiet (Köln/Darmstadt/Augsburg 40 km, Berlin 30 km), das gemeinsame Budget „Lokal Bewerbersuche Okt 2026“ (17,50 €/Tag, bereits angelegt), die maximale Klickgebühr 2,50 €, die Standortoption „Präsenz“ sowie Sitelinks und Callouts.
 
 Die Import-Datei wird aus dem Plan erzeugt, nicht von Hand gepflegt. Wer Texte ändert, ändert sie im Plan und erzeugt die Datei neu.
+
+## Verlauf
+
+- **01.–03.10.2026:** 645 Impressionen, 55 Klicks (CTR 8,5 %), 77,02 €, Ø-CPC ca. 1,40 €, 0 gemessene Conversions. Kälte trägt zwei Drittel der Klicks. Augsburg und Berlin haben kaum Suchvolumen. Fehlklicks auf „job kfz meister öffentlicher dienst“ (Darmstadt) und „kältetechniker gehalt monat“ führten zu drei neuen Ausschlüssen in allen fünf Kampagnen.
+
