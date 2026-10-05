@@ -4,8 +4,9 @@ import type { LandingpageConfig } from "../typen";
 //
 // Anders als `kaeltetechniker-koeln.ts` bewirbt diese Seite KEINE einzelne
 // Stelle, sondern den gesamten Kältetechnik-Bestand. Stand 26.09.2026 sind das
-// 14 Stellen in Köln, Essen, Koblenz, Hamburg (2x), Berlin (2x), Leipzig,
-// Stuttgart, München (3x), Regensburg und Würzburg.
+// 19 Stellen in Köln, Essen, Koblenz, Hamburg (2x), Berlin (2x), Leipzig, Zerbst,
+// Hannover, Visbek, Offenburg,
+// Stuttgart, München (4x), Regensburg und Würzburg (Stand 06.10.2026).
 //
 // Daraus folgt für die Inhalte: Es darf nur stehen, was bei ALLEN Stellen gilt.
 // Geprüft am 26.09.2026 gegen `app/jobs/data.ts`:
@@ -129,9 +130,9 @@ export const kaeltetechnikerDeutschland: LandingpageConfig = {
         frage: "In welcher Region suchst du?",
         optionen: [
           { wert: "west", label: "Westen — Köln, Essen, Koblenz" },
-          { wert: "sued", label: "Süden — München, Stuttgart, Regensburg, Würzburg" },
-          { wert: "nord", label: "Norden — Hamburg" },
-          { wert: "ost", label: "Osten — Berlin, Leipzig" },
+          { wert: "sued", label: "Süden — München, Stuttgart, Offenburg, Regensburg, Würzburg" },
+          { wert: "nord", label: "Norden — Hamburg, Hannover, Visbek" },
+          { wert: "ost", label: "Osten — Berlin, Leipzig, Zerbst" },
           { wert: "flexibel", label: "Bin flexibel, zeigt mir alles" },
         ],
         zusatzfeld: {

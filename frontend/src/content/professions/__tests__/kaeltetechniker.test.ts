@@ -15,7 +15,7 @@ const routeSrc = read("../../../app/berufe/kaeltetechniker/page.tsx");
 const hubSrc = read("../../../app/berufe/page.tsx");
 const sitemapMod = await import("../../../app/sitemap");
 
-const EXPECTED_MATCH_IDS = ["2", "15", "20", "25", "26", "29", "34", "37", "38", "39", "40", "41", "42", "44"];
+const EXPECTED_MATCH_IDS = ["2", "15", "20", "25", "26", "29", "34", "37", "38", "39", "40", "41", "42", "44", "47", "48", "49", "50", "51"];
 const MUST_NOT_MATCH = ["10", "14", "21", "19", "3", "18"]; // allg. Mechatroniker, SHK, allg. Servicetechniker
 
 describe("Kältetechniker – Config", () => {
@@ -56,12 +56,12 @@ describe("Kältetechniker – Config", () => {
 
 describe("Kältetechniker – Matching (nur echte Kälte-Stellen)", () => {
   const r = matchJobsForProfession(JOBS, kaeltetechniker);
-  it("1 – exakt die 14 Kälte-Stellen (deterministisch), 0 Ausschlüsse", () => {
+  it("1 – exakt die 19 Kälte-Stellen (deterministisch), 0 Ausschlüsse", () => {
     // Der Bestand übersteigt inzwischen maxJobs — Gesamttreffer und sichtbare
     // Auswahl sind deshalb getrennt zu prüfen.
     const alle = matchJobsForProfession(JOBS, { ...kaeltetechniker, jobMatch: { ...kaeltetechniker.jobMatch, maxJobs: 99 } } as never);
     expect(alle.matches.map((m) => m.job.id).sort((a, b) => Number(a) - Number(b))).toEqual(EXPECTED_MATCH_IDS);
-    expect(r.totalMatched).toBe(14);
+    expect(r.totalMatched).toBe(19);
     expect(r.excludedCount).toBe(0);
   });
 
