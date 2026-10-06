@@ -14,6 +14,13 @@
       }
     },
     {
+      "src": "/job-list(-2)?/?",
+      "status": 301,
+      "headers": {
+        "Location": "/jobs"
+      }
+    },
+    {
       "src": "/(.*)",
       "dest": "frontend/$1"
     }
