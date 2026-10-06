@@ -1746,7 +1746,7 @@ export const JOBS: Job[] = [
     benefits: [
       "55.000 – 65.000 € Jahresgehalt",
       "Direkte Festanstellung beim Arbeitgeber, keine Zeitarbeit",
-      "Vermittlung für Sie kostenlos",
+      "Service an Kältemaschinen direkt beim Hersteller",
     ],
   },
   {
@@ -1782,7 +1782,7 @@ export const JOBS: Job[] = [
     benefits: [
       "55.000 – 65.000 € Jahresgehalt",
       "Direkte Festanstellung beim Arbeitgeber, keine Zeitarbeit",
-      "Vermittlung für Sie kostenlos",
+      "Arbeit an großen Kälteanlagen der Lebensmittelindustrie",
     ],
   },
   {
@@ -1817,7 +1817,7 @@ export const JOBS: Job[] = [
     benefits: [
       "55.000 – 65.000 € Jahresgehalt",
       "Direkte Festanstellung beim Arbeitgeber, keine Zeitarbeit",
-      "Vermittlung für Sie kostenlos",
+      "Einsätze bei Kunden im Raum München",
     ],
   },
   {
@@ -1853,7 +1853,7 @@ export const JOBS: Job[] = [
     benefits: [
       "55.000 – 65.000 € Jahresgehalt",
       "Direkte Festanstellung beim Arbeitgeber, keine Zeitarbeit",
-      "Vermittlung für Sie kostenlos",
+      "Feste Stelle mit Sitz im Raum Hannover",
     ],
   },
   {
@@ -1888,7 +1888,7 @@ export const JOBS: Job[] = [
     benefits: [
       "55.000 – 65.000 € Jahresgehalt",
       "Direkte Festanstellung beim Arbeitgeber, keine Zeitarbeit",
-      "Vermittlung für Sie kostenlos",
+      "Fester Arbeitsplatz am Standort Zerbst",
     ],
   },
 ];
