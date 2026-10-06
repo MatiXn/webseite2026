@@ -43,7 +43,11 @@ async function holeVeroeffentlichte(token) {
     }
 
     for (const m of antwort.data ?? []) {
-      const treffer = /phe-perm\.de\/jobs\/[a-z0-9-]*?-(\d+)/.exec(m.caption ?? "");
+      // Die ID ist die Zahl am ENDE des Slugs. Nicht die erste Zahl darin:
+      // "…-3-schicht-heilbronn-12" enthält vorher schon "-3". Mit einem
+      // nicht-gierigen Muster wurde Stelle 12 als Stelle 3 gezählt, galt nie
+      // als gepostet und kam im Oktober 2026 siebenmal hintereinander dran.
+      const treffer = /phe-perm\.de\/jobs\/[a-z0-9-]*-(\d+)(?![a-z0-9-])/.exec(m.caption ?? "");
       if (!treffer) continue;
       const id = treffer[1];
       // Die API liefert absteigend nach Datum — der erste Treffer ist der neueste
