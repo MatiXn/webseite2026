@@ -249,6 +249,40 @@ export const jobCities: readonly JobCity[] = [
     ],
     nearby: ["duesseldorf", "dortmund"],
   },
+  {
+    slug: "muenchen",
+    name: "München",
+    federalState: "Bayern",
+    lat: 48.137,
+    lng: 11.575,
+    radiusKm: 60,
+    // Search-Console-Export 06.10.2026 (12 Monate), Suchanfragen mit „münchen“.
+    // Getragen fast vollständig von „jobs kältetechnik münchen“ (45) und
+    // „servicetechniker jobs münchen“ (18) — die Seite ist deshalb auf
+    // Kälte- und Servicetechnik ausgerichtet.
+    searchDemand: { impressions: 74, avgPosition: 16.2 },
+    intro:
+      "Im Großraum München suchen Betriebe aus Kälte- und Klimatechnik, Gebäudetechnik und Industrie dauerhaft Servicetechniker und Kältetechniker. Wir vermitteln Sie direkt in eine Festanstellung beim Unternehmen — keine Zeitarbeit, kostenlos für Bewerber.",
+    market:
+      "Medizintechnik, Halbleiterfertigung, Forschung und ein großer Gebäudebestand sorgen in Südbayern für viele Anlagen, die gekühlt, klimatisiert und gewartet werden müssen. Entsprechend gefragt sind Kältetechniker und Mechatroniker für Kältetechnik sowie Servicetechniker im Kundendienst. Die Gehälter liegen in der Region spürbar über dem Bundesschnitt; in unseren aktuellen Münchner Kälte-Stellen bei 50.000 bis 65.000 Euro im Jahr.",
+    commute:
+      "Die Liste unten umfasst auch Stellen im Münchner Umland, etwa im Raum Erding und Augsburg, und ist nach Entfernung sortiert. Viele Servicestellen sind regional zugeschnitten: Sie fahren zu Kunden in der Region und sind abends wieder zu Hause.",
+    faq: [
+      {
+        q: "Welche Kältetechniker-Jobs gibt es in München?",
+        a: "Wir vermitteln im Großraum München Kältetechniker und Servicetechniker für Kälte- und Klimaanlagen in Festanstellung. Gehalt, Einsatzgebiet und Reisetätigkeit stehen in jeder Anzeige.",
+      },
+      {
+        q: "Muss ich für eine Servicestelle in München übernachten?",
+        a: "Das hängt von der Stelle ab. Viele Münchner Stellen sind auf ein regionales Einsatzgebiet zugeschnitten, bei anderen gehören einzelne Übernachtungen dazu. Wir sagen Ihnen das vor dem ersten Gespräch.",
+      },
+      {
+        q: "Wie läuft die Bewerbung ab?",
+        a: "Sie senden uns Name und Telefonnummer, wir melden uns innerhalb von 24 Stunden. Erst wenn für Sie alles passt, stellen wir den Kontakt zum Unternehmen her.",
+      },
+    ],
+    nearby: ["stuttgart"],
+  },
 ];
 
 export function jobCityBySlug(slug: string): JobCity | undefined {

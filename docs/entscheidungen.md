@@ -53,6 +53,12 @@ und ohne genügend Stellen im Umkreis entstünde dünner Inhalt. Der Radius je S
 steht in `radiusKm`; Bad Oeynhausen liegt bei 120 km statt 100 km, weil das
 Stellenangebot in Ostwestfalen weiter gestreut ist.
 
+**Nachtrag 06.10.2026:** München aufgenommen (74 Impressionen, getragen von
+„jobs kältetechnik münchen“ und „servicetechniker jobs münchen“). Geprüft und
+bewusst **nicht** aufgenommen: Köln 13, Frankfurt 12 (nur eine Suchanfrage),
+Hamburg 6, Hannover 3 — alle unter der bisher niedrigsten Schwelle (Langenfeld
+16). Abfrage direkt über die Search Console API mit dem Indexing-Dienstkonto.
+
 Abgrenzung zur City Content Engine (`content/cities`): Die dortigen Seiten unter
 `/personalvermittlung/<stadt>` sprechen Arbeitgeber an. Die Jobs-Ortsseiten
 sprechen Bewerber an und brauchen Geo-Umkreis und Stellenliste — deshalb ein
