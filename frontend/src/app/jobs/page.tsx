@@ -87,116 +87,6 @@ type SearchResult =
   | { type: "none" }
   | null;
 
-function ApplyModal({ job, onClose }: { job: Job; onClose: () => void }) {
-  const [form, setForm] = useState({ vorname: "", nachname: "", telefon: "", position: job.title });
-
-  const handleSubmit = () => {
-    const body = `Hallo PHE-Team,
-
-ich möchte mich auf folgende Stelle bewerben:
-
-Position: ${form.position}
-Vorname: ${form.vorname}
-Nachname: ${form.nachname}
-Telefonnummer: ${form.telefon}
-
-Ich freue mich auf Ihre Rückmeldung.
-
-Mit freundlichen Grüßen
-${form.vorname} ${form.nachname}`;
-
-    window.location.href = `mailto:${MAIL_APPLY}?subject=${encodeURIComponent(`Bewerbung: ${form.position}`)}&body=${encodeURIComponent(body)}`;
-    onClose();
-  };
-
-  const inputStyle: React.CSSProperties = {
-    width: "100%", padding: "10px 14px", borderRadius: 8,
-    border: "1.5px solid var(--border)", fontSize: 14,
-    color: "var(--navy)", fontFamily: "inherit", outline: "none",
-    boxSizing: "border-box",
-  };
-
-  return (
-    <div
-      onClick={onClose}
-      style={{
-        position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        zIndex: 1000, padding: 24,
-      }}
-    >
-      <div
-        onClick={e => e.stopPropagation()}
-        style={{
-          background: "#fff", borderRadius: 28, padding: 32,
-          width: "100%", maxWidth: 480, boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
-        }}
-      >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
-          <div>
-            <h2 style={{ fontSize: 20, fontWeight: 800, color: "var(--navy)", marginBottom: 4 }}>Jetzt bewerben</h2>
-            <p style={{ fontSize: 13, color: "var(--gray)" }}>{job.city}</p>
-          </div>
-          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--gray)", fontSize: 20, lineHeight: 1, padding: 4 }}>✕</button>
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-          <div style={{ display: "flex", gap: 12 }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 12, fontWeight: 600, color: "var(--gray)", display: "block", marginBottom: 6 }}>Vorname *</label>
-              <input style={inputStyle} value={form.vorname} onChange={e => setForm(f => ({ ...f, vorname: e.target.value }))} placeholder="Max" />
-            </div>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 12, fontWeight: 600, color: "var(--gray)", display: "block", marginBottom: 6 }}>Nachname *</label>
-              <input style={inputStyle} value={form.nachname} onChange={e => setForm(f => ({ ...f, nachname: e.target.value }))} placeholder="Mustermann" />
-            </div>
-          </div>
-
-          <div>
-            <label style={{ fontSize: 12, fontWeight: 600, color: "var(--gray)", display: "block", marginBottom: 6 }}>Telefonnummer *</label>
-            <input style={inputStyle} type="tel" value={form.telefon} onChange={e => setForm(f => ({ ...f, telefon: e.target.value }))} placeholder="+49 123 456789" />
-          </div>
-
-          <div>
-            <label style={{ fontSize: 12, fontWeight: 600, color: "var(--gray)", display: "block", marginBottom: 6 }}>Gewünschte Position</label>
-            <input style={inputStyle} value={form.position} onChange={e => setForm(f => ({ ...f, position: e.target.value }))} />
-          </div>
-        </div>
-
-        <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
-          <button
-            onClick={onClose}
-            style={{
-              flex: 1, padding: "12px 0", borderRadius: 999, border: "1.5px solid var(--border)",
-              background: "#fff", color: "var(--gray)", fontWeight: 600, fontSize: 14,
-              cursor: "pointer", fontFamily: "inherit",
-            }}
-          >
-            Abbrechen
-          </button>
-          <button
-            onClick={handleSubmit}
-            disabled={!form.vorname || !form.nachname || !form.telefon}
-            style={{
-              flex: 2, padding: "12px 0", borderRadius: 999, border: "none",
-              background: (!form.vorname || !form.nachname || !form.telefon) ? "var(--border)" : "#0071e3",
-              color: "#fff", fontWeight: 700, fontSize: 14,
-              cursor: (!form.vorname || !form.nachname || !form.telefon) ? "not-allowed" : "pointer",
-              fontFamily: "inherit",
-            }}
-          >
-            E-Mail öffnen & absenden
-          </button>
-        </div>
-
-        <p style={{ fontSize: 11, color: "var(--gray-light)", textAlign: "center", marginTop: 12 }}>
-          Ihr E-Mail-Programm öffnet sich mit den ausgefüllten Daten.
-        </p>
-      </div>
-    </div>
-  );
-}
-
 async function geocodeCity(city: string): Promise<{ lat: number; lng: number; display: string } | null> {
   try {
     // Geocoding läuft über unseren Server-Proxy — keine Besucherdaten an Dritte
@@ -585,7 +475,7 @@ const CheckIcon = () => (
   </svg>
 );
 
-function JobDetailModal({ job, jobUrl, onClose, onApply }: { job: Job; jobUrl: string; onClose: () => void; onApply: () => void }) {
+function JobDetailModal({ job, jobUrl, onClose }: { job: Job; jobUrl: string; onClose: () => void }) {
   const color = CATEGORY_COLORS[job.category];
   return (
     <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.45)", zIndex: 500, display: "flex", alignItems: "flex-end", justifyContent: "center", padding: "0 0 0 0" }}>
@@ -664,12 +554,12 @@ function JobDetailModal({ job, jobUrl, onClose, onApply }: { job: Job; jobUrl: s
           >
             <WhatsAppIcon size={16} /> Via WhatsApp bewerben
           </a>
-          <button
-            onClick={onApply}
-            style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: "var(--navy)", color: "#fff", fontSize: 14, fontWeight: 700, padding: "13px 16px", borderRadius: 999, border: "none", cursor: "pointer", fontFamily: "inherit" }}
+          <Link
+            href={`${jobPath(job)}#bewerben`}
+            style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: "var(--navy)", color: "#fff", fontSize: 14, fontWeight: 700, padding: "13px 16px", borderRadius: 999, textDecoration: "none" }}
           >
-            <MailIcon size={15} /> Per E-Mail bewerben
-          </button>
+            <MailIcon size={15} /> Online bewerben
+          </Link>
           {process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID && (
             <a
               href={`/api/auth/linkedin?return=${encodeURIComponent(jobPath(job))}&jobTitle=${encodeURIComponent(job.title)}&jobCity=${encodeURIComponent(job.city)}`}
@@ -695,7 +585,6 @@ function JobDetailModal({ job, jobUrl, onClose, onApply }: { job: Job; jobUrl: s
 
 function JobCard({ job, distance }: { job: Job; distance?: number }) {
   const [showDetail, setShowDetail] = useState(false);
-  const [showApply, setShowApply] = useState(false);
   const color = CATEGORY_COLORS[job.category];
 
   // Auto-open wenn URL ?job=<id> enthält
@@ -721,10 +610,8 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
           job={job}
           jobUrl={jobUrl}
           onClose={closeDetail}
-          onApply={() => { closeDetail(); setShowApply(true); }}
         />
       )}
-      {showApply && <ApplyModal job={job} onClose={() => setShowApply(false)} />}
       <div
         onClick={openDetail}
         style={{ borderRadius: 28, padding: 24, background: "#fff", display: "flex", flexDirection: "column", cursor: "pointer" }}
@@ -802,12 +689,12 @@ function JobCard({ job, distance }: { job: Job; distance?: number }) {
             >
               <WhatsAppIcon size={13} /> WhatsApp
             </a>
-            <button
-              onClick={() => setShowApply(true)}
-              style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "#f5f5f7", color: "#1d1d1f", fontSize: 12, fontWeight: 700, padding: "9px 12px", borderRadius: 999, border: "none", cursor: "pointer", fontFamily: "inherit" }}
+            <Link
+              href={`${jobPath(job)}#bewerben`}
+              style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, background: "#f5f5f7", color: "#1d1d1f", fontSize: 12, fontWeight: 700, padding: "9px 12px", borderRadius: 999, textDecoration: "none" }}
             >
-              <MailIcon size={13} /> E-Mail
-            </button>
+              <MailIcon size={13} /> Bewerben
+            </Link>
             <a
               href={linkedInShareUrl(job, jobUrl)}
               target="_blank" rel="noopener noreferrer"
