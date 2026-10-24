@@ -239,24 +239,24 @@ export default function KontaktPage() {
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                   <div className="form-grid-2">
                     <div>
-                      <label className="form-label">Name *</label>
-                      <input required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Ihr Name"
+                      <label className="form-label" htmlFor="kontakt-name">Name *</label>
+                      <input id="kontakt-name" required autoComplete="name" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Ihr Name"
                         className="form-input" style={{ background: "#fff", border: "1.5px solid var(--border)" }} />
                     </div>
                     <div>
-                      <label className="form-label">Telefon *</label>
-                      <input required type="tel" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} placeholder="+49 ..."
+                      <label className="form-label" htmlFor="kontakt-telefon">Telefon *</label>
+                      <input id="kontakt-telefon" required type="tel" autoComplete="tel" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} placeholder="+49 ..."
                         className="form-input" style={{ background: "#fff", border: "1.5px solid var(--border)" }} />
                     </div>
                   </div>
                   <div>
-                    <label className="form-label">E-Mail *</label>
-                    <input required type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} placeholder="deine@email.de"
+                    <label className="form-label" htmlFor="kontakt-email">E-Mail *</label>
+                    <input id="kontakt-email" required type="email" autoComplete="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} placeholder="deine@email.de"
                       className="form-input" style={{ background: "#fff", border: "1.5px solid var(--border)" }} />
                   </div>
                   <div>
-                    <label className="form-label">Nachricht *</label>
-                    <textarea required value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+                    <label className="form-label" htmlFor="kontakt-nachricht">Nachricht *</label>
+                    <textarea id="kontakt-nachricht" required value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                       placeholder={form.type === "bewerber" ? "Welche Stelle suchen Sie? In welcher Region möchten Sie tätig sein?" : "Welche Fachkraft suchen Sie? Standort, Erfahrung etc."}
                       rows={5}
                       className="form-input" style={{ resize: "vertical", background: "#fff", border: "1.5px solid var(--border)" }} />

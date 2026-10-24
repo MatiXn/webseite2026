@@ -305,50 +305,50 @@ function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+    <form onSubmit={handleSubmit} className="form-dunkel" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       <div className="form-grid">
         <div>
-          <label style={lbl}>Unternehmen *</label>
-          <input style={inp} placeholder="Musterfirma GmbH" value={form.company} onChange={set("company")} required />
+          <label style={lbl} htmlFor="tp-unternehmen">Unternehmen *</label>
+          <input id="tp-unternehmen" autoComplete="organization" style={inp} placeholder="Musterfirma GmbH" value={form.company} onChange={set("company")} required />
         </div>
         <div>
-          <label style={lbl}>Ansprechpartner *</label>
-          <input style={inp} placeholder="Max Mustermann" value={form.contact} onChange={set("contact")} required />
+          <label style={lbl} htmlFor="tp-ansprechpartner">Ansprechpartner *</label>
+          <input id="tp-ansprechpartner" autoComplete="name" style={inp} placeholder="Max Mustermann" value={form.contact} onChange={set("contact")} required />
         </div>
         <div>
-          <label style={lbl}>E-Mail * <span style={{ fontWeight: 400, opacity: 0.6 }}>(geschäftlich)</span></label>
+          <label style={lbl} htmlFor="tp-email">E-Mail * <span style={{ fontWeight: 400, opacity: 0.6 }}>(geschäftlich)</span></label>
           <input
             style={{ ...inp, borderColor: fieldErrors.email ? "#ff6b6b" : undefined }}
-            type="email" placeholder="max@firma.de" value={form.email} onChange={set("email")} required
+            id="tp-email" autoComplete="email" type="email" placeholder="max@firma.de" value={form.email} onChange={set("email")} required
           />
           {fieldErrors.email && <p style={{ fontSize: 12, color: "#ff6b6b", marginTop: 4 }}>{fieldErrors.email}</p>}
         </div>
         <div>
-          <label style={lbl}>Telefon <span style={{ fontWeight: 400, opacity: 0.6 }}>(DE)</span> *</label>
+          <label style={lbl} htmlFor="tp-telefon">Telefon <span style={{ fontWeight: 400, opacity: 0.6 }}>(DE)</span> *</label>
           <input
             style={{ ...inp, borderColor: fieldErrors.phone ? "#ff6b6b" : undefined }}
-            type="tel" required placeholder="+49 211 ..." value={form.phone} onChange={set("phone")}
+            id="tp-telefon" autoComplete="tel" type="tel" required placeholder="+49 211 ..." value={form.phone} onChange={set("phone")}
           />
           {fieldErrors.phone && <p style={{ fontSize: 12, color: "#ff6b6b", marginTop: 4 }}>{fieldErrors.phone}</p>}
         </div>
         <div>
-          <label style={lbl}>Gesuchte Fachkräfte *</label>
-          <select style={{ ...inp, colorScheme: "dark" }} value={form.category} onChange={set("category")} required>
+          <label style={lbl} htmlFor="tp-fachkraefte">Gesuchte Fachkräfte *</label>
+          <select style={{ ...inp, colorScheme: "dark" }} id="tp-fachkraefte" value={form.category} onChange={set("category")} required>
             <option value="" style={{ background: "#1a2d45", color: "#fff" }}>Bitte wählen …</option>
             {CATEGORIES.map(c => <option key={c} value={c} style={{ background: "#1a2d45", color: "#fff" }}>{c}</option>)}
           </select>
         </div>
         <div>
-          <label style={lbl}>Anzahl</label>
-          <select style={{ ...inp, colorScheme: "dark" }} value={form.volume} onChange={set("volume")}>
+          <label style={lbl} htmlFor="tp-anzahl">Anzahl</label>
+          <select style={{ ...inp, colorScheme: "dark" }} id="tp-anzahl" value={form.volume} onChange={set("volume")}>
             <option value="" style={{ background: "#1a2d45", color: "#fff" }}>Bitte wählen …</option>
             {VOLUMES.map(v => <option key={v} value={v} style={{ background: "#1a2d45", color: "#fff" }}>{v}</option>)}
           </select>
         </div>
       </div>
       <div>
-        <label style={lbl}>Ihre Anfrage</label>
-        <textarea style={{ ...inp, minHeight: 88, resize: "vertical" }}
+        <label style={lbl} htmlFor="tp-anfrage">Ihre Anfrage</label>
+        <textarea id="tp-anfrage" style={{ ...inp, minHeight: 88, resize: "vertical" }}
           placeholder="Kurz beschreiben: Anforderungen, Qualifikationen, Einsatzort …"
           value={form.message} onChange={set("message")} />
       </div>

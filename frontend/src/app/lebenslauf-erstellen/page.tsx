@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useId } from "react";
 import Link from "next/link";
 import Nav, { MAIL_APPLY, WA_LINK } from "../components/Nav";
 import FaqSection from "../components/FaqSection";
@@ -54,12 +54,13 @@ const EMPTY: CVData = {
 // ── Input Component (Apple style) ────────────────────────────────────────────
 function Input({ label, value, onChange, placeholder, type = "text", multiline = false }:
   { label: string; value: string; onChange: (v: string) => void; placeholder?: string; type?: string; multiline?: boolean }) {
+  const id = useId();
   return (
     <div>
-      <label className="form-label">{label}</label>
+      <label className="form-label" htmlFor={id}>{label}</label>
       {multiline
-        ? <textarea className="form-input" value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} rows={3} style={{ resize: "vertical" }} />
-        : <input className="form-input" type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} />
+        ? <textarea id={id} className="form-input" value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} rows={3} style={{ resize: "vertical" }} />
+        : <input id={id} className="form-input" type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} />
       }
     </div>
   );
@@ -113,21 +114,21 @@ ${form.vorname} ${form.nachname}`;
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           <div style={{ display: "flex", gap: 12 }}>
             <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 6 }}>Vorname *</label>
-              <input style={inputStyle} value={form.vorname} onChange={e => setForm(f => ({ ...f, vorname: e.target.value }))} placeholder="Max" />
+              <label htmlFor="cv-vorname" style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 6 }}>Vorname *</label>
+              <input id="cv-vorname" autoComplete="given-name" style={inputStyle} value={form.vorname} onChange={e => setForm(f => ({ ...f, vorname: e.target.value }))} placeholder="Max" />
             </div>
             <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 6 }}>Nachname *</label>
-              <input style={inputStyle} value={form.nachname} onChange={e => setForm(f => ({ ...f, nachname: e.target.value }))} placeholder="Mustermann" />
+              <label htmlFor="cv-nachname" style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 6 }}>Nachname *</label>
+              <input id="cv-nachname" autoComplete="family-name" style={inputStyle} value={form.nachname} onChange={e => setForm(f => ({ ...f, nachname: e.target.value }))} placeholder="Mustermann" />
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 6 }}>Telefonnummer *</label>
-            <input style={inputStyle} type="tel" value={form.telefon} onChange={e => setForm(f => ({ ...f, telefon: e.target.value }))} placeholder="+49 123 456789" />
+            <label htmlFor="cv-telefon" style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 6 }}>Telefonnummer *</label>
+            <input id="cv-telefon" autoComplete="tel" style={inputStyle} type="tel" value={form.telefon} onChange={e => setForm(f => ({ ...f, telefon: e.target.value }))} placeholder="+49 123 456789" />
           </div>
           <div>
-            <label style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 6 }}>Gewünschte Position / Berufsfeld</label>
-            <input style={inputStyle} value={form.position} onChange={e => setForm(f => ({ ...f, position: e.target.value }))} placeholder="z.B. Elektroniker, Mechatroniker..." />
+            <label htmlFor="cv-position" style={{ fontSize: 13, fontWeight: 500, color: "#707070", display: "block", marginBottom: 6 }}>Gewünschte Position / Berufsfeld</label>
+            <input id="cv-position" style={inputStyle} value={form.position} onChange={e => setForm(f => ({ ...f, position: e.target.value }))} placeholder="z.B. Elektroniker, Mechatroniker..." />
           </div>
         </div>
         <div style={{ display: "flex", gap: 10, marginTop: 24 }}>

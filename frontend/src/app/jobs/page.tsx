@@ -222,6 +222,7 @@ export default function JobsPage() {
               </span>
               <input
                 type="text"
+                aria-label="Berufsbezeichnung"
                 placeholder="Berufsbezeichnung, z.B. Elektroniker"
                 value={query}
                 onChange={e => setQuery(e.target.value)}
@@ -242,6 +243,7 @@ export default function JobsPage() {
               </span>
               <input
                 type="text"
+                aria-label="Stadt"
                 placeholder="Stadt, z.B. Berlin"
                 value={locationInput}
                 onChange={e => {

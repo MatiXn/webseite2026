@@ -310,6 +310,8 @@ function YaftoForm() {
           value={email}
           onChange={e => setEmail(e.target.value)}
           placeholder="Ihre E-Mail-Adresse"
+          aria-label="Ihre E-Mail-Adresse"
+          autoComplete="email"
           style={{
             flex: 1, background: "rgba(255,255,255,.1)", border: "1.5px solid rgba(255,255,255,.2)",
             color: "#fff", fontSize: 14, padding: "12px 16px", borderRadius: 8, outline: "none"

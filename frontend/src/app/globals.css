@@ -260,6 +260,22 @@ body {
   border-color: #0071e3;
   background: #fff;
 }
+
+/* Sichtbarer Tastaturfokus für alle Formularfelder (WCAG 2.4.7). !important,
+   weil viele Felder Inline-Styles mit outline: none tragen, die sonst gewinnen
+   (Audit 2026-10-24: auf /jobs, /kontakt, Jobdetail und Startseite änderte
+   sich beim Fokussieren nichts). Die Landingpage-Felder (.lp-feld) haben ihre
+   eigene Regel weiter unten. */
+/* :where() hält die Spezifität niedrig, damit die Ausnahmen unten greifen. */
+:where(input, textarea, select):where(:not(.lp-feld):not([type="hidden"])):focus-visible {
+  outline: 2px solid #0071e3 !important;
+  outline-offset: 2px;
+}
+/* Auf dunklem Grund (YAFTO-Feld, B2B-Anfrage) ist Blau zu schwach. */
+.yafto-form input:focus-visible,
+.form-dunkel :where(input, textarea, select):focus-visible {
+  outline-color: #fff !important;
+}
 @media (max-width: 767px) {
   /* font-size >= 16px prevents iOS Safari auto-zoom on input focus */
   .form-input { font-size: 16px; padding: 13px 14px; border-radius: 12px; }

@@ -206,6 +206,10 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
     border: "1.5px solid #d2d2d7", fontSize: 15, background: "#fff",
     outline: "none", color: "#1d1d1f",
   };
+  const labelStyle: React.CSSProperties = {
+    display: "flex", flexDirection: "column", gap: 6,
+    fontSize: 13, fontWeight: 600, color: "#424245",
+  };
 
   return (
     <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -238,31 +242,43 @@ export default function ApplyForm({ jobTitle, jobCity }: { jobTitle: string; job
           zusätzliche E-Mail-Bestätigung direkt bei uns ein.
         </div>
       )}
-      <input
-        style={inputStyle} placeholder="Ihr Name *" required maxLength={200}
-        value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
-      />
-      <input
-        style={inputStyle} placeholder="E-Mail-Adresse *" type="email" required maxLength={254}
-        value={form.email} readOnly={!!linkedin}
-        onChange={e => setForm({ ...form, email: e.target.value })}
-      />
-      <input
-        style={inputStyle} placeholder="Telefonnummer *" type="tel" required maxLength={40}
-        value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
-      />
+      <label style={labelStyle}>
+        Name *
+        <input
+          style={inputStyle} placeholder="Max Mustermann" required maxLength={200} autoComplete="name"
+          value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
+        />
+      </label>
+      <label style={labelStyle}>
+        E-Mail-Adresse *
+        <input
+          style={inputStyle} placeholder="max@beispiel.de" type="email" required maxLength={254} autoComplete="email"
+          value={form.email} readOnly={!!linkedin}
+          onChange={e => setForm({ ...form, email: e.target.value })}
+        />
+      </label>
+      <label style={labelStyle}>
+        Telefonnummer *
+        <input
+          style={inputStyle} placeholder="+49 151 23456789" type="tel" required maxLength={40} autoComplete="tel"
+          value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
+        />
+      </label>
       {/* Honeypot — für Menschen unsichtbar, Bots füllen es aus */}
       <input
         type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true"
         value={honeypot} onChange={e => setHoneypot(e.target.value)}
         style={{ position: "absolute", left: "-9999px", height: 0, width: 0, opacity: 0 }}
       />
-      <textarea
-        style={{ ...inputStyle, minHeight: 100, resize: "vertical" }}
-        placeholder="Kurze Nachricht (optional) – z. B. Ihre Erfahrung oder Verfügbarkeit"
-        maxLength={5000}
-        value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
-      />
+      <label style={labelStyle}>
+        Kurze Nachricht (optional)
+        <textarea
+          style={{ ...inputStyle, minHeight: 100, resize: "vertical" }}
+          placeholder="z. B. Ihre Erfahrung oder Verfügbarkeit"
+          maxLength={5000}
+          value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
+        />
+      </label>
       <Turnstile onVerify={setTurnstileToken} />
       {error && (
         <p style={{ fontSize: 14, color: "#dc2626", fontWeight: 600 }}>{error}</p>
