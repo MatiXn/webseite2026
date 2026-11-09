@@ -41,6 +41,7 @@ export const navigation = {
       title: "Unternehmen",
       items: [
         { label: "Technische Personalvermittlung", href: "/technische-personalvermittlung" },
+        { label: "Personalvermittlung Düsseldorf", href: "/personalvermittlung/duesseldorf" },
         { label: "Über PHE", href: "/ueber-uns" },
         { label: "Kontakt", href: "/kontakt" },
       ],

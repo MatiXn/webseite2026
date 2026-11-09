@@ -134,6 +134,10 @@ export default function KontaktPage() {
             <Link href="/technische-personalvermittlung" style={{ color: "var(--blue)", fontWeight: 700, textDecoration: "none" }}>
               Mehr über unsere Direktvermittlung
             </Link>
+            {" oder "}
+            <Link href="/personalvermittlung/duesseldorf" style={{ color: "var(--blue)", fontWeight: 700, textDecoration: "none" }}>
+              Personalvermittlung in Düsseldorf
+            </Link>
           </p>
         </div>
 

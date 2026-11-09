@@ -740,6 +740,8 @@ export default function TalenteFindPage() {
               {"  ·  "}
               <Link href="/jobs" style={{ color: "rgba(255,255,255,0.78)", textDecoration: "underline" }}>Aktuelle technische Stellen ansehen</Link>
               {"  ·  "}
+              <Link href="/personalvermittlung/duesseldorf" style={{ color: "rgba(255,255,255,0.78)", textDecoration: "underline" }}>Personalvermittlung in Düsseldorf</Link>
+              {"  ·  "}
               <Link href="/ueber-uns" style={{ color: "rgba(255,255,255,0.78)", textDecoration: "underline" }}>PHE-Perm kennenlernen</Link>
             </p>
           </div>

@@ -137,7 +137,8 @@ export default function UeberUnsPage() {
             Sie suchen eine Stelle?{" "}
             <Link href="/jobs" style={{ color: "#0071e3", fontWeight: 700, textDecoration: "none" }}>Offene technische Stellen ansehen</Link>.{" "}
             Sie suchen Fachkräfte?{" "}
-            <Link href="/technische-personalvermittlung" style={{ color: "#0071e3", fontWeight: 700, textDecoration: "none" }}>Unsere technische Personalvermittlung</Link>.
+            <Link href="/technische-personalvermittlung" style={{ color: "#0071e3", fontWeight: 700, textDecoration: "none" }}>Unsere technische Personalvermittlung</Link>{" "}
+            oder direkt <Link href="/personalvermittlung/duesseldorf" style={{ color: "#0071e3", fontWeight: 700, textDecoration: "none" }}>Personalvermittlung in Düsseldorf</Link>.
           </p>
         </div>
       </section>
