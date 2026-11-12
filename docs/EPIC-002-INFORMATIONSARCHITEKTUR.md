@@ -7,7 +7,7 @@
 
 > **Positionierung (Leitplanke):** PHE-Perm vermittelt technische Fachkräfte in Festanstellung — persönlich geprüft, fachlich passend, langfristig gedacht.
 > **Strategische Kategorie:** Technische Direktvermittlung.
-> **YAFTO** ist eine eigenständige Marke und **nicht** Teil dieser SEO-Architektur.
+> **YAFTO** ist ein eigenständiges, von PHE-Perm getrenntes Unternehmen und **nicht** Teil dieser Website oder SEO-Architektur. Seit 12.11.2026 ist jeder YAFTO-Bezug von phe-perm.de entfernt.
 
 ---
 
@@ -192,7 +192,7 @@ PHE-Perm (/)
 └── Rechtliches (Footer, noindex): /impressum · /datenschutz · /agb
 
 Intern/noindex (nicht in Nav/Sitemap): /jobs/social-kit · /jobs/[id]/social
-Ausgeschlossen aus PHE-SEO: YAFTO (eigene Marke/Domain)
+Ausgeschlossen aus PHE-SEO: YAFTO (anderes Unternehmen, eigene Domain)
 ```
 
 ---

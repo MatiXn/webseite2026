@@ -76,6 +76,11 @@ cd frontend && npm run dev                     # Frontend
 
 ## Fallstricke
 
+- **YAFTO ist ein anderes Unternehmen**, nicht Teil von PHE-Perm. Auf
+  phe-perm.de gehört nichts zu YAFTO: kein Abschnitt, kein Link, keine
+  Warteliste, keine gemeinsamen Tracking-IDs. Der Abschnitt auf der Startseite
+  wurde am 12.11.2026 entfernt. PHE nutzt `GTM-WQZKFVDF` und `AW-10801717598`,
+  YAFTO hat eigene Konten (`GTM-NWTFHQ84`, `G-321GXQQCKJ`).
 - **Getrennte Prozesse:** Backend und Frontend haben je ein eigenes `.env` / `.env.example` und müssen einzeln gestartet werden — kein Root-Skript, das beides orchestriert.
 - **CORS ist strikt:** `backend/app/main.py` erlaubt nur explizit gelistete Origins (`ALLOWED_ORIGINS` in `backend/.env.example`, default `https://phe-perm.de,https://www.phe-perm.de`), kein Wildcard.
 - **Production-Härtung schaltet sich über `APP_ENV` frei:** In `is_production` werden `/docs`, `/redoc`, `/openapi.json` deaktiviert und `TrustedHostMiddleware` mit `allowed_hosts=["api.phe-perm.de", "*.run.app"]` aktiviert (`backend/app/main.py`) — bei lokalem Testen mit `APP_ENV=production` sind diese Endpunkte also absichtlich nicht erreichbar.
