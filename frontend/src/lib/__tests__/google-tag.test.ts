@@ -26,54 +26,19 @@ beforeEach(() => {
   delete window.dataLayer;
 });
 
-describe("Google-Tag lädt nur mit Einwilligung", () => {
-  it("lädt ohne Entscheidung kein Skript", async () => {
-    const { ladeGoogleTag } = await frischesTag();
-    ladeGoogleTag();
-
-    expect(tagSkripte()).toHaveLength(0);
-    expect(window.gtag).toBeUndefined();
+describe("Kein eigenes gtag.js mehr (Ads-Tag liegt im GTM-Container)", () => {
+  it("exportiert keinen Lader mehr", async () => {
+    const modul = await frischesTag();
+    expect("ladeGoogleTag" in modul).toBe(false);
   });
 
-  it("lädt nach einer Ablehnung kein Skript", async () => {
-    setzeConsent(false);
-    const { ladeGoogleTag } = await frischesTag();
-    ladeGoogleTag();
-
-    expect(tagSkripte()).toHaveLength(0);
-    expect(window.gtag).toBeUndefined();
-  });
-
-  it("lädt nach einer Zustimmung genau ein Skript mit der Ads-ID", async () => {
+  it("lädt auch bei einer Conversion kein gtag.js", async () => {
     setzeConsent(true);
-    const { ladeGoogleTag, GOOGLE_ADS_ID } = await frischesTag();
-    ladeGoogleTag();
-    ladeGoogleTag();
+    const { meldeKontaktConversion } = await frischesTag();
+    meldeKontaktConversion("kontakt");
 
-    expect(tagSkripte()).toHaveLength(1);
-    expect(tagSkripte()[0].src).toContain(`id=${GOOGLE_ADS_ID}`);
-    expect(befehle()).toContainEqual(["config", GOOGLE_ADS_ID]);
-  });
-
-  it("setzt Consent Mode vor der Konfiguration", async () => {
-    setzeConsent(true);
-    const { ladeGoogleTag } = await frischesTag();
-    ladeGoogleTag();
-
-    const namen = befehle().map((b) => b[0]);
-    expect(namen.indexOf("consent")).toBeLessThan(namen.indexOf("config"));
-    expect(befehle()[0][2]).toMatchObject({ ad_storage: "granted", ad_user_data: "granted" });
-  });
-
-  it("übernimmt keine Zustimmung aus Fassung 2 (nur Meta-Pixel)", async () => {
-    window.localStorage.setItem(
-      "phe_consent_v2",
-      JSON.stringify({ marketing: true, zeitpunkt: new Date().toISOString() }),
-    );
-    const { ladeGoogleTag } = await frischesTag();
-    ladeGoogleTag();
-
-    expect(tagSkripte()).toHaveLength(0);
+    expect(tagSkripte().filter((s) => s.src.includes("gtag/js"))).toHaveLength(0);
+    expect(befehle()).not.toContainEqual(expect.arrayContaining(["config"]));
   });
 });
 
@@ -102,15 +67,15 @@ describe("Conversions", () => {
     ]);
   });
 
-  it("lädt das Tag selbst nach, wenn ein Formular vor dem Lader meldet", async () => {
+  it("lädt GTM selbst nach, wenn ein Formular vor dem Lader meldet", async () => {
     setzeConsent(true);
     const { meldeKontaktConversion } = await frischesTag();
 
     meldeKontaktConversion("bewerbung_linkedin");
 
-    expect(tagSkripte()).toHaveLength(1);
-    const namen = befehle().map((b) => b[0]);
-    expect(namen.indexOf("config")).toBeLessThan(namen.indexOf("event"));
+    const gtm = tagSkripte().filter((s) => s.src.includes("gtm.js"));
+    expect(gtm).toHaveLength(1);
+    expect(befehle()).toContainEqual(expect.arrayContaining(["event", "conversion"]));
   });
 
   it("meldet Termin mit Kanal", async () => {

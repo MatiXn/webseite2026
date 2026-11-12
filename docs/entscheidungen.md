@@ -377,3 +377,15 @@ Container `GTM-WQZKFVDF` kommt zusätzlich zum bestehenden Google-Tag hinzu.
   im Container mit anderem Zweck oder Empfänger (z. B. GA4, LinkedIn, Hotjar)
   braucht dagegen eine Banner-Kategorie, eine neue Consent-Fassung, eine
   Ergänzung der Datenschutzerklärung und gegebenenfalls CSP-Domains.
+
+## Google-Ads-Tag nur noch über GTM (12.11.2026)
+
+Der Container `GTM-WQZKFVDF` enthält den Google-Tag für `AW-10801717598`
+bereits. Das eigene gtag.js im Code hat ihn doppelt geladen und
+Seitenaufrufe doppelt gemeldet, deshalb wurde es entfernt. Die
+Conversion-Labels für „Kontakt“ und „Termin“ kennt der Container nicht. Darum
+legt der Code die `gtag('event', 'conversion', {send_to})`-Befehle weiter
+in den dataLayer, und der Google-Tag im Container verarbeitet sie. Am
+12.11.2026 mit Playwright gegen den echten Container geprüft: Ein
+Telefonklick erzeugt `googleadservices.com/pagead/conversion/10801717598`
+mit `en=conversion`. Vor der Einwilligung gibt es keine Google-Anfrage.

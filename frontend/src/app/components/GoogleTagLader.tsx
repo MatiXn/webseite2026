@@ -1,6 +1,6 @@
 "use client";
 
-// Bindet das Google-Tag site-weit ein, sobald eine Marketing-Einwilligung
+// Bindet den Google Tag Manager site-weit ein, sobald eine Marketing-Einwilligung
 // vorliegt, und zählt Klicks auf Telefon- und WhatsApp-Links als
 // Conversion „Termin vereinbaren".
 //
@@ -14,12 +14,11 @@
 
 import { useEffect } from "react";
 import { CONSENT_EREIGNIS, marketingErlaubt } from "../../lib/consent";
-import { ladeGoogleTag, meldeTerminConversion, terminKanal } from "../../lib/google-tag";
+import { meldeTerminConversion, terminKanal } from "../../lib/google-tag";
 import { ladeGtm, sendeGoogleConsent } from "../../lib/gtm";
 
 export default function GoogleTagLader() {
   useEffect(() => {
-    ladeGoogleTag();
     ladeGtm();
 
     // Zustimmung oder Widerruf im Banner. Beim Widerruf bleiben bereits
@@ -27,7 +26,6 @@ export default function GoogleTagLader() {
     // Werbe-Cookies mehr. Beim nächsten Seitenaufruf werden sie nicht geladen.
     const beiAenderung = () => {
       sendeGoogleConsent(marketingErlaubt());
-      ladeGoogleTag();
       ladeGtm();
     };
 

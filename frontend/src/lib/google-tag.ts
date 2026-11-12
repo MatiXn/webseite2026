@@ -1,12 +1,12 @@
-// Google-Tag (Google Ads Conversion-Tracking) — lädt ausschließlich nach
-// erteilter Marketing-Einwilligung.
+// Google Ads Conversion-Tracking — nur nach erteilter Marketing-Einwilligung.
 //
-// Es gelten dieselben Regeln wie beim Meta-Pixel (siehe meta-pixel.ts):
+// Seit 12.11.2026 lädt der Code kein eigenes gtag.js mehr für
+// AW-10801717598: Der Google-Tag für Ads liegt im GTM-Container (lib/gtm.ts).
+// Der Container kennt aber die Conversion-Labels für Kontakt und Termin nicht.
+// Deshalb legt dieser Code die Conversions als gtag-Befehle in den dataLayer,
+// und der Google-Tag im Container verarbeitet sie.
 //
-// 1. Ohne Einwilligung wird gtag.js gar nicht erst angefordert. Google schlägt
-//    vor, den Schnipsel fest in den <head> zu setzen — dann ginge die
-//    IP-Adresse schon beim ersten Seitenaufruf an Google, vor jeder Wahl im
-//    Banner.
+// 1. Ohne Einwilligung wird nichts gemeldet und nichts geladen.
 // 2. Conversions werden erst nach bestätigtem Versand gemeldet, nie beim
 //    Öffnen eines Formulars.
 //
@@ -14,7 +14,7 @@
 // E-Mail-Adressen.
 
 import { marketingErlaubt } from "./consent";
-import { sendeGoogleConsent } from "./gtm";
+import { ladeGtm, stelleGtagBereit } from "./gtm";
 
 /** Konto-ID aus Google Ads. Nicht geheim — sie steht in jedem Seitenquelltext. */
 export const GOOGLE_ADS_ID = "AW-10801717598";
@@ -41,43 +41,16 @@ declare global {
   }
 }
 
-let geladen = false;
-
-/**
- * Lädt gtag.js und meldet den Seitenaufruf.
- * Mehrfachaufrufe sind unschädlich — nach dem ersten Mal passiert nichts.
- */
-export function ladeGoogleTag(): void {
-  if (typeof window === "undefined") return;
-  // Nur am eigenen Merker festmachen: window.gtag existiert seit dem
-  // GTM-Umbau schon durch public/consent-default.js im <head>.
-  if (geladen) return;
-  if (!marketingErlaubt()) return;
-
-  geladen = true;
-
-  // Consent Mode v2: Die Standardwerte (alles abgelehnt) setzt
-  // consent-default.js. Hier die Zustimmung melden — geladen wird ja nur nach
-  // Zustimmung. Analytics bleibt abgelehnt (siehe gtm.ts).
-  sendeGoogleConsent(true);
-  window.gtag!("js", new Date());
-  window.gtag!("config", GOOGLE_ADS_ID);
-
-  const skript = document.createElement("script");
-  skript.async = true;
-  skript.src = `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`;
-  document.head.appendChild(skript);
-}
-
 function melde(sendTo: string, parameter?: Record<string, unknown>): void {
   if (typeof window === "undefined") return;
   if (!marketingErlaubt()) return;
 
   // Ein Formular kann schneller melden, als der GoogleTagLader seinen Effekt
   // ausführt (z. B. die LinkedIn-Bewerbung direkt beim Seitenaufbau). Dann
-  // hier laden — gtag puffert das Ereignis, bis das Skript da ist.
-  ladeGoogleTag();
-  window.gtag?.("event", "conversion", { send_to: sendTo, ...parameter });
+  // hier laden. Der Befehl wartet im dataLayer, bis der Container da ist.
+  ladeGtm();
+  stelleGtagBereit();
+  window.gtag!("event", "conversion", { send_to: sendTo, ...parameter });
 }
 
 /**

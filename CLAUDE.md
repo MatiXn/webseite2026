@@ -114,6 +114,10 @@ cd frontend && npm run dev                     # Frontend
   keine Ads-Conversion-Tags für Kontakt/Termin (die sendet der Code, sonst
   doppelt), keine „Benutzerdefinierten JavaScript-Variablen“ (CSP ohne
   `unsafe-eval`), neue Dienste nur mit Banner, Datenschutzerklärung und CSP.
+  Seit 12.11.2026 lädt der Code **kein eigenes gtag.js** mehr: Der Google-Tag
+  `AW-10801717598` liegt im Container. `lib/google-tag.ts` legt nur noch die
+  Conversion-Befehle (`send_to` mit Label) in den dataLayer. Wird der Google-Tag
+  im Container gelöscht oder pausiert, zählt Google Ads keine Conversions mehr.
 - **Die Meta-Pixel-ID steht nur bei Vercel** (`NEXT_PUBLIC_META_PIXEL_ID`,
   Production), nicht im Code. Seit 06.10.2026 `1531099928014474` (vorher
   `1721750638380257`). Sie wird beim Build eingesetzt: Nach einer Änderung

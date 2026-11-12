@@ -112,16 +112,20 @@ describe("GTM lädt nur mit Einwilligung", () => {
   });
 });
 
-describe("Google-Ads-Tag mit vorhandenem consent-default.js", () => {
-  it("lädt trotz bereits existierendem window.gtag", async () => {
+describe("Conversions mit vorhandenem consent-default.js", () => {
+  it("landen im dataLayer, nachdem GTM gestartet wurde", async () => {
     headSkript();
     setzeConsent(true);
     vi.resetModules();
-    const { ladeGoogleTag, GOOGLE_ADS_ID } = await import("../google-tag");
-    ladeGoogleTag();
+    const { meldeTerminConversion, CONVERSION } = await import("../google-tag");
+    meldeTerminConversion("telefon");
 
-    const skripte = [...document.querySelectorAll("script")].filter((s) => s.src.includes("gtag/js"));
-    expect(skripte).toHaveLength(1);
-    expect(eintraege()).toContainEqual(["config", GOOGLE_ADS_ID]);
+    const liste = eintraege();
+    const start = liste.findIndex((e) => (e as { event?: string })?.event === "gtm.js");
+    const conversion = liste.findIndex(
+      (e) => Array.isArray(e) && e[0] === "event" && (e[2] as { send_to?: string })?.send_to === CONVERSION.termin,
+    );
+    expect(start).toBeGreaterThan(-1);
+    expect(conversion).toBeGreaterThan(start);
   });
 });
