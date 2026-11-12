@@ -248,87 +248,6 @@ const STEPS = [
   },
 ];
 
-function YaftoForm() {
-  const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    const a = document.createElement("a");
-    a.href = `mailto:warteliste@yafto.de?subject=${encodeURIComponent("Warteliste: " + email)}&body=${encodeURIComponent(`Hallo YAFTO-Team,\n\nbitte tragt mich in die Warteliste ein:\n\nE-Mail: ${email}\n\nMit freundlichen Grüßen`)}`;
-    a.click();
-    setSent(true);
-  };
-
-  return (
-    <>
-      {sent && (
-        <div onClick={() => setSent(false)} style={{
-          position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          zIndex: 1000, padding: 24,
-        }}>
-          <div onClick={e => e.stopPropagation()} style={{
-            background: "#fff", borderRadius: 20, padding: "40px 36px",
-            width: "100%", maxWidth: 440, textAlign: "center",
-            boxShadow: "0 24px 64px rgba(0,0,0,0.25)",
-          }}>
-            <div style={{
-              width: 64, height: 64, borderRadius: "50%",
-              background: "linear-gradient(135deg,var(--blue),var(--violet))",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              margin: "0 auto 20px",
-            }}>
-              <svg width={28} height={28} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            </div>
-            <h2 style={{ fontSize: 22, fontWeight: 800, color: "var(--navy)", marginBottom: 10 }}>
-              Sie sind auf der Warteliste!
-            </h2>
-            <p style={{ fontSize: 14, color: "var(--gray)", lineHeight: 1.6, marginBottom: 8 }}>
-              Ihr E-Mail-Programm öffnet sich gleich. Bitte senden Sie die E-Mail ab, um Ihren Platz zu sichern.
-            </p>
-            <p style={{ fontSize: 13, color: "var(--gray-light)", marginBottom: 28 }}>
-              Wir informieren Sie, sobald YAFTO startet.
-            </p>
-            <button onClick={() => setSent(false)} style={{
-              background: "linear-gradient(135deg,var(--blue),var(--violet))",
-              color: "#fff", fontSize: 14, fontWeight: 700, padding: "12px 32px",
-              borderRadius: 10, border: "none", cursor: "pointer", fontFamily: "inherit",
-            }}>
-              Alles klar!
-            </button>
-          </div>
-        </div>
-      )}
-      <form onSubmit={handleSubmit} className="yafto-form">
-        <input
-          type="email"
-          required
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="Ihre E-Mail-Adresse"
-          aria-label="Ihre E-Mail-Adresse"
-          autoComplete="email"
-          style={{
-            flex: 1, background: "rgba(255,255,255,.1)", border: "1.5px solid rgba(255,255,255,.2)",
-            color: "#fff", fontSize: 14, padding: "12px 16px", borderRadius: 8, outline: "none"
-          }}
-        />
-        <button type="submit" style={{
-          background: "linear-gradient(135deg,var(--blue),var(--violet))",
-          color: "#fff", fontSize: 14, fontWeight: 700, padding: "12px 20px",
-          borderRadius: 8, border: "none", cursor: "pointer", whiteSpace: "nowrap", fontFamily: "inherit"
-        }}>
-          Zur Warteliste anmelden
-        </button>
-      </form>
-    </>
-  );
-}
-
 // Eine Quelle für sichtbares FAQ und FAQPage-Schema — Google verlangt,
 // dass Schema-FAQ-Inhalte auch sichtbar auf der Seite stehen.
 const HOME_FAQ = [
@@ -341,7 +260,6 @@ const HOME_FAQ = [
   { q: "Was ist der Unterschied zwischen Personalvermittlung und Zeitarbeit?", a: "Bei der Personalvermittlung wird der Kandidat direkt und dauerhaft beim Unternehmen angestellt – mit vollen Sozialleistungen, Kündigungsschutz und Urlaubsansprüchen. Bei Zeitarbeit ist man bei einer Zeitarbeitsfirma angestellt und wird an Betriebe verliehen. PHE-Perm Engineering praktiziert ausschließlich die direkte Festanstellungsvermittlung." },
   { q: "Wer zahlt den Personalvermittler bei PHE-Perm Engineering?", a: "Das einstellende Unternehmen zahlt die Vermittlungsprovision an PHE-Perm Engineering – und nur im Erfolgsfall. Für Bewerber entstehen keinerlei Kosten. Dieses Modell ist bei seriösen Personalvermittlern Standard." },
   { q: "Kann ich mich bewerben, wenn ich keine aktuelle Stelle suche?", a: "Ja. Sie können sich jederzeit vormerken lassen, auch bei bestehender Beschäftigung. Wir informieren Sie diskret, sobald eine passende Position verfügbar ist." },
-  { q: "Was ist YAFTO?", a: "YAFTO ist unsere neue Plattform, auf der Sie Ihr Profil anonym veröffentlichen und Unternehmen sich bei Ihnen bewerben. Sie entscheiden, wen Sie kennenlernen möchten, ohne Druck und ohne Spam. Bald verfügbar." },
 ];
 
 export default function Home() {
@@ -627,47 +545,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── YAFTO ── */}
-      <section id="yafto" style={{ background: "var(--navy)", color: "#fff", position: "relative", overflow: "hidden", padding: 0 }}>
-        <div style={{
-          position: "absolute", inset: 0,
-          backgroundImage: "url('/yafto-bg.webp')",
-          backgroundSize: "cover", backgroundPosition: "center", opacity: 0.2
-        }} />
-        <div style={{ position: "relative", zIndex: 1, maxWidth: 800, margin: "0 auto", textAlign: "center", padding: "80px 24px" }}>
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.2)",
-            color: "#fff", fontSize: 12, fontWeight: 700, padding: "6px 16px", borderRadius: 20, marginBottom: 28,
-            letterSpacing: "0.1em", textTransform: "uppercase"
-          }}>
-            <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e", display: "inline-block", animation: "pulse 2s infinite" }} />
-            Bald verfügbar
-          </div>
-          <h2 style={{ fontSize: "clamp(32px,5vw,56px)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.025em", marginBottom: 16 }}>
-            Willkommen bei<br />
-            <em style={{ fontStyle: "normal", background: "linear-gradient(135deg,#60a5fa,#c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>YAFTO</em>
-          </h2>
-          <p style={{ fontSize: 17, color: "rgba(255,255,255,.65)", lineHeight: 1.7, marginBottom: 48 }}>
-            Die neue Art der Stellenvermittlung in Deutschland. Ihr Profil, anonym. Unternehmen bewerben sich bei Ihnen. Sie entscheiden.
-          </p>
-          <div className="grid-3col" style={{ marginBottom: 48, textAlign: "left" }}>
-            {[
-              { icon: "01", title: "100% Anonym", desc: "Ihr Name bleibt bis zur eigenen Freigabe vollständig anonym. Keine unerwünschten Kontaktversuche durch Dritte." },
-              { icon: "02", title: "Firmen kommen zu Ihnen", desc: "Unternehmen sehen Ihr Profil und nehmen Kontakt auf, Sie entscheiden, wen Sie kennenlernen möchten." },
-              { icon: "03", title: "Sie entscheiden", desc: "Kontaktanfragen annehmen oder ablehnen, Sie behalten jederzeit die Kontrolle. Kein Spam, keine Verpflichtung." },
-            ].map((f) => (
-              <div key={f.title} style={{ background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.1)", borderRadius: 14, padding: 24 }}>
-                <div style={{ fontSize: 13, fontWeight: 800, color: "rgba(255,255,255,.5)", marginBottom: 12, letterSpacing: "0.05em" }}>{f.icon}</div>
-                <h4 style={{ fontSize: 15, fontWeight: 700, marginBottom: 6 }}>{f.title}</h4>
-                <p style={{ fontSize: 13, color: "rgba(255,255,255,.55)", lineHeight: 1.6 }}>{f.desc}</p>
-              </div>
-            ))}
-          </div>
-          <YaftoForm />
-        </div>
-      </section>
-
       {/* ── FAQ ── */}
       <FaqSection title="Häufige Fragen zur Jobvermittlung" items={[
         { q: "Was kostet die Vermittlung durch PHE-Perm Engineering?", a: "Die Vermittlung ist für Bewerber vollständig kostenlos. PHE-Perm Engineering wird ausschließlich vom Unternehmen vergütet, Ihnen entstehen keinerlei Kosten, weder für die Beratung noch für die Vermittlung." },
@@ -676,18 +553,10 @@ export default function Home() {
         { q: "Welche Jobs vermittelt PHE-Perm Engineering?", a: "Wir sind spezialisiert auf Festanstellungen in drei Bereichen: Elektrotechnik (Elektroniker, Elektriker, Elektroplaner), IT & Automation (SPS-Programmierer, Netzwerktechniker) sowie Bau & TGA (Bauleiter, Projektleiter, Oberbauleiter)." },
         { q: "Kann ich mich bewerben, wenn ich keine aktuelle Stelle suche?", a: "Ja. Sie können sich jederzeit vormerken lassen, auch bei bestehender Beschäftigung. Wir informieren Sie diskret, sobald eine passende Position verfügbar ist." },
         { q: "Ist PHE-Perm Engineering eine Zeitarbeitsfirma?", a: "Nein. Wir vermitteln ausschließlich Festanstellungen direkt beim Unternehmen. Es gibt keine Zeitarbeit, keine Leiharbeit, Sie werden von Anfang an unbefristet angestellt." },
-        { q: "Was ist YAFTO?", a: "YAFTO ist unsere neue Plattform, auf der Sie Ihr Profil anonym veröffentlichen und Unternehmen sich bei Ihnen bewerben. Sie entscheiden, wen Sie kennenlernen möchten, ohne Druck und ohne Spam. Bald verfügbar." },
       ]} />
 
       {/* ── FOOTER ── */}
       <Footer />
-
-      <style>{`
-        @keyframes pulse {
-          0%,100%{opacity:1;transform:scale(1)}
-          50%{opacity:.6;transform:scale(1.3)}
-        }
-      `}</style>
     </>
   );
 }

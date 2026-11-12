@@ -16,7 +16,7 @@ export default function Footer() {
             </p>
           </div>
           {[
-            { title: "Für Bewerber", links: [["Stellenangebote", "/jobs"], ["Technische Berufe", "/berufe"], ["Lebenslauf erstellen", "/lebenslauf-erstellen"], ["Jetzt bewerben", WA_LINK], ["YAFTO", "/#yafto"]] },
+            { title: "Für Bewerber", links: [["Stellenangebote", "/jobs"], ["Technische Berufe", "/berufe"], ["Lebenslauf erstellen", "/lebenslauf-erstellen"], ["Jetzt bewerben", WA_LINK]] },
             { title: "Unternehmen", links: [["Technische Personalvermittlung", "/technische-personalvermittlung"], ["Personalvermittlung Düsseldorf", "/personalvermittlung/duesseldorf"], ["Branchen", "/branchen"], ["Über PHE", "/ueber-uns"], ["Kontakt", "/kontakt"]] },
             { title: "Rechtliches", links: [["Impressum", "/impressum"], ["Datenschutz", "/datenschutz"], ["AGB", "/agb"]] },
           ].map((col) => (

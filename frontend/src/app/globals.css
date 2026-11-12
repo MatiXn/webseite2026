@@ -152,18 +152,6 @@ body {
   background: #fff;
 }
 
-/* YAFTO waitlist form */
-.yafto-form {
-  display: flex;
-  gap: 8px;
-  max-width: 440px;
-  margin: 0 auto;
-}
-@media (max-width: 499px) {
-  .yafto-form { flex-direction: column; }
-  .yafto-form input, .yafto-form button { width: 100%; }
-}
-
 /* Footer bottom row */
 .footer-bottom {
   display: flex;
@@ -271,8 +259,7 @@ body {
   outline: 2px solid #0071e3 !important;
   outline-offset: 2px;
 }
-/* Auf dunklem Grund (YAFTO-Feld, B2B-Anfrage) ist Blau zu schwach. */
-.yafto-form input:focus-visible,
+/* Auf dunklem Grund (B2B-Anfrage) ist Blau zu schwach. */
 .form-dunkel :where(input, textarea, select):focus-visible {
   outline-color: #fff !important;
 }
