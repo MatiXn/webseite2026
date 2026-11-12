@@ -10,13 +10,20 @@ const CSP = [
   // (wird nur nach erteilter Marketing-Einwilligung überhaupt angefordert),
   // googletagmanager.com für das Google-Tag (Google Ads, ebenfalls nur nach
   // Einwilligung). gtag.js lädt Folgeskripte von googleadservices.com nach.
-  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://connect.facebook.net https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net",
-  // Next.js CSS-in-JS + Styles braucht unsafe-inline
-  "style-src 'self' 'unsafe-inline'",
+  // Der Google Tag Manager (gtm.js) kommt ebenfalls von googletagmanager.com
+  // und ebenfalls nur nach Einwilligung; tagmanager.google.com braucht nur die
+  // GTM-Vorschau („Preview"/Tag Assistant). Den Consent-Default im <head>
+  // deckt 'self' ab (public/consent-default.js) — bewusst kein Hash: Ein Hash
+  // würde 'unsafe-inline' außer Kraft setzen und Next.js-Inline-Skripte sperren.
+  // Kein 'unsafe-eval': Benutzerdefinierte JavaScript-Variablen in GTM
+  // funktionieren deshalb nicht — im Container darauf verzichten.
+  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://connect.facebook.net https://www.googletagmanager.com https://tagmanager.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net",
+  // Next.js CSS-in-JS + Styles braucht unsafe-inline; GTM-Vorschau-Styles
+  "style-src 'self' 'unsafe-inline' https://tagmanager.google.com https://fonts.googleapis.com",
   // data: für Base64-Previews, blob: für File-Viewer
   "img-src 'self' data: blob: https:",
   // Meta-Pixel meldet Ereignisse als Bild-Abruf und per fetch an facebook.com
-  "font-src 'self'",
+  "font-src 'self' data: https://fonts.gstatic.com",
   // Google Ads meldet Conversions per fetch/Beacon an diese Hosts
   // API-Calls: eigene Domain + Supabase + Backend + Nominatim (Standortsuche)
   `connect-src 'self' https://nominatim.openstreetmap.org https://www.facebook.com https://connect.facebook.net https://www.googletagmanager.com https://www.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://*.doubleclick.net ${process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://*.supabase.co"} ${process.env.NEXT_PUBLIC_API_URL ?? ""}`,

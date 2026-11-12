@@ -352,3 +352,28 @@ Score, dann Veröffentlichungsdatum, dann ID.
 - **Conversion „Kontakt“** wird erst nach erfolgreichem Versand ausgelöst. Das gilt für `/kontakt`, die Bewerbung unter `/jobs/…` (auch per LinkedIn), die Unternehmensanfrage auf `/technische-personalvermittlung` und den Funnel unter `/stellen/…`. Der Parameter `quelle` unterscheidet die Formulare.
 - **Conversion „Termin vereinbaren“** zählt Klicks auf `tel:`- und WhatsApp-Links. Ein Terminformular gibt es auf der Website nicht. Ein Klick ist also nur eine Absicht, kein bestätigter Termin. Erfasst wird über einen einzigen Listener am Dokument (`GoogleTagLader`), damit auch neue Links ohne zusätzlichen Code mitzählen.
 - **Consent Mode v2** wird beim Laden auf `granted` gesetzt, weil das Tag ohnehin nur nach Zustimmung existiert. `analytics_storage` bleibt `denied`, weil kein Google Analytics im Einsatz ist.
+
+## Google Tag Manager im Consent Mode v2 „Basic“ (12.11.2026)
+
+Container `GTM-WQZKFVDF` kommt zusätzlich zum bestehenden Google-Tag hinzu.
+
+- **Nur der Consent-Default steht fest im `<head>`**, und zwar als eigene Datei
+  `frontend/public/consent-default.js`, die synchron geladen wird. Sie setzt alle
+  Consent-Mode-Signale auf `denied` und übernimmt eine frühere Zustimmung
+  sofort als `update`. `gtm.js` selbst wird erst nach Zustimmung nachgeladen
+  (`lib/gtm.ts`). „Advanced“ (gtm.js immer laden, cookielose Pings) wurde
+  verworfen, weil schon der Abruf die IP an Google überträgt. Nach dem VG Hannover
+  (2025) ist dafür eine Einwilligung nach § 25 TDDDG nötig.
+- **Eine Datei statt Inline-Skript mit Hash oder Nonce.** Ein Hash in `script-src`
+  schaltet `'unsafe-inline'` ab und würde die Inline-Skripte von Next.js sperren.
+  Nonces gehen in Next.js nur mit dynamischem Rendering, das hätte die 126
+  statischen Seiten gekostet. Die Datei ist über `'self'` erlaubt.
+- **Google-Ads-Conversions und Meta-Pixel bleiben im Code.** Im Container
+  deshalb keine eigenen Ads-Conversion-Tags für Kontakt und Termin anlegen,
+  sonst wird doppelt gezählt.
+- **Keine neue Consent-Fassung**, weil der Empfänger derselbe bleibt
+  (Google Ireland) und auch der Zweck (Ads-Messung). Banner und Ziffer 7/7d der
+  Datenschutzerklärung nennen den Tag Manager jetzt ausdrücklich. Ein neues Tag
+  im Container mit anderem Zweck oder Empfänger (z. B. GA4, LinkedIn, Hotjar)
+  braucht dagegen eine Banner-Kategorie, eine neue Consent-Fassung, eine
+  Ergänzung der Datenschutzerklärung und gegebenenfalls CSP-Domains.

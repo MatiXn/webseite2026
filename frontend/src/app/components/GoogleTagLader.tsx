@@ -13,14 +13,23 @@
 // daran denken muss.
 
 import { useEffect } from "react";
-import { CONSENT_EREIGNIS } from "../../lib/consent";
+import { CONSENT_EREIGNIS, marketingErlaubt } from "../../lib/consent";
 import { ladeGoogleTag, meldeTerminConversion, terminKanal } from "../../lib/google-tag";
+import { ladeGtm, sendeGoogleConsent } from "../../lib/gtm";
 
 export default function GoogleTagLader() {
   useEffect(() => {
     ladeGoogleTag();
+    ladeGtm();
 
-    const beiAenderung = () => ladeGoogleTag();
+    // Zustimmung oder Widerruf im Banner. Beim Widerruf bleiben bereits
+    // geladene Skripte im Speicher, erhalten aber „denied" und setzen keine
+    // Werbe-Cookies mehr. Beim nächsten Seitenaufruf werden sie nicht geladen.
+    const beiAenderung = () => {
+      sendeGoogleConsent(marketingErlaubt());
+      ladeGoogleTag();
+      ladeGtm();
+    };
 
     const beiKlick = (ereignis: MouseEvent) => {
       const link = (ereignis.target as Element | null)?.closest?.("a[href]");

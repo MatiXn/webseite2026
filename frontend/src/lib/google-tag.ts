@@ -14,6 +14,7 @@
 // E-Mail-Adressen.
 
 import { marketingErlaubt } from "./consent";
+import { sendeGoogleConsent } from "./gtm";
 
 /** Konto-ID aus Google Ads. Nicht geheim — sie steht in jedem Seitenquelltext. */
 export const GOOGLE_ADS_ID = "AW-10801717598";
@@ -48,30 +49,19 @@ let geladen = false;
  */
 export function ladeGoogleTag(): void {
   if (typeof window === "undefined") return;
-  if (geladen || window.gtag) return;
+  // Nur am eigenen Merker festmachen: window.gtag existiert seit dem
+  // GTM-Umbau schon durch public/consent-default.js im <head>.
+  if (geladen) return;
   if (!marketingErlaubt()) return;
 
   geladen = true;
 
-  // Offizieller Google-Schnipsel. `arguments` statt Restparameter ist Absicht:
-  // gtag.js erkennt Befehle nur als Arguments-Objekt, ein Array ignoriert es.
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag() {
-    // eslint-disable-next-line prefer-rest-params
-    window.dataLayer!.push(arguments);
-  };
-
-  // Consent Mode v2: Google verlangt für Nutzer im EWR ein ausdrückliches
-  // Signal. Geladen wird nur nach Zustimmung, also ist Werbung erlaubt.
-  // Analytics nutzen wir nicht, das bleibt abgelehnt.
-  window.gtag("consent", "default", {
-    ad_storage: "granted",
-    ad_user_data: "granted",
-    ad_personalization: "granted",
-    analytics_storage: "denied",
-  });
-  window.gtag("js", new Date());
-  window.gtag("config", GOOGLE_ADS_ID);
+  // Consent Mode v2: Die Standardwerte (alles abgelehnt) setzt
+  // consent-default.js. Hier die Zustimmung melden — geladen wird ja nur nach
+  // Zustimmung. Analytics bleibt abgelehnt (siehe gtm.ts).
+  sendeGoogleConsent(true);
+  window.gtag!("js", new Date());
+  window.gtag!("config", GOOGLE_ADS_ID);
 
   const skript = document.createElement("script");
   skript.async = true;

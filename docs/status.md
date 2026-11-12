@@ -8,6 +8,14 @@
 
 ## Offene Punkte
 
+### Google Tag Manager (seit 12.11.2026)
+
+- [ ] Container `GTM-WQZKFVDF` prüfen: Er darf keine Google-Ads-Conversion-Tags
+      für Kontakt/Termin enthalten (die sendet bereits der Code), und Tags
+      sollten „Zusätzliche Einwilligung erforderlich: ad_storage“ tragen.
+- [ ] Nach dem Deploy mit Tag Assistant prüfen: Vor Zustimmung kein Abruf von
+      `gtm.js`, danach `consent update` → `gtm.js`.
+
 ### Recruiting-Landingpages (seit 23.08.2026)
 
 - [x] Umgebungsvariablen gesetzt (23.08.2026): `RECRUITING_SUPABASE_URL`,

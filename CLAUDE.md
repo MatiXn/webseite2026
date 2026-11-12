@@ -107,6 +107,13 @@ cd frontend && npm run dev                     # Frontend
   Wer am Tracking etwas ändert, muss die Ziffern 7/7b/7d der
   Datenschutzerklärung und die CSP in `next.config.ts` mitziehen. Kommt ein
   neuer Empfänger dazu, braucht es eine neue Consent-Fassung.
+- **Google Tag Manager (`GTM-WQZKFVDF`, seit 12.11.2026) lädt ebenfalls erst
+  nach Einwilligung** (`lib/gtm.ts`). Fest im `<head>` steht nur
+  `public/consent-default.js` (Consent Mode v2, alles `denied`). Ihren
+  Speicherschlüssel prüft ein Test gegen `lib/consent.ts`. Im Container gilt:
+  keine Ads-Conversion-Tags für Kontakt/Termin (die sendet der Code, sonst
+  doppelt), keine „Benutzerdefinierten JavaScript-Variablen“ (CSP ohne
+  `unsafe-eval`), neue Dienste nur mit Banner, Datenschutzerklärung und CSP.
 - **Die Meta-Pixel-ID steht nur bei Vercel** (`NEXT_PUBLIC_META_PIXEL_ID`,
   Production), nicht im Code. Seit 06.10.2026 `1531099928014474` (vorher
   `1721750638380257`). Sie wird beim Build eingesetzt: Nach einer Änderung

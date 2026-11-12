@@ -91,7 +91,7 @@ export default function CookieBanner() {
             />
             <Kategorie
               titel="Marketing (Google Ads, Meta-Pixel)"
-              text="Google-Tag auf der gesamten Website: misst, welche Google-Anzeige zu einer Anfrage, Bewerbung oder einem Anruf geführt hat; überträgt Daten an Google Ireland Ltd. Meta-Pixel nur auf unseren Stellen-Landingpages: misst dasselbe für Facebook- und Instagram-Anzeigen; überträgt Daten an Meta Platforms Ireland Ltd. Ohne Ihre Zustimmung wird keines der beiden Skripte geladen."
+              text="Google-Tag und Google Tag Manager auf der gesamten Website: misst, welche Google-Anzeige zu einer Anfrage, Bewerbung oder einem Anruf geführt hat; überträgt Daten an Google Ireland Ltd. Meta-Pixel nur auf unseren Stellen-Landingpages: misst dasselbe für Facebook- und Instagram-Anzeigen; überträgt Daten an Meta Platforms Ireland Ltd. Ohne Ihre Zustimmung wird keines der beiden Skripte geladen."
             />
           </div>
         )}

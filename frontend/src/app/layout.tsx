@@ -123,6 +123,13 @@ const orgSchema = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de" className={inter.variable}>
+      <head>
+        {/* Consent Mode v2: Standardwerte vor jedem Google-Skript. Synchron und
+            als eigene Datei (CSP über 'self'). Lädt selbst nichts von Google —
+            GTM und Google-Tag folgen erst nach Zustimmung (GoogleTagLader). */}
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script src="/consent-default.js" />
+      </head>
       <body>
         <JsonLd data={websiteSchema} />
         <JsonLd data={orgSchema} />
